@@ -217,3 +217,29 @@ implementation, payment system, or mainnet release.
 This validates the version 4 website bundle, deployment, and access gate within
 the checks above. It does not validate an O2A wallet, proof-package
 implementation, RGB contract, payment system, or mainnet release.
+
+### Version 5 validation — 2026-09-23
+
+- Before release, the live access policy had drifted to `public` at revision 6.
+  Under the private-live authorization, it was restored to `custom` owner-only
+  access at revision 7: one owner, no other viewers or editors, no groups, and
+  no external visitors.
+- Sites production deployment completed successfully at the existing private
+  review URL as saved version 5.
+- Source commit: `1e593c8e01135c698eb84cefa535387d9069ea63` in the isolated
+  Sites snapshot repository, not the protocol repository.
+- Archive SHA-256:
+  `92725e8b8af86c7c28105c53678695cecce729a4cb251f7b3b42276a1965fae7`.
+- Signed-out requests to `/`, `/guide.html`, and
+  `/assets/protocol-framework.svg` returned HTTP 401.
+- Authorized requests loaded both pages and the flow, framework, stack, and
+  pipeline figures with HTTP 200 after following the site's canonical redirect.
+- Live content checks found the new framework, sequential release gates, and
+  four-figure protocol section.
+- Eleven-file export validation, SVG XML parsing, local visual rendering,
+  relative Markdown-link checks, Git whitespace checks, and all 21 Palimnex
+  evaluation cases passed.
+
+This validates the version 5 website bundle, deployment, and access gate within
+the checks above. It does not validate an O2A wallet, proof-package
+implementation, RGB contract, payment system, or mainnet release.
