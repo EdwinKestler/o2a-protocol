@@ -40,9 +40,11 @@ a draft; they do not provide access control.
 
 ## GitHub Pages
 
-**Public publication is on hold pending explicit authorization.** Keep
-`PAGES_ENABLED` unset or false. Do not create a public repository, change
-repository visibility, or widen the Sites audience as part of draft testing.
+The Sites deployment is publicly accessible under the recorded default policy.
+GitHub Pages remains a separate release route: keep `PAGES_ENABLED` unset or
+false unless that route is explicitly enabled. Do not create a public source
+repository or change the protocol repository's visibility as part of Sites
+publication.
 
 The workflow `.github/workflows/pages.yml` builds the public bundle on relevant
 pushes and pull requests. Deployment requires Pages configured for GitHub
@@ -62,14 +64,15 @@ The source repository has multiple push URLs configured for `origin`. Any
 publishing command must name the intended repository explicitly rather than
 using an unqualified `git push`.
 
-## Owner-private live review with Sites
+## Public live draft with Sites
 
 The draft is hosted at
-[O2A Protocol — Private Draft](https://o2a-protocol.edwinkestler.chatgpt.site).
-Sign in with the owning Sites account. The access policy is owner-only
-(`custom`, one owner, no other viewers, editors, groups, or external visitors).
-The hosted draft is an actual deployment with restricted access; the URL
-does not grant access by itself. Public publication remains a separate step.
+[O2A Protocol — Public Draft](https://o2a-protocol.edwinkestler.chatgpt.site).
+Its default access policy is `public`: anyone with the URL may retrieve the
+curated site without signing in. This public audience decision applies to the
+Sites deployment, not to repository visibility or GitHub Pages configuration.
+The `noindex` page metadata and `robots.txt` remain draft-indexing requests;
+they are not access control.
 
 `.openai/hosting.json` records the existing Sites project ID. Reuse it; never
 create a replacement site for an update. Only the eleven curated website files
@@ -110,19 +113,18 @@ git -C .sites-work/source archive --format=tar.gz -o ../o2a-site.tar.gz HEAD
 git -C .sites-work/source rev-parse HEAD
 ```
 
-Read the current Sites access policy immediately before a private release. The
-private deployment operation requires an already owner-private site; it is not
-an access probe and must not be used to change the audience implicitly. If the
-policy has drifted, stop unless there is explicit authorization to restore it.
-With that authorization, set `custom` access with only the owner retained and
-clear non-owner users and groups, then re-read the policy.
+Read the current Sites access policy immediately before release. The expected
+policy is `public`. If it has drifted, restore `public` under this recorded
+default and re-read the policy before deployment. Audience changes remain
+explicit Sites operations; a source push or deployment must not silently
+change access.
 
-Use the Sites `save_version_and_deploy_private` operation with the existing
-project ID, that full commit SHA, and the absolute archive path. Confirm a
-successful production deployment and re-check the owner-only audience. Use a
-temporary Sites authorization header scoped exclusively to the site origin for
-automated browser tests; never place a test token in a page or share URL.
-Verify signed-out requests cannot retrieve either pages or static assets.
+Use the Sites `save_site_version` operation with the existing project ID, full
+commit SHA, and absolute archive path, then deploy that exact saved version
+with `deploy_site_version`. Confirm a successful production deployment and
+re-check the public audience. Verify anonymous requests can retrieve both pages
+and static assets with HTTP 200, and inspect the live content rather than
+treating an access response as deployment proof.
 
 Deployment evidence and validation results are recorded below; refresh them
 after each deployment rather than assuming an older test proves a new version.

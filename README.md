@@ -19,9 +19,10 @@ Start with the [project vision and rationale](docs/00-vision.md) and the
 accepted
 [Bitcoin-rooted identity decision](adr/0005-bitcoin-rooted-self-custodial-identity.md).
 
-The [project website draft](docs/WEBSITE.md) has an owner-private Sites review
-deployment and a local preview. Public release and GitHub Pages deployment
-remain on hold pending authorization. Examples use generic participants.
+The [project website draft](docs/WEBSITE.md) has a public Sites deployment and
+a local preview. Public access is the default Sites policy; GitHub Pages remains
+a separate, currently disabled publication route. Examples use generic
+participants.
 
 ## Design principle
 
