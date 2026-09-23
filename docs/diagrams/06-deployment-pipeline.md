@@ -1,6 +1,6 @@
 # 06 — Development-to-Public-Release Pipeline
 
-The proposed deployment progression adds two controlled environments between local development and production.
+The proposed deployment progression adds two controlled environments between local development and production. The project is still in specification, so these stages are design targets rather than a running deployment.
 
 ```mermaid
 flowchart LR

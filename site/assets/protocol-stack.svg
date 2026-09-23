@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 860" role="img">
+  <title>O2A protocol stack</title>
+  <desc>Proposed stack: clients and a protocol API over a protocol engine, with rebuildable read models. Bitcoin and RGB are optional adapters. Discovery cannot change a verification result.</desc>
+  <defs>
+    <filter id="shadow" x="-6%" y="-8%" width="116%" height="130%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#112840" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="860" fill="#f6f8fb"/>
+  <text x="48" y="52" fill="#1559e9" font-family="Helvetica Neue, Arial, sans-serif" font-size="12" font-weight="700" letter-spacing="2.2">PROTOCOL STACK</text>
+  <text x="48" y="90" fill="#142238" font-family="Helvetica Neue, Arial, sans-serif" font-size="30" font-weight="700">Each layer has one job</text>
+  <text x="48" y="118" fill="#536379" font-family="Helvetica Neue, Arial, sans-serif" font-size="15">A proposal, not a running system. The engine checks evidence. The database does not decide identity.</text>
+
+  <g font-family="Helvetica Neue, Arial, sans-serif" filter="url(#shadow)">
+    <g transform="translate(48 146)">
+      <rect width="1104" height="84" rx="16" fill="#ffffff" stroke="#dce3ed"/>
+      <rect x="0" y="18" width="4" height="48" fill="#1559e9"/>
+      <text x="28" y="36" fill="#1559e9" font-size="12" font-weight="700" letter-spacing="1.2">01 / CLIENTS · PROPOSED</text>
+      <text x="28" y="62" fill="#142238" font-size="16">Web client, command-line verifier, and a future SDK. They request checks. They do not invent validity.</text>
+    </g>
+    <g transform="translate(48 246)">
+      <rect width="1104" height="96" rx="16" fill="#ffffff" stroke="#dce3ed"/>
+      <rect x="0" y="24" width="4" height="48" fill="#1559e9"/>
+      <text x="28" y="36" fill="#1559e9" font-size="12" font-weight="700" letter-spacing="1.2">02 / PROTOCOL API · PROPOSED</text>
+      <text x="28" y="64" fill="#142238" font-size="16">Entities, claims, attestations, challenges, policies, proofs, and registry reads.</text>
+    </g>
+    <g transform="translate(48 358)">
+      <rect width="1104" height="112" rx="16" fill="#112840"/>
+      <text x="28" y="36" fill="#a9edd6" font-size="12" font-weight="700" letter-spacing="1.2">03 / PROTOCOL ENGINE</text>
+      <text x="28" y="68" fill="#ffffff" font-size="18" font-weight="700">Schemas, transitions, canonical proofs, policy evaluator</text>
+      <text x="28" y="94" fill="#b7d3ee" font-size="14">This is the checkable core. Language choice is not proof that the protocol is correct.</text>
+    </g>
+  </g>
+
+  <g font-family="Helvetica Neue, Arial, sans-serif" filter="url(#shadow)">
+    <g transform="translate(48 490)">
+      <rect width="538" height="156" rx="16" fill="#ffffff" stroke="#dce3ed"/>
+      <text x="24" y="36" fill="#1559e9" font-size="12" font-weight="700" letter-spacing="1.2">04 / READ MODELS</text>
+      <text x="24" y="68" fill="#142238" font-size="16" font-weight="700">Not the source of truth</text>
+      <text x="24" y="98" fill="#536379" font-size="14">PostgreSQL stores a rebuildable projection.</text>
+      <text x="24" y="120" fill="#536379" font-size="14">Redis is a disposable cache. Object storage</text>
+      <text x="24" y="142" fill="#536379" font-size="14">holds portable proof packages.</text>
+    </g>
+    <g transform="translate(614 490)">
+      <rect width="538" height="156" rx="16" fill="#ffffff" stroke="#1559e9" stroke-dasharray="6 5"/>
+      <text x="24" y="36" fill="#1559e9" font-size="12" font-weight="700" letter-spacing="1.2">05 / OPTIONAL ADAPTER</text>
+      <text x="24" y="68" fill="#142238" font-size="16" font-weight="700">Bitcoin and RGB, when required</text>
+      <text x="24" y="98" fill="#536379" font-size="14">Client-side validation and a Bitcoin anchor</text>
+      <text x="24" y="120" fill="#536379" font-size="14">apply only if the selected policy asks</text>
+      <text x="24" y="142" fill="#536379" font-size="14">for that proof. Identity does not require them.</text>
+    </g>
+  </g>
+
+  <g font-family="Helvetica Neue, Arial, sans-serif">
+    <rect x="48" y="666" width="1104" height="72" rx="16" fill="#e7eef9" stroke="#c5d6f0"/>
+    <text x="72" y="694" fill="#1559e9" font-size="12" font-weight="700" letter-spacing="1.2">OPTIONAL DISCOVERY</text>
+    <text x="280" y="694" fill="#142238" font-size="15">A profile adapter such as Pubky may help someone find a record. It cannot change the verification result.</text>
+    <rect x="48" y="754" width="1104" height="68" rx="16" fill="#112840"/>
+    <text x="72" y="794" fill="#a9edd6" font-family="Helvetica Neue, Arial, sans-serif" font-size="15">Signed evidence and the versioned policy are authoritative. Replacing the database does not rewrite identity.</text>
+  </g>
+</svg>

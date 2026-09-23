@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 820" role="img">
+  <title>O2A release pipeline</title>
+  <desc>Proposed path from local regtest through CI, a shared regtest, public testnet, and public beta to a mainnet release of identity, evidence, and verification. The same signed artifact is promoted rather than rebuilt.</desc>
+  <defs>
+    <filter id="shadow" x="-12%" y="-8%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#112840" flood-opacity="0.08"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 1.2L8 5L0 8.8" fill="none" stroke="#1559e9" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="820" fill="#f6f8fb"/>
+  <text x="48" y="52" fill="#1559e9" font-family="Helvetica Neue, Arial, sans-serif" font-size="12" font-weight="700" letter-spacing="2.2">RELEASE PIPELINE</text>
+  <text x="48" y="90" fill="#142238" font-family="Helvetica Neue, Arial, sans-serif" font-size="30" font-weight="700">Promote one tested artifact</text>
+  <text x="48" y="118" fill="#536379" font-family="Helvetica Neue, Arial, sans-serif" font-size="15">Design targets while the protocol is still a specification. These environments are not running.</text>
+
+  <g font-family="Helvetica Neue, Arial, sans-serif" filter="url(#shadow)">
+    <g transform="translate(48 150)">
+      <rect width="168" height="248" rx="16" fill="#ffffff" stroke="#dce3ed"/>
+      <text x="18" y="36" fill="#1559e9" font-size="12" font-weight="700">01</text>
+      <text x="18" y="72" fill="#142238" font-size="16" font-weight="700">Local</text>
+      <text x="18" y="94" fill="#142238" font-size="16" font-weight="700">development</text>
+      <text x="18" y="136" fill="#536379" font-size="13">Docker Compose</text>
+      <text x="18" y="158" fill="#536379" font-size="13">Bitcoin regtest</text>
+    </g>
+    <g transform="translate(232 150)">
+      <rect width="168" height="248" rx="16" fill="#ffffff" stroke="#dce3ed"/>
+      <text x="18" y="36" fill="#1559e9" font-size="12" font-weight="700">02</text>
+      <text x="18" y="72" fill="#142238" font-size="16" font-weight="700">CI regtest</text>
+      <text x="18" y="136" fill="#536379" font-size="13">Unit tests</text>
+      <text x="18" y="158" fill="#536379" font-size="13">Integration tests</text>
+      <text x="18" y="180" fill="#536379" font-size="13">Fixed vectors</text>
+    </g>
+    <g transform="translate(416 150)">
+      <rect width="168" height="248" rx="16" fill="#ffffff" stroke="#dce3ed"/>
+      <text x="18" y="36" fill="#1559e9" font-size="12" font-weight="700">03</text>
+      <text x="18" y="72" fill="#142238" font-size="16" font-weight="700">Shared</text>
+      <text x="18" y="94" fill="#142238" font-size="16" font-weight="700">regtest</text>
+      <text x="18" y="136" fill="#536379" font-size="13">Team integration</text>
+      <text x="18" y="158" fill="#536379" font-size="13">Synthetic network</text>
+    </g>
+    <g transform="translate(600 150)">
+      <rect width="168" height="248" rx="16" fill="#ffffff" stroke="#dce3ed"/>
+      <text x="18" y="36" fill="#1559e9" font-size="12" font-weight="700">04</text>
+      <text x="18" y="72" fill="#142238" font-size="16" font-weight="700">Public</text>
+      <text x="18" y="94" fill="#142238" font-size="16" font-weight="700">testnet</text>
+      <text x="18" y="136" fill="#536379" font-size="13">Public API</text>
+      <text x="18" y="158" fill="#536379" font-size="13">Attack simulation</text>
+      <text x="18" y="180" fill="#536379" font-size="13">Registry rebuild</text>
+    </g>
+    <g transform="translate(784 150)">
+      <rect width="168" height="248" rx="16" fill="#ffffff" stroke="#dce3ed"/>
+      <text x="18" y="36" fill="#1559e9" font-size="12" font-weight="700">05</text>
+      <text x="18" y="72" fill="#142238" font-size="16" font-weight="700">Public</text>
+      <text x="18" y="94" fill="#142238" font-size="16" font-weight="700">beta</text>
+      <text x="18" y="136" fill="#536379" font-size="13">SDK</text>
+      <text x="18" y="158" fill="#536379" font-size="13">Independent</text>
+      <text x="18" y="180" fill="#536379" font-size="13">verifier</text>
+      <text x="18" y="202" fill="#536379" font-size="13">Integrations</text>
+    </g>
+    <g transform="translate(968 150)">
+      <rect width="184" height="248" rx="16" fill="#112840"/>
+      <text x="18" y="36" fill="#a9edd6" font-size="12" font-weight="700">06</text>
+      <text x="18" y="72" fill="#ffffff" font-size="16" font-weight="700">Mainnet</text>
+      <text x="18" y="94" fill="#ffffff" font-size="16" font-weight="700">release</text>
+      <text x="18" y="136" fill="#b7d3ee" font-size="13">Identity</text>
+      <text x="18" y="158" fill="#b7d3ee" font-size="13">Evidence</text>
+      <text x="18" y="180" fill="#b7d3ee" font-size="13">Verification</text>
+    </g>
+  </g>
+  <g fill="none" stroke="#1559e9" stroke-width="1.6" marker-end="url(#arrow)">
+    <path d="M216 274H224"/>
+    <path d="M400 274H408"/>
+    <path d="M584 274H592"/>
+    <path d="M768 274H776"/>
+    <path d="M952 274H960"/>
+  </g>
+
+  <text x="48" y="444" fill="#1559e9" font-family="Helvetica Neue, Arial, sans-serif" font-size="12" font-weight="700" letter-spacing="1.4">SAME ARTIFACT, THREE PROMOTIONS</text>
+  <g font-family="Helvetica Neue, Arial, sans-serif" filter="url(#shadow)">
+    <g transform="translate(48 464)">
+      <rect width="240" height="88" rx="14" fill="#ffffff" stroke="#dce3ed"/>
+      <text x="20" y="38" fill="#142238" font-size="15" font-weight="700">Git commit</text>
+      <text x="20" y="62" fill="#536379" font-size="13">The exact source revision</text>
+    </g>
+    <g transform="translate(336 464)">
+      <rect width="240" height="88" rx="14" fill="#ffffff" stroke="#dce3ed"/>
+      <text x="20" y="38" fill="#142238" font-size="15" font-weight="700">Signed artifact</text>
+      <text x="20" y="62" fill="#536379" font-size="13">Container or binary</text>
+    </g>
+    <g transform="translate(624 464)">
+      <rect width="240" height="88" rx="14" fill="#ffffff" stroke="#dce3ed"/>
+      <text x="20" y="38" fill="#142238" font-size="15" font-weight="700">Dev, then testnet</text>
+      <text x="20" y="62" fill="#536379" font-size="13">The artifact already tested</text>
+    </g>
+    <g transform="translate(912 464)">
+      <rect width="240" height="88" rx="14" fill="#112840"/>
+      <text x="20" y="38" fill="#ffffff" font-size="15" font-weight="700">Production</text>
+      <text x="20" y="62" fill="#b7d3ee" font-size="13">No second build</text>
+    </g>
+  </g>
+  <g fill="none" stroke="#1559e9" stroke-width="1.6" marker-end="url(#arrow)">
+    <path d="M288 508H328"/>
+    <path d="M576 508H616"/>
+    <path d="M864 508H904"/>
+  </g>
+
+  <rect x="48" y="584" width="1104" height="188" rx="16" fill="#112840"/>
+  <text x="76" y="628" fill="#a9edd6" font-family="Helvetica Neue, Arial, sans-serif" font-size="12" font-weight="700" letter-spacing="1.4">FIRST PUBLIC RELEASE</text>
+  <text x="76" y="666" fill="#ffffff" font-family="Helvetica Neue, Arial, sans-serif" font-size="22" font-weight="700">Identity, evidence, and verification</text>
+  <text x="76" y="702" fill="#b7d3ee" font-family="Helvetica Neue, Arial, sans-serif" font-size="15">GatePass, SplitNight, and settlement adapters follow protocol stability.</text>
+  <text x="76" y="730" fill="#b7d3ee" font-family="Helvetica Neue, Arial, sans-serif" font-size="15">They do not block the first public identity release.</text>
+</svg>

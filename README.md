@@ -89,14 +89,14 @@ The first complete protocol scenario is:
 
 1. An artist creates an EntityID.
 2. The artist publishes a signed self-claim.
-3. A venue attests that the artist performed at an event.
-4. A promoter independently attests that the artist was booked for the event.
-5. Independent clients validate the same evidence.
-6. Each client applies the same versioned trust policy.
+3. The artist and a venue sign the same canonical event manifest through separate evidence objects.
+4. A promoter may add independent booking evidence. Booking, performance, and settlement stay distinct claims.
+5. Known challenges and revocations remain visible in the package.
+6. Independent clients apply the same versioned trust policy to that evidence.
 7. Each client derives the same verification result.
 
 ```text
-same evidence + same policy + same protocol version
+same evidence + same policy + same protocol version + same evaluation context
                          =
                  same verification result
 ```
