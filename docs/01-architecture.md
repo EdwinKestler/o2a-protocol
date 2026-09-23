@@ -127,10 +127,10 @@ mode MUST disclose its header, inclusion-proof, indexer, privacy, and
 availability assumptions. Offline mode verifies retained packages without
 pretending to know about evidence it has not received.
 
-The future official reference wallet/node is intended to be open-source
-software that anyone can inspect, build, and run. The repository MUST choose
-and record its source license before accepting reference implementation code;
-this design repository currently contains no license grant.
+The repository and future official reference wallet/node use the Apache
+License 2.0 so anyone can inspect, build, run, modify, and distribute the
+software under its terms. This closes the source-license decision; it does not
+close the remaining protocol, dependency, conformance, or security gates.
 
 ## Storage model
 

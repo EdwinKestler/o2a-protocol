@@ -168,7 +168,9 @@ Costs and limits:
 - identity creation and lifecycle changes require Bitcoin fees and confirmation
   policy;
 - client-side validation requires durable consignment and proof availability;
-- a lost or compromised root requires a previously committed recovery path;
+- a lost root preserves the same EntityID only when a recovery rule committed
+  by an earlier valid state still authorizes recovery; otherwise continuity
+  requires a new root, a new EntityID, and explicit successor evidence;
 - Pubky and O2A use different key schemes and require an explicit binding; and
 - Bitcoin cannot resolve the social oracle problem of who is entitled to a
   human-readable name.

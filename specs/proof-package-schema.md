@@ -16,6 +16,7 @@ private attestation, or application record public.
 ```json
 {
   "protocol_version": "0.1",
+  "bitcoin_network": "<bitcoin-network>",
   "object_type": "public_identity_proof_package",
   "package_id": "<hash-of-canonical-package-manifest>",
   "subject": "<EntityID>",
@@ -30,6 +31,8 @@ private attestation, or application record public.
   "previous_package": null,
   "publisher": "<EntityID>",
   "publisher_state": "<authorizing-rgb-state-id>",
+  "signing_key": "<authorized-controller-key-id>",
+  "signing_key_purpose": "proof_package_publisher",
   "signature_domain": "O2A/v0.1/proof-package",
   "signature": "<authorized-controller-bip340-signature>"
 }
@@ -40,8 +43,11 @@ private attestation, or application record public.
 `package_id` is the hash of the versioned canonical manifest with
 `package_id`, `signature`, and transport-only locator metadata omitted. The
 publisher signs that same digest in the proof-package signing domain. The
-final canonical encoding and hash algorithm MUST be frozen with positive,
-mutation, truncation, and cross-domain test vectors before implementation.
+declared `signing_key` MUST be authorized for the declared purpose by
+`publisher_state` on the declared `bitcoin_network`. The final canonical
+encoding and hash algorithm MUST be frozen with positive, mutation, truncation,
+wrong-network, wrong-key-purpose, and cross-domain test vectors before
+implementation.
 
 Every content-addressed reference contributes its media type, byte length, and
 content hash to the signed manifest. Implementations MUST reject ambiguous
@@ -89,8 +95,7 @@ package already retained by another wallet.
 
 Public packages MUST NOT contain:
 
-- seeds, private keys, recovery secrets, or Bitcoin spending descriptors that
-  were not intentionally published;
+- seeds, private keys, recovery secrets, or Bitcoin spending descriptors;
 - private RGB state unrelated to the public identity-history shard;
 - private attestations or undisclosed evidence; or
 - access tokens, private API responses, or unnecessary personal data.

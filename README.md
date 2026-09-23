@@ -116,10 +116,11 @@ No production implementation code should be introduced until the v0.1 RGB
 identity schema, canonical serialization, Bitcoin commitment and reorg rules,
 key-derivation profile, and deterministic test vectors are agreed.
 
-The future official reference wallet and node are intended to be open-source
-software anyone can inspect, build, and run. This repository does not yet have
-a source license; selecting and adding one is a gate before implementation
-code is accepted.
+This repository and the future official reference wallet and node are licensed
+under the [Apache License 2.0](LICENSE), with copyright held by Edwin Kestler.
+Anyone may inspect, build, run, modify, and distribute them under that license.
+The license decision is closed; the remaining specification and conformance
+gates still apply before implementation code is accepted.
 
 ## First milestone
 

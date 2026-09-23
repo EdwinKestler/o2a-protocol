@@ -22,8 +22,7 @@
 - specify competing human-name claims without first-claim ownership;
 - specify bounded evidence retrieval and explicit evaluation context;
 - create deterministic positive and adversarial test vectors; and
-- accept a source-license decision and add the license before reference wallet
-  or node implementation code is admitted.
+- retain the accepted Apache-2.0 repository and reference wallet/node license.
 
 Gate: the vectors cover distinct root/payment keys, duplicate names, invalid
 BIP340 signatures, cross-domain signature replay, wrong Bitcoin network, wrong

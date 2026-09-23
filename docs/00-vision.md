@@ -304,7 +304,6 @@ after the identity and evidence model is stable.
   to Bitcoin; ordinary content edits remain off-chain.
 - **Self-custodial:** seeds, identity keys, consignments, and proof packages stay
   under the participant's control.
-- **Open-source infrastructure:** the future official reference wallet and node
-  are intended to use an approved open-source license so anyone can inspect,
-  build, and run them. The exact license is a required decision before
-  implementation code enters this repository.
+- **Open-source infrastructure:** this repository and the future official
+  reference wallet and node use Apache-2.0 so anyone can inspect, build, run,
+  modify, and distribute them under its terms.
