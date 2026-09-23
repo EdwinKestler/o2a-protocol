@@ -34,7 +34,7 @@
   "cache_mode": "on",
   "content_scan_allowlist_sha256": [],
   "evaluation_fixture": "evaluation/palimnex-v1.json",
-  "evaluation_fixture_sha256": "4b18e39148d33eacd69fe582257dcc056060d48f634f87d30e639be955ecf73c",
+  "evaluation_fixture_sha256": "6dad2baff0117d623179250ef0aab479ac328248ab39122590456e814b1264f4",
   "redis_socket_path": ".palimnex/redis/redis.sock",
   "durable_ledger_path": ".palimnex/memory.sqlite3",
   "semantic_provider": {

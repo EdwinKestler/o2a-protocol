@@ -12,7 +12,9 @@ The editorial sources are the accepted
 [the vision](00-vision.md),
 [the roadmap](13-roadmap.md),
 [the architecture](01-architecture.md),
-[the event and album identity profiles](../specs/music-object-schema.md), and
+[the event and album identity profiles](../specs/music-object-schema.md),
+[the cryptographic profile](../specs/cryptographic-profile.md),
+[the public proof-package profile](../specs/proof-package-schema.md), and
 [the paid-use proposal](16-artist-authorized-use-payments.md).
 The flow, stack, and pipeline figures follow
 [the protocol flow](diagrams/02-end-to-end-protocol-flow.md),

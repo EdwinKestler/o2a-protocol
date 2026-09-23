@@ -20,6 +20,9 @@ requires Bitcoin anchoring and RGB client-side validation for identity state.
 - validate the RGB identity schema, consignment history, seals, anchors, and
   current controller/recovery state;
 - distinguish identity, controller, discovery, and payment key purposes;
+- validate purpose-specific BIP340 tagged-hash domains and reject cross-domain
+  signature reuse;
+- import, hash-check, and export public identity proof packages;
 - expose explicit Bitcoin confirmation and reorg context; and
 - validate EVENT and ALBUM identity lifecycles like other entities.
 

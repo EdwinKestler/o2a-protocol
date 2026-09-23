@@ -43,12 +43,35 @@ delegated under the current identity state and can rotate without changing the
 EntityID. The root key is an identifier and genesis authority; it is not an
 unconditional forever-controller after later state transitions.
 
+The root public key is immutable because the EntityID is derived from it.
+Recovery replaces controller authority under a rule committed by an earlier
+valid state; it never replaces the root public key. A different root public key
+creates a different EntityID and requires explicit successor-identity evidence.
+
 Identity creation, controller changes, recovery-policy changes, and revocation
 are RGB client-side state transitions anchored to Bitcoin single-use seals.
 The current valid controller and recovery policy come from the validated RGB
 history and Bitcoin anchor, not from the newest database row or profile file.
 Recovery without a currently authorized key is valid only when a recovery rule
 committed in an earlier valid state authorizes it.
+
+The post-genesis state SHOULD remove unilateral routine control from the root
+key. If a current state still authorizes the root for recovery or administration,
+that authority MUST be explicit. The final profile MUST define threshold,
+delay, cancellation, stale-state, fork, and reorg rules. If an attacker uses a
+still-authorized compromised root or controller to create the next otherwise
+valid transition first, wallets cannot erase that transition by social vote or
+post-hoc policy. They follow the valid RGB/Bitcoin history, expose the
+compromise evidence, and use only a recovery path already authorized by the
+relevant prior state. If no such path remains valid, continuity requires a new
+EntityID plus explicit successor and compromise claims.
+
+All BIP340-signed O2A objects MUST use distinct, purpose-specific tagged-hash
+domains. Genesis, identity transitions, recovery, claims, attestations,
+challenges, discovery bindings, and music manifests cannot reuse one signing
+domain. Bitcoin spending and external Nostr/Pubky signatures remain separate
+key and protocol contexts. See the
+[cryptographic profile](../specs/cryptographic-profile.md).
 
 ### Claims, names, and public evidence
 
@@ -85,6 +108,15 @@ for the O2A root identity:
 
 Public discovery data must not contain private RGB consignments, private
 attestations, wallet seeds, recovery secrets, or Bitcoin spending keys.
+
+An independently verifiable public identity nevertheless requires publication
+of the deliberately public identity-history shard. The owner wallet MUST be
+able to export a content-addressed public proof package containing or
+referencing the O2A RGB identity history, Bitcoin proofs, and disclosed
+evidence needed by another wallet. Public discovery services advertise hashes
+and locators; they do not become authority. Unrelated wallet consignments and
+private evidence remain excluded. See the
+[public proof-package profile](../specs/proof-package-schema.md).
 
 ### Consensus and verification
 
@@ -148,7 +180,9 @@ Costs and limits:
   than an optional settlement adapter.
 - [ADR-0002](0002-entity-id-over-artist-id.md) keeps generic EntityID and entity
   types, while this ADR defines the public-key root and adds ALBUM.
-- [ADR-0003](0003-catalog-is-not-source-of-truth.md) remains unchanged.
+- [ADR-0003](0003-catalog-is-not-source-of-truth.md) is amended to include
+  promoter, label, event, and album projections and to require rebuild input
+  from valid RGB consignments, Bitcoin proof data, and evidence packages.
 - [ADR-0004](0004-consensus-as-policy-not-blockchain.md) still governs the
   meaning of social evidence; this ADR makes Bitcoin consensus mandatory for
   lifecycle ordering without turning it into a vote on name ownership.
@@ -159,4 +193,5 @@ Before v0.1 implementation claims completion, the repository must contain
 version-pinned regtest vectors for genesis, controller rotation, recovery-rule
 change, authorized recovery, revocation, invalid/forked RGB history, missing
 consignments, reorg handling, duplicate names, album/event custody, Pubky and
-Nostr bindings, and offline deterministic verification by independent clients.
+Nostr bindings, cross-domain signature rejection, public proof-package
+retrieval, and offline deterministic verification by independent clients.

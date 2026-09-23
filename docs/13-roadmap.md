@@ -3,6 +3,9 @@
 ## Phase 0 — Freeze the Bitcoin-native specification
 
 - freeze the EntityID encoding rooted in a dedicated BIP340 public key;
+- freeze distinct tagged-hash signing domains and cross-domain rejection
+  vectors for genesis, transitions, recovery, evidence, discovery bindings,
+  proof packages, and music manifests;
 - freeze separated root, controller, recovery, discovery, and payment key
   purposes and wallet derivation rules;
 - define the RGB identity contract/schema for genesis, controller rotation,
@@ -11,17 +14,21 @@
 - define network, confirmation, reorg, seal, witness, and consignment rules;
 - define canonical schemas and serialization for entities, claims,
   attestations, challenges, observations, EVENT manifests, and ALBUM manifests;
-- define the portable proof package and offline verification inputs;
+- define the public, content-addressed proof package, privacy boundary,
+  publication locators, direct exchange, and offline verification inputs;
 - define Pubky Ed25519 and Nostr key bindings to the O2A root;
 - define DNS, HTTPS, and social channel-control challenges and signed
   observations;
 - specify competing human-name claims without first-claim ownership;
-- specify bounded evidence retrieval and explicit evaluation context; and
-- create deterministic positive and adversarial test vectors.
+- specify bounded evidence retrieval and explicit evaluation context;
+- create deterministic positive and adversarial test vectors; and
+- accept a source-license decision and add the license before reference wallet
+  or node implementation code is admitted.
 
 Gate: the vectors cover distinct root/payment keys, duplicate names, invalid
-BIP340 signatures, wrong Bitcoin network, wrong RGB contract/schema/asset,
-forked or missing consignments, mismatched seals and anchors, reorgs,
+BIP340 signatures, cross-domain signature replay, wrong Bitcoin network, wrong
+RGB contract/schema/asset, forked or missing consignments, mismatched seals and
+anchors, reorgs,
 controller compromise, recovery, revocation, expired control proofs, Pubky and
 Nostr rebinding, album/event custody, and unavailable discovery.
 
@@ -65,12 +72,15 @@ consignments, Bitcoin proof data, and retained evidence packages.
   payment keys;
 - controller delegation and rotation UX;
 - RGB consignment, proof-package, and evidence storage;
+- public proof-package export, content-addressed retrieval, hash validation,
+  locator failover, and direct wallet-to-wallet exchange;
 - full Bitcoin node mode;
 - clearly labeled light mode with documented trust, privacy, and availability
   assumptions;
 - online DNS/HTTPS/social collection producing signed observations;
 - offline proof-package verification with no hidden network inputs;
-- export/import between two independently developed wallets; and
+- export/import between two independently developed wallets;
+- reproducible source builds of the licensed open-source reference client; and
 - fail-closed behavior for missing history, reorgs, stale observations, and
   unsupported schema versions.
 

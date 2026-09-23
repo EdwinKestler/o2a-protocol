@@ -53,6 +53,11 @@ changes, authorized recovery, custody transfer, and revocation. Consignments
 and the client-side history remain with interested parties; a transaction ID
 alone is not an identity proof.
 
+For the public O2A identity profile, the owner deliberately exports the
+identity-history shard and Bitcoin proofs needed by another wallet as a
+content-addressed public proof package. This is a disclosure choice defined by
+the profile, not a claim that all RGB state is globally public.
+
 ### Entity identity
 
 Defines a generic EntityID rooted in a dedicated BIP340/secp256k1 public key.
@@ -94,6 +99,11 @@ projections. Pubky/PKARR can publish public profiles and discovery pointers
 through a signed Ed25519-key binding. Nostr can publish BIP340-signed events
 through a separate binding. Neither adapter key replaces the O2A root.
 
+Discovery records advertise signed package hashes and transport locators.
+Another wallet verifies the retrieved bytes; the locator or hosting service is
+never authority. Direct wallet-to-wallet export remains required, and public
+packages should be replicated across independent retrieval paths.
+
 ### Applications
 
 GatePass, SplitNight, catalogs, sponsorship, merchandise, and paid permissions
@@ -116,6 +126,11 @@ The client supports a full Bitcoin node and a clearly labeled light mode. Light
 mode MUST disclose its header, inclusion-proof, indexer, privacy, and
 availability assumptions. Offline mode verifies retained packages without
 pretending to know about evidence it has not received.
+
+The future official reference wallet/node is intended to be open-source
+software that anyone can inspect, build, and run. The repository MUST choose
+and record its source license before accepting reference implementation code;
+this design repository currently contains no license grant.
 
 ## Storage model
 

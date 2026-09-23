@@ -51,6 +51,10 @@ administrative transitions according to explicit purposes in the current RGB
 state. The root is not an unconditional forever-controller unless the current
 state says so.
 
+The root public key never changes: it is part of the EntityID derivation.
+Replacing it creates a new EntityID. Recovery rotates controller authority
+under an earlier committed policy while preserving that immutable root.
+
 Operational-key rotation does not change EntityID. Historical signatures are
 checked against the state that authorized their key at issuance time. Losing a
 working key therefore need not erase identity.
@@ -62,8 +66,17 @@ state committed the applicable recovery rule. A later collection of social
 attestations can support recognition of a successor identity, but cannot
 silently invent authorization for the existing EntityID.
 
+After genesis, the normal profile should remove unilateral routine control from
+the root. Any continuing root authority must be explicit in current RGB state.
 The specification must define root compromise, recovery thresholds, delay,
 cancellation, stale-state, fork, and reorg behavior before implementation.
+
+If a stolen root or controller remains authorized and produces the next valid
+transition first, a wallet follows the valid RGB/Bitcoin history. Social
+attestations cannot reverse it. Recovery can continue only through a path that
+the applicable prior state already authorized. Otherwise the participant must
+create a new EntityID and publish explicit successor and compromise evidence;
+the protocol does not pretend the old EntityID was cryptographically recovered.
 
 ## Event and album identities
 

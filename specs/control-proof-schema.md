@@ -23,6 +23,7 @@ to an artist, venue, promoter, album, or event name.
   "issued_at": "<explicit-time>",
   "expires_at": "<explicit-time>",
   "policy_hash": "<policy-hash>",
+  "signature_domain": "O2A/v0.1/control-challenge",
   "signature": "<authorized-controller-bip340-signature>"
 }
 ```
@@ -42,6 +43,7 @@ to an artist, venue, promoter, album, or event name.
   "expires_at": "<explicit-time>",
   "result": "MATCH",
   "transport_evidence": "<portable-evidence-reference>",
+  "signature_domain": "O2A/v0.1/observation",
   "signature": "<observer-signature>"
 }
 ```
@@ -50,6 +52,8 @@ to an artist, venue, promoter, album, or event name.
 
 - challenges MUST be resource-specific, single-use, controller-bound, and
   expire;
+- challenge signatures MUST use the control-challenge tagged-hash domain;
+- observer signatures MUST use the observation tagged-hash domain;
 - the public token MUST be derived from the canonical challenge and MUST never
   be a wallet seed, spending secret, or payment preimage;
 - social proofs SHOULD bind stable platform account IDs rather than only mutable

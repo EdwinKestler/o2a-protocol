@@ -36,6 +36,7 @@ Draft. This document defines semantic fields; canonical binary encoding is still
   },
   "profile_commitment": null,
   "status": "ACTIVE",
+  "signature_domain": "O2A/v0.1/entity-genesis",
   "genesis_signature": "<root-key-signature>"
 }
 ```
@@ -48,6 +49,9 @@ Draft. This document defines semantic fields; canonical binary encoding is still
   Bitcoin network, and root identity public key;
 - genesis MUST be signed by the root key and represented by an RGB state
   anchored to Bitcoin;
+- genesis, transitions, and recovery authorizations MUST use their respective
+  tagged-hash domains from the
+  [cryptographic profile](cryptographic-profile.md);
 - the validated RGB history MUST bind the current state to the correct contract,
   previous state, Bitcoin seal, witness transaction, and commitment;
 - `sequence` MUST monotonically advance for mutable identity state;
@@ -58,8 +62,10 @@ Draft. This document defines semantic fields; canonical binary encoding is still
   current valid state grants it that purpose;
 - `entity_id` MUST remain stable across operational-controller rotation and
   authorized recovery;
-- canonical serialization MUST exclude transport-only metadata.
-- human-readable profiles SHOULD remain separable from identity-critical state.
+- the root public key MUST remain immutable. A replacement root produces a new
+  EntityID rather than a recovery transition;
+- canonical serialization MUST exclude transport-only metadata;
+- human-readable profiles SHOULD remain separable from identity-critical state;
 - the exact EntityID encoding, RGB schema, Bitcoin commitment method,
   confirmation policy, and reorg behavior MUST be frozen before implementation.
 

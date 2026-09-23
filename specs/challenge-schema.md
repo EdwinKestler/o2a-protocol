@@ -14,7 +14,8 @@
   "context": "<optional-context>",
   "nonce": "<replay-protection>",
   "signature": {
-    "scheme": "<scheme>",
+    "scheme": "bip340-secp256k1",
+    "domain": "O2A/v0.1/challenge",
     "value": "<signature>"
   }
 }
@@ -33,7 +34,8 @@
   "context": "<optional-context>",
   "nonce": "<replay-protection>",
   "signature": {
-    "scheme": "<scheme>",
+    "scheme": "bip340-secp256k1",
+    "domain": "O2A/v0.1/revocation",
     "value": "<signature>"
   }
 }
@@ -44,6 +46,8 @@
 - a challenge does not erase its target;
 - revocation authority MUST be validated explicitly;
 - challenge and revocation objects are themselves immutable signed evidence;
+- challenge and revocation signatures MUST use distinct tagged-hash domains
+  from the [cryptographic profile](cryptographic-profile.md);
 - resolution SHOULD create new evidence rather than mutate old evidence;
 - policies MUST state how unresolved challenges affect verification.
 

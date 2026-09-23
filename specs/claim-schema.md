@@ -18,6 +18,7 @@
   "checkpoint": null,
   "signature": {
     "scheme": "bip340-secp256k1",
+    "domain": "O2A/v0.1/claim",
     "value": "<signature>"
   }
 }
@@ -27,11 +28,12 @@
 
 Conceptually:
 
-[
-C=H(version || issuer || subject || predicate || object || context || nonce)
-]
+```text
+C = TaggedHash("O2A/v0.1/claim", Canonical(claim-without-signature))
+```
 
-The signature signs C or the canonical claim payload defined by the final cryptographic profile.
+The BIP340 signature signs `C`. The final canonical bytes are defined by the
+[cryptographic profile](cryptographic-profile.md) and its conformance vectors.
 
 ## Requirements
 
@@ -39,6 +41,8 @@ The signature signs C or the canonical claim payload defined by the final crypto
 - `issuer_state` MUST identify the state that authorized the signing key;
 - the controller key and purpose MUST be authorized by that state;
 - the BIP340 signature MUST validate against the canonical claim bytes;
+- the signature MUST use the claim tagged-hash domain and MUST be rejected in
+  every other O2A signing domain;
 - predicate semantics MUST be versioned;
 - nonce/state semantics MUST prevent unintended replay;
 - signed historical claims MUST NOT be edited in place;

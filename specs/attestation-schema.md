@@ -17,6 +17,7 @@
   "nonce": "<replay-protection>",
   "signature": {
     "scheme": "bip340-secp256k1",
+    "domain": "O2A/v0.1/attestation",
     "value": "<signature>"
   }
 }
@@ -28,6 +29,8 @@
 - issuer identity and controller authorization MUST be independently
   verifiable from the issuer's RGB identity history and Bitcoin anchor;
 - evidence references MUST be immutable identifiers;
+- the signature MUST use the attestation tagged-hash domain from the
+  [cryptographic profile](cryptographic-profile.md);
 - policy evaluation MUST be able to identify attester independence and conflicts from explicit evidence;
 - an attestation MUST NOT directly mutate verification status.
 

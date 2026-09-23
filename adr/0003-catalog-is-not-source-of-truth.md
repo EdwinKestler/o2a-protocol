@@ -1,6 +1,7 @@
 # ADR-0003 — Catalog Is Not the Source of Truth
 
-**Status:** Accepted for v0.1 design
+**Status:** Accepted for v0.1 design; amended by
+[ADR-0005](0005-bitcoin-rooted-self-custodial-identity.md)
 
 ## Context
 

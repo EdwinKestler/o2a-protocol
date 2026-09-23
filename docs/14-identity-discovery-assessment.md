@@ -68,6 +68,26 @@ authorize replacement of the binding. A lost Pubky key does not replace or
 erase the Bitcoin-rooted EntityID. Public Pubky storage never contains seeds,
 recovery material, private attestations, or RGB consignments.
 
+### Public identity proof package
+
+A discovery pointer is not enough for verification. An authorized O2A claim
+advertises the content hash and one or more locators for a public proof package.
+That package contains or references the deliberately public O2A identity
+consignment from genesis to the advertised state, its Bitcoin proofs, and the
+public evidence selected by the owner. A stranger wallet fetches the bytes,
+checks the package hash, and validates them locally.
+
+The package may be downloaded over HTTPS or from another content-addressed
+transport; a Pubky profile or Nostr event may advertise its hash and locators.
+The wallet must also support direct export to another wallet. Public packages
+should be replicated across independent retrieval paths, because no indexer,
+homeserver, relay, or URL is authoritative or guaranteed to remain available.
+
+This public-identity consignment is an intentional disclosure. Other RGB
+consignments, private attestations, recovery material, seeds, and private keys
+remain outside public discovery storage. Missing public history produces an
+incomplete result; Bitcoin cannot reconstruct it.
+
 Nostr can provide a signed public-event transport using BIP340 keys. O2A still
 uses an explicit binding and O2A-specific canonical objects rather than
 assuming every Nostr event is an O2A claim. Relay deletion, partial visibility,
@@ -123,6 +143,8 @@ signature.
    regtest.
 3. **Wallet portability:** export the same proof package between independent
    clients and reproduce the result offline.
+   A stranger wallet must also retrieve the public package by hash through a
+   signed locator, validate it, and fail explicitly when every locator is down.
 4. **Pubky portability:** publish/read, migrate homeservers, restore backups,
    rotate the binding, and verify retained evidence while Pubky is unavailable.
 5. **Nostr portability:** publish through several relays, tolerate partial

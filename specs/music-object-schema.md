@@ -20,6 +20,7 @@ participant EntityIDs and roles
 canonical manifest hash
 custodian EntityID
 event-key signature
+signature domain: O2A/v0.1/music-manifest
 ```
 
 The responsible venue, promoter, or organizer may hold the event key in the
@@ -41,6 +42,7 @@ track-manifest hash
 artwork and media commitments where disclosed
 custodian EntityID
 album-key signature
+signature domain: O2A/v0.1/music-manifest
 ```
 
 The responsible artist or label may hold the album key in the same wallet as
@@ -51,6 +53,8 @@ or authenticity of undisclosed media.
 ## Custody and recovery
 
 - each EVENT and ALBUM MUST use a distinct identity key;
+- manifest signatures MUST use the music-manifest tagged-hash domain and MUST
+  NOT validate as ordinary claims, identity transitions, or Bitcoin spends;
 - wallet derivation MUST separate entity keys from payment keys and from one
   another;
 - custody transfer, controller rotation, recovery-policy change, and revocation

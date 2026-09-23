@@ -64,6 +64,12 @@ Given identical inputs, independent conforming wallets MUST produce the same
 result. Online DNS, social, Pubky, Nostr, and Bitcoin observations become
 explicit evidence rather than hidden verifier inputs.
 
+A public identity is useful only when another wallet can obtain its validation
+data. The owner publishes or directly transfers a content-addressed public
+proof package containing the deliberately public RGB identity-history shard,
+Bitcoin proofs, and disclosed evidence. Discovery URLs are locators, never
+authority; private wallet state remains excluded.
+
 ## Initial scope
 
 O2A v0.1 specifies:
@@ -92,7 +98,9 @@ The current schema set defines the
 [attestations](specs/attestation-schema.md),
 [challenges](specs/challenge-schema.md),
 [channel-control proofs](specs/control-proof-schema.md),
-[event and album identities](specs/music-object-schema.md), and
+[event and album identities](specs/music-object-schema.md),
+[cryptographic signing domains](specs/cryptographic-profile.md),
+[public proof packages](specs/proof-package-schema.md), and
 [verification policy](specs/verification-policy.md).
 
 Local source discovery and historical memory use Palimnex. See
@@ -107,6 +115,11 @@ defines the channel-proof and independent-observation boundary.
 No production implementation code should be introduced until the v0.1 RGB
 identity schema, canonical serialization, Bitcoin commitment and reorg rules,
 key-derivation profile, and deterministic test vectors are agreed.
+
+The future official reference wallet and node are intended to be open-source
+software anyone can inspect, build, and run. This repository does not yet have
+a source license; selecting and adding one is a gate before implementation
+code is accepted.
 
 ## First milestone
 

@@ -30,6 +30,12 @@ them, see known conflicts, and apply its own explicit acceptance policy. A
 compatible application should reproduce the same result from the same
 evidence, policy, protocol version, and evaluation context.
 
+A public identity must also be retrievable. The owner wallet publishes or
+directly transfers a content-addressed public proof package containing the
+deliberately public RGB identity-history shard, Bitcoin proofs, and disclosed
+evidence needed by another wallet. Mutable discovery URLs are locators, not
+authority, and private wallet state remains excluded.
+
 The first vertical is artists, venues, promoters, labels, events, and albums.
 EntityID is generic, but every entity has its own root key. An event or album
 key can live in the responsible participant's wallet while remaining an
@@ -298,3 +304,7 @@ after the identity and evidence model is stable.
   to Bitcoin; ordinary content edits remain off-chain.
 - **Self-custodial:** seeds, identity keys, consignments, and proof packages stay
   under the participant's control.
+- **Open-source infrastructure:** the future official reference wallet and node
+  are intended to use an approved open-source license so anyone can inspect,
+  build, and run them. The exact license is a required decision before
+  implementation code enters this repository.

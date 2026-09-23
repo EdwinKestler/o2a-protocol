@@ -43,12 +43,19 @@ or indexer requests. Online collectors normalize those results into signed,
 bounded observations. Bitcoin headers, confirmations, reorg assumptions, and
 RGB consignments used by evaluation are explicit inputs.
 
+For a public identity, those inputs MUST be obtainable from a validated
+[public identity proof package](proof-package-schema.md) or direct wallet
+transfer. A package locator is not evidence of availability or validity: the
+verifier fetches the content, checks its hash, validates the RGB history and
+Bitcoin proofs, and reports missing material explicitly.
+
 ## Explainability
 
 Result R MUST expose sufficient information to reproduce the decision:
 
 - policy ID/hash;
 - accepted identity-state and Bitcoin-anchor references;
+- public proof-package ID and any missing referenced objects;
 - accepted evidence IDs;
 - rejected/inapplicable evidence IDs where relevant;
 - conflict state;
