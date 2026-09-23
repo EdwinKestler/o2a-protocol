@@ -243,3 +243,27 @@ implementation, RGB contract, payment system, or mainnet release.
 This validates the version 5 website bundle, deployment, and access gate within
 the checks above. It does not validate an O2A wallet, proof-package
 implementation, RGB contract, payment system, or mainnet release.
+
+### Version 6 validation — 2026-09-23
+
+- Sites production deployment completed successfully at the existing private
+  review URL as saved version 6.
+- The access policy remained `custom` owner-only at revision 7: one owner, no
+  other viewers or editors, no groups, and no external visitors.
+- Source commit: `67299f1d9725ee189939890055cb6a6b1763fbff` in the isolated
+  Sites snapshot repository, not the protocol repository.
+- Archive SHA-256:
+  `c74aae3aae1df8328c245f8fc0f75f263c54766e22522b308a01b01392509f09`.
+- Signed-out requests to `/`, `/guide.html`, and
+  `/assets/protocol-pipeline.svg` returned HTTP 401.
+- Authorized requests loaded the homepage, guide, and pipeline figure with
+  HTTP 200 after following the site's canonical redirect.
+- Live content checks found the Apache License 2.0 decision in the guide and
+  the accepted Apache-2.0 gate in the pipeline figure.
+- Eleven-file export validation, SVG XML parsing and visual rendering,
+  canonical-license comparison, relative Markdown-link checks, Git whitespace
+  checks, and all 21 Palimnex evaluation cases passed.
+
+This validates the version 6 website bundle, deployment, and access gate within
+the checks above. It does not validate an O2A wallet, proof-package
+implementation, RGB contract, payment system, or mainnet release.
