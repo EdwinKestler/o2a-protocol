@@ -6,9 +6,11 @@ formats, add production code, or authorize real-fund experiments.
 
 ## Polished proposal
 
-An artist originates a signed identity claim, proves control of established
-public channels, and obtains attestations from identifiable counterparties.
-Independent clients evaluate that portable evidence under a named policy.
+An artist first validates the Bitcoin-anchored RGB history of a dedicated
+BIP340-rooted EntityID, then originates a signed name claim, proves control of
+established public channels, and obtains attestations from identifiable
+counterparties. Independent clients evaluate that portable evidence under a
+named policy.
 An optional, time-limited satoshi bond can support accountability where its
 release conditions and failure handling are explicit.
 
@@ -96,9 +98,10 @@ the web publisher. Preserve this distinction in proof packages.
 
 ## Proposed flow
 
-1. **Claim.** A recognized music artist creates an EntityID and signs a name
-   claim. Representatives declare their role and authorization. Neither the
-   first claimant nor the largest bond gets exclusive ownership of a name.
+1. **Claim.** A music artist creates a BIP340-rooted EntityID through an RGB
+   genesis anchored to Bitcoin, then signs a non-exclusive name claim.
+   Representatives declare their role and authorization. Neither the first
+   claimant nor the largest bond gets exclusive ownership of a name.
 2. **Challenge.** Create a short-lived, single-use challenge with at least
    128 bits of cryptographic randomness. Bind it to the claim ID, EntityID,
    controller state/key, exact resource, purpose, protocol environment,
@@ -117,9 +120,10 @@ the web publisher. Preserve this distinction in proof packages.
 5. **Recognition.** Obtain separate statements linking the controller or
    channel to the artist from suitable labels, venues, promoters, or ticket
    services. Preserve issuer role, representative authority, and conflicts.
-6. **Evaluation.** The Rust core verifies the fixed evidence package and
-   named policy. It reports supported claims, missing evidence, freshness,
-   challenges, and trust assumptions. It does not fetch the live Internet.
+6. **Evaluation.** The Rust core verifies the EntityIDs' RGB histories,
+   controller authorization, fixed evidence package, and named policy. It
+   reports supported claims, missing evidence, freshness, challenges, and
+   trust assumptions. It does not fetch the live Internet.
 7. **Optional bond resolution.** A downstream adapter applies the agreed
    outcome to the correct funded contract. Financial settlement and identity
    evaluation remain separate records. Later compromise or revocation creates
@@ -220,18 +224,20 @@ indefinitely by submitting repeated challenges.
 
 | Component | Responsibility |
 | --- | --- |
-| Rust core | Canonical challenge/evidence validation, historical controller authority, signatures, policy and explicit evaluation context; no live DNS/HTTP calls. |
+| Self-custodial wallet/node | Store the seed, dedicated identity keys, controller history, RGB consignments, attestations, and proof packages; use a full Bitcoin node or an explicit light mode. |
+| Rust core | BIP340 root and controller signatures, RGB identity-history validation, Bitcoin anchors, canonical challenge/evidence validation, policy, and explicit evaluation context; no hidden live DNS/HTTP calls. |
 | Rust/Axum application and workers | Challenge issuance, rate limits, DNS/HTTPS/platform adapters, signed observation collection, retry and expiry handling. |
 | Next.js/TypeScript or CLI | Clear publication instructions, passkey-friendly sessions, separate controller authorization, understandable evidence and refund status. |
 | PostgreSQL and object storage | Rebuildable request/result projections and retained immutable evidence packages; Redis remains optional cache. |
 | Optional Internet Identity adapter | Login or imported credentials after origin, authorization, privacy, signature, trust-root, and license checks. No ICP requirement in the kernel. |
-| Bitcoin adapter | Exact network/outpoint/value/script/confirmation checks, bond funding and spending, persistent intents and restart-safe refunds. |
-| RGB adapter | Optional client-side evidence or later rights state; no authority to read DNS or automatically control arbitrary native BTC. |
+| Bitcoin and RGB identity profile | Required EntityID genesis, controller rotation, recovery-policy changes, revocation, single-use seals, and client-side validation. It has no authority to interpret DNS or social facts. |
+| Optional native-BTC bond adapter | Exact network/outpoint/value/script/confirmation checks, bond funding and spending, persistent intents, and restart-safe refunds. It remains separate from identity ownership. |
 | Lightning / USDt swaps | Separate future service-payment or settlement routes. Neither is needed for basic channel proofs or the first BTC bond experiment. |
 
-Bitcoin validates transaction spending conditions, not social accounts. An
-RGB transition validates supplied client-side state against its contract and
-anchor; off-chain observations must still come from explicit evidence issuers.
+Bitcoin validates order, anchors, and transaction spending conditions, not
+social accounts. An RGB transition validates supplied client-side identity
+state against its contract and anchor; off-chain observations must still come
+from explicit evidence issuers.
 [RGB overview](https://rgb.info/). An RGB proof or commitment alone cannot
 release a separate native-BTC output: a compatible spending construction and
 authorized signatures are required. The DNS token cannot bridge that gap.
@@ -244,7 +250,8 @@ Revalidation adds a new observation rather than changing an old package.
 
 ## Implementation gates and evaluation
 
-1. **Specification:** define challenge bindings, observer and endorsement
+1. **Specification:** first freeze the Bitcoin/RGB identity profile, then
+   define challenge bindings, observer and endorsement
    predicates, resource normalization, issuer bootstrap, provenance, freshness,
    disclosure, and reason codes. Keep challenge requests distinct from O2A
    dispute objects. Do not edit frozen cryptographic/wire rules by implication.
@@ -271,6 +278,7 @@ unavailable endpoints, and observer collusion. Malicious control of every
 accepted source is a stated policy failure case, not a cryptographic guarantee.
 
 **Decision:** this is a valuable proposed onboarding/evidence profile above
-the existing O2A primitives. Prioritize proof of control and independent
-recognition. Treat economic deterrence as a separate experiment, and keep
-native BTC, RGB rights, and USDt conversion as distinct adapter concerns.
+the required Bitcoin/RGB identity foundation. Prioritize proof of control and
+independent recognition. Treat economic deterrence as a separate experiment;
+native-BTC bonds, additional RGB rights profiles, and USDt conversion remain
+distinct from the mandatory RGB identity lifecycle.

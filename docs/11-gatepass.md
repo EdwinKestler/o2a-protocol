@@ -9,7 +9,7 @@ Downstream application module; not part of the v0.1 identity kernel.
 GatePass consumes:
 
 - EntityID/O2A ID;
-- EventID;
+- the key-rooted EVENT EntityID and validated RGB state;
 - VenueID;
 - protocol validation/proof interfaces.
 

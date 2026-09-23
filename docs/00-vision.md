@@ -6,17 +6,23 @@ they are not claims of established adoption or measured fraud reduction.
 
 ## Main goal
 
-O2A is an open protocol for portable identity and independently verifiable
-trust in the music ecosystem. Its goal is to let artists, venues, and promoters
-carry evidence of who they represent and how they have worked together across
-applications, without making one catalog operator the authority over that
-history.
+O2A is an open, decentralized, Bitcoin-native protocol for portable identity
+and independently verifiable trust in the music ecosystem. Its central goal is
+to let artists, venues, promoters, labels, live events, and albums own unique
+public IDs through keys held in their own wallet rather than identifiers rented
+from a catalog or platform.
 
-The participant should be able to originate and sign its own identity claims,
-and explicitly authorize representatives. Existing platform IDs can be linked
-to that identity without making a platform account the permanent root of its
-authority. This applies to artists, promoters, venue operators, and event
-organizers as well as to the relationships between them.
+Every EntityID is rooted in a dedicated BIP340/secp256k1 public identity key.
+The key is separate from Bitcoin spending keys. Identity genesis, controller
+changes, recovery-policy changes, and revocation are RGB client-side state
+transitions anchored to Bitcoin. Day-to-day controller keys can rotate without
+erasing the public ID.
+
+The participant should be able to originate and sign identity and name claims,
+publish public channel-control evidence, and explicitly authorize
+representatives. Existing platform IDs can be linked without making a platform
+account the permanent root of authority. Pubky and Nostr keys are signed
+discovery/publication bindings rather than replacements for the Bitcoin root.
 
 An artist should be able to present a signed, portable evidence package to a
 new venue. The venue should be able to inspect the claims, verify who signed
@@ -24,17 +30,18 @@ them, see known conflicts, and apply its own explicit acceptance policy. A
 compatible application should reproduce the same result from the same
 evidence, policy, protocol version, and evaluation context.
 
-The first vertical is artists, venues, promoters, and events. The underlying
-EntityID is intentionally generic: one participant can have multiple roles
-without creating a separate identity for each application. The long-term
-opportunity is a shared foundation for catalogs, booking, ticketing, and
-payments that can reuse that evidence.
+The first vertical is artists, venues, promoters, labels, events, and albums.
+EntityID is generic, but every entity has its own root key. An event or album
+key can live in the responsible participant's wallet while remaining an
+independent public identity for that event or work. Canonical content hashes
+bind the ID to versioned event or album claims.
 
 An early application hypothesis is direct remuneration for artist-authorized
 uses: approved links, promotional mentions, catalog references, or tour-date
 integrations could carry a signed permission and a payment in satoshis. The
 artist could choose the terms and payment destination, with optional USDt
-conversion and RGB contracts considered as later settlement/rights adapters.
+conversion and additional RGB contracts considered as later settlement/rights
+profiles beyond the required RGB identity lifecycle.
 The intended benefit is payment at the point of authorization in participating
 services, alongside inspectable consent.
 
@@ -95,14 +102,14 @@ which checks are costly, and whether participants will supply reusable evidence.
 
 | Subproblem | Proposed O2A solution | Why it matters |
 | --- | --- | --- |
-| Different services assign different IDs, and mappings do not establish the subject's authorization. | Signed claims that bind a stable EntityID to namespaced external references, with explicit issuer, evidence, and dispute history. | Existing IDs can be reused while distinguishing a catalog's association from an artist's own assertion. |
-| Identity and profile access depend on the issuing service's rules. | Participant-originated identity claims and controller-authorized transitions that compatible clients can verify. | Artists, promoters, venues, and organizers can carry their own signed statements between applications. Platform permissions remain separate. |
-| Identical names, aliases, and multiple roles make record matching ambiguous. | Stable EntityID; names, roles, and external identifiers expressed as versioned claims. Competing name claims remain visible. | A name change or duplicate stage name need not merge unrelated histories or erase a participant. |
+| Different services assign different IDs, and mappings do not establish the subject's authorization. | A self-custodied BIP340-rooted EntityID plus signed claims binding namespaced external references, evidence, and dispute history. | Existing IDs can be reused while the participant retains an independently controlled root. |
+| Identity and profile access depend on the issuing service's rules. | RGB identity lifecycle anchored to Bitcoin, with participant-originated claims and rotatable controllers. | Artists, promoters, venues, labels, events, and albums retain portable IDs and signed histories. |
+| Identical names, aliases, and multiple roles make record matching ambiguous. | Unique cryptographic EntityIDs; names and external identifiers remain versioned claims. Competing claims and Bitcoin-established chronology remain visible. | Duplicate stage names do not merge histories, and first publication does not create global ownership of a spelling. |
 | Creating a profile or controlling a key is confused with representing a real artist or venue. | Separate controller authorization from self-claims and independent attestations. | Anyone can create an identity; recognition requires evidence under a stated policy. |
 | Work history is difficult to carry between services. | Portable signed claims and event evidence, with immutable references and proof export/import. | A counterparty can inspect previous evidence without accepting a catalog's unexplained badge. |
 | Participants describe the same event differently. | A canonical EventManifest with separate participant attestations referencing the same manifest. | Verifiers can detect agreement, missing signatures, and conflicting details. Booking, performance, and settlement remain distinct claims. |
 | Corrections, impersonation claims, and revocations can disappear behind mutable records. | Signed challenges, supersession, and authorized revocation that preserve history. | A verifier can explain how a dispute changes a result and reproduce earlier decisions. |
-| Keys, representatives, and payment endpoints change. | Controller rotation preserving EntityID, historical authorization checks, and separate expiring/revocable payment bindings. | Continuity does not require retaining a compromised spending key. Recovery without prior authorization remains a separate policy problem. |
+| Keys, representatives, and payment endpoints change. | RGB controller transitions and precommitted recovery rules preserve EntityID; payment bindings use separate keys. | A lost working key need not erase identity, and identity keys never become spending keys. |
 | Verification rules are hidden or inconsistent. | Deterministic, versioned policies with evidence references and explanations. | Communities can choose different rules while identifying exactly why results differ. |
 | A catalog outage or provider change puts discovery and evidence at risk. | Rebuildable registries plus independently retained proof packages; optional public-profile discovery adapters. | Replacing an index should preserve protocol results. Backups and evidence availability still have to be demonstrated. |
 | Approved promotional use and remuneration are separate workflows, with no portable record connecting consent to payment. | An optional application binds a specific permitted use, signed terms, an authorized recipient, and a payment receipt. | Artists could approve selected integrations and receive direct payment when authorization is fulfilled. This is a pilot hypothesis, not a fee on every public mention. |
@@ -111,15 +118,17 @@ which checks are costly, and whether participants will supply reusable evidence.
 
 O2A separates three concerns:
 
-1. **Identity** — who controls an EntityID and can authorize its transitions.
+1. **Identity** — the BIP340 root and Bitcoin-anchored RGB history that define
+   an EntityID and its current controllers.
 2. **Evidence** — what signed claims, attestations, challenges, and revocations
    exist about that entity or its relationships.
 3. **Verification** — what a named, versioned policy concludes from the supplied
    evidence and evaluation context.
 
 ```text
-EntityID + signed claims + independent attestations
-          + challenges/revocations
+Bitcoin anchor + validated RGB identity history
+          + signed claims + independent attestations
+          + challenges/revocations + explicit observations
                        ↓
               portable evidence package
                        ↓
@@ -130,11 +139,13 @@ EntityID + signed claims + independent attestations
            catalogs and other applications
 ```
 
-The first scenario is deliberately concrete: an artist creates an EntityID
-and a self-claim; the artist and a venue sign evidence referring to the same
-event manifest; a promoter can add booking evidence. Two independent clients
-evaluate the package under the same policy. Variants introduce a competing
-name claim, a revoked attestation, and conflicting event details.
+The first scenario is deliberately concrete: an artist, venue, and event each
+create a key-rooted EntityID through RGB genesis on Bitcoin regtest. The artist
+signs a name claim and publishes a fresh DNS or social control proof. The event
+key signs a canonical manifest; the artist and venue attest to its exact hash,
+and a promoter can add booking evidence. Two independent wallets validate the
+same RGB histories and evidence under the same policy. Variants introduce a
+competing name claim, a revoked attestation, and conflicting event details.
 
 Cryptography establishes authorship and integrity. Policy determines what
 that evidence supports. Neither a signature, a large number of attestations,
@@ -201,19 +212,19 @@ relationships, conflict semantics, and reproducible policy evaluation. No
 W3C compatibility is claimed until a concrete mapping is specified and tested.
 [W3C Verifiable Credentials Data Model 2.0](https://www.w3.org/TR/vc-data-model-2.0/).
 
-**Discovery can be tested locally.** Pubky documents a local development stack
-for public-key discovery and homeserver storage. This makes it possible to
-evaluate user-controlled public profiles without depending on a public
-deployment. Its current storage and recovery constraints are reasons for an
-optional adapter and a migration test, rather than an assumed production fit.
+**Discovery can be tested locally.** Pubky documents public-key discovery and
+homeserver storage; Nostr provides BIP340-signed public events. O2A binds these
+adapter keys to the Bitcoin-rooted EntityID. Neither adapter is the identity
+root, and neither stores private RGB consignments or recovery secrets.
 [Pubky developer guide](https://pubky.org/explore/pubky-protocol/getting-started/),
 [Homeserver capabilities](https://pubky.org/explore/pubky-protocol/homeserver/).
 
-**The first useful experiment is small.** One artist, one venue, a mutually
-evidenced event, and two verifiers can test the central promise before ticketing,
-financial settlement, or a large reputation network exists. Existing local
-RGB and swap work provides engineering references; compatibility and reuse
-still require the checks in [the code reference map](../codereference.md).
+**The first useful experiment is small.** One artist, one venue, one key-rooted
+event, an RGB identity lifecycle on Bitcoin regtest, and two independent
+wallets can test the central promise before ticketing or a large reputation
+network exists. Existing local RGB and swap work provides engineering
+references; compatibility still requires the checks in
+[the code reference map](../codereference.md).
 
 The timing case is therefore a testable combination of an active problem,
 available components, and a bounded pilot. It does not depend on a token
@@ -223,20 +234,21 @@ launch, speculative adoption, or production USDt availability on RGB.
 
 | Technology or design choice | Purpose and reason | Boundary or cost |
 | --- | --- | --- |
-| Public-key signatures and controller history | Make authorship and authorization independently checkable across services. | Key custody, rotation, and recovery must be usable; signatures do not establish real-world truth. |
+| Dedicated BIP340 identity keys | Give every artist, venue, promoter, label, event, and album a self-custodied public root that is distinct from spending keys. | Root custody and derivation must be safe; a public key does not establish a human-readable name. |
+| Required RGB identity lifecycle on Bitcoin | Make genesis, controller rotation, recovery-policy changes, and revocation client-validatable, ordered, and resistant to quiet rewriting. | Requires compatible RGB dependencies, Bitcoin fees, confirmations, reorg handling, and durable consignments. |
 | Canonical encoding and immutable evidence identifiers | Give independent implementations the same bytes to hash and verify; make changes detectable. | The encoding and cryptographic profile still need to be frozen and tested. |
 | Deterministic, versioned trust policy | Make recognition explainable and reproducible without requiring one global verifier. | Policies need explicit trust assumptions, conflict handling, and bounded inputs. |
 | Proposed Rust protocol core | Keep validation logic strongly typed and reusable behind APIs and a CLI. | Rust does not guarantee protocol correctness; independently implemented verification remains an acceptance gate. |
 | Conventional API and rebuildable PostgreSQL read models | Make search and application integration practical while keeping evidence portable. | Fast queries do not make the database authoritative. Rebuild tests are required. |
-| Optional Pubky/PKARR adapter | Explore user-controlled public-profile storage and discovery across homeservers. | O2A EntityID remains stable independently of the Pubky key. Public profiles cannot store private evidence by default. |
-| Optional RGB with Bitcoin anchors | Later support client-side validation of digital rights or asset transitions using UTXO seals and commitments, while retaining contract data off-chain. | Requires a compatible RGB stack and the actual validation data; a transaction ID alone is insufficient. It adds no automatic authority to a real-world identity claim. |
+| Pubky/PKARR and optional Nostr adapters | Publish and discover public profiles or signed posts through keys explicitly bound to the O2A ID. | Pubky uses Ed25519, adapter keys can rotate, and public transports must not contain private wallet or consignment data. |
+| Optional additional RGB rights profiles | Extend the required identity lifecycle with client-side digital-rights or asset state where useful. | Each profile requires compatible schemas and full validation data; a transaction ID alone is insufficient. |
 | Optional Lightning payments and client-controlled swap adapters | Explore sat-denominated payment for an approved use, with a later option to receive a supported USDt asset. | Payment, authorization, and conversion are separate states. Routing, fees, liquidity, asset identity, and failure recovery must be tested; immediate completion is not guaranteed. |
 
 RGB's specific contribution is its commitment and state-transition model:
 the spending transaction closes a UTXO seal around a commitment, while clients
-validate the associated off-chain data. That is useful when an application
-needs those properties. Basic self-claims and event attestations do not need
-to become blockchain transactions.
+validate the associated off-chain data. O2A requires those properties for
+identity lifecycle state. Basic self-claims and event attestations remain
+signed client-side data and do not each become blockchain transactions.
 [RGB commitment and seal model](https://docs.rgb.info/commitment-layer/commitment-schemes).
 
 A centralized database is sufficient for a directory owned and trusted by
@@ -250,11 +262,12 @@ boundaries in more detail.
 
 ## What success must demonstrate
 
-Technical success means independent verifiers agree on valid, invalid,
-conflicting, and incomplete evidence under fixed inputs; controller rotation
-preserves identity and historical checks; and a catalog can be rebuilt from
-retained packages. Optional discovery outages must not change the result for
-the same available package. These are acceptance gates in the
+Technical success means independent wallets validate the same Bitcoin/RGB
+identity history and agree on valid, invalid, conflicting, and incomplete
+evidence under fixed inputs; controller rotation and authorized recovery
+preserve identity and historical checks; event and album keys remain distinct;
+and a catalog can be rebuilt from retained packages. Discovery outages must
+not change the result for the same available package. These are gates in the
 [roadmap](13-roadmap.md), not completed capabilities.
 
 Product success requires a separate pilot evaluation: compare the time and
@@ -281,4 +294,7 @@ after the identity and evidence model is stable.
 - **Rebuildable:** registries are indexes over evidence, not sources of truth.
 - **Explainable:** a verification result identifies the exact policy and evidence used.
 - **Versioned:** schemas and policies have explicit versions and hashes.
-- **Minimal on-chain footprint:** use blockchain commitments only where they add integrity or settlement value.
+- **Bitcoin-rooted:** identity lifecycle state is RGB client-side state anchored
+  to Bitcoin; ordinary content edits remain off-chain.
+- **Self-custodial:** seeds, identity keys, consignments, and proof packages stay
+  under the participant's control.

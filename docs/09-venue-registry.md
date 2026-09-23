@@ -3,10 +3,13 @@
 ## Purpose
 
 Venue identities provide an independent evidence source for artist and event relationships.
+Each venue has its own BIP340-rooted EntityID and RGB lifecycle; a location or
+business name is a claim about that ID, not the identifier itself.
 
 ## Suggested projection
 
 - entity_id;
+- root key and validated RGB state reference;
 - official and alternate names;
 - controller;
 - location claims;

@@ -5,90 +5,145 @@
 ```text
 Applications
     ↑
-Registries
+Registries and discovery views
     ↑
-Trust Policy
+Trust policy and conflict evaluation
     ↑
-Challenges / Revocation
+Claims · attestations · observations · challenges
     ↑
-Attestations
+BIP340 key-rooted EntityID and controller authorization
     ↑
-Claims
+RGB identity state and client-side validation
     ↑
-Entity Identity
-    ↑
-Protocol Kernel
-    ↑
-RGB / Bitcoin adapters
+Bitcoin anchors, ordering, and single-use seals
 ```
 
-Dependencies point downward. The kernel MUST NOT import artist, venue, event, ticket, or settlement-specific behavior.
+Dependencies point downward. The protocol kernel MUST NOT import ticket,
+catalog-ranking, payment, or application-specific behavior. Bitcoin/RGB is a
+required identity-lifecycle foundation, not an optional settlement plugin.
+
+## Authority model
+
+O2A deliberately separates three kinds of authority:
+
+1. **Bitcoin consensus** establishes transaction order, confirmations,
+   commitments, and whether a single-use seal was spent.
+2. **RGB client-side validation** establishes whether the supplied identity
+   history follows the O2A identity schema and its Bitcoin anchors.
+3. **O2A policy evaluation** establishes what the supplied signed evidence
+   supports about names, relationships, albums, or events.
+
+Bitcoin and RGB cannot determine whether a stage name belongs to a real-world
+artist. A policy cannot override an invalid RGB transition. A registry cannot
+override either one.
 
 ## Layers
 
-### Protocol Kernel
+### Bitcoin foundation
 
-Provides state transitions, commitments, proof packaging, validation hooks, and anchoring adapters.
+Provides the consensus-ordered witness transactions and spent seals used by
+the RGB identity lifecycle. Network, confirmation depth, header source, reorg
+handling, commitment method, outpoint, and witness data are explicit verifier
+inputs.
 
-### Entity Identity
+### RGB identity state
 
-Defines EntityID, controller authorization, status, and controller/key rotation.
+Defines and validates identity genesis, controller rotation, recovery-policy
+changes, authorized recovery, custody transfer, and revocation. Consignments
+and the client-side history remain with interested parties; a transaction ID
+alone is not an identity proof.
 
-### Claims
+### Entity identity
 
-Defines signed assertions from an issuer about a subject.
+Defines a generic EntityID rooted in a dedicated BIP340/secp256k1 public key.
+Every ARTIST, BAND, VENUE, PROMOTER, LABEL, ORGANIZATION, EVENT, and ALBUM uses
+its own root key. Root, controller, discovery, and payment keys have separate
+purposes.
 
-### Attestations
+### Claims and attestations
 
-Defines independent evidence issued by one entity about another entity, claim, or event.
+Claims are controller-authorized statements. Attestations are independently
+authorized evidence from another identity or versioned observer. Names remain
+non-exclusive claims. EVENT and ALBUM keys sign their canonical manifests and
+content commitments; participant attestations remain separate.
+
+### Online observations
+
+DNS, HTTPS, social, Pubky, and Nostr collectors create signed, bounded
+observation objects. The deterministic core consumes those objects, not hidden
+live network responses. Re-fetching produces new evidence rather than silently
+changing an old result.
 
 ### Challenges and revocation
 
-Represents disputes, corrections, supersession, and explicit invalidation without deleting history.
+Evidence challenges, corrections, supersession, and revocations preserve
+history. Entity revocation is an RGB state transition; revoking a claim is a
+signed evidence object.
 
-### Trust Policy
+### Trust policy
 
-Consumes normalized evidence and deterministically derives a verification result.
+Consumes validated identity histories and normalized evidence to derive an
+explainable result. A policy may compare competing name claims, including
+their supporting evidence and Bitcoin chronology, but the core protocol has no
+first-claim global username rule.
 
-### Registries
+### Registries and discovery
 
-Artist, venue, and event registries are rebuildable projections for discovery and query performance.
-An optional public-profile discovery adapter (for example Pubky) may provide
-mutable profile data. Its availability or contents cannot silently change a
-protocol verification result; signed claims and proof packages remain portable.
+Artist, venue, promoter, album, and event registries are rebuildable
+projections. Pubky/PKARR can publish public profiles and discovery pointers
+through a signed Ed25519-key binding. Nostr can publish BIP340-signed events
+through a separate binding. Neither adapter key replaces the O2A root.
 
 ### Applications
 
-GatePass, SplitNight, sponsorship, merchandise, and future modules consume identifiers and verification results.
+GatePass, SplitNight, catalogs, sponsorship, merchandise, and paid permissions
+consume identities and verification results. They do not redefine the root
+identity model.
 
-Proposed channel-control verification uses online DNS/HTTPS/platform collectors
-to produce signed observations for the evidence layer. The deterministic core
-consumes preserved observations, not live network responses. Internet Identity
-may be evaluated as an optional authentication/credential adapter. Native-BTC
-verification deposits are downstream financial experiments, with their own
-funding/refund state; neither login nor funding establishes artist recognition.
-See [the assessment](17-control-proofs-and-verification-bonds.md).
+## Self-custodial wallet/node
+
+The reference client is wallet-like software on the participant's machine. It
+stores:
+
+- the seed and separated identity/controller derivation domains;
+- root and operational identity keys, never reused as spending keys;
+- RGB identity consignments and Bitcoin proof data;
+- claims, attestations, challenges, and proof packages;
+- EVENT and ALBUM keys held for the responsible custodian; and
+- signed bindings for Pubky, Nostr, DNS, social, and payment endpoints.
+
+The client supports a full Bitcoin node and a clearly labeled light mode. Light
+mode MUST disclose its header, inclusion-proof, indexer, privacy, and
+availability assumptions. Offline mode verifies retained packages without
+pretending to know about evidence it has not received.
 
 ## Storage model
 
 ```text
-authoritative protocol/evidence state
-              ↓
-       projection builder
-              ↓
-          PostgreSQL
-              ↓
-      API / search / UI
+Bitcoin headers and anchors + RGB consignments + signed evidence packages
+                              ↓
+                     client-side validation
+                              ↓
+                    deterministic evaluator
+                              ↓
+                       projection builder
+                              ↓
+         PostgreSQL / search / Pubky index / application API
 ```
 
-Redis may cache derived results. Object storage may hold portable proof packages. Neither is authoritative.
+PostgreSQL, Redis, object storage, Pubky homeservers, Nostr relays, and search
+indexes are replaceable transport or projection infrastructure. Durable client
+backups are still required: Bitcoin commitments cannot reconstruct a missing
+RGB consignment or undisclosed evidence package.
 
 ## Determinism invariant
 
-For protocol version V, evidence set E, and policy P:
+For validated identity histories I, evidence E, policy P, protocol version V,
+and explicit evaluation context C:
 
 [
-Verify(E,P,V) = R
+Verify(I,E,P,V,C)=R
 ]
 
-Every conforming implementation MUST produce the same result R.
+Every conforming implementation MUST produce the same result R. Online wallets
+can collect new evidence, but must show that the input set changed.

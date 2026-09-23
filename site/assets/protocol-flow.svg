@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 780" role="img">
   <title>O2A protocol flow</title>
-  <desc>Hello World path: EntityID, self-claim, shared event manifest, visible challenges, a named policy, and the same result from independent verifiers.</desc>
+  <desc>Hello World path: Bitcoin-anchored RGB identity, non-exclusive name and channel claims, an event with its own key, relationship attestations, visible conflicts, and the same policy result from independent wallets.</desc>
   <defs>
     <filter id="shadow" x="-8%" y="-8%" width="120%" height="130%">
       <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#112840" flood-opacity="0.08"/>
@@ -12,35 +12,35 @@
   <rect width="1200" height="780" fill="#f6f8fb"/>
   <text x="48" y="52" fill="#1559e9" font-family="Helvetica Neue, Arial, sans-serif" font-size="12" font-weight="700" letter-spacing="2.2">PROTOCOL FLOW</text>
   <text x="48" y="90" fill="#142238" font-family="Helvetica Neue, Arial, sans-serif" font-size="30" font-weight="700">From an identity to the same result</text>
-  <text x="48" y="118" fill="#536379" font-family="Helvetica Neue, Arial, sans-serif" font-size="15">The first scenario. A promoter statement is optional. Challenges stay in the record.</text>
+  <text x="48" y="118" fill="#536379" font-family="Helvetica Neue, Arial, sans-serif" font-size="15">The first scenario. Bitcoin orders identity state; wallets evaluate real-world evidence.</text>
 
   <g font-family="Helvetica Neue, Arial, sans-serif">
     <g transform="translate(48 148)" filter="url(#shadow)">
       <rect width="348" height="176" rx="16" fill="#ffffff" stroke="#dce3ed"/>
       <circle cx="36" cy="40" r="15" fill="#1559e9"/>
       <text x="36" y="45" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="700">01</text>
-      <text x="60" y="45" fill="#1559e9" font-size="12" font-weight="700" letter-spacing="1.1">IDENTITY</text>
-      <text x="24" y="86" fill="#142238" font-size="20" font-weight="700">Create an EntityID</text>
-      <text x="24" y="118" fill="#536379" font-size="14">Controller keys authorize</text>
-      <text x="24" y="140" fill="#536379" font-size="14">later transitions.</text>
+      <text x="60" y="45" fill="#1559e9" font-size="12" font-weight="700" letter-spacing="1.1">IDENTITY GENESIS</text>
+      <text x="24" y="86" fill="#142238" font-size="20" font-weight="700">Root an EntityID</text>
+      <text x="24" y="118" fill="#536379" font-size="14">BIP340 root + RGB state,</text>
+      <text x="24" y="140" fill="#536379" font-size="14">anchored to Bitcoin.</text>
     </g>
     <g transform="translate(426 148)" filter="url(#shadow)">
       <rect width="348" height="176" rx="16" fill="#ffffff" stroke="#dce3ed"/>
       <circle cx="36" cy="40" r="15" fill="#1559e9"/>
       <text x="36" y="45" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="700">02</text>
-      <text x="60" y="45" fill="#1559e9" font-size="12" font-weight="700" letter-spacing="1.1">SELF-CLAIM</text>
-      <text x="24" y="86" fill="#142238" font-size="20" font-weight="700">Sign a statement</text>
-      <text x="24" y="118" fill="#536379" font-size="14">The participant signs a claim</text>
-      <text x="24" y="140" fill="#536379" font-size="14">about its own identity.</text>
+      <text x="60" y="45" fill="#1559e9" font-size="12" font-weight="700" letter-spacing="1.1">NAME + CHANNEL</text>
+      <text x="24" y="86" fill="#142238" font-size="20" font-weight="700">Publish evidence</text>
+      <text x="24" y="118" fill="#536379" font-size="14">Sign a non-exclusive name claim</text>
+      <text x="24" y="140" fill="#536379" font-size="14">and DNS or social proof.</text>
     </g>
     <g transform="translate(804 148)" filter="url(#shadow)">
       <rect width="348" height="176" rx="16" fill="#ffffff" stroke="#dce3ed"/>
       <circle cx="36" cy="40" r="15" fill="#1559e9"/>
       <text x="36" y="45" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="700">03</text>
-      <text x="60" y="45" fill="#1559e9" font-size="12" font-weight="700" letter-spacing="1.1">ATTESTATION</text>
-      <text x="24" y="86" fill="#142238" font-size="20" font-weight="700">One event manifest</text>
-      <text x="24" y="118" fill="#536379" font-size="14">Artist and venue each sign it.</text>
-      <text x="24" y="140" fill="#536379" font-size="14">A promoter may add evidence.</text>
+      <text x="60" y="45" fill="#1559e9" font-size="12" font-weight="700" letter-spacing="1.1">EVENT IDENTITY</text>
+      <text x="24" y="86" fill="#142238" font-size="20" font-weight="700">Create an event key</text>
+      <text x="24" y="118" fill="#536379" font-size="14">Its EntityID signs the manifest</text>
+      <text x="24" y="140" fill="#536379" font-size="14">and content hash.</text>
     </g>
     <path d="M396 236H418" fill="none" stroke="#1559e9" stroke-width="1.6" marker-end="url(#arrow)"/>
     <path d="M774 236H796" fill="none" stroke="#1559e9" stroke-width="1.6" marker-end="url(#arrow)"/>
@@ -49,28 +49,28 @@
       <rect width="348" height="176" rx="16" fill="#ffffff" stroke="#dce3ed"/>
       <circle cx="36" cy="40" r="15" fill="#1559e9"/>
       <text x="36" y="45" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="700">04</text>
-      <text x="60" y="45" fill="#1559e9" font-size="12" font-weight="700" letter-spacing="1.1">CHALLENGE</text>
-      <text x="24" y="86" fill="#142238" font-size="20" font-weight="700">Keep the dispute</text>
-      <text x="24" y="118" fill="#536379" font-size="14">Challenges and revocations</text>
-      <text x="24" y="140" fill="#536379" font-size="14">stay in the record.</text>
+      <text x="60" y="45" fill="#1559e9" font-size="12" font-weight="700" letter-spacing="1.1">ATTESTATIONS</text>
+      <text x="24" y="86" fill="#142238" font-size="20" font-weight="700">Connect the participants</text>
+      <text x="24" y="118" fill="#536379" font-size="14">Artist, venue, and promoter</text>
+      <text x="24" y="140" fill="#536379" font-size="14">sign scoped relationships.</text>
     </g>
     <g transform="translate(426 360)" filter="url(#shadow)">
       <rect width="348" height="176" rx="16" fill="#ffffff" stroke="#dce3ed"/>
       <circle cx="36" cy="40" r="15" fill="#1559e9"/>
       <text x="36" y="45" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="700">05</text>
-      <text x="60" y="45" fill="#1559e9" font-size="12" font-weight="700" letter-spacing="1.1">TRUST POLICY</text>
-      <text x="24" y="86" fill="#142238" font-size="20" font-weight="700">Name the rule</text>
-      <text x="24" y="118" fill="#536379" font-size="14">A versioned policy evaluates</text>
-      <text x="24" y="140" fill="#536379" font-size="14">the evidence and explains why.</text>
+      <text x="60" y="45" fill="#1559e9" font-size="12" font-weight="700" letter-spacing="1.1">CONFLICTS + POLICY</text>
+      <text x="24" y="86" fill="#142238" font-size="20" font-weight="700">Show competing claims</text>
+      <text x="24" y="118" fill="#536379" font-size="14">A named policy weighs evidence;</text>
+      <text x="24" y="140" fill="#536379" font-size="14">first claim does not own a name.</text>
     </g>
     <g transform="translate(804 360)" filter="url(#shadow)">
       <rect width="348" height="176" rx="16" fill="#112840"/>
       <circle cx="36" cy="40" r="15" fill="#a9edd6"/>
       <text x="36" y="45" text-anchor="middle" fill="#112840" font-size="12" font-weight="700">06</text>
       <text x="60" y="45" fill="#a9edd6" font-size="12" font-weight="700" letter-spacing="1.1">SAME RESULT</text>
-      <text x="24" y="86" fill="#ffffff" font-size="20" font-weight="700">Independent verifiers</text>
-      <text x="24" y="118" fill="#b7d3ee" font-size="14">Same evidence, policy, version,</text>
-      <text x="24" y="140" fill="#b7d3ee" font-size="14">and context. Same result.</text>
+      <text x="24" y="86" fill="#ffffff" font-size="20" font-weight="700">Independent wallets</text>
+      <text x="24" y="118" fill="#b7d3ee" font-size="14">Same identity history, evidence,</text>
+      <text x="24" y="140" fill="#b7d3ee" font-size="14">policy, and context. Same result.</text>
     </g>
     <path d="M396 448H418" fill="none" stroke="#1559e9" stroke-width="1.6" marker-end="url(#arrow)"/>
     <path d="M774 448H796" fill="none" stroke="#1559e9" stroke-width="1.6" marker-end="url(#arrow)"/>
@@ -78,11 +78,11 @@
 
   <rect x="48" y="564" width="1104" height="168" rx="16" fill="#112840"/>
   <text x="76" y="604" fill="#a9edd6" font-family="Helvetica Neue, Arial, sans-serif" font-size="12" font-weight="700" letter-spacing="1.4">PROJECTIONS</text>
-  <text x="76" y="634" fill="#ffffff" font-family="Helvetica Neue, Arial, sans-serif" font-size="15">Artist, venue, and event registries</text>
+  <text x="76" y="634" fill="#ffffff" font-family="Helvetica Neue, Arial, sans-serif" font-size="15">Artist, venue, event, and album registries</text>
   <text x="76" y="658" fill="#b7d3ee" font-family="Helvetica Neue, Arial, sans-serif" font-size="14">are rebuilt from signed evidence.</text>
   <text x="76" y="682" fill="#b7d3ee" font-family="Helvetica Neue, Arial, sans-serif" font-size="14">Replacing the index does not change the result.</text>
   <text x="620" y="604" fill="#a9edd6" font-family="Helvetica Neue, Arial, sans-serif" font-size="12" font-weight="700" letter-spacing="1.4">APPLICATIONS</text>
   <text x="620" y="634" fill="#ffffff" font-family="Helvetica Neue, Arial, sans-serif" font-size="15">GatePass, SplitNight, and payments</text>
   <text x="620" y="658" fill="#b7d3ee" font-family="Helvetica Neue, Arial, sans-serif" font-size="14">consume the verification result.</text>
-  <text x="620" y="682" fill="#b7d3ee" font-family="Helvetica Neue, Arial, sans-serif" font-size="14">They are outside the first identity release.</text>
+  <text x="620" y="682" fill="#b7d3ee" font-family="Helvetica Neue, Arial, sans-serif" font-size="14">They cannot redefine identity validity.</text>
 </svg>

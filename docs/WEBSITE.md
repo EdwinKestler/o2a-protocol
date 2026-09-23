@@ -7,9 +7,12 @@ individual artist names, account identifiers, or profile URLs belong in public
 content. The demo uses fictional inputs and does not verify signatures or
 accept payments.
 
-The editorial sources are [the vision](00-vision.md),
+The editorial sources are the accepted
+[Bitcoin-rooted identity decision](../adr/0005-bitcoin-rooted-self-custodial-identity.md),
+[the vision](00-vision.md),
 [the roadmap](13-roadmap.md),
-[the architecture](01-architecture.md), and
+[the architecture](01-architecture.md),
+[the event and album identity profiles](../specs/music-object-schema.md), and
 [the paid-use proposal](16-artist-authorized-use-payments.md).
 The flow, stack, and pipeline figures follow
 [the protocol flow](diagrams/02-end-to-end-protocol-flow.md),

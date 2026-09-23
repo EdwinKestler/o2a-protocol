@@ -6,20 +6,24 @@ This is the foundational modular architecture proposed for O2A.
 flowchart TB
     APP["Application Modules<br/>Artist Catalog · Venue Registry · Event Registry<br/>GatePass · SplitNight · Sponsors · Merch/F&B"]
     TRUST["Trust / Policy Modules<br/>Claims · Attestations · Endorsements<br/>Challenges · Revocation · Reputation"]
-    ID["Identity Module<br/>EntityID · Keys · Profiles · Controllers<br/>Relationships · Key Rotation"]
-    KERNEL["Protocol Kernel<br/>Schema · Genesis · State · Transition<br/>Consignment · Client-side Validation · Proofs"]
-    SETTLE["Settlement / Anchoring Adapters<br/>Bitcoin UTXO · RGB · optional Liquid / cross-chain adapters"]
+    ID["Identity Module<br/>BIP340-rooted EntityID · Controllers<br/>Recovery · Relationships · Profiles"]
+    KERNEL["Required Bitcoin/RGB Identity Kernel<br/>Genesis · State · Transition · Single-use seals<br/>Consignments · Anchors · Client-side validation"]
+    WALLET["Self-custodial Wallet / Node<br/>Seed · identity keys · proof packages<br/>full Bitcoin node or labeled light mode"]
+    EXT["Optional Application Adapters<br/>Lightning · additional RGB rights profiles<br/>Liquid / cross-chain experiments"]
 
     APP --> TRUST
     TRUST --> ID
     ID --> KERNEL
-    KERNEL --> SETTLE
+    KERNEL --> WALLET
+    APP -.-> EXT
 ```
 
 ## Dependency invariant
 
 ```text
-applications → registries/trust → identity → kernel → settlement adapters
+applications → registries/trust → identity → Bitcoin/RGB identity kernel → wallet/node
 ```
 
-The reverse direction is forbidden. The kernel must never import Artist, Venue, Ticket, or SplitNight semantics.
+The reverse direction is forbidden. The kernel must never import Artist,
+Venue, Ticket, or SplitNight semantics. Bitcoin/RGB lifecycle validation is
+mandatory for every EntityID; optional application adapters cannot redefine it.

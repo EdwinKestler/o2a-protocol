@@ -7,7 +7,9 @@ graph TD
     ART["Artist EntityID"]
     VEN["Venue EntityID"]
     PRO["Promoter EntityID"]
+    LAB["Label / Organization EntityID"]
     EVT["Event EntityID"]
+    ALB["Album EntityID"]
     OTHER["Other verified Artist / Organization"]
 
     ART -->|"self claim: official_name"| ART
@@ -16,6 +18,10 @@ graph TD
     PRO -->|"booked"| ART
     PRO -->|"organized"| EVT
     ART -->|"performed_at"| EVT
+    ART -->|"custodian + creator attestation"| ALB
+    ALB -->|"signs manifest hash"| ALB
+    EVT -->|"signs event manifest hash"| EVT
+    LAB -->|"release / representation attestation"| ALB
     OTHER -->|"endorsement / relationship attestation"| ART
 
     POL["Trust Policy"]
@@ -25,6 +31,8 @@ graph TD
     VEN --> POL
     PRO --> POL
     EVT --> POL
+    ALB --> POL
+    LAB --> POL
     OTHER --> POL
     POL --> RES
 ```
@@ -46,4 +54,6 @@ graph LR
     A2 -->|"self claim only"| A2
 ```
 
-The protocol preserves both claims. A verification policy determines how the available evidence is interpreted.
+The protocol preserves both claims and their Bitcoin-established chronology.
+A verification policy determines how the available evidence is interpreted;
+chronology does not grant exclusive ownership of the spelling.

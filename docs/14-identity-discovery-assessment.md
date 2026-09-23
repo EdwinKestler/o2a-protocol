@@ -1,103 +1,144 @@
-# 14 — Assessment of the original identity/discovery concept
+# 14 — Bitcoin Identity and Discovery Assessment
 
-**Status:** roadmap assessment, 2026-09-23. This records planned experiments;
-it does not replace the accepted ADRs or finalize v0.1 wire formats.
+**Status:** aligned with
+[ADR-0005](../adr/0005-bitcoin-rooted-self-custodial-identity.md), 2026-09-23.
+This is a design assessment, not an implemented or mainnet-tested stack.
 
 ## Conclusion
 
-The strongest part of the two original notes is the separation between
-creating a key and recognizing a real-world claim. O2A already models that
-distinction with EntityID, self-claims, independent attestations, challenges,
-and versioned policies. A jointly evidenced event makes the first scenario
-more useful and gives the policy a concrete conflict to resolve. Pubky is a
-promising *optional* discovery and public-profile adapter. RGB is valuable for
-specific rights and payment evidence, but neither stack should be required to
-verify a basic identity claim.
+O2A is a Bitcoin-native, self-custodial identity protocol. The permanent root
+is a dedicated BIP340/secp256k1 public key. The identity's lifecycle is RGB
+client-side state anchored to Bitcoin. Pubky, Nostr, DNS, HTTPS, social
+platforms, catalogs, and APIs help publish, discover, or support claims; none
+replaces the root or the validated RGB history.
 
-| Idea in the notes | Assessment and plan |
-| --- | --- |
-| Role-neutral identity with multiple roles | Keep EntityID and versioned role claims. Do not derive the permanent EntityID solely from a Pubky key: O2A requires controller rotation without changing EntityID. |
-| Self-attestation and independent attestations | Keep. A valid signature proves the issuer made a statement; it does not prove the real-world name or event. |
-| Competing names and challenges | Add explicit duplicate-name, first-claim, dispute, and resolution vectors. Names remain claims, never unique keys or automatic leases. |
-| Mutually signed event | Add a canonical EventManifest and separate participant signatures/evidence to the local Hello World. Define who signed which exact bytes and distinguish planned/booked, occurred, and settled states. |
-| Pubky public profiles and discovery | Test an adapter in Phase 2. Preserve portable claims and proof packages if a homeserver is unavailable or a key changes. Public profile JSON is mutable display data, not historical proof. |
-| Payment and identity keys | Specify separate keys and purpose-bound, expiring, revocable bindings. A public payment address or endpoint does not itself prove recipient authorization. |
-| RGB rights, settlement, GatePass, SplitNight | Keep downstream. Add a separately checked RGB/Bitcoin evidence example after base verification; do not make a transfer or Bitcoin anchor an automatic proof of performance or name ownership. |
-| Global confidence formula, graph rank, namespace lease | Defer. The proposed weights are illustrative and can be gamed by coordinated fake identities. v0.1 uses explicit deterministic policy rules and explainable results. |
-| Social key recovery | Research as a policy-mediated recognition transfer. Without an old-key signature or predefined recovery authority, third-party attestations cannot authorize a transition of the existing EntityID. |
-| Extend RGBMVP as the product base | Keep O2A's specification and conformance vectors in this repository. Use RGBMVP as a read-only reference for adapters and regtest experiments; adopting its lab API or storage model would couple identity semantics to an asset lab before compatibility is established. |
+The public key makes the EntityID unique and owner-controlled. It does not make
+a human-readable name unique. A wallet evaluates competing name claims using
+signed channel-control proofs, attestations, challenges, chronology, and a
+named policy. The core has no first-claim namespace lease.
 
-## Required boundaries
+## Technology roles
 
-The follow-up [control-proof and bond assessment](17-control-proofs-and-verification-bonds.md)
-adds a proposed channel-control onboarding profile and evaluates Internet
-Identity/id.ai as optional authentication references. Refundable deposits and
-fraud penalties remain distinct downstream experiments; neither changes the
-base evidence or controller-authority model.
+| Technology | O2A role | What it does not establish |
+| --- | --- | --- |
+| Dedicated BIP340 root key | Stable cryptographic root for every artist, venue, promoter, label, event, and album ID. | Ownership of a stage name, legal identity, event occurrence, copyright, or payment. |
+| RGB identity contract | Client-side lifecycle for genesis, controllers, recovery rules, custody, and revocation. | Truth of DNS, social, album, or event claims without the referenced evidence. |
+| Bitcoin | Orders and confirms anchors and closes single-use seals. | A social oracle or a vote on which claimant is the real artist. |
+| Pubky/PKARR | Public Ed25519-key discovery pointer and public profile storage bound to an O2A ID. | The Bitcoin root, standardized O2A recovery, or private consignment storage. |
+| Nostr | Optional BIP340-signed public-event transport bound to an O2A ID. | Complete evidence availability, canonical identity recovery, or relay-independent truth. |
+| DNS/HTTPS/social | Public channel-control evidence collected through resource-specific challenges. | Permanent control, real-world entitlement to a name, or independent endorsement by itself. |
+| Registries/indexers | Searchable projections and conflict discovery. | Authority to create, rotate, recover, or revoke an EntityID. |
 
-The base O2A concepts remain Entity, Claim, Attestation, Challenge, Revocation,
-and Policy. EventManifest is a domain evidence profile built above them. A
-Pubky identifier may be bound to an EntityID by signed, versioned evidence; it
-is not automatically the EntityID. A catalog document can reference evidence,
-but deleting or moving that document must not alter verification from a
-specified portable package. Portability alone cannot prove that no competing
-claim or challenge exists elsewhere. RGB consignments and private financial material
-stay out of public profile storage.
+## Key hierarchy and separation
 
-For an event, independently signed statements must refer to the *same*
-canonical manifest ID and identify the asserted fact. An artist's booking
-signature plus a venue's hosting signature can support a booking relationship;
-they do not alone establish that the performance occurred. The policy must
-state the required roles, issuer independence, evidence freshness, conflicts,
-and evaluation context. An RGB contract or Bitcoin transaction may strengthen
-a specifically verified economic claim, but it cannot serve as a real-world
-oracle. If a required proof or issuer datum is missing, evaluation must
-report incompleteness or an unverifiable result, never a silent positive result.
+One self-custodial wallet may hold many O2A identities, but every entity has a
+different root key. The wallet separates:
 
-## Pubky feasibility gate
+```text
+identity seed
+  ├─ ARTIST root key
+  │    └─ rotatable claim/admin controller keys
+  ├─ ALBUM root key(s)
+  ├─ EVENT root key(s)
+  ├─ VENUE / PROMOTER / LABEL root keys as applicable
+  ├─ Pubky Ed25519 discovery key bindings
+  ├─ optional Nostr publication key bindings
+  └─ payment and Bitcoin spending keys in separate purposes/domains
+```
 
-Pubky currently provides public-key discovery through PKARR and per-key
-Homeserver storage, including public application paths. Its own documentation
-says current Homeserver data is public and unencrypted, migration requires
-moving data, and automatic mirroring is still planned. Its FAQ says key
-rotation is not yet standardized. These facts make it a candidate for
-discoverable *public* profile data, not a required O2A root or private proof
-transport. A local testnet pilot must demonstrate publication, independent
-read, homeserver migration and backup/restore, key-change handling, registry
-rebuild, and offline verification from a portable package before an adapter is
-promoted. Paykit is documented as work in progress, so its payment endpoint
-format is a later interoperability question rather than a v0.1 dependency.
+The final derivation standard is not yet specified. Implementations must not
+invent incompatible paths or reuse the same secret across identity, Pubky,
+Nostr, RGB seal, or payment signing contexts.
 
-## Plan and acceptance evidence
+## Public discovery
 
-1. **Phase 0 — formalize:** define event manifest bytes and IDs, identity-to-
-   Pubky binding, payment-key binding, bounded evidence and conflict discovery,
-   and recovery
-   policy. Publish deterministic vectors for two claimants using the same
-   stage name, mismatched event hashes, role spoofing, revoked signatures,
-   compromised keys, and unavailable optional storage.
-2. **Phase 1 — prove the core:** execute the artist/venue event package under
-   two independent verifiers. They must report the same result and explain
-   every accepted, rejected, conflicting, or missing evidence item. Add an
-   optional regtest RGB proof only if a compatible stack and proof format are
-   verified; keep the base vector independent of it.
-3. **Phase 2 — prove discovery portability:** run Pubky locally, publish only
-   public mutable profile data, migrate it to another homeserver, destroy and
-   rebuild the O2A registry, and reproduce the previous protocol result with
-   Pubky offline. Record the exact Pubky versions and interoperability gaps.
-4. **Later — economic applications:** GatePass/SplitNight may consume O2A
-   identities and attach verified RGB evidence. Specify asset IDs, networks,
-   issuer authenticity, recipient binding, and proof availability before any
-   real-asset settlement claim. Real USDt is outside the pilot.
+Pubky provides public-key domains, PKARR records, homeserver selection, and
+public application storage. O2A uses it for public profile discovery through a
+signed binding:
 
-This sequence preserves the accepted [modular dependency direction](../adr/0001-modular-protocol-architecture.md),
-[stable EntityID](../adr/0002-entity-id-over-artist-id.md),
-[rebuildable catalogs](../adr/0003-catalog-is-not-source-of-truth.md), and
-[policy-based recognition](../adr/0004-consensus-as-policy-not-blockchain.md).
+```text
+O2A EntityID
+  signs → Pubky Ed25519 public key + purpose + expiry/version
+Pubky key
+  signs → reciprocal O2A binding and current public-profile location
+```
+
+Because Pubky key rotation is not yet standardized, O2A controller state must
+authorize replacement of the binding. A lost Pubky key does not replace or
+erase the Bitcoin-rooted EntityID. Public Pubky storage never contains seeds,
+recovery material, private attestations, or RGB consignments.
+
+Nostr can provide a signed public-event transport using BIP340 keys. O2A still
+uses an explicit binding and O2A-specific canonical objects rather than
+assuming every Nostr event is an O2A claim. Relay deletion, partial visibility,
+and competing replaceable events remain availability concerns.
+
+## Channel-control evidence
+
+A claimant signs a short-lived challenge bound to its EntityID, current RGB
+state, resource, purpose, nonce, expiry, and policy. It publishes the derived
+token in one of:
+
+- a DNS TXT record;
+- a well-known HTTPS path;
+- a stable account field or signed post on a recognized platform;
+- a bound Pubky public path; or
+- a bound Nostr event.
+
+Collectors record and sign exact observations. Wallets can fetch fresh
+observations online and verify retained observations offline. Several
+collectors reading one source improve observation coverage but do not create
+several independent endorsements.
+
+## Competing names
+
+Two O2A IDs may claim the same artist name, venue name, promoter name, album
+title, or event name. Wallets show:
+
+- each unique EntityID and current validated RGB state;
+- when relevant claims or checkpoints were anchored;
+- current and expired channel-control proofs;
+- independent endorsements and conflicts;
+- challenges, supersession, and revocations; and
+- the exact policy and explanation used for the displayed result.
+
+Stronger evidence may produce a stronger policy result. Neither the earliest
+claim nor the largest economic balance automatically wins.
+
+## Event and album identities
+
+EVENT and ALBUM use independent root keys held by their responsible custodian.
+The event key signs the event-manifest hash; the album key signs album metadata
+and track/media commitments. Artists, venues, promoters, labels, and organizers
+issue separate attestations. This gives each work or event a stable reference
+without collapsing custody, occurrence, participation, and rights into one
+signature.
+
+## Required feasibility gates
+
+1. **Cryptographic profile:** freeze EntityID encoding, key derivation,
+   canonical bytes, and signature domains.
+2. **RGB/Bitcoin profile:** pin compatible dependencies and prove genesis,
+   rotation, recovery, revocation, reorg, and missing-consignment behavior on
+   regtest.
+3. **Wallet portability:** export the same proof package between independent
+   clients and reproduce the result offline.
+4. **Pubky portability:** publish/read, migrate homeservers, restore backups,
+   rotate the binding, and verify retained evidence while Pubky is unavailable.
+5. **Nostr portability:** publish through several relays, tolerate partial
+   relay availability, and preserve canonical O2A objects outside relays.
+6. **Conflict visibility:** demonstrate two IDs claiming the same name without
+   accidental merging or first-claim ownership.
+7. **Music objects:** demonstrate separate ARTIST, EVENT, and ALBUM keys,
+   manifests, custody, recovery, and participant attestations.
 
 ## Sources checked
 
-- [Pubky protocol overview](https://pubky.org/explore/pubky-protocol/introduction/), [Homeserver storage and migration](https://pubky.org/explore/pubky-protocol/homeserver/), [developer guide/local testnet](https://pubky.org/explore/pubky-protocol/getting-started/), and [key-rotation FAQ](https://pubky.org/faq/).
-- [Paykit status](https://docs.pubky.org/Explore/Technologies/Paykit).
-- [RGB single-use seal/commitment model](https://docs.rgb.info/commitment-layer/commitment-schemes) and [client-side validation](https://docs.rgb.info/distributed-computing-concepts/client-side-validation).
+- [BIP340 Schnorr signatures](https://github.com/bitcoin/bips/blob/master/bip-0340.mediawiki).
+- [Pubky protocol overview](https://pubky.org/explore/pubky-protocol/introduction/),
+  [Pubky FAQ](https://pubky.org/faq/), and
+  [PKARR](https://github.com/pubky/pkarr).
+- [Nostr NIP-01](https://github.com/nostr-protocol/nips/blob/master/01.md).
+- [RGB single-use seal/commitment model](https://docs.rgb.info/commitment-layer/commitment-schemes)
+  and [client-side validation](https://docs.rgb.info/distributed-computing-concepts/client-side-validation).
 - O2A's [code and sibling-project reference map](../codereference.md).

@@ -42,7 +42,8 @@ Cross-chain HTLC or atomic-swap functionality should be an optional settlement a
 
 ## Dependency rule
 
-Economic modules reference O2A identities; economic outcomes do not define who an entity is.
+Economic modules reference Bitcoin-rooted O2A identities; economic outcomes do
+not define who an entity is. Identity keys MUST NOT be reused as payment keys.
 
 ## Related remuneration application
 

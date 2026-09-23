@@ -7,12 +7,14 @@ flowchart TB
     O2A["Open2Artist / O2A"]
     PROTO["O2A Protocol"]
     ID["O2A ID<br/>product-facing representation"]
-    ENTITY["EntityID<br/>protocol primitive"]
+    ENTITY["EntityID<br/>BIP340 root + RGB lifecycle<br/>anchored to Bitcoin"]
 
     ART["Artist"]
     VEN["Venue"]
     PROM["Promoter"]
     EVT["Event"]
+    ALB["Album"]
+    LAB["Label / Organization"]
 
     CL["Claims"]
     AT["Attestations"]
@@ -31,11 +33,15 @@ flowchart TB
     ENTITY --> VEN
     ENTITY --> PROM
     ENTITY --> EVT
+    ENTITY --> ALB
+    ENTITY --> LAB
 
     ART --> CL
     VEN --> AT
     PROM --> AT
     EVT --> AT
+    ALB --> CL
+    LAB --> AT
 
     CL --> PF
     AT --> PF
@@ -58,7 +64,7 @@ flowchart TB
 
 ```text
 O2A ID    = human/product-facing identity
-EntityID  = generic protocol primitive
+EntityID  = public-key-rooted protocol primitive with a Bitcoin/RGB lifecycle
 ```
 
 This preserves an artist-focused go-to-market without restricting the protocol to artists only.

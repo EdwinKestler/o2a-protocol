@@ -2,7 +2,8 @@
 
 **Status:** proposed downstream application and adoption experiment,
 2026-09-23. No live payment, USDt swap, or rights-contract implementation is
-claimed. The [identity core](00-vision.md) remains usable without this module.
+claimed. The [Bitcoin/RGB identity core](00-vision.md) remains usable without
+this module; the payment module is still optional.
 
 ## Intended artist benefit
 
@@ -11,6 +12,11 @@ material, work reference, catalog, or live-event material and receive payment
 when that authorization is fulfilled. The artist chooses the permitted uses,
 price, authorized representative if any, and receiving wallet. A publisher
 gets a verifiable statement describing the approval it purchased.
+
+The signing key is an authorized O2A controller key. The receiving wallet uses
+a separately bound payment key or endpoint. Root identity, operational
+controller, RGB seal, Lightning, and on-chain spending keys MUST NOT be treated
+as interchangeable.
 
 Examples include a commercial event-discovery service paying to display an
 artist-approved tour card, a sponsor purchasing an approved promotional
@@ -85,8 +91,9 @@ the purchased permission. A BTC/USDt swap on another network also does not
 become an RGB swap merely because O2A uses RGB elsewhere. Test assets must be
 labeled as such rather than presented as genuine USDt.
 
-RGB is useful if the application needs enforceable state-transition rules
-for digital rights; a basic signed permission receipt may not need it. Any
+O2A already uses RGB for identity lifecycle. An additional rights contract is
+useful only if the application needs enforceable state-transition rules beyond
+a basic signed permission receipt. Any
 real-world permission remains bound to the issuer's actual authority and the
 explicit terms. An RGB transition is not proof that a publisher displayed a
 mention, that a live event occurred, or that a rights dispute is resolved.

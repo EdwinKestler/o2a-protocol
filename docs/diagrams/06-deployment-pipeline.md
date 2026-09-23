@@ -4,9 +4,9 @@ The proposed deployment progression adds two controlled environments between loc
 
 ```mermaid
 flowchart LR
-    DEV["Local Development<br/>Docker Compose<br/>Bitcoin regtest"]
-    CI["CI Regtest<br/>unit + integration tests<br/>fixed test vectors"]
-    SHR["Shared Regtest<br/>team integration<br/>seeded synthetic network"]
+    DEV["Local Development<br/>self-custodial wallet/node<br/>Bitcoin + RGB regtest"]
+    CI["CI Regtest<br/>lifecycle + recovery tests<br/>fixed conformance vectors"]
+    SHR["Shared Regtest<br/>independent wallets<br/>portable consignments + proofs"]
     TEST["Public Testnet<br/>public API<br/>attack simulation<br/>registry rebuild tests"]
     BETA["Public Beta<br/>SDK<br/>independent verifier<br/>external integrations"]
     MAIN["Mainnet / Public Release<br/>Identity + Evidence + Verification"]
@@ -30,6 +30,8 @@ The intended discipline is to promote the same tested artifact rather than rebui
 
 ```text
 Entity
+RGB identity lifecycle
+Bitcoin anchors and seals
 Claim
 Attestation
 Challenge
@@ -38,6 +40,7 @@ Trust Policy
 Artist Registry
 Venue Registry
 Event Registry
+Album Registry
 ```
 
 GatePass and SplitNight should follow protocol stability rather than block the first public identity release.

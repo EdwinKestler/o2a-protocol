@@ -4,8 +4,9 @@ The first diagram is dependency order. A lower layer must not import an upper la
 
 ```mermaid
 flowchart LR
-    K["Protocol Kernel<br/>state · transitions · consignments<br/>proofs · anchoring"]
-    I["Entity Identity<br/>EntityID · controller keys<br/>key rotation"]
+    B["Bitcoin<br/>order · anchors · seals"]
+    K["RGB Identity Kernel<br/>genesis · state · transitions<br/>consignments · validation"]
+    I["Entity Identity<br/>BIP340 root · controller keys<br/>rotation · recovery · revocation"]
     C["Claims<br/>self-attestation<br/>signed assertions"]
     A["Attestations<br/>venue · promoter · artist<br/>independent evidence"]
     X["Challenges / Revocation<br/>disputes · conflicts<br/>corrections"]
@@ -13,7 +14,7 @@ flowchart LR
     R["Registries<br/>Artist Catalog<br/>Venue Registry<br/>Event Registry"]
     M["Application Modules<br/>GatePass · SplitNight<br/>Sponsors · Merch/F&B"]
 
-    K --> I --> C --> A --> X --> P --> R --> M
+    B --> K --> I --> C --> A --> X --> P --> R --> M
 ```
 
 ## Operational Hello World
@@ -22,11 +23,11 @@ This is the first complete scenario. It matches the [roadmap](../13-roadmap.md) 
 
 ```mermaid
 flowchart LR
-    E["1 EntityID<br/>controller keys"] --> C["2 Self-claim<br/>signed by the participant"]
-    C --> A["3 Event manifest<br/>artist and venue sign<br/>promoter may add evidence"]
-    A --> X["4 Challenges<br/>remain visible"]
-    X --> P["5 Named policy<br/>versioned rules"]
-    P --> R["6 Same result<br/>independent verifiers"]
+    E["1 Identity genesis<br/>BIP340 root · RGB state<br/>anchored to Bitcoin"] --> C["2 Name + channel claims<br/>non-exclusive · signed<br/>DNS / social evidence"]
+    C --> V["3 Event EntityID<br/>its own key + manifest hash<br/>held by venue or promoter"]
+    V --> A["4 Relationship attestations<br/>artist · venue · promoter"]
+    A --> X["5 Challenges + competing names<br/>remain visible"]
+    X --> P["6 Same result<br/>same package + policy<br/>independent wallets"]
 ```
 
 Registries are rebuildable projections over that evidence. GatePass, SplitNight, and payment modules consume the result; they do not redefine identity.

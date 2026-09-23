@@ -1,156 +1,156 @@
 # 13 — Roadmap
 
-## Phase 0 — Specification
+## Phase 0 — Freeze the Bitcoin-native specification
 
-- freeze terminology;
-- define canonical schemas;
-- define canonical serialization;
-- define authorization transitions;
-- define portable proof package;
-- create deterministic test vectors;
-- specify separate identity-controller and payment-key binding/revocation;
-- specify competing human-name claims without first-claim priority;
-- assess the proposed channel-control evidence profile: resource-specific,
-  controller-bound challenges; signed observer records; independent
-  recognition; issuer bootstrap; freshness and explicit failure reasons;
-- specify event-manifest identity, canonical encoding, signer roles, and
-  challenge/revocation behavior (the event manifest is an application evidence
-  object, not a required sixth kernel primitive);
-- specify proof retrieval and evaluation-context rules so independent verifiers
-  operate on the same explicitly bounded evidence set and report unknown or
-  missing evidence without claiming global completeness.
+- freeze the EntityID encoding rooted in a dedicated BIP340 public key;
+- freeze separated root, controller, recovery, discovery, and payment key
+  purposes and wallet derivation rules;
+- define the RGB identity contract/schema for genesis, controller rotation,
+  recovery-policy change, authorized recovery, custody transfer, and revocation;
+- select and pin a compatible RGB stack and Bitcoin commitment method;
+- define network, confirmation, reorg, seal, witness, and consignment rules;
+- define canonical schemas and serialization for entities, claims,
+  attestations, challenges, observations, EVENT manifests, and ALBUM manifests;
+- define the portable proof package and offline verification inputs;
+- define Pubky Ed25519 and Nostr key bindings to the O2A root;
+- define DNS, HTTPS, and social channel-control challenges and signed
+  observations;
+- specify competing human-name claims without first-claim ownership;
+- specify bounded evidence retrieval and explicit evaluation context; and
+- create deterministic positive and adversarial test vectors.
 
-Gate: include vectors for duplicate names, controller rotation and compromise,
-missing or conflicting event signatures, revoked evidence, expired payment
-bindings, and unavailable optional discovery. Decisions about recovery without
-the old key must state the trust policy and must not impersonate controller
-authorization.
+Gate: the vectors cover distinct root/payment keys, duplicate names, invalid
+BIP340 signatures, wrong Bitcoin network, wrong RGB contract/schema/asset,
+forked or missing consignments, mismatched seals and anchors, reorgs,
+controller compromise, recovery, revocation, expired control proofs, Pubky and
+Nostr rebinding, album/event custody, and unavailable discovery.
 
-The [control-proof and bond assessment](17-control-proofs-and-verification-bonds.md)
-adds proposed vectors for token replay, compromised or transferred channels,
-related-party issuers, and unavailable providers. Define these as an evidence
-profile above the kernel. No deposit is required to create an EntityID.
+No production implementation code is accepted before this gate closes.
 
-## Phase 1 — Local / regtest
+## Phase 1 — Deterministic core and Bitcoin regtest
 
 Release sequence:
 
 ```text
-0.0.1 Entity
-0.0.2 Claim
-0.0.3 Attestation
-0.0.4 Challenge + Revocation
-0.0.5 Policy Engine
-0.1.0 Complete Hello World
+0.0.1 BIP340 EntityID + canonical encoding
+0.0.2 RGB identity genesis + Bitcoin anchor
+0.0.3 Controller rotation + recovery + revocation
+0.0.4 Claims + attestations + control observations
+0.0.5 Policy engine + proof packages
+0.0.6 EVENT + ALBUM identity profiles
+0.1.0 Complete self-custodial Hello World
 ```
 
-Hello World: one artist and one venue create distinct EntityIDs; the artist
-publishes a self-claim; both sign the same canonical event manifest through
-separate evidence objects; a promoter may add independent evidence; a competing
-name claim and challenge remain visible; two independent clients verify the
-same portable package under the same named policy. RGB/Bitcoin anchoring is an
-optional, separately verified evidence variant, not a prerequisite for a
-valid identity result.
+Hello World:
 
-Exit condition: multiple independent verifier implementations produce identical
-outputs from fixed vectors, including conflicts and missing optional services.
+1. an artist, venue, promoter, event, and album use distinct root public keys;
+2. their RGB identity histories are created and validated on Bitcoin regtest;
+3. day-to-day controller keys sign claims while root and spending keys remain
+   separated;
+4. the artist publishes a DNS or social name-control proof;
+5. a competing EntityID claims the same name and remains visible;
+6. the event and album keys sign canonical content hashes;
+7. counterparties issue separate attestations and a challenge; and
+8. two independent verifier implementations return the same explained result
+   from the same bounded package.
 
-After core acceptance, test the control-proof profile using local DNS/HTTPS
-fixtures and signed observations. Independent clients must reproduce results
-from the retained package without querying live websites. Then optionally test
-a refundable native-BTC deposit on regtest, with cooperative success and
-unilateral timeout recovery. This is not a forfeiture or slashing mechanism.
+Exit condition: fixed vectors pass in independent implementations, including
+invalid and incomplete cases. A catalog can be destroyed and rebuilt from RGB
+consignments, Bitcoin proof data, and retained evidence packages.
 
-## Phase 2 — Test network
+## Phase 2 — Self-custodial wallet/node
 
-- Artist Catalog;
-- Venue Registry;
-- Event Registry;
-- shared test environment;
-- adversarial identity collisions;
-- registry destruction/rebuild tests;
-- key rotation and revocation tests;
-- evaluate Pubky/PKARR as an optional public-profile and discovery adapter on
-  an isolated local testnet: publish/read, move homeserver, backup/restore,
-  rebuild the registry, and verify proofs while the homeserver is unavailable;
-- document the mapping between a Pubky key and stable O2A EntityID, including
-  what happens when that Pubky key changes or is compromised.
+- encrypted local seed and backup/recovery workflow;
+- separate hardened derivation domains for root, controller, EVENT, ALBUM, and
+  payment keys;
+- controller delegation and rotation UX;
+- RGB consignment, proof-package, and evidence storage;
+- full Bitcoin node mode;
+- clearly labeled light mode with documented trust, privacy, and availability
+  assumptions;
+- online DNS/HTTPS/social collection producing signed observations;
+- offline proof-package verification with no hidden network inputs;
+- export/import between two independently developed wallets; and
+- fail-closed behavior for missing history, reorgs, stale observations, and
+  unsupported schema versions.
 
-Gate: Pubky integration must not make a public profile, homeserver, or Pubky key
-the sole source of O2A verification or defeat EntityID controller rotation.
-Do not publish private attestations or RGB consignments to public storage.
+Gate: losing an operational key is recoverable under a previously committed
+policy without changing EntityID; losing required RGB data is detected rather
+than reconstructed from a transaction ID; identity and payment keys never
+cross purposes.
 
-Optional application experiment, after Phase 1 acceptance: one artist and one
-publisher exchange a signed permission for an approved metadata link and a
-test Lightning payment. The grant identifies the allowed use, recipient,
-content/version, terms, and payment. Test unpaid requests, altered terms,
-duplicate callbacks, payment success followed by service failure, and grant
-expiry. This measures a potential immediate artist benefit without making
-payment a requirement for identity creation or ordinary evidence verification.
-See [the paid-use proposal](16-artist-authorized-use-payments.md).
+## Phase 3 — Public discovery and test network
 
-Separately evaluate Internet Identity/id.ai as an optional authentication or
-credential adapter: confirm component licenses, origin and subject binding,
-canister-signature verification, privacy, recovery, and offline proof limits.
-Keep O2A controller authority and EntityID independent of the login provider.
-Before any fraud-bond pilot, specify enforceable payout and refund paths,
-adjudication authority, appeal deadlines, and economic/false-rejection metrics.
-Public release of the website remains on hold as recorded in [WEBSITE.md](WEBSITE.md).
+- Artist, Venue, Promoter, Event, and Album registry projections;
+- shared Bitcoin test network and adversarial identity collisions;
+- Pubky/PKARR public-profile publication, independent read, homeserver
+  migration, backup/restore, and key rebinding;
+- optional Nostr signed-publication adapter and relay diversity tests;
+- public control-proof collectors with SSRF, redirect, size, freshness, and
+  stable-account-ID defenses;
+- registry destruction and rebuild while discovery services are unavailable;
+- explicit display of competing name claims, chronology, supporting evidence,
+  and policy differences; and
+- external wallet and verifier interoperability.
 
-## Phase 3 — Public test release
+Gate: discovery data can disappear or move without changing verification of a
+retained package. Pubky, Nostr, indexers, or APIs cannot replace the Bitcoin
+root or RGB lifecycle. Private consignments and secrets never enter public
+profile storage.
 
-- public API;
-- CLI verifier;
-- SDK;
-- portable proof package exchange;
-- external integrator testing;
-- schema/policy compatibility matrix;
-- optional Pubky discovery interoperability report and recovery limitations;
-- portable event-manifest examples with matching independent signatures and
-  explicit evidence provenance.
+An optional adoption experiment can pair an artist-authorized grant with a
+test Lightning payment. Payment, identity, permission delivery, and optional
+asset conversion remain separate states. See
+[the paid-use proposal](16-artist-authorized-use-payments.md).
 
-## Phase 4 — Mainnet v1
+Public release of the website remains on hold as recorded in
+[WEBSITE.md](WEBSITE.md).
 
-Initial public release should prioritize:
+## Phase 4 — Public beta and mainnet v1
+
+- version-pinned wallet, CLI verifier, SDK, and proof-package format;
+- public interoperability and recovery report;
+- schema and policy compatibility matrix;
+- mainnet fee, confirmation, reorg, backup, and incident procedures;
+- independent security review of key separation and RGB validation;
+- signed reproducible releases; and
+- an explicit migration path for every supported pre-mainnet identity.
+
+Initial mainnet release prioritizes:
 
 ```text
-Identity + Evidence + Verification
+Bitcoin-rooted Identity + Evidence + Deterministic Verification
 ```
 
-Do not require GatePass, SplitNight, or financial settlement for v1.
+GatePass, SplitNight, rights contracts, swaps, and settlement integrations do
+not block identity v1.
 
 ## Phase 5 — Applications
 
 After protocol stability:
 
 - GatePass;
-- artist-authorized mentions, catalog/tour-date links, and content integrations
-  with signed grants and sat payments, if the local pilot supports adoption;
-- sponsorship/merchandise integrations;
+- artist-authorized catalog, tour-date, and content grants with sats payments;
+- sponsorship and merchandise integrations;
 - SplitNight;
-- optional RGB/Bitcoin-backed event or settlement evidence, only with a
-  version-matched client-side proof and independently checked anchor;
-- payment-endpoint discovery after signed binding, expiration, and revocation
-  semantics are specified; evaluate Paykit when its interface stabilizes;
-- additional registry applications.
+- additional RGB rights contracts for albums or permitted uses;
+- payment-endpoint discovery with signed, expiring, revocable bindings; and
+- optional client-controlled BTC/USDt conversion after independent test gates.
 
-Potential extensions include RGB contracts for scoped digital-use rights and
-optional client-controlled BTC/USDt swaps. Before promotion, verify the exact
-asset/network and recipient, prove both swap legs and timeout recovery, and
-separately demonstrate payment-to-grant delivery. RGB client-side validation
-alone does not establish atomic exchange or grant-delivery fairness.
+An RGB asset transition validates the supplied contract history against
+Bitcoin. It does not prove that a performance occurred, that audio is authentic,
+that a claimant owns a name, or that payment reached an authorized recipient.
+Applications verify those as separate claims.
 
-An RGB asset transfer proves the validated asset transition, not that a
-performance happened, a person controls an artist name, or a payment was
-received by an authorized counterparty. Application policy must check those
-separate claims. Live USDt on RGB is not a v0.1 or v1 dependency.
-
-## Phase 6 — Federation and reputation
+## Phase 6 — Federation and reputation research
 
 Only after sufficient real evidence:
 
-- federated registries;
-- policy diversity;
-- graph reputation and Sybil-resistance research, with empirical evidence
-  before adopting scores, namespace leases, or automatic social recovery;
-- optional cross-chain settlement adapters.
+- federated and user-selected registry/index views;
+- policy diversity and comparison;
+- graph reputation and Sybil-resistance research;
+- recovery-policy usability studies; and
+- optional settlement adapters that do not weaken the Bitcoin identity root.
+
+Human-readable global namespace leases remain outside the core unless a future
+ADR defines their governance, transfer, dispute, and failure model.

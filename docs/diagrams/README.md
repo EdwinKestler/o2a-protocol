@@ -18,7 +18,13 @@ All diagrams use Mermaid so they render directly in GitHub and remain editable/v
 ## Design rules reflected in these diagrams
 
 - lower layers never depend on upper layers;
-- EntityID is the generic protocol primitive;
+- every EntityID is rooted in a dedicated BIP340 key and an RGB lifecycle
+  anchored to Bitcoin;
+- artist, venue, promoter, label/organization, event, and album identities
+  each have their own public key;
+- owner wallets retain seeds, keys, consignments, attestations, and proof
+  packages, with a full Bitcoin node or an explicitly labeled light mode;
+- human-readable names are non-exclusive evidence-backed claims;
 - signed claims and attestations are evidence, not truth by themselves;
 - verification is a deterministic policy result over evidence;
 - registries are rebuildable projections, not the source of truth;

@@ -21,7 +21,8 @@ Suggested fields:
 
 ## Revocation
 
-A Revocation explicitly invalidates or withdraws an earlier object when the revoking party is authorized to do so.
+A Revocation explicitly invalidates or withdraws an earlier evidence object
+when the revoking party is authorized to do so.
 
 Suggested fields:
 
@@ -42,6 +43,14 @@ UNVERIFIED → SELF_ATTESTED → ENDORSED → VERIFIED
 
 Status is derived from evidence and policy; it is not a mutable label controlled by a registry administrator.
 
+Entity lifecycle status is different: revoking an EntityID, changing its
+controllers, or changing its recovery policy requires a valid RGB state
+transition anchored to Bitcoin. A registry flag or evidence-level revocation
+cannot replace that transition.
+
 ## Collision example
 
-If two EntityIDs claim the same stage identity, both claims remain visible. Policies determine what additional evidence is required to establish a usable verification result.
+If two EntityIDs claim the same stage name, both claims remain visible. Wallets
+show their Bitcoin chronology, DNS/social control proofs, attestations,
+challenges, and policy results. The earlier claim does not own the spelling by
+core-protocol rule.

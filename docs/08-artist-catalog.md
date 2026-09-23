@@ -9,6 +9,7 @@ It is a projection over protocol evidence, not an authority.
 ## Suggested projection
 
 - entity_id;
+- root identity public key and validated RGB state reference;
 - display_name;
 - aliases;
 - profile references;
@@ -19,12 +20,15 @@ It is a projection over protocol evidence, not an authority.
 - related venues;
 - related events;
 - challenges/revocations.
+- competing name claims and Bitcoin chronology;
 
 ## Rebuildability requirement
 
 Deleting the catalog database must not destroy artist identity or proof.
 
-A compliant implementation MUST be able to rebuild catalog state from valid protocol/evidence packages.
+A compliant implementation MUST be able to rebuild catalog state from
+validated RGB identity consignments, Bitcoin proof data, and signed evidence
+packages held outside the catalog.
 
 ## Initial experience
 

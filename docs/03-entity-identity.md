@@ -2,50 +2,101 @@
 
 ## EntityID
 
-EntityID is the canonical subject identifier.
+EntityID is the canonical, self-custodied subject identifier. It is
+deterministically rooted in:
 
-Domain categories such as ARTIST and VENUE are entity types, not independent identity systems.
+```text
+O2A protocol profile + Bitcoin network + dedicated BIP340 root public key
+```
 
-Suggested initial types:
+The final byte and human-readable encodings remain to be frozen. The root key
+is an identity key, never a Bitcoin spending key. Each entity uses a different
+root key even when one wallet holds several of them.
+
+Initial entity types are:
 
 - PERSON
 - ARTIST
 - BAND
 - VENUE
 - PROMOTER
+- LABEL
 - ORGANIZATION
 - EVENT
+- ALBUM
 
-## Minimal state
+Domain categories are entity types, not incompatible identifier systems.
 
-An entity contains:
+## RGB identity lifecycle
 
-- protocol version;
-- entity type;
-- controller or controller set;
-- creation commitment/time reference;
-- optional profile commitment;
-- status;
-- previous-state reference when updated.
+The root key signs genesis. Genesis creates the first RGB identity state and
+anchors it to a Bitcoin single-use seal. Later valid transitions can change:
 
-## Controller authorization
+- operational controller keys and their allowed purposes;
+- the committed recovery policy;
+- custodian or representative bindings;
+- optional profile commitments; and
+- ACTIVE, SUSPENDED, or REVOKED lifecycle status.
 
-A controller is authorized to create state transitions for the entity. A valid transition must prove authorization under the previous valid controller state.
+Every transition references the previous valid state, closes the expected
+seal, commits the successor state, and is authorized by the previous state.
+Wallets validate the complete supplied client-side history against Bitcoin.
+The newest profile document or database row is never sufficient.
 
-## Key rotation
+## Root and controller keys
 
-Controller rotation MUST NOT change EntityID.
+The root public key gives the EntityID its stable cryptographic root and signs
+genesis. Day-to-day controller keys sign claims, attestations, and
+administrative transitions according to explicit purposes in the current RGB
+state. The root is not an unconditional forever-controller unless the current
+state says so.
 
-Historical signatures remain verifiable against the controller state valid at their issuance point.
+Operational-key rotation does not change EntityID. Historical signatures are
+checked against the state that authorized their key at issuance time. Losing a
+working key therefore need not erase identity.
 
-## Human-facing identity
+## Recovery
 
-O2A may expose a friendly O2A ID while internally retaining EntityID as the generic protocol type.
+Recovery without a current controller is valid only when an earlier valid RGB
+state committed the applicable recovery rule. A later collection of social
+attestations can support recognition of a successor identity, but cannot
+silently invent authorization for the existing EntityID.
+
+The specification must define root compromise, recovery thresholds, delay,
+cancellation, stale-state, fork, and reorg behavior before implementation.
+
+## Event and album identities
+
+EVENT and ALBUM each have an independent root public key and RGB lifecycle.
+The responsible venue, promoter, organizer, artist, or label can hold those
+keys in the same wallet as its own identity, using separated derivation paths.
+
+An event-key signature authorizes a canonical event-manifest claim. An
+album-key signature authorizes canonical album metadata and content-hash
+claims. Participant attestations remain separate. The keys do not alone prove
+that an event occurred, that audio is authentic, or that the custodian owns
+copyright.
+
+## Human-facing names
+
+An O2A ID is unique because its root key is unique. Artist names, venue names,
+promoter names, album titles, and event names are non-exclusive claims.
+Wallets show their evidence, Bitcoin chronology, conflicts, challenges, and
+policy result. The core protocol does not award permanent ownership of a
+spelling to its first claimant.
+
+## Discovery and payment bindings
+
+Pubky Ed25519 keys, Nostr keys, DNS names, social accounts, Lightning offers,
+and Bitcoin payment descriptors are purpose-bound claims attached to an
+EntityID. They can expire, rotate, or be revoked without replacing the root
+identity when a valid RGB transition or controller-authorized claim updates
+the binding.
 
 ```text
-O2A ID (product-facing)
+O2A ID (product-facing encoding)
         ↓
-EntityID (protocol primitive)
+EntityID (BIP340-rooted protocol identifier)
+        ↓
+validated RGB state (current controllers and recovery rules)
 ```
-
-This allows the artist-focused go-to-market to coexist with generic protocol semantics.

@@ -1,12 +1,23 @@
 # O2A Protocol
 
-**Open2Artist (O2A)** is a modular identity, attestation, verification, and registry protocol for artists and the wider live-music ecosystem.
+**Open2Artist (O2A)** is a decentralized, Bitcoin-native identity,
+attestation, verification, and registry protocol for the music ecosystem.
 
-The protocol is designed around a generic **EntityID** primitive so the same trust layer can represent artists, venues, promoters, events, and later other ecosystem participants without redefining identity for each application.
+Each artist, venue, promoter, label, live event, and album has a public O2A
+EntityID rooted in its own dedicated BIP340/secp256k1 identity key. The owner
+holds that key and its proof data in a self-custodial wallet/node. Identity
+genesis, controller changes, recovery-policy changes, and revocation are RGB
+client-side state transitions anchored to Bitcoin. Identity keys are never
+Bitcoin spending keys.
 
-Start with the [project vision and rationale](docs/00-vision.md) for the main
-goal, the problems O2A addresses, the proposed solutions, and why this timing
-and technology are appropriate to test them.
+Human-readable names remain evidence-backed claims rather than globally locked
+usernames. Wallets can show DNS and social control proofs, attestations from
+other O2A IDs, challenges, competing claims, and Bitcoin-established chronology
+without pretending that the first claimant owns a spelling forever.
+
+Start with the [project vision and rationale](docs/00-vision.md) and the
+accepted
+[Bitcoin-rooted identity decision](adr/0005-bitcoin-rooted-self-custodial-identity.md).
 
 The [project website draft](docs/WEBSITE.md) has an owner-private Sites review
 deployment and a local preview. Public release and GitHub Pages deployment
@@ -15,52 +26,57 @@ remain on hold pending authorization. Examples use generic participants.
 ## Design principle
 
 ```text
-Protocol Kernel
+Bitcoin consensus
     ↓
-Entity Identity
+RGB identity state
     ↓
-Claims
+BIP340 key-rooted EntityID
     ↓
-Attestations
+Claims and attestations
     ↓
 Challenges / Revocation
     ↓
 Trust Policy
     ↓
-Registries
-    ↓
-Applications
+Registries and Applications
 ```
 
-Dependencies flow downward only. Application modules consume protocol primitives; lower layers never depend on application-specific concepts.
+Dependencies flow downward only. Applications consume protocol primitives;
+lower layers never depend on application-specific behavior. Bitcoin validates
+anchors and spent seals; it does not decide who is the real-world owner of an
+artist or venue name.
 
-## Source of truth
+## Source of verification
 
-Registries and databases are projections, not authority. Public profiles are
-discoverable application data; signed evidence and its validation determine
-protocol results. RGB/Bitcoin proofs contribute only when a policy explicitly
-requires and verifies them.
+Registries and databases are projections, not authority. The portable source
+of verification is the validated RGB identity history, its Bitcoin anchors,
+and the signed evidence package retained by clients. Public profiles are
+discoverable application data.
 
 ```text
-signed evidence + optional RGB/Bitcoin proof + versioned policy
+Bitcoin anchor + validated RGB identity history + signed evidence
+                    + versioned policy
                               ↓
-                      rebuildable registry
+          reproducible result + rebuildable registry
 ```
 
-Given identical evidence, policy, and protocol version, independent verifiers MUST produce the same result.
+Given identical inputs, independent conforming wallets MUST produce the same
+result. Online DNS, social, Pubky, Nostr, and Bitcoin observations become
+explicit evidence rather than hidden verifier inputs.
 
 ## Initial scope
 
 O2A v0.1 specifies:
 
-- Entity identity and controller rotation
-- Signed claims
-- Third-party attestations
-- Challenges and revocation
-- Deterministic trust policies
-- Artist, venue, and event registry projections
-- Portable proof packages
-- Module boundaries for GatePass and SplitNight
+- BIP340-rooted EntityID genesis on RGB/Bitcoin;
+- controller rotation, committed recovery rules, and revocation;
+- signed claims and third-party attestations;
+- DNS, HTTPS, Pubky, Nostr, and social channel-control observations;
+- challenges and evidence revocation;
+- deterministic trust policies;
+- artist, venue, promoter, album, and event identity profiles;
+- rebuildable registry projections and portable proof packages; and
+- module boundaries for GatePass and SplitNight.
 
 ## Repository structure
 
@@ -70,38 +86,58 @@ specs/  Canonical data and verification contracts
 adr/    Architecture decision records
 ```
 
+The current schema set defines the
+[Bitcoin-rooted entity](specs/entity-schema.md),
+[claims](specs/claim-schema.md),
+[attestations](specs/attestation-schema.md),
+[challenges](specs/challenge-schema.md),
+[channel-control proofs](specs/control-proof-schema.md),
+[event and album identities](specs/music-object-schema.md), and
+[verification policy](specs/verification-policy.md).
+
 Local source discovery and historical memory use Palimnex. See
 [the O2A Palimnex setup](docs/PALIMNEX.md) for installation and validation.
 See [code references](codereference.md) for RGB upstream sources and the
 independent local project knowledge available for research.
 The [identity/discovery assessment](docs/14-identity-discovery-assessment.md)
-records how the original Pubky, claim-recognition, and event ideas affect the
-[roadmap](docs/13-roadmap.md).
-The [control-proof and verification-bond assessment](docs/17-control-proofs-and-verification-bonds.md)
-evaluates DNS/social proofs, independent endorsements, optional satoshi
-deposits, and Internet Identity/id.ai against the same protocol boundaries.
+maps Pubky, Nostr, DNS/social proofs, and wallet custody into the architecture.
+The [control-proof assessment](docs/17-control-proofs-and-verification-bonds.md)
+defines the channel-proof and independent-observation boundary.
 
-No production implementation code should be introduced until the v0.1 schemas, canonical serialization rules, and deterministic Hello-World test vectors are agreed.
+No production implementation code should be introduced until the v0.1 RGB
+identity schema, canonical serialization, Bitcoin commitment and reorg rules,
+key-derivation profile, and deterministic test vectors are agreed.
 
 ## First milestone
 
 The first complete protocol scenario is:
 
-1. An artist creates an EntityID.
-2. The artist publishes a signed self-claim.
-3. The artist and a venue sign the same canonical event manifest through separate evidence objects.
-4. A promoter may add independent booking evidence. Booking, performance, and settlement stay distinct claims.
-5. Known challenges and revocations remain visible in the package.
-6. Independent clients apply the same versioned trust policy to that evidence.
-7. Each client derives the same verification result.
+1. An artist, a venue, and a live event create distinct key-rooted EntityIDs
+   through RGB genesis transitions on Bitcoin regtest.
+2. Their wallets validate the RGB histories and current controller keys.
+3. The artist signs a name claim and publishes a fresh DNS or social control
+   proof; a competing name claim remains visible.
+4. The event key signs a canonical event manifest. The artist and venue sign
+   separate attestations over its exact hash; a promoter may add booking
+   evidence.
+5. Known challenges and revocations remain visible in the package. Booking,
+   performance, and settlement stay distinct claims.
+6. Independent clients apply the same versioned trust policy to the same
+   Bitcoin/RGB history and evidence.
+7. Each client derives the same verification result and explanation.
 
 ```text
-same evidence + same policy + same protocol version + same evaluation context
-                         =
+same Bitcoin/RGB history + same evidence + same policy
+             + same protocol version + same evaluation context
+                              =
                  same verification result
 ```
 
 ## Status
 
 **Design / specification phase.**  
-Network targets, cryptographic primitives, serialization rules, and RGB integration remain subject to implementation validation before v1.0.
+The BIP340 root and required Bitcoin/RGB identity lifecycle are accepted design
+constraints. The exact EntityID encoding, RGB schema, commitment method,
+confirmation/reorg policy, key-derivation profile, serialization rules, and
+compatible dependency set remain subject to specification and regtest
+validation before v0.1 implementation is accepted.

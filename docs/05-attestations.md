@@ -2,7 +2,9 @@
 
 ## Definition
 
-An Attestation is signed evidence issued by an entity about another entity, claim, relationship, or event.
+An Attestation is signed evidence issued by an authorized controller of one
+validated O2A identity about another entity, claim, relationship, album, event,
+or online observation.
 
 Examples:
 
@@ -10,6 +12,9 @@ Examples:
 - a promoter attests that it booked an artist;
 - an artist attests that a venue hosted the performance;
 - an organization attests that a controller represents a legal entity.
+- an artist or label attests that an ALBUM manifest describes a particular work;
+- an observer attests that a key-bound DNS or social token was visible during
+  a specified interval.
 
 ## Evidence graph
 
@@ -33,6 +38,10 @@ An attestation is evidence, not truth by itself.
 
 Verification occurs only when a named policy evaluates the complete applicable evidence set.
 
+The issuer's EntityID, RGB state, controller purpose, and Bitcoin anchor must
+validate before its attestation can be considered. This establishes who signed
+the statement, not whether the statement is true.
+
 ## Independence
 
 Policies may distinguish:
@@ -44,3 +53,7 @@ Policies may distinguish:
 - conflicting attestation.
 
 These relationships must be explicit rather than inferred invisibly.
+
+Several wallets observing the same DNS record or social post provide redundant
+observations of one source. They do not automatically become several
+independent endorsements of the claimed real-world identity.

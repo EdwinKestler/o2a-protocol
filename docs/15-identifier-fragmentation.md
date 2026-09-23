@@ -53,7 +53,7 @@ records?** Both can be useful evidence, but they are different statements.
 | Commercial platform ID | The platform administers its namespace and profile-access process. | A portable signature by the artist or representative authorizing a cross-platform claim. |
 | Open community catalog ID | Contributors and the project's governance maintain shared records. | Exclusive subject control or a subject-signed assertion about the record. |
 | Standard identifier such as ISNI | The standard and its registration/assignment system govern issuance. | Control of a signing key or authorization of a particular claim or representative. |
-| Proposed O2A EntityID and claims | Controller authorization governs protocol transitions; claims remain challengeable and policies govern recognition. | Automatic truth about the artist's name, legal identity, history, or ownership of an external account. |
+| Proposed O2A EntityID and claims | A dedicated BIP340 root and Bitcoin-anchored RGB state govern identity lifecycle; signed claims remain challengeable and policies govern recognition. | Automatic truth about the artist's name, legal identity, history, or ownership of an external account. |
 
 MusicBrainz describes itself as a community-maintained music encyclopedia;
 Wikidata describes a collaborative knowledge base. Their openness and reuse
@@ -91,7 +91,9 @@ may differ: a physical venue is not necessarily its current operator; a
 festival brand is not one specific year's event; a promoter's staff account
 is not the promoter organization.
 
-The proposed model therefore requires an explicit subject and relationship.
+The proposed model therefore gives artists, venues, promoters, labels, events,
+and albums distinct public-key-rooted EntityIDs and requires an explicit
+subject and relationship.
 A venue operator can assert its role for a venue; an organizer can assert its
 role for an event; artists and counterparties can attest to the same event
 manifest. No participant gains authority over all these entities merely by
@@ -99,7 +101,8 @@ creating a matching name or importing a platform record.
 
 ## What O2A should add
 
-An external-identifier claim should retain the EntityID, external namespace,
+An external-identifier claim should retain the BIP340-rooted EntityID, the
+validated issuer RGB state, external namespace,
 identifier value, exact relationship being claimed, issuer authorization,
 supporting evidence, and relevant time/context. These are design requirements
 for the draft claim vocabulary, not a frozen encoding. A claim that a catalog
@@ -112,6 +115,7 @@ relationship. Exported evidence preserves the assertion and its provenance
 even if the discovery service changes; it does not guarantee that an external
 profile remains available or under the same control forever.
 
-The intended result is **an identity the participant can state and authorize,
-with portable evidence linking it to the ecosystem's existing records**.
+The intended result is **a Bitcoin-rooted identity the participant controls in
+its own wallet, with portable evidence linking it to the ecosystem's existing
+records**.
 It remains open to independent verification, disagreement, and correction.

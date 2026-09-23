@@ -1,6 +1,7 @@
 # ADR-0004 — Consensus as Policy, Not a New Blockchain
 
-**Status:** Accepted for v0.1 design
+**Status:** Accepted for v0.1 design; Bitcoin lifecycle role clarified by
+[ADR-0005](0005-bitcoin-rooted-self-custodial-identity.md)
 
 ## Context
 
@@ -20,7 +21,10 @@ versioned policy
 verification result
 ```
 
-Bitcoin/RGB may secure commitments and state transitions; trust policy evaluates the meaning of evidence.
+Bitcoin/RGB MUST secure identity genesis and lifecycle transitions under the
+v0.1 Bitcoin-native profile. Trust policy evaluates the social meaning of
+signed evidence. Bitcoin consensus establishes anchor order and spent seals;
+it does not vote on who owns a human-readable name.
 
 ## Consequences
 

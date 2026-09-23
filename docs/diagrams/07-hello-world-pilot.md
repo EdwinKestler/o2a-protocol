@@ -4,11 +4,12 @@ This is the smallest scenario that demonstrates O2A as a protocol rather than a 
 
 ```mermaid
 flowchart LR
-    A["Alice creates<br/>Artist EntityID A"]
+    A["Alice creates Artist EntityID A<br/>BIP340 root + RGB genesis<br/>anchored to Bitcoin"]
     SC["Alice signs self-claim<br/>'I am Artist X'"]
     V["Venue V creates<br/>Venue EntityID"]
     VA["Venue V attests<br/>'Artist A performed at Event E'"]
     P["Promoter P creates<br/>Promoter EntityID"]
+    E["Promoter or venue creates<br/>Event EntityID E<br/>own key + manifest hash"]
     PA["Promoter P attests<br/>'I booked Artist A for Event E'"]
     PKG["Signed evidence package"]
     C1["Verifier Client 1"]
@@ -18,6 +19,8 @@ flowchart LR
     R2["Result R"]
 
     A --> SC --> VA
+    E --> VA
+    E --> PA
     V --> VA
     P --> PA
     SC --> PKG

@@ -7,6 +7,7 @@
   "protocol_version": "0.1",
   "object_type": "challenge",
   "challenger": "<EntityID>",
+  "challenger_state": "<validated-rgb-identity-state-id>",
   "target": "<object-id>",
   "reason": "<reason-code>",
   "evidence": ["<object-id>"],
@@ -26,6 +27,7 @@
   "protocol_version": "0.1",
   "object_type": "revocation",
   "issuer": "<EntityID>",
+  "issuer_state": "<validated-rgb-identity-state-id>",
   "target": "<object-id>",
   "reason": "<reason-code>",
   "context": "<optional-context>",
@@ -44,3 +46,9 @@
 - challenge and revocation objects are themselves immutable signed evidence;
 - resolution SHOULD create new evidence rather than mutate old evidence;
 - policies MUST state how unresolved challenges affect verification.
+
+This evidence-level revocation object revokes or qualifies a claim,
+attestation, binding, or other signed object. Revoking an EntityID itself is an
+RGB identity-state transition anchored to Bitcoin under
+[the entity schema](entity-schema.md); an evidence object alone cannot mutate
+the identity lifecycle.

@@ -8,11 +8,14 @@ Fast discovery requires an indexed database, but making that database authoritat
 
 ## Decision
 
-Artist, venue, and event catalogs are rebuildable projections over signed protocol evidence.
+Artist, venue, promoter, label, event, and album catalogs are rebuildable
+projections over validated RGB identity histories and signed protocol evidence.
 
 ## Required test
 
-A deployment MUST be able to destroy its registry/index and regenerate equivalent protocol-relevant projections from valid evidence/proof packages.
+A deployment MUST be able to destroy its registry/index and regenerate
+equivalent protocol-relevant projections from valid RGB consignments, Bitcoin
+proof data, and evidence/proof packages.
 
 ## Consequences
 

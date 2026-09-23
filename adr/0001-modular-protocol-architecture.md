@@ -1,6 +1,7 @@
 # ADR-0001 — Modular Protocol Architecture
 
-**Status:** Accepted for v0.1 design
+**Status:** Accepted for v0.1 design; amended by
+[ADR-0005](0005-bitcoin-rooted-self-custodial-identity.md)
 
 ## Context
 
@@ -8,7 +9,9 @@ O2A is intended to support identity, registries, ticketing, settlement, and futu
 
 ## Decision
 
-Use a layered architecture with downward-only dependencies:
+Use a layered architecture with downward-only dependencies. Bitcoin consensus
+and RGB client-side validation are the required foundation for identity
+lifecycle state under ADR-0005; other settlement systems remain adapters.
 
 ```text
 Applications

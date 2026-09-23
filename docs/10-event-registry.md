@@ -2,11 +2,14 @@
 
 ## Purpose
 
-Events are high-value evidence junctions because multiple independent participants can attest to the same real-world occurrence.
+Events are key-rooted O2A identities and high-value evidence junctions because
+multiple independent participants can attest to the same canonical manifest
+and real-world occurrence.
 
 ## Suggested projection
 
 - event EntityID;
+- event root public key, custodian, and validated RGB state reference;
 - venue EntityID;
 - artist EntityIDs;
 - promoter EntityID(s);
@@ -24,6 +27,11 @@ Promoter ─ booked ───────► Artist + Event
 ```
 
 Agreement across independently controlled identities increases usable evidence without requiring one central issuer.
+
+The event key is normally held in the responsible venue, promoter, or
+organizer's wallet, with its own derivation path and recovery policy. It signs
+the canonical manifest hash. Participant signatures remain separate evidence;
+the event's self-signature does not prove that the event occurred.
 
 ## Scope
 

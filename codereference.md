@@ -10,6 +10,7 @@ design decision, compatibility check, and local tests.
 
 | Reference | What to inspect for O2A | Current boundary |
 | --- | --- | --- |
+| [BIP340](https://github.com/bitcoin/bips/blob/master/bip-0340.mediawiki) | Schnorr public-key and signature requirements for the dedicated O2A root and controller authorization profile. | The exact O2A key derivation, domain separation, message framing, and EntityID encoding still require frozen vectors. Identity keys must remain separate from spending keys. |
 | [RGB Core](https://github.com/RGB-WG/rgb-core) | Consensus validation, client-side state, single-use seals, commitments, and Strict Types integration. Start with its source and [releases](https://github.com/RGB-WG/rgb-core/releases). | Core v0.12.0 is a final consensus release; that alone does not establish a compatible application/runtime stack. |
 | [RGB API](https://github.com/rgb-protocol/rgb-api) | Client-facing Rust API, local `rgb` CLI, wallet/runtime integration, and indexer boundary. | This is an RGB client library, not O2A's proposed HTTP API. Check its Cargo dependencies against the chosen Core line before using it. |
 | [RGB Sandbox](https://github.com/RGB-Tools/rgb-sandbox) ([current location](https://github.com/rgb-protocol/rgb-sandbox)) | Docker regtest layout, indexer, external wallet, issuance, consignment, and transfer demonstrations. | Its README describes an RGB 0.11.1 RC6 demo. Use it to learn and test that line; do not treat it as proof of a Core 0.12 integration. Some demo scripts remove local data. |
@@ -22,9 +23,11 @@ revisions solely because they share the RGB name.
 
 For O2A, distinguish four checks: the Bitcoin outpoint identifies the seal;
 the spending transaction closes it and commits to a transition; an RGB client
-validates the off-chain transition and proof; and O2A separately validates
-EntityID controller authority, signed claims/attestations, and trust policy.
-A Bitcoin public key or UTXO spend alone is not an O2A verification result.
+validates the off-chain identity transition and proof under the O2A schema;
+and the O2A verifier validates BIP340 authorization plus signed external
+evidence and trust policy. Bitcoin/RGB is required for EntityID lifecycle
+validity, but a Bitcoin public key or UTXO spend alone is not a real-world
+identity verification result.
 
 ## Authentication and external control-proof references
 
@@ -101,7 +104,8 @@ merely to obtain a reference.
 For any external or sibling implementation detail proposed for O2A, record the
 source URL or local path and revision, its license, the exact behavior being
 adapted, the version compatibility result, O2A-specific semantic differences,
-and tests against O2A's own specifications. O2A's first gates remain
-canonical serialization, authorization transitions, portable proof packages,
-and independent deterministic Hello-World vectors before production code, as
-specified in [the roadmap](docs/13-roadmap.md).
+and tests against O2A's own specifications. O2A's first gates remain the
+BIP340-rooted EntityID encoding, a compatible Bitcoin/RGB identity profile,
+canonical serialization, authorization and recovery transitions, portable
+consignments/proof packages, and independent deterministic Hello-World vectors
+before production code, as specified in [the roadmap](docs/13-roadmap.md).
