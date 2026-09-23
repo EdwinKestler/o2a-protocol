@@ -81,7 +81,7 @@ O2A v0.1 specifies:
 - DNS, HTTPS, Pubky, Nostr, and social channel-control observations;
 - challenges and evidence revocation;
 - deterministic trust policies;
-- artist, venue, promoter, album, and event identity profiles;
+- artist, venue, promoter, label, album, and event identity profiles;
 - rebuildable registry projections and portable proof packages; and
 - module boundaries for GatePass and SplitNight.
 
@@ -123,8 +123,9 @@ Supporting projection notes cover the
 [artist catalog](docs/08-artist-catalog.md),
 [venue registry](docs/09-venue-registry.md),
 [event registry](docs/10-event-registry.md),
-[promoter registry](docs/18-promoter-registry.md), and
-[album registry](docs/19-album-registry.md).
+[promoter registry](docs/18-promoter-registry.md),
+[album registry](docs/19-album-registry.md), and
+[label registry](docs/20-label-registry.md).
 
 No production implementation code should be introduced until the v0.1 RGB
 identity schema, canonical serialization, Bitcoin commitment and reorg rules,
@@ -140,8 +141,8 @@ gates still apply before implementation code is accepted.
 
 The first complete protocol scenario is:
 
-1. An artist, venue, promoter, live event, and album create distinct key-rooted
-   EntityIDs through RGB genesis transitions on Bitcoin regtest.
+1. An artist, venue, promoter, label, live event, and album create distinct
+   key-rooted EntityIDs through RGB genesis transitions on Bitcoin regtest.
 2. Their wallets validate the RGB histories and current controller keys.
 3. Day-to-day controller keys sign typed objects while root and Bitcoin
    spending keys remain separate.

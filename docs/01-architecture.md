@@ -94,7 +94,7 @@ first-claim global username rule.
 
 ### Registries and discovery
 
-Artist, venue, promoter, album, and event registries are rebuildable
+Artist, venue, promoter, label, album, and event registries are rebuildable
 projections. Pubky/PKARR can publish public profiles and discovery pointers
 through a signed Ed25519-key binding. Nostr can publish BIP340-signed events
 through a separate binding. Both use the canonical

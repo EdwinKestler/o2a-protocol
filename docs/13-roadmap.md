@@ -49,7 +49,8 @@ Release sequence:
 
 Hello World:
 
-1. an artist, venue, promoter, event, and album use distinct root public keys;
+1. an artist, venue, promoter, label, event, and album use distinct root public
+   keys;
 2. their RGB identity histories are created and validated on Bitcoin regtest;
 3. day-to-day controller keys sign claims while root and spending keys remain
    separated;
@@ -94,7 +95,7 @@ cross purposes.
 
 ## Phase 3 — Public discovery and test network
 
-- Artist, Venue, Promoter, Event, and Album registry projections;
+- Artist, Venue, Promoter, Label, Event, and Album registry projections;
 - shared Bitcoin test network and adversarial identity collisions;
 - Pubky/PKARR public-profile publication, independent read, homeserver
   migration, backup/restore, and key rebinding;

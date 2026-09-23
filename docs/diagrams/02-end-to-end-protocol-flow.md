@@ -11,7 +11,7 @@ flowchart LR
     A["Attestations<br/>venue · promoter · artist<br/>independent evidence"]
     X["Optional Challenges / Revocation<br/>disputes · conflicts<br/>corrections when present"]
     P["Trust Policy<br/>deterministic rules<br/>verification status"]
-    R["Registries<br/>Artist · Venue · Promoter<br/>Event · Album"]
+    R["Registries<br/>Artist · Venue · Promoter<br/>Label · Event · Album"]
     M["Application Modules<br/>GatePass · SplitNight<br/>Sponsors · Merch/F&B"]
 
     B --> K --> I

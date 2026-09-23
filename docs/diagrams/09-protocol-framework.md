@@ -38,7 +38,7 @@ flowchart LR
 
     subgraph VIEWS["Replaceable views and applications"]
         DISC["Discovery<br/>direct exchange · HTTPS<br/>Pubky · optional Nostr"]
-        REG["Rebuildable registries<br/>artist · venue · promoter<br/>event · album"]
+        REG["Rebuildable registries<br/>artist · venue · promoter<br/>label · event · album"]
         APP["Applications<br/>GatePass · SplitNight<br/>paid-use · catalogs"]
         DISC --> REG --> APP
     end

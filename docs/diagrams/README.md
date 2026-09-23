@@ -24,7 +24,7 @@ repeated a master in an older form:
   [the protocol flow](./02-end-to-end-protocol-flow.md) and the roadmap Hello
   World.
 - `08-o2a-ecosystem-map.md` assigned claims and attestations by role and omitted
-  album and promoter registries. The authority picture is
+  album, promoter, and label registries. The authority picture is
   [the protocol framework](./09-protocol-framework.md).
 
 ## Design rules reflected in these diagrams

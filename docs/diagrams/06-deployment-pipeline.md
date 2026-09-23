@@ -47,6 +47,8 @@ Revocation
 Trust Policy
 Artist Registry
 Venue Registry
+Promoter Registry
+Label Registry
 Event Registry
 Album Registry
 ```

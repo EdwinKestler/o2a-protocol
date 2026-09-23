@@ -4,7 +4,7 @@ This is the foundational modular architecture proposed for O2A.
 
 ```mermaid
 flowchart TB
-    APP["Application Modules<br/>Artist · Venue · Promoter · Event · Album registries<br/>GatePass · SplitNight · Sponsors · Merch/F&B"]
+    APP["Application Modules<br/>Artist · Venue · Promoter · Label · Event · Album registries<br/>GatePass · SplitNight · Sponsors · Merch/F&B"]
     TRUST["Trust / Policy Modules<br/>Claims · Attestations · Observations<br/>Optional challenges · evidence revocation · named policy"]
     ID["Identity Module<br/>BIP340-rooted EntityID · Controllers<br/>Recovery · Relationships · Profiles"]
     KERNEL["Required Bitcoin/RGB Identity Kernel<br/>Genesis · State · Transition · Single-use seals<br/>Consignments · Anchors · Client-side validation"]
