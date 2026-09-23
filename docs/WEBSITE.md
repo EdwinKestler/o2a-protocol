@@ -56,7 +56,7 @@ The source repository has multiple push URLs configured for `origin`. Any
 publishing command must name the intended repository explicitly rather than
 using an unqualified `git push`.
 
-## Private review with Sites
+## Owner-private live review with Sites
 
 The draft is hosted at
 [O2A Protocol — Private Draft](https://o2a-protocol.edwinkestler.chatgpt.site).
@@ -95,7 +95,8 @@ PY
 
 Review and commit only that snapshot, then use a short-lived Sites repository
 write credential to push its exact HEAD to the Sites-provided remote and
-branch. Keep credentials in process memory, never in files or remote URLs.
+branch. Keep credentials in process memory, never in files or remote URLs. A
+successful source push does not by itself save a Sites version or deploy it.
 Build the archive from that same pushed commit:
 
 ```bash
@@ -103,17 +104,28 @@ git -C .sites-work/source archive --format=tar.gz -o ../o2a-site.tar.gz HEAD
 git -C .sites-work/source rev-parse HEAD
 ```
 
+Read the current Sites access policy immediately before a private release. The
+private deployment operation requires an already owner-private site; it is not
+an access probe and must not be used to change the audience implicitly. If the
+policy has drifted, stop unless there is explicit authorization to restore it.
+With that authorization, set `custom` access with only the owner retained and
+clear non-owner users and groups, then re-read the policy.
+
 Use the Sites `save_version_and_deploy_private` operation with the existing
 project ID, that full commit SHA, and the absolute archive path. Confirm a
-successful deployment and re-check the owner-only audience. Use a temporary
-Sites authorization header scoped exclusively to the site origin for
+successful production deployment and re-check the owner-only audience. Use a
+temporary Sites authorization header scoped exclusively to the site origin for
 automated browser tests; never place a test token in a page or share URL.
 Verify signed-out requests cannot retrieve either pages or static assets.
 
 Deployment evidence and validation results are recorded below; refresh them
 after each deployment rather than assuming an older test proves a new version.
 
-### Version 1 validation — 2026-09-23
+### Version 1 historical validation — 2026-09-23
+
+This is evidence for version 1 at its validation time, not proof of the current
+deployment or access policy. Re-check both after every access or deployment
+change.
 
 - Sites deployment completed successfully; owner-only access policy revision 1.
 - Source commit: `b4d5124b237ae223632de55c0f5c2c82e53f2984` in the isolated
@@ -126,7 +138,27 @@ after each deployment rather than assuming an older test proves a new version.
   with HTTP 200 and no horizontal overflow.
 - The sample policy, challenge override, and keyboard toggle checks passed;
   no browser console or page errors were observed.
-- Seven-file export validation and Git whitespace checks passed.
+- Seven-file export validation and Git whitespace checks passed for version 1.
 
-This validates the website draft and its access gate. It does not validate an
-O2A protocol implementation, payment system, or RGB smart contract.
+### Version 2 validation — 2026-09-23
+
+- Before release, the live access policy had drifted to `public` at revision 4.
+  With explicit authorization, it was restored to `custom` owner-only access
+  at revision 5, with no other viewers, editors, groups, or external visitors.
+- Sites production deployment completed successfully at the existing private
+  review URL as saved version 2.
+- Source commit: `ce6212b8e532069bd7b809ea54dd0bfc06206b2a` in the isolated
+  Sites snapshot repository, not the protocol repository.
+- Archive SHA-256:
+  `6f4f45354e1757eb7117ca3cdb0e94a200c2d9a655bc78796178a8f26c5dceac`.
+- Signed-out requests to `/`, `/guide.html`, and `/assets/site.js` returned
+  HTTP 401 without the curated website content.
+- Authorized requests loaded both pages and all three protocol figures with
+  HTTP 200. The home page contained the protocol section and figure links, and
+  the guide contained the release-pipeline update.
+- Ten-file export validation and Git whitespace checks passed. Browser viewport
+  and interaction checks were not rerun for version 2.
+
+This validates the version 2 website bundle, deployment, and access gate within
+the checks above. It does not validate an O2A protocol implementation, payment
+system, or RGB smart contract.
