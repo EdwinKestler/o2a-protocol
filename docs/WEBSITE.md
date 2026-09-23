@@ -269,3 +269,26 @@ implementation, RGB contract, payment system, or mainnet release.
 This validates the version 6 website bundle, deployment, and access gate within
 the checks above. It does not validate an O2A wallet, proof-package
 implementation, RGB contract, payment system, or mainnet release.
+
+### Version 7 public validation — 2026-09-23
+
+- The recorded default Sites access policy changed from owner-only to `public`.
+  The live policy was `public` at revision 8 before and after deployment.
+- The Sites display title changed to `O2A Protocol — Public Draft`.
+- Sites production deployment completed successfully as saved version 7 at the
+  existing public URL.
+- Source commit: `bdf829cc40f690776ab156b51425347c403c443c` in the isolated
+  Sites snapshot repository, not the protocol repository.
+- Archive SHA-256:
+  `c585efd8dcf209708f4fd5010b1e997afb3f7ec422fa66ba51125d6499c8c2b1`.
+- Anonymous requests to `/`, `/guide.html`, `robots.txt`, and all four protocol
+  figure assets returned HTTP 200 after following canonical redirects.
+- Live content checks found the public-draft labels and the Apache License 2.0
+  decision. The pages still request `noindex` while the project is a draft;
+  this is not access control.
+- Eleven-file export validation, SVG XML parsing, relative Markdown-link
+  checks, Git whitespace checks, and all 21 Palimnex evaluation cases passed.
+
+This validates public access, the version 7 website bundle, and the deployed
+content within the checks above. It does not validate an O2A wallet,
+proof-package implementation, RGB contract, payment system, or mainnet release.
