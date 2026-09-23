@@ -316,3 +316,25 @@ proof-package implementation, RGB contract, payment system, or mainnet release.
 This validates public access, the version 8 website bundle, and the deployed
 content within the checks above. It does not validate an O2A wallet,
 proof-package implementation, RGB contract, payment system, or mainnet release.
+
+### Version 9 public validation — 2026-09-23
+
+- The live access policy remained the recorded `public` default at revision 8
+  before and after deployment.
+- Sites production deployment completed successfully as saved version 9 at the
+  existing public URL.
+- Source commit: `c7a953e11c23ad2b6844ea17f1d8dffacafa4490` in the isolated
+  Sites snapshot repository, not the protocol repository.
+- Archive SHA-256:
+  `5484565748f2f818193e3c195d71444ec232cd105bba415a9ad3afd2afd11c92`.
+- Anonymous requests to `/`, `/guide.html`, `robots.txt`, and all four protocol
+  figure assets returned HTTP 200 after following canonical redirects.
+- Live content checks found label in the six-identity first milestone, guide,
+  and replaceable-registry list in the framework figure.
+- Eleven-file export validation, SVG XML parsing and visual rendering, Git
+  whitespace checks, Palimnex deep validation, and all 21 Palimnex evaluation
+  cases passed.
+
+This validates public access, the version 9 website bundle, and the deployed
+content within the checks above. It does not validate an O2A wallet,
+proof-package implementation, RGB contract, payment system, or mainnet release.
