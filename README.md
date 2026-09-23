@@ -126,6 +126,9 @@ The supporting [license/adoption assessment](docs/22-license-and-adoption-assess
 and [compatibility/security record](docs/23-stack-compatibility-and-security-readiness.md)
 record the accepted dual-license policy, the disposable install smoke,
 blockers, and required mitigations without selecting a dependency graph.
+The [containerized Phase 0 development environment](dev/README.md) supplies a
+pinned Rust toolchain, isolated Bitcoin Core regtest, and an opt-in disposable
+RGB compatibility profile without adding an O2A implementation crate.
 Supporting projection notes cover the
 [artist catalog](docs/08-artist-catalog.md),
 [venue registry](docs/09-venue-registry.md),

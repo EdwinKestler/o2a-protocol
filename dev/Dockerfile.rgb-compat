@@ -1,0 +1,37 @@
+FROM rust:1.98.1-slim-bookworm@sha256:ff521445a372125ed4f76e1453a1f8098f2d05332d1601d30db1c1f62757e730 AS build
+
+ARG RGB_TAG=v0.12.0-rc.3
+ARG RGB_COMMIT=a1e6b41524131f6d6f183b2235fdaacb5c1abb31
+
+RUN set -eux; \
+    apt-get update; \
+    apt-get install --yes --no-install-recommends \
+      build-essential ca-certificates clang cmake git libclang-dev pkg-config; \
+    rm --recursive --force /var/lib/apt/lists/*
+
+WORKDIR /src
+RUN git clone --depth 1 --branch "${RGB_TAG}" https://github.com/RGB-WG/rgb.git
+RUN test "$(git -C rgb rev-parse HEAD)" = "${RGB_COMMIT}"
+
+COPY evidence/phase0/rgb-rc3-remediation-2026-09-23/rgb-rc3-cli.patch /tmp/rgb-rc3-cli.patch
+RUN set -eux; \
+    git -C rgb apply --check --recount /tmp/rgb-rc3-cli.patch; \
+    git -C rgb apply --recount /tmp/rgb-rc3-cli.patch; \
+    cargo build --manifest-path rgb/Cargo.toml --release --locked --package rgb-wallet
+
+FROM debian:bookworm-slim@sha256:3783cc01769c7b2b1b83a5c5ad96c815348e28ed7da68e2e3687004faa906251
+
+RUN set -eux; \
+    apt-get update; \
+    apt-get install --yes --no-install-recommends ca-certificates; \
+    rm --recursive --force /var/lib/apt/lists/*; \
+    groupadd --gid 10001 o2a; \
+    useradd --uid 10001 --gid 10001 --create-home --shell /usr/sbin/nologin o2a; \
+    install --directory --owner 10001 --group 10001 /var/lib/rgb
+
+COPY --from=build /src/rgb/target/release/rgb /usr/local/bin/rgb
+
+USER 10001:10001
+WORKDIR /var/lib/rgb
+VOLUME ["/var/lib/rgb"]
+CMD ["sleep", "infinity"]

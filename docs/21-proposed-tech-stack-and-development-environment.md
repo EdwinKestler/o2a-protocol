@@ -114,15 +114,20 @@ provenance, and known incompatibilities in the Phase 0 profile.
 - Use a repository task runner such as `just` only as a convenience layer;
   every task must remain reproducible as documented commands.
 
-### Repository artifacts to add when implementation begins
+### Phase 0 environment artifacts
+
+The containerized [Phase 0 development environment](../dev/README.md) now
+provides the Compose file, Bitcoin configuration, pinned toolchain image, and
+opt-in electrs/RGB compatibility images. It deliberately does not add a Rust
+workspace, O2A crate, adopted dependency lock, or identity implementation.
+
+Artifacts still deferred until implementation begins are:
 
 ```text
 rust-toolchain.toml        exact compiler plus rustfmt/clippy
 Cargo.toml / Cargo.lock    workspace and locked dependency graph
 deny.toml                  advisories, sources and license policy
 justfile                   bootstrap, lint, unit, vectors and regtest tasks
-dev/compose.yaml           isolated regtest and optional adapter profiles
-dev/bitcoin.conf           regtest-only defaults; no reusable credentials
 .env.example               names and safe placeholders only
 tests/vectors/             public positive and adversarial fixtures
 ```
