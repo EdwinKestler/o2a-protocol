@@ -192,6 +192,16 @@ vulnerabilities and five warnings in the locked 342-package graph. That result
 closes the earlier evidence gaps but fails the dependency-adoption gate; it
 still does not select the stack or authorize `crates/o2a-rgb`.
 
+A [third disposable run](../evidence/phase0/rgb-rc3-remediation-2026-09-23/RUN.md)
+converted the parser and wallet-path workarounds into a reproducible three-line
+patch and reran the resolver under Rust 1.98.1 against the exact electrs
+`v0.12.0` tag. The patched CLI synced 101 regtest UTXOs without a manual wallet
+rename. Unmodified RC3 and current upstream `master` still contain the defects.
+Compatible dependency updates leave three Esplora-path advisories; removing
+Esplora yields an Electrum-only graph with zero vulnerability advisories but an
+unmaintained dependency warning and unreviewed license expressions. These are
+useful compatibility results, not an adopted fork, lock, or identity crate.
+
 ## Quality and security gates
 
 The initial CI proposal is:

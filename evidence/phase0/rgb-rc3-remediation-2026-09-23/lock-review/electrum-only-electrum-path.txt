@@ -1,0 +1,35 @@
+bp-electrum v0.12.0-rc.1
+├── bp-electrum feature "byteorder"
+│   └── bp-electrum feature "proxy"
+│       └── bp-electrum feature "default"
+│           ├── rgb-runtime v0.12.0-rc.3 (<RGB_SRC>)
+│           │   ├── rgb-runtime feature "default" (command-line)
+│           │   │   └── rgb-wallet v0.12.0-rc.3 (<RGB_SRC>/cli)
+│           │   │       └── rgb-wallet feature "default" (command-line)
+│           │   ├── rgb-runtime feature "fs"
+│           │   │   └── rgb-wallet v0.12.0-rc.3 (<RGB_SRC>/cli) (*)
+│           │   ├── rgb-runtime feature "resolver-electrum"
+│           │   │   └── rgb-runtime feature "resolvers-all"
+│           │   │       └── rgb-wallet v0.12.0-rc.3 (<RGB_SRC>/cli) (*)
+│           │   ├── rgb-runtime feature "resolvers-all" (*)
+│           │   ├── rgb-runtime feature "serde"
+│           │   │   └── rgb-wallet v0.12.0-rc.3 (<RGB_SRC>/cli) (*)
+│           │   │   └── rgb-runtime feature "fs" (*)
+│           │   ├── rgb-runtime feature "std"
+│           │   │   ├── rgb-runtime feature "default" (command-line) (*)
+│           │   │   └── rgb-runtime feature "fs" (*)
+│           │   └── rgb-runtime feature "toml"
+│           │       └── rgb-runtime feature "serde" (*)
+│           └── rgb-wallet v0.12.0-rc.3 (<RGB_SRC>/cli) (*)
+├── bp-electrum feature "default" (*)
+├── bp-electrum feature "libc"
+│   └── bp-electrum feature "proxy" (*)
+├── bp-electrum feature "proxy" (*)
+├── bp-electrum feature "rustls"
+│   └── bp-electrum feature "use-rustls"
+│       └── bp-electrum feature "default" (*)
+├── bp-electrum feature "use-rustls" (*)
+├── bp-electrum feature "webpki-roots"
+│   └── bp-electrum feature "use-rustls" (*)
+└── bp-electrum feature "winapi"
+    └── bp-electrum feature "proxy" (*)

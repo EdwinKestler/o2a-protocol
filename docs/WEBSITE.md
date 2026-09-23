@@ -338,3 +338,28 @@ proof-package implementation, RGB contract, payment system, or mainnet release.
 This validates public access, the version 9 website bundle, and the deployed
 content within the checks above. It does not validate an O2A wallet,
 proof-package implementation, RGB contract, payment system, or mainnet release.
+
+### Version 10 public validation — 2026-09-23
+
+- The live access policy remained the recorded `public` default at revision 8
+  before and after deployment.
+- Sites production deployment completed successfully as saved version 10 at
+  the existing public URL.
+- Source commit: `8ae51f76e0b9d4e91bc8d57f43e7a4c5e1939f51` in the isolated
+  Sites snapshot repository, not the protocol repository.
+- Local archive SHA-256:
+  `cbc969437db33f3ba671898f2f239f2ec0be1a489ba8b7b6b3f20c646242fea8`.
+  The Sites archive store recorded content hash
+  `sha256:85ee3e1cc2b2354200e042d248b1efea12615b203a745275a9c49a7c976b8634`.
+- Anonymous requests to `/`, `/guide`, and
+  `/assets/protocol-pipeline.svg` returned HTTP 200 after following canonical
+  redirects.
+- Live content checks found `MIT OR Apache-2.0` and `CC0-1.0` in the guide and
+  the accepted dual-license gate in the pipeline figure. The repository and
+  public site now describe the same licensing policy.
+- Eleven-file export validation passed. The snapshot contains only the curated
+  site files and hosting manifest.
+
+This validates public access, the version 10 website bundle, and the deployed
+license content within the checks above. It does not validate or release an
+O2A wallet, dependency graph, RGB contract, payment system, or mainnet system.

@@ -1,0 +1,72 @@
+diff --git a/Cargo.toml b/Cargo.toml
+index 3732d4d..0a3a4b5 100644
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -21,7 +21,6 @@ commit_verify = "0.12.0"
+ bp-core = "0.12.0"
+ bp-std = { version = "0.12.0-rc.3", features = ["client-side-validation"] }
+ bp-electrum = { version = "0.12.0-rc.1" }
+-bp-esplora = { version = "0.12.0-rc.3", default-features = false }
+ rgb-std = { version = "0.12.0-rc.3" }
+ rgb-runtime = { version = "0.12.0-rc.3", path = "." }
+ rgb-psbt = { version = "0.12.0-rc.3", path = "psbt" }
+@@ -59,7 +58,6 @@ commit_verify = { workspace = true }
+ strict_types = { workspace = true }
+ bp-std = { workspace = true }
+ bp-electrum = { workspace = true, optional = true }
+-bp-esplora = { workspace = true, optional = true }
+ rgb-std = { workspace = true, features = ["bitcoin"] }
+ rgb-psbt = { workspace = true, features = ["bp"] }
+ rgb-descriptors = { workspace = true }
+@@ -107,20 +105,19 @@ log = ["dep:log"]
+
+ resolvers-all = [
+     "resolver-electrum",
+-    "resolver-esplora",
+     #"resolver-bitcoinrpc"
+ ]
+ resolver-electrum = ["dep:bp-electrum"]
+-resolver-esplora = ["bp-esplora/blocking-https"]
++resolver-esplora = [] # Disabled in this throwaway Electrum-only audit.
+ #resolver-bitcoinrpc = [] # TODO
+
+ resolvers-all-async = [
+     #"resolver-electrum-async",
+-    "resolver-esplora-async",
++    "async",
+     #"resolver-bitcoinrpc-async"
+ ]
+ #resolver-electrum-async = ["async", "dep:bp-electrum"] # TODO: ["bp-electrum/async"]
+-resolver-esplora-async = ["async", "bp-esplora/async", "bp-esplora/async-https", "bp-esplora/tokio"]
++resolver-esplora-async = ["async"] # Disabled in this throwaway Electrum-only audit.
+ #resolver-bitcoinrpc-async = ["async"] # TODO
+
+ serde = [
+diff --git a/cli/Cargo.toml b/cli/Cargo.toml
+index cd71769..3807704 100644
+--- a/cli/Cargo.toml
++++ b/cli/Cargo.toml
+@@ -21,7 +21,6 @@ strict_encoding.workspace = true
+ strict_types.workspace = true
+ bp-std = { workspace = true }
+ bp-electrum = { workspace = true }
+-bp-esplora = { workspace = true }
+ rgb-std = { workspace = true, features = ["binfile", "uri", "serde"] }
+ rgb-runtime = { workspace = true, features = ["resolvers-all", "fs", "serde"] }
+ rgb-persist-fs.workspace = true
+diff --git a/cli/src/args.rs b/cli/src/args.rs
+index 4fe8752..cb46c04 100644
+--- a/cli/src/args.rs
++++ b/cli/src/args.rs
+@@ -170,10 +170,9 @@ impl Args {
+     }
+
+     pub fn resolver(&self, resolver: &ResolverOpt) -> MultiResolver {
+-        let network = self.network.to_string();
+         match (&resolver.esplora, &resolver.electrum) {
+             (None, Some(url)) => MultiResolver::new_electrum(url),
+-            (Some(url), None) => MultiResolver::new_esplora(&url.replace("{network}", &network)),
++            (Some(_), None) => panic!("Esplora resolver disabled for this feature-minimized audit"),
+             _ => MultiResolver::new_absent(),
+         }
+         .expect("Unable to connect to the indexing server")

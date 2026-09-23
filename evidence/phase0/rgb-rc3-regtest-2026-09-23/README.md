@@ -16,7 +16,7 @@ Only the sanitized evidence in this directory remains.
 | RGB Core | `v0.12.0`, `388d9c386117cf74f67f185b65adf946e775091c` |
 | RGB standard library | `v0.12.0-rc.3`, `e183bebfed9ffd0ba8c6f7110fe3e097f23cd70b` |
 | RGB upstream lock | [`rgb-runtime-Cargo.lock`](rgb-runtime-Cargo.lock), SHA256 `3103095dac0a9f7aaa3d72c16770e833765b588d2f124b4b718f92398257dda1` |
-| electrs | `v0.12.0`, `d975dd03f2a410c4473116d5a2be950a205e0443` |
+| electrs | `d975dd03f2a410c4473116d5a2be950a205e0443`, the then-current `master` commit; this run incorrectly labeled it `v0.12.0` |
 | electrs lock | [`electrs-Cargo.lock`](electrs-Cargo.lock), SHA256 `2fc62ab317822f7435a732662ba6cb187568fd781765aea9c492c27d32fad53e` |
 | Bitcoin Core | 31.1 x86_64 Linux archive, SHA256 `b80d9c3e04da78fb6f0569685673418cf686fadba9042d926d13fb87ff503f9e` |
 | Rust used by resolver run | rustc/cargo 1.96.1; the earlier isolated 1.98.1 check was not repeated |
@@ -56,6 +56,12 @@ The `ELECRTUM_SERVER` source typo was not patched; the run supplied
 `blockchain.scripthash.listunspent` calls in [`electrs.log`](electrs.log).
 This proves a bounded resolver path after documented workarounds, not
 unmodified CLI readiness or RGB client-side contract validation.
+
+The later [Rust 1.98.1 remediation run](../rgb-rc3-remediation-2026-09-23/RUN.md)
+corrected the electrs provenance error: the annotated `v0.12.0` tag peels to
+`37501cc4b94aea99e50670a6524fa3ad4ac9aabb`, and that exact tag was used in
+the later run. The retained lock in this historical bundle belongs to the
+`d975dd03` checkout and must not be represented as the tag's lock.
 
 The exact enabled graph is preserved in
 [`rgb-feature-tree.txt`](rgb-feature-tree.txt). Absolute temporary paths were

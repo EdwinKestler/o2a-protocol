@@ -1,0 +1,229 @@
+slab v0.4.10
+├── slab feature "default"
+│   ├── futures-util v0.3.31
+│   │   ├── futures-executor v0.3.31
+│   │   │   └── futures v0.3.31
+│   │   │       ├── futures feature "alloc"
+│   │   │       │   └── futures feature "std"
+│   │   │       │       ├── futures feature "default"
+│   │   │       │       │   └── rgb-runtime v0.12.0-rc.3 (<temporary_workspace>/rgb)
+│   │   │       │       │       ├── rgb-runtime feature "all" (command-line)
+│   │   │       │       │       ├── rgb-runtime feature "all-async" (command-line)
+│   │   │       │       │       ├── rgb-runtime feature "async" (command-line)
+│   │   │       │       │       │   ├── rgb-runtime feature "all-async" (command-line)
+│   │   │       │       │       │   └── rgb-runtime feature "resolver-esplora-async" (command-line)
+│   │   │       │       │       │       └── rgb-runtime feature "resolvers-all-async" (command-line)
+│   │   │       │       │       │           └── rgb-runtime feature "all-async" (command-line)
+│   │   │       │       │       ├── rgb-runtime feature "bp-esplora" (command-line)
+│   │   │       │       │       │   ├── rgb-runtime feature "resolver-esplora" (command-line)
+│   │   │       │       │       │   │   └── rgb-runtime feature "resolvers-all" (command-line)
+│   │   │       │       │       │   │       └── rgb-wallet v0.12.0-rc.3 (<temporary_workspace>/rgb/cli)
+│   │   │       │       │       │   │           ├── rgb-wallet feature "all" (command-line)
+│   │   │       │       │       │   │           ├── rgb-wallet feature "default" (command-line)
+│   │   │       │       │       │   │           └── rgb-wallet feature "log" (command-line)
+│   │   │       │       │       │   │               └── rgb-wallet feature "all" (command-line)
+│   │   │       │       │       │   │       └── rgb-runtime feature "all" (command-line)
+│   │   │       │       │       │   └── rgb-runtime feature "resolver-esplora-async" (command-line) (*)
+│   │   │       │       │       ├── rgb-runtime feature "default" (command-line)
+│   │   │       │       │       │   └── rgb-wallet v0.12.0-rc.3 (<temporary_workspace>/rgb/cli) (*)
+│   │   │       │       │       ├── rgb-runtime feature "fs" (command-line)
+│   │   │       │       │       │   └── rgb-wallet v0.12.0-rc.3 (<temporary_workspace>/rgb/cli) (*)
+│   │   │       │       │       │   └── rgb-runtime feature "all" (command-line)
+│   │   │       │       │       ├── rgb-runtime feature "futures" (command-line)
+│   │   │       │       │       │   └── rgb-runtime feature "async" (command-line) (*)
+│   │   │       │       │       ├── rgb-runtime feature "log" (command-line)
+│   │   │       │       │       │   ├── rgb-runtime feature "all" (command-line)
+│   │   │       │       │       │   ├── rgb-runtime feature "all-async" (command-line)
+│   │   │       │       │       │   └── rgb-wallet feature "log" (command-line) (*)
+│   │   │       │       │       ├── rgb-runtime feature "rand" (command-line)
+│   │   │       │       │       ├── rgb-runtime feature "resolver-electrum" (command-line)
+│   │   │       │       │       │   └── rgb-runtime feature "resolvers-all" (command-line) (*)
+│   │   │       │       │       ├── rgb-runtime feature "resolver-esplora" (command-line) (*)
+│   │   │       │       │       ├── rgb-runtime feature "resolver-esplora-async" (command-line) (*)
+│   │   │       │       │       ├── rgb-runtime feature "resolvers-all" (command-line) (*)
+│   │   │       │       │       ├── rgb-runtime feature "resolvers-all-async" (command-line) (*)
+│   │   │       │       │       ├── rgb-runtime feature "serde" (command-line)
+│   │   │       │       │       │   └── rgb-wallet v0.12.0-rc.3 (<temporary_workspace>/rgb/cli) (*)
+│   │   │       │       │       │   ├── rgb-runtime feature "all" (command-line)
+│   │   │       │       │       │   ├── rgb-runtime feature "all-async" (command-line)
+│   │   │       │       │       │   └── rgb-runtime feature "fs" (command-line) (*)
+│   │   │       │       │       ├── rgb-runtime feature "std" (command-line)
+│   │   │       │       │       │   ├── rgb-runtime feature "all" (command-line)
+│   │   │       │       │       │   ├── rgb-runtime feature "all-async" (command-line)
+│   │   │       │       │       │   ├── rgb-runtime feature "default" (command-line) (*)
+│   │   │       │       │       │   └── rgb-runtime feature "fs" (command-line) (*)
+│   │   │       │       │       └── rgb-runtime feature "toml" (command-line)
+│   │   │       │       │           └── rgb-runtime feature "serde" (command-line) (*)
+│   │   │       │       └── futures feature "executor"
+│   │   │       │           └── futures feature "default" (*)
+│   │   │       ├── futures feature "async-await"
+│   │   │       │   └── futures feature "default" (*)
+│   │   │       ├── futures feature "default" (*)
+│   │   │       ├── futures feature "executor" (*)
+│   │   │       ├── futures feature "futures-executor"
+│   │   │       │   └── futures feature "executor" (*)
+│   │   │       └── futures feature "std" (*)
+│   │   │   └── futures-executor feature "std"
+│   │   │       └── futures feature "executor" (*)
+│   │   ├── hyper v1.6.0
+│   │   │   ├── hyper feature "client"
+│   │   │   │   └── reqwest v0.12.22
+│   │   │   │       ├── reqwest feature "__tls"
+│   │   │   │       │   └── reqwest feature "default-tls"
+│   │   │   │       │       └── bp-esplora feature "async-https"
+│   │   │   │       │           └── rgb-runtime feature "resolver-esplora-async" (command-line) (*)
+│   │   │   │       ├── reqwest feature "default-tls" (*)
+│   │   │   │       ├── reqwest feature "json"
+│   │   │   │       │   └── bp-esplora v0.12.0-rc.3
+│   │   │   │       │       ├── rgb-runtime v0.12.0-rc.3 (<temporary_workspace>/rgb) (*)
+│   │   │   │       │       └── rgb-wallet v0.12.0-rc.3 (<temporary_workspace>/rgb/cli) (*)
+│   │   │   │       │       ├── bp-esplora feature "async"
+│   │   │   │       │       │   ├── rgb-runtime feature "resolver-esplora-async" (command-line) (*)
+│   │   │   │       │       │   └── bp-esplora feature "async-https" (*)
+│   │   │   │       │       ├── bp-esplora feature "async-https" (*)
+│   │   │   │       │       ├── bp-esplora feature "blocking"
+│   │   │   │       │       │   └── bp-esplora feature "blocking-https"
+│   │   │   │       │       │       └── rgb-runtime feature "resolver-esplora" (command-line) (*)
+│   │   │   │       │       ├── bp-esplora feature "blocking-https" (*)
+│   │   │   │       │       ├── bp-esplora feature "minreq"
+│   │   │   │       │       │   ├── bp-esplora feature "blocking" (*)
+│   │   │   │       │       │   └── bp-esplora feature "blocking-https" (*)
+│   │   │   │       │       ├── bp-esplora feature "reqwest"
+│   │   │   │       │       │   ├── bp-esplora feature "async" (*)
+│   │   │   │       │       │   └── bp-esplora feature "async-https" (*)
+│   │   │   │       │       └── bp-esplora feature "tokio"
+│   │   │   │       │           └── rgb-runtime feature "resolver-esplora-async" (command-line) (*)
+│   │   │   │       └── reqwest feature "socks"
+│   │   │   │           └── bp-esplora feature "async" (*)
+│   │   │   │   └── hyper-util feature "client"
+│   │   │   │       └── reqwest v0.12.22 (*)
+│   │   │   │       ├── hyper-util feature "client-legacy"
+│   │   │   │       │   ├── hyper-tls v0.6.0
+│   │   │   │       │   │   └── hyper-tls feature "default"
+│   │   │   │       │   │       └── reqwest v0.12.22 (*)
+│   │   │   │       │   └── reqwest v0.12.22 (*)
+│   │   │   │       └── hyper-util feature "client-proxy"
+│   │   │   │           └── reqwest v0.12.22 (*)
+│   │   │   ├── hyper feature "default"
+│   │   │   │   ├── hyper-tls v0.6.0 (*)
+│   │   │   │   ├── hyper-util v0.1.15
+│   │   │   │   │   ├── hyper-util feature "client" (*)
+│   │   │   │   │   ├── hyper-util feature "client-legacy" (*)
+│   │   │   │   │   ├── hyper-util feature "client-proxy" (*)
+│   │   │   │   │   ├── hyper-util feature "default"
+│   │   │   │   │   │   ├── hyper-tls v0.6.0 (*)
+│   │   │   │   │   │   └── reqwest v0.12.22 (*)
+│   │   │   │   │   ├── hyper-util feature "http1"
+│   │   │   │   │   │   └── reqwest v0.12.22 (*)
+│   │   │   │   │   └── hyper-util feature "tokio"
+│   │   │   │   │       ├── hyper-tls v0.6.0 (*)
+│   │   │   │   │       └── reqwest v0.12.22 (*)
+│   │   │   │   │       ├── hyper-util feature "client-legacy" (*)
+│   │   │   │   │       └── hyper-util feature "tokio" (*)
+│   │   │   │   └── reqwest v0.12.22 (*)
+│   │   │   └── hyper feature "http1"
+│   │   │       └── reqwest v0.12.22 (*)
+│   │   │       └── hyper-util feature "http1" (*)
+│   │   ├── hyper-util v0.1.15 (*)
+│   │   └── tower-http v0.6.6
+│   │       ├── tower-http feature "follow-redirect"
+│   │       │   └── reqwest v0.12.22 (*)
+│   │       ├── tower-http feature "futures-util"
+│   │       │   └── tower-http feature "follow-redirect" (*)
+│   │       ├── tower-http feature "iri-string"
+│   │       │   └── tower-http feature "follow-redirect" (*)
+│   │       └── tower-http feature "tower"
+│   │           └── tower-http feature "follow-redirect" (*)
+│   │   ├── futures-util feature "alloc"
+│   │   │   └── tower v0.5.2
+│   │   │       ├── tower feature "__common"
+│   │   │       │   └── tower feature "util"
+│   │   │       │       └── reqwest v0.12.22 (*)
+│   │   │       │       └── tower-http feature "follow-redirect" (*)
+│   │   │       ├── tower feature "default"
+│   │   │       │   └── tower-http v0.6.6 (*)
+│   │   │       ├── tower feature "futures-core"
+│   │   │       │   └── tower feature "__common" (*)
+│   │   │       ├── tower feature "futures-util"
+│   │   │       │   └── tower feature "util" (*)
+│   │   │       ├── tower feature "pin-project-lite"
+│   │   │       │   ├── tower feature "__common" (*)
+│   │   │       │   ├── tower feature "timeout"
+│   │   │       │   │   └── reqwest v0.12.22 (*)
+│   │   │       │   └── tower feature "util" (*)
+│   │   │       ├── tower feature "sync_wrapper"
+│   │   │       │   └── tower feature "util" (*)
+│   │   │       ├── tower feature "timeout" (*)
+│   │   │       ├── tower feature "tokio"
+│   │   │       │   └── tower feature "timeout" (*)
+│   │   │       └── tower feature "util" (*)
+│   │   │   ├── futures-util feature "std"
+│   │   │   │   ├── futures-util feature "channel"
+│   │   │   │   │   └── futures feature "std" (*)
+│   │   │   │   ├── futures-util feature "io"
+│   │   │   │   │   └── futures feature "std" (*)
+│   │   │   │   ├── futures feature "std" (*)
+│   │   │   │   └── futures-executor feature "std" (*)
+│   │   │   └── futures feature "alloc" (*)
+│   │   ├── futures-util feature "async-await"
+│   │   │   ├── futures-util feature "async-await-macro"
+│   │   │   │   └── futures feature "async-await" (*)
+│   │   │   └── futures feature "async-await" (*)
+│   │   ├── futures-util feature "async-await-macro" (*)
+│   │   ├── futures-util feature "channel" (*)
+│   │   ├── futures-util feature "futures-channel"
+│   │   │   └── futures-util feature "channel" (*)
+│   │   ├── futures-util feature "futures-io"
+│   │   │   └── futures-util feature "io" (*)
+│   │   ├── futures-util feature "futures-macro"
+│   │   │   └── futures-util feature "async-await-macro" (*)
+│   │   ├── futures-util feature "futures-sink"
+│   │   │   └── futures-util feature "sink"
+│   │   │       └── futures v0.3.31 (*)
+│   │   ├── futures-util feature "io" (*)
+│   │   ├── futures-util feature "memchr"
+│   │   │   └── futures-util feature "io" (*)
+│   │   ├── futures-util feature "sink" (*)
+│   │   ├── futures-util feature "slab"
+│   │   │   └── futures-util feature "std" (*)
+│   │   └── futures-util feature "std" (*)
+│   └── tokio v1.46.1
+│       └── hyper-util v0.1.15 (*)
+│       ├── tokio feature "bytes"
+│       │   └── tokio feature "io-util"
+│       │       └── reqwest feature "__tls" (*)
+│       ├── tokio feature "default"
+│       │   ├── bp-esplora v0.12.0-rc.3 (*)
+│       │   ├── hyper v1.6.0 (*)
+│       │   ├── hyper-tls v0.6.0 (*)
+│       │   ├── tokio-native-tls v0.3.1
+│       │   │   └── tokio-native-tls feature "default"
+│       │   │       ├── hyper-tls v0.6.0 (*)
+│       │   │       └── reqwest v0.12.22 (*)
+│       │   └── tower v0.5.2 (*)
+│       ├── tokio feature "io-util" (*)
+│       ├── tokio feature "libc"
+│       │   └── tokio feature "net"
+│       │       └── reqwest v0.12.22 (*)
+│       │       └── hyper-util feature "tokio" (*)
+│       ├── tokio feature "mio"
+│       │   └── tokio feature "net" (*)
+│       ├── tokio feature "net" (*)
+│       ├── tokio feature "rt"
+│       │   └── hyper-util feature "tokio" (*)
+│       ├── tokio feature "socket2"
+│       │   └── tokio feature "net" (*)
+│       ├── tokio feature "sync"
+│       │   ├── hyper v1.6.0 (*)
+│       │   └── tower v0.5.2 (*)
+│       │   └── hyper-util feature "client-legacy" (*)
+│       ├── tokio feature "time"
+│       │   ├── bp-esplora v0.12.0-rc.3 (*)
+│       │   └── reqwest v0.12.22 (*)
+│       │   ├── bp-esplora feature "async" (*)
+│       │   ├── hyper-util feature "tokio" (*)
+│       │   └── tower feature "timeout" (*)
+│       └── tokio feature "windows-sys"
+│           └── tokio feature "net" (*)
+└── slab feature "std"
+    └── slab feature "default" (*)

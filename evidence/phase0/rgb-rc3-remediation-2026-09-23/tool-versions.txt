@@ -1,0 +1,9 @@
+rgb_rc3_commit=a1e6b41524131f6d6f183b2235fdaacb5c1abb31
+electrs_v0.12.0_tag_object=7d2aec6cc60f0f67c9bf518d180fb55105935344
+electrs_v0.12.0_peeled_commit=37501cc4b94aea99e50670a6524fa3ad4ac9aabb
+rustc=rustc 1.98.1 (48a229cea 2026-09-01)
+cargo=cargo 1.98.1 (797e8a9bc 2026-08-05)
+bitcoin_core=Bitcoin Core daemon version v31.1.0 bitcoind
+electrs=v0.12.0
+cargo_audit=cargo-audit-audit 0.22.2
+rustsec_db_revision=1e640cd56d7604993e3a9ec392060666e3b95ccc

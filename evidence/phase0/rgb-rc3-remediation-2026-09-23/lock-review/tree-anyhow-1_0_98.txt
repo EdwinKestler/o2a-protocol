@@ -1,0 +1,9 @@
+anyhow v1.0.98
+├── anyhow feature "default"
+│   └── rgb-wallet v0.12.0-rc.3 (<temporary_workspace>/rgb/cli)
+│       ├── rgb-wallet feature "all" (command-line)
+│       ├── rgb-wallet feature "default" (command-line)
+│       └── rgb-wallet feature "log" (command-line)
+│           └── rgb-wallet feature "all" (command-line)
+└── anyhow feature "std"
+    └── anyhow feature "default" (*)

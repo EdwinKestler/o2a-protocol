@@ -1,0 +1,106 @@
+rustls-webpki v0.101.7
+├── rustls-webpki feature "alloc"
+│   └── rustls v0.21.12
+│       ├── rustls feature "default"
+│       │   └── minreq v2.14.0
+│       │       ├── minreq feature "base64"
+│       │       │   └── minreq feature "proxy"
+│       │       │       └── bp-esplora feature "blocking"
+│       │       │           └── bp-esplora feature "blocking-https"
+│       │       │               └── rgb-runtime feature "resolver-esplora" (command-line)
+│       │       │                   └── rgb-runtime feature "resolvers-all" (command-line)
+│       │       │                       └── rgb-wallet v0.12.0-rc.3 (<temporary_workspace>/rgb/cli)
+│       │       │                           ├── rgb-wallet feature "all" (command-line)
+│       │       │                           ├── rgb-wallet feature "default" (command-line)
+│       │       │                           └── rgb-wallet feature "log" (command-line)
+│       │       │                               └── rgb-wallet feature "all" (command-line)
+│       │       │                       └── rgb-runtime feature "all" (command-line)
+│       │       ├── minreq feature "default"
+│       │       │   └── bp-esplora v0.12.0-rc.3
+│       │       │       ├── rgb-runtime v0.12.0-rc.3 (<temporary_workspace>/rgb)
+│       │       │       │   ├── rgb-runtime feature "all" (command-line)
+│       │       │       │   ├── rgb-runtime feature "all-async" (command-line)
+│       │       │       │   ├── rgb-runtime feature "async" (command-line)
+│       │       │       │   │   ├── rgb-runtime feature "all-async" (command-line)
+│       │       │       │   │   └── rgb-runtime feature "resolver-esplora-async" (command-line)
+│       │       │       │   │       └── rgb-runtime feature "resolvers-all-async" (command-line)
+│       │       │       │   │           └── rgb-runtime feature "all-async" (command-line)
+│       │       │       │   ├── rgb-runtime feature "bp-esplora" (command-line)
+│       │       │       │   │   ├── rgb-runtime feature "resolver-esplora" (command-line) (*)
+│       │       │       │   │   └── rgb-runtime feature "resolver-esplora-async" (command-line) (*)
+│       │       │       │   ├── rgb-runtime feature "default" (command-line)
+│       │       │       │   │   └── rgb-wallet v0.12.0-rc.3 (<temporary_workspace>/rgb/cli) (*)
+│       │       │       │   ├── rgb-runtime feature "fs" (command-line)
+│       │       │       │   │   └── rgb-wallet v0.12.0-rc.3 (<temporary_workspace>/rgb/cli) (*)
+│       │       │       │   │   └── rgb-runtime feature "all" (command-line)
+│       │       │       │   ├── rgb-runtime feature "futures" (command-line)
+│       │       │       │   │   └── rgb-runtime feature "async" (command-line) (*)
+│       │       │       │   ├── rgb-runtime feature "log" (command-line)
+│       │       │       │   │   ├── rgb-runtime feature "all" (command-line)
+│       │       │       │   │   ├── rgb-runtime feature "all-async" (command-line)
+│       │       │       │   │   └── rgb-wallet feature "log" (command-line) (*)
+│       │       │       │   ├── rgb-runtime feature "rand" (command-line)
+│       │       │       │   ├── rgb-runtime feature "resolver-electrum" (command-line)
+│       │       │       │   │   └── rgb-runtime feature "resolvers-all" (command-line) (*)
+│       │       │       │   ├── rgb-runtime feature "resolver-esplora" (command-line) (*)
+│       │       │       │   ├── rgb-runtime feature "resolver-esplora-async" (command-line) (*)
+│       │       │       │   ├── rgb-runtime feature "resolvers-all" (command-line) (*)
+│       │       │       │   ├── rgb-runtime feature "resolvers-all-async" (command-line) (*)
+│       │       │       │   ├── rgb-runtime feature "serde" (command-line)
+│       │       │       │   │   └── rgb-wallet v0.12.0-rc.3 (<temporary_workspace>/rgb/cli) (*)
+│       │       │       │   │   ├── rgb-runtime feature "all" (command-line)
+│       │       │       │   │   ├── rgb-runtime feature "all-async" (command-line)
+│       │       │       │   │   └── rgb-runtime feature "fs" (command-line) (*)
+│       │       │       │   ├── rgb-runtime feature "std" (command-line)
+│       │       │       │   │   ├── rgb-runtime feature "all" (command-line)
+│       │       │       │   │   ├── rgb-runtime feature "all-async" (command-line)
+│       │       │       │   │   ├── rgb-runtime feature "default" (command-line) (*)
+│       │       │       │   │   └── rgb-runtime feature "fs" (command-line) (*)
+│       │       │       │   └── rgb-runtime feature "toml" (command-line)
+│       │       │       │       └── rgb-runtime feature "serde" (command-line) (*)
+│       │       │       └── rgb-wallet v0.12.0-rc.3 (<temporary_workspace>/rgb/cli) (*)
+│       │       │       ├── bp-esplora feature "async"
+│       │       │       │   ├── rgb-runtime feature "resolver-esplora-async" (command-line) (*)
+│       │       │       │   └── bp-esplora feature "async-https"
+│       │       │       │       └── rgb-runtime feature "resolver-esplora-async" (command-line) (*)
+│       │       │       ├── bp-esplora feature "async-https" (*)
+│       │       │       ├── bp-esplora feature "blocking" (*)
+│       │       │       ├── bp-esplora feature "blocking-https" (*)
+│       │       │       ├── bp-esplora feature "minreq"
+│       │       │       │   ├── bp-esplora feature "blocking" (*)
+│       │       │       │   └── bp-esplora feature "blocking-https" (*)
+│       │       │       ├── bp-esplora feature "reqwest"
+│       │       │       │   ├── bp-esplora feature "async" (*)
+│       │       │       │   └── bp-esplora feature "async-https" (*)
+│       │       │       └── bp-esplora feature "tokio"
+│       │       │           └── rgb-runtime feature "resolver-esplora-async" (command-line) (*)
+│       │       ├── minreq feature "https"
+│       │       │   └── bp-esplora feature "blocking-https" (*)
+│       │       ├── minreq feature "https-rustls"
+│       │       │   └── minreq feature "https" (*)
+│       │       ├── minreq feature "json-using-serde"
+│       │       │   └── bp-esplora v0.12.0-rc.3 (*)
+│       │       ├── minreq feature "proxy" (*)
+│       │       ├── minreq feature "rustls"
+│       │       │   └── minreq feature "https-rustls" (*)
+│       │       ├── minreq feature "rustls-webpki"
+│       │       │   └── minreq feature "https-rustls" (*)
+│       │       ├── minreq feature "serde"
+│       │       │   └── minreq feature "json-using-serde" (*)
+│       │       ├── minreq feature "serde_json"
+│       │       │   └── minreq feature "json-using-serde" (*)
+│       │       └── minreq feature "webpki-roots"
+│       │           └── minreq feature "https-rustls" (*)
+│       ├── rustls feature "log"
+│       │   └── rustls feature "logging"
+│       │       └── rustls feature "default" (*)
+│       ├── rustls feature "logging" (*)
+│       └── rustls feature "tls12"
+│           └── rustls feature "default" (*)
+│   └── rustls-webpki feature "std"
+│       └── rustls v0.21.12 (*)
+│       └── rustls-webpki feature "default"
+│           ├── minreq v2.14.0 (*)
+│           └── rustls v0.21.12 (*)
+├── rustls-webpki feature "default" (*)
+└── rustls-webpki feature "std" (*)

@@ -1,0 +1,22 @@
+Synchronize wallet and contracts with the blockchain
+
+Usage: rgb-patched sync [OPTIONS] [WALLET]
+
+Arguments:
+  [WALLET]  Wallet to use [env: RGB_WALLET=]
+
+Options:
+  -d, --data-dir <DATA_DIR>
+          Location of the data directory [env: RGB_DATA_DIR=] [default: <host_default_rgb_dir>]
+      --electrum[=<URL>]
+          Electrum server to use [env: ELECRTUM_SERVER=]
+      --esplora[=<URL>]
+          Esplora server to use [env: ESPLORA_SERVER=]
+  -n, --network <NETWORK>
+          Bitcoin network [env: RGB_NETWORK=] [default: testnet4]
+      --no-network-prefix
+          Do not add network name as a prefix to the data directory [env: RGB_NO_NETWORK_PREFIX=]
+      --min-confirmations <MIN_CONFIRMATIONS>
+          Minimal number of confirmations to consider an operation final [default: 32]
+  -h, --help
+          Print help

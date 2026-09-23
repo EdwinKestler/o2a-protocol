@@ -1,0 +1,382 @@
+rand v0.9.1
+├── rand feature "alloc"
+│   └── rand feature "std"
+│       ├── rand feature "default"
+│       │   ├── commit_verify v0.12.0
+│       │   │   ├── commit_verify feature "default"
+│       │   │   │   ├── aluvm v0.12.0
+│       │   │   │   │   ├── aluvm feature "default"
+│       │   │   │   │   │   ├── hypersonic v0.12.0
+│       │   │   │   │   │   │   ├── hypersonic feature "binfile"
+│       │   │   │   │   │   │   │   └── sonic-persist-fs v0.12.0
+│       │   │   │   │   │   │   │       └── sonic-persist-fs feature "default"
+│       │   │   │   │   │   │   │           └── rgb-persist-fs v0.12.0-rc.3
+│       │   │   │   │   │   │   │               └── rgb-persist-fs feature "default"
+│       │   │   │   │   │   │   │                   ├── rgb-runtime v0.12.0-rc.3 (<temporary_workspace>/rgb)
+│       │   │   │   │   │   │   │                   │   ├── rgb-runtime feature "all" (command-line)
+│       │   │   │   │   │   │   │                   │   ├── rgb-runtime feature "all-async" (command-line)
+│       │   │   │   │   │   │   │                   │   ├── rgb-runtime feature "async" (command-line)
+│       │   │   │   │   │   │   │                   │   │   ├── rgb-runtime feature "all-async" (command-line)
+│       │   │   │   │   │   │   │                   │   │   └── rgb-runtime feature "resolver-esplora-async" (command-line)
+│       │   │   │   │   │   │   │                   │   │       └── rgb-runtime feature "resolvers-all-async" (command-line)
+│       │   │   │   │   │   │   │                   │   │           └── rgb-runtime feature "all-async" (command-line)
+│       │   │   │   │   │   │   │                   │   ├── rgb-runtime feature "bp-esplora" (command-line)
+│       │   │   │   │   │   │   │                   │   │   ├── rgb-runtime feature "resolver-esplora" (command-line)
+│       │   │   │   │   │   │   │                   │   │   │   └── rgb-runtime feature "resolvers-all" (command-line)
+│       │   │   │   │   │   │   │                   │   │   │       └── rgb-wallet v0.12.0-rc.3 (<temporary_workspace>/rgb/cli)
+│       │   │   │   │   │   │   │                   │   │   │           ├── rgb-wallet feature "all" (command-line)
+│       │   │   │   │   │   │   │                   │   │   │           ├── rgb-wallet feature "default" (command-line)
+│       │   │   │   │   │   │   │                   │   │   │           └── rgb-wallet feature "log" (command-line)
+│       │   │   │   │   │   │   │                   │   │   │               └── rgb-wallet feature "all" (command-line)
+│       │   │   │   │   │   │   │                   │   │   │       └── rgb-runtime feature "all" (command-line)
+│       │   │   │   │   │   │   │                   │   │   └── rgb-runtime feature "resolver-esplora-async" (command-line) (*)
+│       │   │   │   │   │   │   │                   │   ├── rgb-runtime feature "default" (command-line)
+│       │   │   │   │   │   │   │                   │   │   └── rgb-wallet v0.12.0-rc.3 (<temporary_workspace>/rgb/cli) (*)
+│       │   │   │   │   │   │   │                   │   ├── rgb-runtime feature "fs" (command-line)
+│       │   │   │   │   │   │   │                   │   │   └── rgb-wallet v0.12.0-rc.3 (<temporary_workspace>/rgb/cli) (*)
+│       │   │   │   │   │   │   │                   │   │   └── rgb-runtime feature "all" (command-line)
+│       │   │   │   │   │   │   │                   │   ├── rgb-runtime feature "futures" (command-line)
+│       │   │   │   │   │   │   │                   │   │   └── rgb-runtime feature "async" (command-line) (*)
+│       │   │   │   │   │   │   │                   │   ├── rgb-runtime feature "log" (command-line)
+│       │   │   │   │   │   │   │                   │   │   ├── rgb-runtime feature "all" (command-line)
+│       │   │   │   │   │   │   │                   │   │   ├── rgb-runtime feature "all-async" (command-line)
+│       │   │   │   │   │   │   │                   │   │   └── rgb-wallet feature "log" (command-line) (*)
+│       │   │   │   │   │   │   │                   │   ├── rgb-runtime feature "rand" (command-line)
+│       │   │   │   │   │   │   │                   │   ├── rgb-runtime feature "resolver-electrum" (command-line)
+│       │   │   │   │   │   │   │                   │   │   └── rgb-runtime feature "resolvers-all" (command-line) (*)
+│       │   │   │   │   │   │   │                   │   ├── rgb-runtime feature "resolver-esplora" (command-line) (*)
+│       │   │   │   │   │   │   │                   │   ├── rgb-runtime feature "resolver-esplora-async" (command-line) (*)
+│       │   │   │   │   │   │   │                   │   ├── rgb-runtime feature "resolvers-all" (command-line) (*)
+│       │   │   │   │   │   │   │                   │   ├── rgb-runtime feature "resolvers-all-async" (command-line) (*)
+│       │   │   │   │   │   │   │                   │   ├── rgb-runtime feature "serde" (command-line)
+│       │   │   │   │   │   │   │                   │   │   └── rgb-wallet v0.12.0-rc.3 (<temporary_workspace>/rgb/cli) (*)
+│       │   │   │   │   │   │   │                   │   │   ├── rgb-runtime feature "all" (command-line)
+│       │   │   │   │   │   │   │                   │   │   ├── rgb-runtime feature "all-async" (command-line)
+│       │   │   │   │   │   │   │                   │   │   └── rgb-runtime feature "fs" (command-line) (*)
+│       │   │   │   │   │   │   │                   │   ├── rgb-runtime feature "std" (command-line)
+│       │   │   │   │   │   │   │                   │   │   ├── rgb-runtime feature "all" (command-line)
+│       │   │   │   │   │   │   │                   │   │   ├── rgb-runtime feature "all-async" (command-line)
+│       │   │   │   │   │   │   │                   │   │   ├── rgb-runtime feature "default" (command-line) (*)
+│       │   │   │   │   │   │   │                   │   │   └── rgb-runtime feature "fs" (command-line) (*)
+│       │   │   │   │   │   │   │                   │   └── rgb-runtime feature "toml" (command-line)
+│       │   │   │   │   │   │   │                   │       └── rgb-runtime feature "serde" (command-line) (*)
+│       │   │   │   │   │   │   │                   └── rgb-wallet v0.12.0-rc.3 (<temporary_workspace>/rgb/cli) (*)
+│       │   │   │   │   │   │   │   └── rgb-std feature "binfile"
+│       │   │   │   │   │   │   │       ├── rgb-persist-fs v0.12.0-rc.3 (*)
+│       │   │   │   │   │   │   │       └── rgb-wallet v0.12.0-rc.3 (<temporary_workspace>/rgb/cli) (*)
+│       │   │   │   │   │   │   │       └── rgb-runtime feature "fs" (command-line) (*)
+│       │   │   │   │   │   │   ├── hypersonic feature "default"
+│       │   │   │   │   │   │   │   ├── rgb-invoice v0.12.0-rc.3
+│       │   │   │   │   │   │   │   │   ├── rgb-invoice feature "bitcoin"
+│       │   │   │   │   │   │   │   │   │   ├── rgb-std feature "bitcoin"
+│       │   │   │   │   │   │   │   │   │   │   ├── rgb-descriptors v0.12.0-rc.3 (<temporary_workspace>/rgb/descriptors)
+│       │   │   │   │   │   │   │   │   │   │   │   ├── rgb-descriptors feature "all" (command-line)
+│       │   │   │   │   │   │   │   │   │   │   │   ├── rgb-descriptors feature "default" (command-line)
+│       │   │   │   │   │   │   │   │   │   │   │   │   └── rgb-runtime v0.12.0-rc.3 (<temporary_workspace>/rgb) (*)
+│       │   │   │   │   │   │   │   │   │   │   │   └── rgb-descriptors feature "serde" (command-line)
+│       │   │   │   │   │   │   │   │   │   │   │       ├── rgb-descriptors feature "all" (command-line)
+│       │   │   │   │   │   │   │   │   │   │   │       └── rgb-runtime feature "serde" (command-line) (*)
+│       │   │   │   │   │   │   │   │   │   │   ├── rgb-psbt v0.12.0-rc.3 (<temporary_workspace>/rgb/psbt)
+│       │   │   │   │   │   │   │   │   │   │   │   ├── rgb-psbt feature "all" (command-line)
+│       │   │   │   │   │   │   │   │   │   │   │   ├── rgb-psbt feature "bp" (command-line)
+│       │   │   │   │   │   │   │   │   │   │   │   │   └── rgb-runtime v0.12.0-rc.3 (<temporary_workspace>/rgb) (*)
+│       │   │   │   │   │   │   │   │   │   │   │   │   └── rgb-psbt feature "all" (command-line)
+│       │   │   │   │   │   │   │   │   │   │   │   ├── rgb-psbt feature "bp-std" (command-line)
+│       │   │   │   │   │   │   │   │   │   │   │   │   └── rgb-psbt feature "bp" (command-line) (*)
+│       │   │   │   │   │   │   │   │   │   │   │   ├── rgb-psbt feature "default" (command-line)
+│       │   │   │   │   │   │   │   │   │   │   │   │   └── rgb-runtime v0.12.0-rc.3 (<temporary_workspace>/rgb) (*)
+│       │   │   │   │   │   │   │   │   │   │   │   └── rgb-psbt feature "rust-bitcoin" (command-line)
+│       │   │   │   │   │   │   │   │   │   │   │       └── rgb-psbt feature "all" (command-line)
+│       │   │   │   │   │   │   │   │   │   │   └── rgb-runtime v0.12.0-rc.3 (<temporary_workspace>/rgb) (*)
+│       │   │   │   │   │   │   │   │   │   │   └── rgb-std feature "default"
+│       │   │   │   │   │   │   │   │   │   │       ├── rgb-descriptors v0.12.0-rc.3 (<temporary_workspace>/rgb/descriptors) (*)
+│       │   │   │   │   │   │   │   │   │   │       ├── rgb-persist-fs v0.12.0-rc.3 (*)
+│       │   │   │   │   │   │   │   │   │   │       ├── rgb-psbt v0.12.0-rc.3 (<temporary_workspace>/rgb/psbt) (*)
+│       │   │   │   │   │   │   │   │   │   │       ├── rgb-runtime v0.12.0-rc.3 (<temporary_workspace>/rgb) (*)
+│       │   │   │   │   │   │   │   │   │   │       └── rgb-wallet v0.12.0-rc.3 (<temporary_workspace>/rgb/cli) (*)
+│       │   │   │   │   │   │   │   │   │   └── rgb-invoice feature "default"
+│       │   │   │   │   │   │   │   │   │       └── rgb-std v0.12.0-rc.3
+│       │   │   │   │   │   │   │   │   │           ├── rgb-std feature "async"
+│       │   │   │   │   │   │   │   │   │           │   └── rgb-runtime feature "async" (command-line) (*)
+│       │   │   │   │   │   │   │   │   │           ├── rgb-std feature "binfile" (*)
+│       │   │   │   │   │   │   │   │   │           ├── rgb-std feature "bitcoin" (*)
+│       │   │   │   │   │   │   │   │   │           ├── rgb-std feature "bp-core"
+│       │   │   │   │   │   │   │   │   │           │   ├── rgb-std feature "bitcoin" (*)
+│       │   │   │   │   │   │   │   │   │           │   └── rgb-std feature "serde"
+│       │   │   │   │   │   │   │   │   │           │       └── rgb-wallet v0.12.0-rc.3 (<temporary_workspace>/rgb/cli) (*)
+│       │   │   │   │   │   │   │   │   │           │       ├── rgb-descriptors feature "serde" (command-line) (*)
+│       │   │   │   │   │   │   │   │   │           │       └── rgb-runtime feature "serde" (command-line) (*)
+│       │   │   │   │   │   │   │   │   │           ├── rgb-std feature "bp-invoice"
+│       │   │   │   │   │   │   │   │   │           │   └── rgb-std feature "bitcoin" (*)
+│       │   │   │   │   │   │   │   │   │           ├── rgb-std feature "default" (*)
+│       │   │   │   │   │   │   │   │   │           ├── rgb-std feature "serde" (*)
+│       │   │   │   │   │   │   │   │   │           ├── rgb-std feature "std"
+│       │   │   │   │   │   │   │   │   │           │   ├── rgb-std feature "binfile" (*)
+│       │   │   │   │   │   │   │   │   │           │   ├── rgb-std feature "default" (*)
+│       │   │   │   │   │   │   │   │   │           │   └── rgb-std feature "serde" (*)
+│       │   │   │   │   │   │   │   │   │           └── rgb-std feature "uri"
+│       │   │   │   │   │   │   │   │   │               └── rgb-wallet v0.12.0-rc.3 (<temporary_workspace>/rgb/cli) (*)
+│       │   │   │   │   │   │   │   │   ├── rgb-invoice feature "bp-core"
+│       │   │   │   │   │   │   │   │   │   ├── rgb-invoice feature "bitcoin" (*)
+│       │   │   │   │   │   │   │   │   │   └── rgb-invoice feature "serde"
+│       │   │   │   │   │   │   │   │   │       └── rgb-std feature "serde" (*)
+│       │   │   │   │   │   │   │   │   ├── rgb-invoice feature "bp-invoice"
+│       │   │   │   │   │   │   │   │   │   ├── rgb-invoice feature "bitcoin" (*)
+│       │   │   │   │   │   │   │   │   │   └── rgb-invoice feature "serde" (*)
+│       │   │   │   │   │   │   │   │   ├── rgb-invoice feature "default" (*)
+│       │   │   │   │   │   │   │   │   ├── rgb-invoice feature "serde" (*)
+│       │   │   │   │   │   │   │   │   ├── rgb-invoice feature "std"
+│       │   │   │   │   │   │   │   │   │   ├── rgb-std feature "std" (*)
+│       │   │   │   │   │   │   │   │   │   └── rgb-invoice feature "default" (*)
+│       │   │   │   │   │   │   │   │   └── rgb-invoice feature "uri"
+│       │   │   │   │   │   │   │   │       └── rgb-std feature "uri" (*)
+│       │   │   │   │   │   │   │   ├── rgb-std v0.12.0-rc.3 (*)
+│       │   │   │   │   │   │   │   └── sonic-persist-fs v0.12.0 (*)
+│       │   │   │   │   │   │   ├── hypersonic feature "serde"
+│       │   │   │   │   │   │   │   └── sonic-persist-fs v0.12.0 (*)
+│       │   │   │   │   │   │   │   └── rgb-std feature "serde" (*)
+│       │   │   │   │   │   │   └── hypersonic feature "std"
+│       │   │   │   │   │   │       └── hypersonic feature "default" (*)
+│       │   │   │   │   │   ├── sonic-api v0.12.0
+│       │   │   │   │   │   │   ├── sonic-api feature "binfile"
+│       │   │   │   │   │   │   │   ├── hypersonic feature "binfile" (*)
+│       │   │   │   │   │   │   │   └── sonic-api feature "default"
+│       │   │   │   │   │   │   │       └── hypersonic v0.12.0 (*)
+│       │   │   │   │   │   │   ├── sonic-api feature "default" (*)
+│       │   │   │   │   │   │   ├── sonic-api feature "serde"
+│       │   │   │   │   │   │   │   └── hypersonic feature "serde" (*)
+│       │   │   │   │   │   │   └── sonic-api feature "std"
+│       │   │   │   │   │   │       ├── hypersonic feature "std" (*)
+│       │   │   │   │   │   │       ├── sonic-api feature "binfile" (*)
+│       │   │   │   │   │   │       └── sonic-api feature "default" (*)
+│       │   │   │   │   │   └── zk-aluvm v0.12.0
+│       │   │   │   │   │       ├── zk-aluvm feature "default"
+│       │   │   │   │   │       │   └── ultrasonic v0.12.0
+│       │   │   │   │   │       │       ├── ultrasonic feature "baid64"
+│       │   │   │   │   │       │       │   └── ultrasonic feature "default"
+│       │   │   │   │   │       │       │       ├── hypersonic v0.12.0 (*)
+│       │   │   │   │   │       │       │       ├── rgb-core v0.12.0
+│       │   │   │   │   │       │       │       │   ├── rgb-core feature "bitcoin"
+│       │   │   │   │   │       │       │       │   │   ├── rgb-std feature "bitcoin" (*)
+│       │   │   │   │   │       │       │       │   │   ├── rgb-core feature "default"
+│       │   │   │   │   │       │       │       │   │   │   ├── rgb-invoice v0.12.0-rc.3 (*)
+│       │   │   │   │   │       │       │       │   │   │   └── rgb-std v0.12.0-rc.3 (*)
+│       │   │   │   │   │       │       │       │   │   └── rgb-invoice feature "bitcoin" (*)
+│       │   │   │   │   │       │       │       │   ├── rgb-core feature "bp-core"
+│       │   │   │   │   │       │       │       │   │   └── rgb-core feature "bitcoin" (*)
+│       │   │   │   │   │       │       │       │   ├── rgb-core feature "default" (*)
+│       │   │   │   │   │       │       │       │   ├── rgb-core feature "serde"
+│       │   │   │   │   │       │       │       │   │   ├── rgb-std feature "serde" (*)
+│       │   │   │   │   │       │       │       │   │   └── rgb-invoice feature "serde" (*)
+│       │   │   │   │   │       │       │       │   └── rgb-core feature "std"
+│       │   │   │   │   │       │       │       │       └── rgb-core feature "default" (*)
+│       │   │   │   │   │       │       │       ├── sonic-api v0.12.0 (*)
+│       │   │   │   │   │       │       │       └── sonic-callreq v0.12.0
+│       │   │   │   │   │       │       │           ├── sonic-callreq feature "default"
+│       │   │   │   │   │       │       │           │   ├── hypersonic v0.12.0 (*)
+│       │   │   │   │   │       │       │           │   ├── rgb-invoice v0.12.0-rc.3 (*)
+│       │   │   │   │   │       │       │           │   └── sonic-api v0.12.0 (*)
+│       │   │   │   │   │       │       │           ├── sonic-callreq feature "fluent-uri"
+│       │   │   │   │   │       │       │           │   └── sonic-callreq feature "std"
+│       │   │   │   │   │       │       │           │       ├── hypersonic feature "std" (*)
+│       │   │   │   │   │       │       │           │       ├── sonic-api feature "std" (*)
+│       │   │   │   │   │       │       │           │       ├── sonic-callreq feature "default" (*)
+│       │   │   │   │   │       │       │           │       └── rgb-invoice feature "std" (*)
+│       │   │   │   │   │       │       │           ├── sonic-callreq feature "indexmap"
+│       │   │   │   │   │       │       │           │   └── sonic-callreq feature "std" (*)
+│       │   │   │   │   │       │       │           ├── sonic-callreq feature "serde"
+│       │   │   │   │   │       │       │           │   ├── hypersonic feature "serde" (*)
+│       │   │   │   │   │       │       │           │   ├── sonic-api feature "serde" (*)
+│       │   │   │   │   │       │       │           │   └── rgb-invoice feature "serde" (*)
+│       │   │   │   │   │       │       │           ├── sonic-callreq feature "std" (*)
+│       │   │   │   │   │       │       │           └── sonic-callreq feature "uri"
+│       │   │   │   │   │       │       │               └── rgb-invoice feature "uri" (*)
+│       │   │   │   │   │       │       ├── ultrasonic feature "chf-sha256"
+│       │   │   │   │   │       │       │   └── ultrasonic feature "default" (*)
+│       │   │   │   │   │       │       ├── ultrasonic feature "default" (*)
+│       │   │   │   │   │       │       └── ultrasonic feature "serde"
+│       │   │   │   │   │       │           ├── hypersonic feature "serde" (*)
+│       │   │   │   │   │       │           ├── sonic-api feature "serde" (*)
+│       │   │   │   │   │       │           ├── sonic-callreq feature "serde" (*)
+│       │   │   │   │   │       │           └── rgb-core feature "serde" (*)
+│       │   │   │   │   │       └── zk-aluvm feature "serde"
+│       │   │   │   │   │           └── ultrasonic feature "serde" (*)
+│       │   │   │   │   └── aluvm feature "serde"
+│       │   │   │   │       ├── sonic-api feature "serde" (*)
+│       │   │   │   │       └── zk-aluvm feature "serde" (*)
+│       │   │   │   ├── bp-consensus v0.12.0
+│       │   │   │   │   ├── bp-consensus feature "chrono"
+│       │   │   │   │   │   └── bp-consensus feature "default"
+│       │   │   │   │   │       ├── bp-core v0.12.0
+│       │   │   │   │   │       │   ├── bp-core feature "default"
+│       │   │   │   │   │       │   │   ├── bp-electrum v0.12.0-rc.1
+│       │   │   │   │   │       │   │   │   ├── bp-electrum feature "byteorder"
+│       │   │   │   │   │       │   │   │   │   └── bp-electrum feature "proxy"
+│       │   │   │   │   │       │   │   │   │       └── bp-electrum feature "default"
+│       │   │   │   │   │       │   │   │   │           ├── rgb-runtime v0.12.0-rc.3 (<temporary_workspace>/rgb) (*)
+│       │   │   │   │   │       │   │   │   │           └── rgb-wallet v0.12.0-rc.3 (<temporary_workspace>/rgb/cli) (*)
+│       │   │   │   │   │       │   │   │   ├── bp-electrum feature "default" (*)
+│       │   │   │   │   │       │   │   │   ├── bp-electrum feature "libc"
+│       │   │   │   │   │       │   │   │   │   └── bp-electrum feature "proxy" (*)
+│       │   │   │   │   │       │   │   │   ├── bp-electrum feature "proxy" (*)
+│       │   │   │   │   │       │   │   │   ├── bp-electrum feature "rustls"
+│       │   │   │   │   │       │   │   │   │   └── bp-electrum feature "use-rustls"
+│       │   │   │   │   │       │   │   │   │       └── bp-electrum feature "default" (*)
+│       │   │   │   │   │       │   │   │   ├── bp-electrum feature "use-rustls" (*)
+│       │   │   │   │   │       │   │   │   ├── bp-electrum feature "webpki-roots"
+│       │   │   │   │   │       │   │   │   │   └── bp-electrum feature "use-rustls" (*)
+│       │   │   │   │   │       │   │   │   └── bp-electrum feature "winapi"
+│       │   │   │   │   │       │   │   │       └── bp-electrum feature "proxy" (*)
+│       │   │   │   │   │       │   │   ├── bp-esplora v0.12.0-rc.3
+│       │   │   │   │   │       │   │   │   ├── rgb-runtime v0.12.0-rc.3 (<temporary_workspace>/rgb) (*)
+│       │   │   │   │   │       │   │   │   └── rgb-wallet v0.12.0-rc.3 (<temporary_workspace>/rgb/cli) (*)
+│       │   │   │   │   │       │   │   │   ├── bp-esplora feature "async"
+│       │   │   │   │   │       │   │   │   │   ├── rgb-runtime feature "resolver-esplora-async" (command-line) (*)
+│       │   │   │   │   │       │   │   │   │   └── bp-esplora feature "async-https"
+│       │   │   │   │   │       │   │   │   │       └── rgb-runtime feature "resolver-esplora-async" (command-line) (*)
+│       │   │   │   │   │       │   │   │   ├── bp-esplora feature "async-https" (*)
+│       │   │   │   │   │       │   │   │   ├── bp-esplora feature "blocking"
+│       │   │   │   │   │       │   │   │   │   └── bp-esplora feature "blocking-https"
+│       │   │   │   │   │       │   │   │   │       └── rgb-runtime feature "resolver-esplora" (command-line) (*)
+│       │   │   │   │   │       │   │   │   ├── bp-esplora feature "blocking-https" (*)
+│       │   │   │   │   │       │   │   │   ├── bp-esplora feature "minreq"
+│       │   │   │   │   │       │   │   │   │   ├── bp-esplora feature "blocking" (*)
+│       │   │   │   │   │       │   │   │   │   └── bp-esplora feature "blocking-https" (*)
+│       │   │   │   │   │       │   │   │   ├── bp-esplora feature "reqwest"
+│       │   │   │   │   │       │   │   │   │   ├── bp-esplora feature "async" (*)
+│       │   │   │   │   │       │   │   │   │   └── bp-esplora feature "async-https" (*)
+│       │   │   │   │   │       │   │   │   └── bp-esplora feature "tokio"
+│       │   │   │   │   │       │   │   │       └── rgb-runtime feature "resolver-esplora-async" (command-line) (*)
+│       │   │   │   │   │       │   │   ├── bp-std v0.12.0-rc.3
+│       │   │   │   │   │       │   │   │   ├── bp-std feature "bp-core"
+│       │   │   │   │   │       │   │   │   │   ├── bp-std feature "client-side-validation"
+│       │   │   │   │   │       │   │   │   │   │   ├── rgb-descriptors v0.12.0-rc.3 (<temporary_workspace>/rgb/descriptors) (*)
+│       │   │   │   │   │       │   │   │   │   │   ├── rgb-psbt v0.12.0-rc.3 (<temporary_workspace>/rgb/psbt) (*)
+│       │   │   │   │   │       │   │   │   │   │   ├── rgb-runtime v0.12.0-rc.3 (<temporary_workspace>/rgb) (*)
+│       │   │   │   │   │       │   │   │   │   │   └── rgb-wallet v0.12.0-rc.3 (<temporary_workspace>/rgb/cli) (*)
+│       │   │   │   │   │       │   │   │   │   └── bp-std feature "serde"
+│       │   │   │   │   │       │   │   │   │       ├── rgb-descriptors feature "serde" (command-line) (*)
+│       │   │   │   │   │       │   │   │   │       └── rgb-runtime feature "serde" (command-line) (*)
+│       │   │   │   │   │       │   │   │   ├── bp-std feature "client-side-validation" (*)
+│       │   │   │   │   │       │   │   │   ├── bp-std feature "default"
+│       │   │   │   │   │       │   │   │   │   ├── rgb-descriptors v0.12.0-rc.3 (<temporary_workspace>/rgb/descriptors) (*)
+│       │   │   │   │   │       │   │   │   │   ├── rgb-psbt v0.12.0-rc.3 (<temporary_workspace>/rgb/psbt) (*)
+│       │   │   │   │   │       │   │   │   │   ├── rgb-runtime v0.12.0-rc.3 (<temporary_workspace>/rgb) (*)
+│       │   │   │   │   │       │   │   │   │   └── rgb-wallet v0.12.0-rc.3 (<temporary_workspace>/rgb/cli) (*)
+│       │   │   │   │   │       │   │   │   └── bp-std feature "serde" (*)
+│       │   │   │   │   │       │   │   ├── psbt v0.12.0-rc.3
+│       │   │   │   │   │       │   │   │   ├── psbt feature "bp-core"
+│       │   │   │   │   │       │   │   │   │   └── psbt feature "client-side-validation"
+│       │   │   │   │   │       │   │   │   │       └── bp-std feature "client-side-validation" (*)
+│       │   │   │   │   │       │   │   │   ├── psbt feature "client-side-validation" (*)
+│       │   │   │   │   │       │   │   │   ├── psbt feature "commit_verify"
+│       │   │   │   │   │       │   │   │   │   └── psbt feature "client-side-validation" (*)
+│       │   │   │   │   │       │   │   │   ├── psbt feature "default"
+│       │   │   │   │   │       │   │   │   │   └── bp-std v0.12.0-rc.3 (*)
+│       │   │   │   │   │       │   │   │   ├── psbt feature "serde"
+│       │   │   │   │   │       │   │   │   │   └── bp-std feature "serde" (*)
+│       │   │   │   │   │       │   │   │   └── psbt feature "strict_encoding"
+│       │   │   │   │   │       │   │   │       └── psbt feature "client-side-validation" (*)
+│       │   │   │   │   │       │   │   ├── rgb-core v0.12.0 (*)
+│       │   │   │   │   │       │   │   ├── rgb-invoice v0.12.0-rc.3 (*)
+│       │   │   │   │   │       │   │   ├── rgb-psbt v0.12.0-rc.3 (<temporary_workspace>/rgb/psbt) (*)
+│       │   │   │   │   │       │   │   └── rgb-std v0.12.0-rc.3 (*)
+│       │   │   │   │   │       │   └── bp-core feature "serde"
+│       │   │   │   │   │       │       ├── bp-electrum v0.12.0-rc.1 (*)
+│       │   │   │   │   │       │       └── bp-esplora v0.12.0-rc.3 (*)
+│       │   │   │   │   │       │       ├── bp-std feature "serde" (*)
+│       │   │   │   │   │       │       ├── rgb-std feature "serde" (*)
+│       │   │   │   │   │       │       └── rgb-invoice feature "serde" (*)
+│       │   │   │   │   │       ├── bp-dbc v0.12.0
+│       │   │   │   │   │       │   ├── bp-dbc feature "default"
+│       │   │   │   │   │       │   │   ├── bp-core v0.12.0 (*)
+│       │   │   │   │   │       │   │   └── bp-seals v0.12.0
+│       │   │   │   │   │       │   │       ├── bp-seals feature "default"
+│       │   │   │   │   │       │   │       │   └── bp-core v0.12.0 (*)
+│       │   │   │   │   │       │   │       └── bp-seals feature "serde"
+│       │   │   │   │   │       │   │           └── bp-core feature "serde" (*)
+│       │   │   │   │   │       │   └── bp-dbc feature "serde"
+│       │   │   │   │   │       │       ├── bp-core feature "serde" (*)
+│       │   │   │   │   │       │       └── bp-seals feature "serde" (*)
+│       │   │   │   │   │       ├── bp-derive v0.12.0-rc.3
+│       │   │   │   │   │       │   ├── bp-derive feature "default"
+│       │   │   │   │   │       │   │   ├── bp-std v0.12.0-rc.3 (*)
+│       │   │   │   │   │       │   │   ├── descriptors v0.12.0-rc.3
+│       │   │   │   │   │       │   │   │   ├── descriptors feature "default"
+│       │   │   │   │   │       │   │   │   │   ├── bp-std v0.12.0-rc.3 (*)
+│       │   │   │   │   │       │   │   │   │   └── psbt v0.12.0-rc.3 (*)
+│       │   │   │   │   │       │   │   │   └── descriptors feature "serde"
+│       │   │   │   │   │       │   │   │       └── bp-std feature "serde" (*)
+│       │   │   │   │   │       │   │   └── psbt v0.12.0-rc.3 (*)
+│       │   │   │   │   │       │   └── bp-derive feature "serde"
+│       │   │   │   │   │       │       ├── bp-std feature "serde" (*)
+│       │   │   │   │   │       │       ├── descriptors feature "serde" (*)
+│       │   │   │   │   │       │       └── psbt feature "serde" (*)
+│       │   │   │   │   │       ├── bp-invoice v0.12.0-rc.3
+│       │   │   │   │   │       │   ├── bp-invoice feature "default"
+│       │   │   │   │   │       │   │   ├── bp-derive v0.12.0-rc.3 (*)
+│       │   │   │   │   │       │   │   ├── bp-esplora v0.12.0-rc.3 (*)
+│       │   │   │   │   │       │   │   ├── bp-std v0.12.0-rc.3 (*)
+│       │   │   │   │   │       │   │   ├── rgb-invoice v0.12.0-rc.3 (*)
+│       │   │   │   │   │       │   │   └── rgb-std v0.12.0-rc.3 (*)
+│       │   │   │   │   │       │   ├── bp-invoice feature "serde"
+│       │   │   │   │   │       │   │   ├── bp-std feature "serde" (*)
+│       │   │   │   │   │       │   │   ├── bp-derive feature "serde" (*)
+│       │   │   │   │   │       │   │   └── rgb-invoice feature "serde" (*)
+│       │   │   │   │   │       │   └── bp-invoice feature "strict_encoding"
+│       │   │   │   │   │       │       └── rgb-invoice v0.12.0-rc.3 (*)
+│       │   │   │   │   │       ├── bp-seals v0.12.0 (*)
+│       │   │   │   │   │       ├── bp-std v0.12.0-rc.3 (*)
+│       │   │   │   │   │       └── psbt v0.12.0-rc.3 (*)
+│       │   │   │   │   ├── bp-consensus feature "default" (*)
+│       │   │   │   │   └── bp-consensus feature "serde"
+│       │   │   │   │       ├── bp-std feature "serde" (*)
+│       │   │   │   │       ├── bp-core feature "serde" (*)
+│       │   │   │   │       ├── bp-dbc feature "serde" (*)
+│       │   │   │   │       ├── bp-seals feature "serde" (*)
+│       │   │   │   │       ├── bp-derive feature "serde" (*)
+│       │   │   │   │       └── bp-invoice feature "serde" (*)
+│       │   │   │   ├── bp-core v0.12.0 (*)
+│       │   │   │   ├── bp-dbc v0.12.0 (*)
+│       │   │   │   ├── bp-derive v0.12.0-rc.3 (*)
+│       │   │   │   ├── bp-invoice v0.12.0-rc.3 (*)
+│       │   │   │   ├── bp-seals v0.12.0 (*)
+│       │   │   │   ├── descriptors v0.12.0-rc.3 (*)
+│       │   │   │   ├── hypersonic v0.12.0 (*)
+│       │   │   │   ├── psbt v0.12.0-rc.3 (*)
+│       │   │   │   ├── rgb-core v0.12.0 (*)
+│       │   │   │   ├── rgb-descriptors v0.12.0-rc.3 (<temporary_workspace>/rgb/descriptors) (*)
+│       │   │   │   ├── rgb-invoice v0.12.0-rc.3 (*)
+│       │   │   │   ├── rgb-runtime v0.12.0-rc.3 (<temporary_workspace>/rgb) (*)
+│       │   │   │   ├── rgb-std v0.12.0-rc.3 (*)
+│       │   │   │   ├── sonic-api v0.12.0 (*)
+│       │   │   │   ├── sonic-persist-fs v0.12.0 (*)
+│       │   │   │   └── ultrasonic v0.12.0 (*)
+│       │   │   ├── commit_verify feature "derive"
+│       │   │   │   └── ultrasonic v0.12.0 (*)
+│       │   │   │   └── commit_verify feature "default" (*)
+│       │   │   ├── commit_verify feature "rand"
+│       │   │   │   └── bp-dbc v0.12.0 (*)
+│       │   │   └── commit_verify feature "serde"
+│       │   │       └── sonic-persist-fs v0.12.0 (*)
+│       │   │       ├── bp-dbc feature "serde" (*)
+│       │   │       ├── bp-seals feature "serde" (*)
+│       │   │       ├── rgb-std feature "serde" (*)
+│       │   │       ├── hypersonic feature "serde" (*)
+│       │   │       ├── sonic-api feature "serde" (*)
+│       │   │       ├── ultrasonic feature "serde" (*)
+│       │   │       └── rgb-core feature "serde" (*)
+│       │   └── rgb-runtime v0.12.0-rc.3 (<temporary_workspace>/rgb) (*)
+│       └── rand feature "thread_rng"
+│           └── rand feature "default" (*)
+├── rand feature "default" (*)
+├── rand feature "os_rng"
+│   ├── rand feature "default" (*)
+│   └── rand feature "thread_rng" (*)
+├── rand feature "small_rng"
+│   └── rand feature "default" (*)
+├── rand feature "std" (*)
+├── rand feature "std_rng"
+│   ├── rand feature "default" (*)
+│   └── rand feature "thread_rng" (*)
+└── rand feature "thread_rng" (*)

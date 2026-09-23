@@ -1,0 +1,39 @@
+diff --git a/cli/src/args.rs b/cli/src/args.rs
+index 4fe8752..40b5b6b 100644
+--- a/cli/src/args.rs
++++ b/cli/src/args.rs
+@@ -141,7 +141,7 @@ impl Args {
+         Contracts::load(stockpile)
+     }
+
+-    fn wallet_dir(&self, name: Option<&str>) -> PathBuf {
++    pub(crate) fn wallet_dir(&self, name: Option<&str>) -> PathBuf {
+         self.data_dir()
+             .join(name.unwrap_or("default"))
+             .with_extension("wallet")
+diff --git a/cli/src/exec.rs b/cli/src/exec.rs
+index 9d098fd..ab5a0fb 100644
+--- a/cli/src/exec.rs
++++ b/cli/src/exec.rs
+@@ -101,7 +101,7 @@ impl Args {
+                          `--tapret-key-only` or `--wpkh`"
+                     ),
+                 };
+-                let path = self.data_dir().join(name);
++                let path = self.wallet_dir(Some(name));
+                 FileHolder::create(path, descr).expect("Unable to create wallet");
+             }
+
+diff --git a/cli/src/opts.rs b/cli/src/opts.rs
+index 4a3c60a..a9062be 100644
+--- a/cli/src/opts.rs
++++ b/cli/src/opts.rs
+@@ -30,7 +30,7 @@ pub const DEFAULT_ELECTRUM: &str = "mycitadel.io:50001";
+ pub const DEFAULT_ESPLORA: &str = "https://mempool.space/{network}/api";
+
+ #[derive(Args, Clone, PartialEq, Eq, Debug)]
+-#[group(args = ["electrum", "esplora", "mempool"])]
++#[group(args = ["electrum", "esplora"])]
+ pub struct ResolverOpt {
+     /// Electrum server to use
+     #[arg(

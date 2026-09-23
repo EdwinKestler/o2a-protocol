@@ -1,0 +1,83 @@
+rustls v0.23.28
+├── rustls feature "aws-lc-rs"
+│   └── rustls feature "aws_lc_rs"
+│       ├── rustls feature "default"
+│       │   └── bp-electrum v0.12.0-rc.1
+│       │       ├── bp-electrum feature "byteorder"
+│       │       │   └── bp-electrum feature "proxy"
+│       │       │       └── bp-electrum feature "default"
+│       │       │           ├── rgb-runtime v0.12.0-rc.3 (<temporary_workspace>/rgb)
+│       │       │           │   ├── rgb-runtime feature "all" (command-line)
+│       │       │           │   ├── rgb-runtime feature "all-async" (command-line)
+│       │       │           │   ├── rgb-runtime feature "async" (command-line)
+│       │       │           │   │   ├── rgb-runtime feature "all-async" (command-line)
+│       │       │           │   │   └── rgb-runtime feature "resolver-esplora-async" (command-line)
+│       │       │           │   │       └── rgb-runtime feature "resolvers-all-async" (command-line)
+│       │       │           │   │           └── rgb-runtime feature "all-async" (command-line)
+│       │       │           │   ├── rgb-runtime feature "bp-esplora" (command-line)
+│       │       │           │   │   ├── rgb-runtime feature "resolver-esplora" (command-line)
+│       │       │           │   │   │   └── rgb-runtime feature "resolvers-all" (command-line)
+│       │       │           │   │   │       └── rgb-wallet v0.12.0-rc.3 (<temporary_workspace>/rgb/cli)
+│       │       │           │   │   │           ├── rgb-wallet feature "all" (command-line)
+│       │       │           │   │   │           ├── rgb-wallet feature "default" (command-line)
+│       │       │           │   │   │           └── rgb-wallet feature "log" (command-line)
+│       │       │           │   │   │               └── rgb-wallet feature "all" (command-line)
+│       │       │           │   │   │       └── rgb-runtime feature "all" (command-line)
+│       │       │           │   │   └── rgb-runtime feature "resolver-esplora-async" (command-line) (*)
+│       │       │           │   ├── rgb-runtime feature "default" (command-line)
+│       │       │           │   │   └── rgb-wallet v0.12.0-rc.3 (<temporary_workspace>/rgb/cli) (*)
+│       │       │           │   ├── rgb-runtime feature "fs" (command-line)
+│       │       │           │   │   └── rgb-wallet v0.12.0-rc.3 (<temporary_workspace>/rgb/cli) (*)
+│       │       │           │   │   └── rgb-runtime feature "all" (command-line)
+│       │       │           │   ├── rgb-runtime feature "futures" (command-line)
+│       │       │           │   │   └── rgb-runtime feature "async" (command-line) (*)
+│       │       │           │   ├── rgb-runtime feature "log" (command-line)
+│       │       │           │   │   ├── rgb-runtime feature "all" (command-line)
+│       │       │           │   │   ├── rgb-runtime feature "all-async" (command-line)
+│       │       │           │   │   └── rgb-wallet feature "log" (command-line) (*)
+│       │       │           │   ├── rgb-runtime feature "rand" (command-line)
+│       │       │           │   ├── rgb-runtime feature "resolver-electrum" (command-line)
+│       │       │           │   │   └── rgb-runtime feature "resolvers-all" (command-line) (*)
+│       │       │           │   ├── rgb-runtime feature "resolver-esplora" (command-line) (*)
+│       │       │           │   ├── rgb-runtime feature "resolver-esplora-async" (command-line) (*)
+│       │       │           │   ├── rgb-runtime feature "resolvers-all" (command-line) (*)
+│       │       │           │   ├── rgb-runtime feature "resolvers-all-async" (command-line) (*)
+│       │       │           │   ├── rgb-runtime feature "serde" (command-line)
+│       │       │           │   │   └── rgb-wallet v0.12.0-rc.3 (<temporary_workspace>/rgb/cli) (*)
+│       │       │           │   │   ├── rgb-runtime feature "all" (command-line)
+│       │       │           │   │   ├── rgb-runtime feature "all-async" (command-line)
+│       │       │           │   │   └── rgb-runtime feature "fs" (command-line) (*)
+│       │       │           │   ├── rgb-runtime feature "std" (command-line)
+│       │       │           │   │   ├── rgb-runtime feature "all" (command-line)
+│       │       │           │   │   ├── rgb-runtime feature "all-async" (command-line)
+│       │       │           │   │   ├── rgb-runtime feature "default" (command-line) (*)
+│       │       │           │   │   └── rgb-runtime feature "fs" (command-line) (*)
+│       │       │           │   └── rgb-runtime feature "toml" (command-line)
+│       │       │           │       └── rgb-runtime feature "serde" (command-line) (*)
+│       │       │           └── rgb-wallet v0.12.0-rc.3 (<temporary_workspace>/rgb/cli) (*)
+│       │       ├── bp-electrum feature "default" (*)
+│       │       ├── bp-electrum feature "libc"
+│       │       │   └── bp-electrum feature "proxy" (*)
+│       │       ├── bp-electrum feature "proxy" (*)
+│       │       ├── bp-electrum feature "rustls"
+│       │       │   └── bp-electrum feature "use-rustls"
+│       │       │       └── bp-electrum feature "default" (*)
+│       │       ├── bp-electrum feature "use-rustls" (*)
+│       │       ├── bp-electrum feature "webpki-roots"
+│       │       │   └── bp-electrum feature "use-rustls" (*)
+│       │       └── bp-electrum feature "winapi"
+│       │           └── bp-electrum feature "proxy" (*)
+│       │   └── bp-electrum feature "use-rustls" (*)
+│       └── rustls feature "prefer-post-quantum"
+│           └── rustls feature "default" (*)
+├── rustls feature "aws_lc_rs" (*)
+├── rustls feature "default" (*)
+├── rustls feature "log"
+│   └── rustls feature "logging"
+│       └── rustls feature "default" (*)
+├── rustls feature "logging" (*)
+├── rustls feature "prefer-post-quantum" (*)
+├── rustls feature "std"
+│   └── rustls feature "default" (*)
+└── rustls feature "tls12"
+    └── rustls feature "default" (*)

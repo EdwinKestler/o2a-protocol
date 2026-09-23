@@ -1,0 +1,7 @@
+{
+  "chain": "regtest",
+  "blocks": 101,
+  "headers": 101,
+  "bestblockhash": "1261d57b83c3bc35241b5fe18993e01397994ecfd7ab65f011af3d51c022aa51",
+  "initialblockdownload": false
+}

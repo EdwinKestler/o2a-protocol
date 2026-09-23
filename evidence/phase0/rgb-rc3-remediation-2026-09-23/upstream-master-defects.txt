@@ -1,0 +1,11 @@
+RGB default branch: 275382240ae1b8a56beb120e926e60d86f49785b
+cli/src/opts.rs:
+33:#[group(args = ["electrum", "esplora", "mempool"])]
+42:        env = "ELECRTUM_SERVER",
+cli/src/args.rs:
+144:    fn wallet_dir(&self, name: Option<&str>) -> PathBuf {
+147:            .with_extension("wallet")
+152:        let path = self.wallet_dir(opts.wallet.as_deref());
+cli/src/exec.rs:
+104:                let path = self.data_dir().join(name);
+105:                FileHolder::create(path, descr).expect("Unable to create wallet");

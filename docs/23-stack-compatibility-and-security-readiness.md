@@ -7,23 +7,29 @@ lineage, freeze a dependency graph, or demonstrate an O2A identity lifecycle.
 ## Verdict
 
 The proposed development baseline is feasible, but the exact stack is **not
-ready to adopt**. Rust 1.98.1, the RGB-WG RC3 libraries, and Bitcoin Core 31.1
-regtest passed their bounded checks. A second disposable run proved the local
-Electrum resolver and a public-key byte conversion after documented RC3
-workarounds, but the exact 342-package RGB lock has 15 RustSec vulnerability
-findings and five warnings. The unmodified CLI still has defects, Bitcoin Core
-RPC is not an implemented RGB RC3 resolver, and no O2A lifecycle was tested.
+ready to adopt**. A third disposable run built the exact RGB-WG RC3 tag and
+electrs tag under Rust 1.98.1. A reproducible three-line compatibility patch
+fixed the CLI parser failure and wallet-path mismatch, and the patched CLI
+synced 101 regtest UTXOs through local electrs and Bitcoin Core 31.1. The
+unmodified tag and current upstream `master` still contain those defects.
+
+Compatible dependency updates reduced the full RC3 graph from 15 RustSec
+findings to three. Removing Esplora in a separate feature-minimized experiment
+removed those three advisories and passed locked checks and tests, but required
+another unreleased source patch and retained an unmaintained dependency
+warning. Bitcoin Core RPC is not an implemented RGB RC3 resolver, the licenses
+of the candidate graph are not approved, and no O2A lifecycle was tested.
 
 | Check | Result | Meaning |
 | --- | --- | --- |
-| Rust 1.98.1 isolated toolchain | Partial pass | Direct `rustc` and `cargo` worked. The isolated `rustup` wrapper exited 1 after installation because its temporary Cargo home lacked the proxy. A checked-in setup script must avoid that layout mistake. |
+| Rust 1.98.1 isolated toolchain | Pass with setup caveat | Direct 1.98.1 binaries built the patched RGB CLI and exact electrs tag and ran the lock-remediation checks. The isolated `rustup` wrapper still exited 1 after installation because its temporary Cargo home lacked the proxy; a checked-in setup script must avoid that layout mistake. |
 | Bitcoin Core 31.1 archive and regtest | Pass | SHA256 matched the published checksum; 11 checksum signatures validated and the Fanquake fingerprint matched the official verification page. GPG trust remained undefined in the isolated keyring. Daemon/RPC, a disposable wallet, 101 blocks, and a 50 BTC mature regtest balance worked with zero peers. |
 | RGB runtime and wallet RC3 compile | Pass | Locked checks/builds passed with exact RC3 tags and Rust 1.98.1. Four runtime library tests passed. |
-| RGB CLI debug-build invocation | Fail | `rgb sync --help` exited 101 because Clap group `ResolverOpt` names nonexistent argument `mempool`. Release-build and `cargo install` behavior were not tested, so this establishes a debug-build defect rather than every distribution path. Compile success is not CLI readiness. |
-| RGB chain resolver | Conditional pass | A temporarily patched debug CLI synced 101 UTXOs through local electrs 0.12.0 backed by the same Core node. The upstream Clap defect and a separate `create`/`sync` wallet-path mismatch required workarounds. Core RPC remains a TODO. |
+| RGB CLI debug-build invocation | Patched pass; upstream fail | A three-line patch removes nonexistent `mempool` from the Clap group and makes `create` write the `.wallet` path that `sync` reads. Patched `sync --help` passed; unmodified RC3 still exited 101. Current upstream `master` retains both defects and the `ELECRTUM_SERVER` typo. |
+| RGB chain resolver | Patched pass | Under Rust 1.98.1, the patched CLI created the correctly named wallet and synced 101 UTXOs through exact electrs 0.12.0 backed by the same Core node. No manual rename was needed. Core RPC remains a TODO. |
 | Bitcoin/RGB type conversion | Bounded pass | A separate manifest resolved BP secp256k1 0.30.0 and rust-bitcoin's 0.29.1. Compressed and x-only public keys round-tripped through validated canonical bytes, and malformed keys were rejected. Signatures, authorization, and consensus behavior remain untested. |
 | O2A RGB lifecycle and independent import | Not run | No genesis, rotation, recovery-policy change, authorized recovery, revocation, consignment exchange, or second-client verification was performed. |
-| Locked advisory and license scan | Fail for adoption | The retained RGB lock has 342 packages. `cargo audit` found 15 vulnerabilities and five warnings. The source scan passed, while the three-license minimum rejected 34 findings across 16 license expressions that require review. |
+| Locked advisory and license scan | Fail for adoption | The tagged 342-package lock has 15 vulnerabilities and five warnings. Compatible updates leave three Esplora-path advisories. An Electrum-only source-patched graph has zero vulnerability advisories but one unmaintained warning and unapproved license expressions. None is adopted. |
 
 These results make the first RGB experiment explicitly disposable. It must not
 be promoted into `crates/o2a-rgb`, and its contract shape must not enter a
@@ -83,13 +89,42 @@ patch plus a newly observed wallet-directory rename, and the exact lock failed
 the advisory gate. No O2A contract, identity, signature, transition, or
 independent package validation was performed.
 
+## Third disposable remediation run
+
+The third run retained the exact patch, upstream locks, feature tree, sanitized
+logs, source checks, and dependency experiments in the
+[remediation evidence bundle](../evidence/phase0/rgb-rc3-remediation-2026-09-23/RUN.md).
+It used Rust 1.98.1 and the exact electrs `v0.12.0` tag, whose annotated tag
+peels to `37501cc4b94aea99e50670a6524fa3ad4ac9aabb`. This corrects the earlier
+evidence record, which mislabeled current electrs `master` commit `d975dd03` as
+the release tag.
+
+The patched CLI passed `sync --help`, created `test2.wallet` directly, and
+synced 101 UTXOs through the local resolver. Unmodified RC3 failed the parser
+probe, and RGB upstream `master` at `27538224` still contained the parser,
+wallet-path, and environment-name defects when inspected.
+
+The [lock-remediation experiment](../evidence/phase0/rgb-rc3-remediation-2026-09-23/lock-review/SUMMARY.md)
+made two bounded attempts:
+
+- compatible updates reduced the full graph to three advisories, all through
+  Esplora's `minreq -> rustls 0.21 -> rustls-webpki 0.101.7` path; and
+- removing Esplora produced a 213-package Electrum-plus-filesystem graph that
+  passed locked workspace checks and five tests with zero vulnerability
+  advisories, but retained the unmaintained `paste 1.0.15` warning.
+
+The second attempt changes upstream features and was not resolver-tested in
+that form. It is evidence for a possible direction, not a selected patch or
+dependency graph. No production crate or O2A identity was created.
+
 ## Compatibility gates for the next run
 
 1. Start from the exact RC3 tags, then check for a newer matching release
    family before testing. Never mix the RGB-WG 0.12 family with an unrelated
    `rgb-protocol` 0.11.1 API by name alone.
-2. Patch or update past the CLI parser defect and prove that the chosen CLI
-   and library operations work, not merely compile.
+2. Obtain an upstream release or a separately reviewed, maintained patch for
+   the CLI parser and wallet-path defects. The retained experimental patch
+   proves the corrections but is not an adopted fork.
 3. Run a local Electrum or Esplora resolver backed by the checksum- and
    signature-verified Bitcoin Core build, unless the selected runtime gains a
    tested Core-RPC resolver.
@@ -101,7 +136,9 @@ independent package validation was performed.
    types match either rust-bitcoin or RGB.
 6. Complete the full O2A lifecycle, negative cases, simulated reorg, package
    export, and validation from a second clean client state.
-7. Preserve the candidate lockfile, its hash, enabled-feature inventory, Cargo
+7. Remove or replace the unmaintained `paste` dependency, eliminate all
+   applicable advisories, and complete the license review before adoption.
+8. Preserve the candidate lockfile, its hash, enabled-feature inventory, Cargo
    metadata, and source revisions as Phase 0 evidence, even when the experiment
    itself remains disposable. Commit a lockfile only with its reviewed
    candidate graph. Run `cargo audit`, all cargo-deny checks,

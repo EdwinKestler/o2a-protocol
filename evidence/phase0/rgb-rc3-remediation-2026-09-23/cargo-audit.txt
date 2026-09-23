@@ -1,0 +1,166 @@
+      Loaded 1267 security advisories (from <temporary_workspace>/advisory-db-pinned)
+    Scanning <evidence_staging>/RGB-Cargo.lock for vulnerabilities (342 crate dependencies)
+Crate:     aws-lc-sys
+Version:   0.29.0
+Title:     CRL Distribution Point Scope Check Logic Error in AWS-LC
+Date:      2026-03-19
+ID:        RUSTSEC-2026-0048
+URL:       https://rustsec.org/advisories/RUSTSEC-2026-0048
+Severity:  7.4 (high)
+Solution:  Upgrade to >=0.39.0
+
+Crate:     aws-lc-sys
+Version:   0.29.0
+Title:     PKCS7_verify Certificate Chain Validation Bypass in AWS-LC
+Date:      2026-03-02
+ID:        RUSTSEC-2026-0046
+URL:       https://rustsec.org/advisories/RUSTSEC-2026-0046
+Severity:  7.5 (high)
+Solution:  Upgrade to >=0.38.0
+
+Crate:     aws-lc-sys
+Version:   0.29.0
+Title:     PKCS7_verify Signature Validation Bypass in AWS-LC
+Date:      2026-03-02
+ID:        RUSTSEC-2026-0047
+URL:       https://rustsec.org/advisories/RUSTSEC-2026-0047
+Severity:  7.5 (high)
+Solution:  Upgrade to >=0.38.0
+
+Crate:     aws-lc-sys
+Version:   0.29.0
+Title:     Timing Side-Channel in AES-CCM Tag Verification in AWS-LC
+Date:      2026-03-02
+ID:        RUSTSEC-2026-0045
+URL:       https://rustsec.org/advisories/RUSTSEC-2026-0045
+Severity:  5.9 (medium)
+Solution:  Upgrade to >=0.38.0
+
+Crate:     bytes
+Version:   1.10.1
+Title:     Integer overflow in `BytesMut::reserve`
+Date:      2026-02-03
+ID:        RUSTSEC-2026-0007
+URL:       https://github.com/advisories/GHSA-434x-w66g-qw3r
+Solution:  Upgrade to >=1.11.1
+
+Crate:     rustls
+Version:   0.23.28
+Title:     TLS 1.3 handshake messages incorrectly accepted across encryption level boundaries
+Date:      2026-09-14
+ID:        RUSTSEC-2026-0285
+URL:       https://rustsec.org/advisories/RUSTSEC-2026-0285
+Severity:  5.3 (medium)
+Solution:  Upgrade to >=0.23.45
+
+Crate:     rustls-webpki
+Version:   0.101.7
+Title:     Reachable panic in certificate revocation list parsing
+Date:      2026-04-22
+ID:        RUSTSEC-2026-0104
+URL:       https://rustsec.org/advisories/RUSTSEC-2026-0104
+Solution:  Upgrade to >=0.103.13, <0.104.0-alpha.1 OR >=0.104.0-alpha.7
+
+Crate:     rustls-webpki
+Version:   0.101.7
+Title:     Name constraints were accepted for certificates asserting a wildcard name
+Date:      2026-04-14
+ID:        RUSTSEC-2026-0099
+URL:       https://rustsec.org/advisories/RUSTSEC-2026-0099
+Solution:  Upgrade to >=0.103.12, <0.104.0-alpha.1 OR >=0.104.0-alpha.6
+
+Crate:     rustls-webpki
+Version:   0.101.7
+Title:     Name constraints for URI names were incorrectly accepted
+Date:      2026-04-14
+ID:        RUSTSEC-2026-0098
+URL:       https://rustsec.org/advisories/RUSTSEC-2026-0098
+Solution:  Upgrade to >=0.103.12, <0.104.0-alpha.1 OR >=0.104.0-alpha.6
+
+Crate:     rustls-webpki
+Version:   0.103.3
+Title:     Reachable panic in certificate revocation list parsing
+Date:      2026-04-22
+ID:        RUSTSEC-2026-0104
+URL:       https://rustsec.org/advisories/RUSTSEC-2026-0104
+Solution:  Upgrade to >=0.103.13, <0.104.0-alpha.1 OR >=0.104.0-alpha.7
+
+Crate:     rustls-webpki
+Version:   0.103.3
+Title:     Name constraints were accepted for certificates asserting a wildcard name
+Date:      2026-04-14
+ID:        RUSTSEC-2026-0099
+URL:       https://rustsec.org/advisories/RUSTSEC-2026-0099
+Solution:  Upgrade to >=0.103.12, <0.104.0-alpha.1 OR >=0.104.0-alpha.6
+
+Crate:     rustls-webpki
+Version:   0.103.3
+Title:     Name constraints for URI names were incorrectly accepted
+Date:      2026-04-14
+ID:        RUSTSEC-2026-0098
+URL:       https://rustsec.org/advisories/RUSTSEC-2026-0098
+Solution:  Upgrade to >=0.103.12, <0.104.0-alpha.1 OR >=0.104.0-alpha.6
+
+Crate:     rustls-webpki
+Version:   0.103.3
+Title:     CRLs not considered authoritative by Distribution Point due to faulty matching logic
+Date:      2026-03-20
+ID:        RUSTSEC-2026-0049
+URL:       https://rustsec.org/advisories/RUSTSEC-2026-0049
+Solution:  Upgrade to >=0.103.10
+
+Crate:     slab
+Version:   0.4.10
+Title:     Out-of-bounds access in `get_disjoint_mut` due to incorrect bounds check
+Date:      2025-08-12
+ID:        RUSTSEC-2025-0047
+URL:       https://rustsec.org/advisories/RUSTSEC-2025-0047
+Solution:  Upgrade to >=0.4.11
+
+Crate:     time
+Version:   0.3.41
+Title:     Denial of Service via Stack Exhaustion
+Date:      2026-02-05
+ID:        RUSTSEC-2026-0009
+URL:       https://rustsec.org/advisories/RUSTSEC-2026-0009
+Severity:  6.8 (medium)
+Solution:  Upgrade to >=0.3.47
+
+Crate:     paste
+Version:   1.0.15
+Warning:   unmaintained
+Title:     paste - no longer maintained
+Date:      2024-10-07
+ID:        RUSTSEC-2024-0436
+URL:       https://rustsec.org/advisories/RUSTSEC-2024-0436
+
+Crate:     anyhow
+Version:   1.0.98
+Warning:   unsound
+Title:     Unsoundness in `Error::downcast_mut()`
+Date:      2026-06-25
+ID:        RUSTSEC-2026-0190
+URL:       https://rustsec.org/advisories/RUSTSEC-2026-0190
+
+Crate:     rand
+Version:   0.8.5
+Warning:   unsound
+Title:     Rand is unsound with a custom logger using `rand::rng()`
+Date:      2026-04-09
+ID:        RUSTSEC-2026-0097
+URL:       https://rustsec.org/advisories/RUSTSEC-2026-0097
+
+Crate:     rand
+Version:   0.9.1
+Warning:   unsound
+Title:     Rand is unsound with a custom logger using `rand::rng()`
+Date:      2026-04-09
+ID:        RUSTSEC-2026-0097
+URL:       https://rustsec.org/advisories/RUSTSEC-2026-0097
+
+Crate:     slab
+Version:   0.4.10
+Warning:   yanked
+
+error: 15 vulnerabilities found!
+warning: 5 allowed warnings found

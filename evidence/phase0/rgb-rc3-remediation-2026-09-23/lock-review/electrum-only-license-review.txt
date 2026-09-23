@@ -1,0 +1,9 @@
+base85	2.0.0	MPL-2.0-no-copyleft-exception
+byteorder	1.5.0	Unlicense OR MIT
+memchr	2.7.5	Unlicense OR MIT
+r-efi	5.3.0	MIT OR Apache-2.0 OR LGPL-2.1-or-later
+same-file	1.0.6	Unlicense/MIT
+walkdir	2.5.0	Unlicense/MIT
+webpki-roots	0.26.11	CDLA-Permissive-2.0
+webpki-roots	1.0.1	CDLA-Permissive-2.0
+winapi-util	0.1.9	Unlicense OR MIT
