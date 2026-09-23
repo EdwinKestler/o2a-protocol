@@ -12,14 +12,21 @@ design decision, compatibility check, and local tests.
 | --- | --- | --- |
 | [BIP340](https://github.com/bitcoin/bips/blob/master/bip-0340.mediawiki) | Schnorr public-key and signature requirements for the dedicated O2A root and controller authorization profile. | The exact O2A key derivation, domain separation, message framing, and EntityID encoding still require frozen vectors. Identity keys must remain separate from spending keys. |
 | [RGB Core](https://github.com/RGB-WG/rgb-core) | Consensus validation, client-side state, single-use seals, commitments, and Strict Types integration. Start with its source and [releases](https://github.com/RGB-WG/rgb-core/releases). | Core v0.12.0 is a final consensus release; that alone does not establish a compatible application/runtime stack. |
-| [RGB API](https://github.com/rgb-protocol/rgb-api) | Client-facing Rust API, local `rgb` CLI, wallet/runtime integration, and indexer boundary. | This is an RGB client library, not O2A's proposed HTTP API. Check its Cargo dependencies against the chosen Core line before using it. |
+| [RGB-WG standard library](https://github.com/RGB-WG/rgb-std) | High-level contract API, consignments, persistence boundaries, and the application-facing 0.12 type graph. | The newest tagged release checked on 2026-09-23 is `v0.12.0-rc.3` (`e183bebf`). It resolves RGB Core 0.12.0 but remains a release candidate. |
+| [RGB-WG runtime and CLI](https://github.com/RGB-WG/rgb) | Runtime, local `rgb` command, import/export, backup, and application integration for the 0.12 family. | The newest tagged release checked on 2026-09-23 is `v0.12.0-rc.3` (`a1e6b415`). Its libraries compiled in the O2A smoke, but the debug-built CLI failed a Clap assertion on `rgb sync --help`; release-build behavior remains untested. Its implemented chain resolvers are Electrum and Esplora rather than Bitcoin Core RPC. See the compatibility record before selecting it. |
+| [`rgb-protocol` API](https://github.com/rgb-protocol/rgb-api) | Client-facing Rust API and wallet/indexer integration maintained for the 0.11.1 family. | This is not O2A's proposed HTTP API and is not evidence of compatibility with RGB-WG Core 0.12. Its current graph includes pre-release BP components. |
 | [RGB Sandbox](https://github.com/RGB-Tools/rgb-sandbox) ([current location](https://github.com/rgb-protocol/rgb-sandbox)) | Docker regtest layout, indexer, external wallet, issuance, consignment, and transfer demonstrations. | Its README describes an RGB 0.11.1 RC6 demo. Use it to learn and test that line; do not treat it as proof of a Core 0.12 integration. Some demo scripts remove local data. |
 | [RGB Documentation](https://github.com/RGB-Tools/RGB-Documentation) ([current location](https://github.com/rgb-protocol/RGB-Documentation)) | Single-use seals, proof of publication, commitment and anchor structure, client-side validation, and contract operations. | Check the documented version and the matching source before treating an example as a current API or wire contract. |
 
 The `RGB-Tools` sandbox and documentation links supplied for this file redirect
-to `rgb-protocol` as checked on 2026-09-23. Repository organization, versions,
-and APIs can change. Do not combine Core, standard library, API, or sandbox
-revisions solely because they share the RGB name.
+to `rgb-protocol` as checked on 2026-09-23. The RGB-WG 0.12 Core, standard
+library, and runtime are a separate candidate family from the maintained
+`rgb-protocol` 0.11.1 API and sandbox. Repository organization, versions, and
+APIs can change. Do not combine Core, standard library, runtime, API, or
+sandbox revisions solely because they share the RGB name. The required
+selection process is recorded in the
+[technology-stack brief](docs/21-proposed-tech-stack-and-development-environment.md)
+and its [compatibility and security record](docs/23-stack-compatibility-and-security-readiness.md).
 
 For O2A, distinguish four checks: the Bitcoin outpoint identifies the seal;
 the spending transaction closes it and commits to a transition; an RGB client

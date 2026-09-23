@@ -74,7 +74,14 @@ These explain the decisions and specs. They do not override them.
 - [Identity and discovery assessment](14-identity-discovery-assessment.md) — technology roles and feasibility gates.
 
 Supporting explanations, including attestations, challenges, trust policy,
-registries, and identifier notes, follow those masters and the specs.
+registries, identifier notes, and the
+[proposed technology stack and development environment](21-proposed-tech-stack-and-development-environment.md),
+its [license and adoption assessment](22-license-and-adoption-assessment.md),
+and its [compatibility and security record](23-stack-compatibility-and-security-readiness.md)
+follow those masters and the specs. A stack proposal, assessment, or smoke
+test does not freeze a protocol dependency or wire format. The root `LICENSE`
+file, not an assessment recommendation, states the repository's current
+license.
 
 ## Derived material
 

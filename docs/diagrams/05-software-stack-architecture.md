@@ -4,7 +4,9 @@ This is the proposed implementation stack. It is not a running system, and it
 does not choose a web framework or an HTTP library. Bitcoin anchoring and RGB
 client-side validation are required for the EntityID lifecycle. DNS, social,
 Pubky, Nostr, databases, and application services have narrower roles. See
-[the architecture](../01-architecture.md) and [the roadmap](../13-roadmap.md).
+[the architecture](../01-architecture.md), [the roadmap](../13-roadmap.md),
+and the
+[proposed stack and initial development environment](../21-proposed-tech-stack-and-development-environment.md).
 
 ```mermaid
 flowchart TB
