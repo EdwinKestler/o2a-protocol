@@ -1,0 +1,1330 @@
+rgb-wallet v0.12.0-rc.3 (<temporary_workspace>/rgb/cli)
+├── bp-esplora v0.12.0-rc.3
+│   ├── amplify feature "default"
+│   │   ├── amplify v4.9.0
+│   │   │   ├── amplify_derive feature "default"
+│   │   │   │   └── amplify_derive v4.0.1 (proc-macro)
+│   │   │   │       ├── amplify_syn feature "default"
+│   │   │   │       │   └── amplify_syn v2.0.1
+│   │   │   │       │       ├── proc-macro2 feature "default"
+│   │   │   │       │       │   ├── proc-macro2 v1.0.95
+│   │   │   │       │       │   │   └── unicode-ident feature "default"
+│   │   │   │       │       │   │       └── unicode-ident v1.0.18
+│   │   │   │       │       │   └── proc-macro2 feature "proc-macro"
+│   │   │   │       │       │       └── proc-macro2 v1.0.95 (*)
+│   │   │   │       │       ├── quote feature "default"
+│   │   │   │       │       │   ├── quote v1.0.40
+│   │   │   │       │       │   │   └── proc-macro2 v1.0.95 (*)
+│   │   │   │       │       │   └── quote feature "proc-macro"
+│   │   │   │       │       │       ├── quote v1.0.40 (*)
+│   │   │   │       │       │       └── proc-macro2 feature "proc-macro" (*)
+│   │   │   │       │       └── syn feature "default"
+│   │   │   │       │           ├── syn v1.0.109
+│   │   │   │       │           │   ├── proc-macro2 v1.0.95 (*)
+│   │   │   │       │           │   ├── quote v1.0.40 (*)
+│   │   │   │       │           │   └── unicode-ident feature "default" (*)
+│   │   │   │       │           ├── syn feature "clone-impls"
+│   │   │   │       │           │   └── syn v1.0.109 (*)
+│   │   │   │       │           ├── syn feature "derive"
+│   │   │   │       │           │   └── syn v1.0.109 (*)
+│   │   │   │       │           ├── syn feature "parsing"
+│   │   │   │       │           │   └── syn v1.0.109 (*)
+│   │   │   │       │           ├── syn feature "printing"
+│   │   │   │       │           │   ├── syn v1.0.109 (*)
+│   │   │   │       │           │   └── syn feature "quote"
+│   │   │   │       │           │       └── syn v1.0.109 (*)
+│   │   │   │       │           └── syn feature "proc-macro"
+│   │   │   │       │               ├── syn v1.0.109 (*)
+│   │   │   │       │               ├── proc-macro2 feature "proc-macro" (*)
+│   │   │   │       │               ├── quote feature "proc-macro" (*)
+│   │   │   │       │               └── syn feature "quote" (*)
+│   │   │   │       ├── proc-macro2 feature "default" (*)
+│   │   │   │       ├── quote feature "default" (*)
+│   │   │   │       └── syn feature "default" (*)
+│   │   │   ├── amplify_syn feature "default" (*)
+│   │   │   ├── amplify_num feature "default"
+│   │   │   │   ├── amplify_num v0.5.3
+│   │   │   │   │   ├── serde feature "default"
+│   │   │   │   │   │   ├── serde v1.0.219
+│   │   │   │   │   │   │   └── serde_derive feature "default"
+│   │   │   │   │   │   │       └── serde_derive v1.0.219 (proc-macro)
+│   │   │   │   │   │   │           ├── proc-macro2 feature "proc-macro" (*)
+│   │   │   │   │   │   │           ├── quote feature "proc-macro" (*)
+│   │   │   │   │   │   │           ├── syn feature "clone-impls"
+│   │   │   │   │   │   │           │   └── syn v2.0.104
+│   │   │   │   │   │   │           │       ├── proc-macro2 v1.0.95 (*)
+│   │   │   │   │   │   │           │       ├── quote v1.0.40 (*)
+│   │   │   │   │   │   │           │       └── unicode-ident feature "default" (*)
+│   │   │   │   │   │   │           ├── syn feature "derive"
+│   │   │   │   │   │   │           │   └── syn v2.0.104 (*)
+│   │   │   │   │   │   │           ├── syn feature "parsing"
+│   │   │   │   │   │   │           │   └── syn v2.0.104 (*)
+│   │   │   │   │   │   │           ├── syn feature "printing"
+│   │   │   │   │   │   │           │   └── syn v2.0.104 (*)
+│   │   │   │   │   │   │           └── syn feature "proc-macro"
+│   │   │   │   │   │   │               ├── syn v2.0.104 (*)
+│   │   │   │   │   │   │               ├── proc-macro2 feature "proc-macro" (*)
+│   │   │   │   │   │   │               └── quote feature "proc-macro" (*)
+│   │   │   │   │   │   └── serde feature "std"
+│   │   │   │   │   │       └── serde v1.0.219 (*)
+│   │   │   │   │   └── serde feature "derive"
+│   │   │   │   │       ├── serde v1.0.219 (*)
+│   │   │   │   │       └── serde feature "serde_derive"
+│   │   │   │   │           └── serde v1.0.219 (*)
+│   │   │   │   └── amplify_num feature "hex"
+│   │   │   │       └── amplify_num v0.5.3 (*)
+│   │   │   ├── serde feature "default" (*)
+│   │   │   ├── serde feature "derive" (*)
+│   │   │   ├── ascii feature "default"
+│   │   │   │   ├── ascii v1.1.0
+│   │   │   │   │   └── serde feature "default" (*)
+│   │   │   │   └── ascii feature "std"
+│   │   │   │       ├── ascii v1.1.0 (*)
+│   │   │   │       └── ascii feature "alloc"
+│   │   │   │           └── ascii v1.1.0 (*)
+│   │   │   ├── stringly_conversions feature "alloc"
+│   │   │   │   └── stringly_conversions v0.1.1
+│   │   │   │       ├── paste feature "default"
+│   │   │   │       │   └── paste v1.0.15 (proc-macro)
+│   │   │   │       └── serde_str_helpers feature "default"
+│   │   │   │           └── serde_str_helpers v0.1.2
+│   │   │   │               ├── serde feature "default" (*)
+│   │   │   │               └── serde_derive feature "default" (*)
+│   │   │   └── stringly_conversions feature "default"
+│   │   │       └── stringly_conversions v0.1.1 (*)
+│   │   ├── amplify feature "derive"
+│   │   │   ├── amplify v4.9.0 (*)
+│   │   │   └── amplify feature "amplify_derive"
+│   │   │       └── amplify v4.9.0 (*)
+│   │   ├── amplify feature "hex"
+│   │   │   ├── amplify v4.9.0 (*)
+│   │   │   └── amplify_num feature "hex" (*)
+│   │   └── amplify feature "std"
+│   │       ├── amplify v4.9.0 (*)
+│   │       ├── amplify feature "alloc"
+│   │       │   ├── amplify v4.9.0 (*)
+│   │       │   └── amplify_num feature "alloc"
+│   │       │       └── amplify_num v0.5.3 (*)
+│   │       └── amplify_num feature "std"
+│   │           └── amplify_num v0.5.3 (*)
+│   ├── amplify feature "serde"
+│   │   ├── amplify v4.9.0 (*)
+│   │   ├── amplify feature "serde_crate"
+│   │   │   └── amplify v4.9.0 (*)
+│   │   ├── amplify feature "std" (*)
+│   │   ├── amplify feature "stringly_conversions"
+│   │   │   └── amplify v4.9.0 (*)
+│   │   ├── amplify_num feature "serde"
+│   │   │   ├── amplify_num v0.5.3 (*)
+│   │   │   ├── amplify_num feature "hex" (*)
+│   │   │   ├── amplify_num feature "serde_crate"
+│   │   │   │   └── amplify_num v0.5.3 (*)
+│   │   │   └── amplify_num feature "std" (*)
+│   │   ├── ascii feature "serde"
+│   │   │   └── ascii v1.1.0 (*)
+│   │   ├── stringly_conversions feature "alloc" (*)
+│   │   └── stringly_conversions feature "serde_str_helpers"
+│   │       └── stringly_conversions v0.1.1 (*)
+│   ├── serde feature "default" (*)
+│   ├── serde feature "derive" (*)
+│   ├── bp-core feature "default"
+│   │   └── bp-core v0.12.0
+│   │       ├── serde feature "default" (*)
+│   │       ├── serde feature "derive" (*)
+│   │       ├── bp-consensus feature "default"
+│   │       │   ├── bp-consensus v0.12.0
+│   │       │   │   ├── amplify feature "default" (*)
+│   │       │   │   ├── serde feature "default" (*)
+│   │       │   │   ├── serde feature "derive" (*)
+│   │       │   │   ├── chrono feature "default"
+│   │       │   │   │   ├── chrono v0.4.41
+│   │       │   │   │   │   ├── num-traits v0.2.19
+│   │       │   │   │   │   │   [build-dependencies]
+│   │       │   │   │   │   │   └── autocfg feature "default"
+│   │       │   │   │   │   │       └── autocfg v1.5.0
+│   │       │   │   │   │   ├── serde v1.0.219 (*)
+│   │       │   │   │   │   ├── iana-time-zone feature "default"
+│   │       │   │   │   │   │   └── iana-time-zone v0.1.63
+│   │       │   │   │   │   └── iana-time-zone feature "fallback"
+│   │       │   │   │   │       └── iana-time-zone v0.1.63
+│   │       │   │   │   ├── chrono feature "clock"
+│   │       │   │   │   │   ├── chrono v0.4.41 (*)
+│   │       │   │   │   │   ├── chrono feature "android-tzdata"
+│   │       │   │   │   │   │   └── chrono v0.4.41 (*)
+│   │       │   │   │   │   ├── chrono feature "iana-time-zone"
+│   │       │   │   │   │   │   └── chrono v0.4.41 (*)
+│   │       │   │   │   │   ├── chrono feature "now"
+│   │       │   │   │   │   │   ├── chrono v0.4.41 (*)
+│   │       │   │   │   │   │   └── chrono feature "std"
+│   │       │   │   │   │   │       ├── chrono v0.4.41 (*)
+│   │       │   │   │   │   │       └── chrono feature "alloc"
+│   │       │   │   │   │   │           └── chrono v0.4.41 (*)
+│   │       │   │   │   │   └── chrono feature "winapi"
+│   │       │   │   │   │       ├── chrono v0.4.41 (*)
+│   │       │   │   │   │       └── chrono feature "windows-link"
+│   │       │   │   │   │           └── chrono v0.4.41 (*)
+│   │       │   │   │   ├── chrono feature "oldtime"
+│   │       │   │   │   │   └── chrono v0.4.41 (*)
+│   │       │   │   │   ├── chrono feature "std" (*)
+│   │       │   │   │   └── chrono feature "wasmbind"
+│   │       │   │   │       ├── chrono v0.4.41 (*)
+│   │       │   │   │       ├── chrono feature "js-sys"
+│   │       │   │   │       │   └── chrono v0.4.41 (*)
+│   │       │   │   │       └── chrono feature "wasm-bindgen"
+│   │       │   │   │           └── chrono v0.4.41 (*)
+│   │       │   │   ├── commit_verify feature "default"
+│   │       │   │   │   ├── commit_verify v0.12.0
+│   │       │   │   │   │   ├── amplify feature "default" (*)
+│   │       │   │   │   │   ├── serde feature "default" (*)
+│   │       │   │   │   │   ├── commit_encoding_derive feature "default"
+│   │       │   │   │   │   │   └── commit_encoding_derive v0.12.0 (proc-macro)
+│   │       │   │   │   │   │       ├── amplify_syn feature "default" (*)
+│   │       │   │   │   │   │       ├── proc-macro2 feature "default" (*)
+│   │       │   │   │   │   │       ├── quote feature "default" (*)
+│   │       │   │   │   │   │       ├── syn feature "default" (*)
+│   │       │   │   │   │   │       ├── syn feature "full"
+│   │       │   │   │   │   │       │   └── syn v1.0.109 (*)
+│   │       │   │   │   │   │       └── amplify feature "default"
+│   │       │   │   │   │   │           ├── amplify v4.9.0
+│   │       │   │   │   │   │           │   ├── amplify_derive feature "default" (*)
+│   │       │   │   │   │   │           │   ├── amplify_num feature "default"
+│   │       │   │   │   │   │           │   │   ├── amplify_num v0.5.3
+│   │       │   │   │   │   │           │   │   └── amplify_num feature "hex"
+│   │       │   │   │   │   │           │   │       └── amplify_num v0.5.3
+│   │       │   │   │   │   │           │   └── ascii feature "default"
+│   │       │   │   │   │   │           │       ├── ascii v1.1.0
+│   │       │   │   │   │   │           │       └── ascii feature "std"
+│   │       │   │   │   │   │           │           ├── ascii v1.1.0
+│   │       │   │   │   │   │           │           └── ascii feature "alloc"
+│   │       │   │   │   │   │           │               └── ascii v1.1.0
+│   │       │   │   │   │   │           ├── amplify feature "derive"
+│   │       │   │   │   │   │           │   ├── amplify v4.9.0 (*)
+│   │       │   │   │   │   │           │   └── amplify feature "amplify_derive"
+│   │       │   │   │   │   │           │       └── amplify v4.9.0 (*)
+│   │       │   │   │   │   │           ├── amplify feature "hex"
+│   │       │   │   │   │   │           │   ├── amplify v4.9.0 (*)
+│   │       │   │   │   │   │           │   └── amplify_num feature "hex" (*)
+│   │       │   │   │   │   │           └── amplify feature "std"
+│   │       │   │   │   │   │               ├── amplify v4.9.0 (*)
+│   │       │   │   │   │   │               ├── amplify feature "alloc"
+│   │       │   │   │   │   │               │   ├── amplify v4.9.0 (*)
+│   │       │   │   │   │   │               │   └── amplify_num feature "alloc"
+│   │       │   │   │   │   │               │       └── amplify_num v0.5.3
+│   │       │   │   │   │   │               └── amplify_num feature "std"
+│   │       │   │   │   │   │                   └── amplify_num v0.5.3
+│   │       │   │   │   │   ├── rand feature "default"
+│   │       │   │   │   │   │   ├── rand v0.9.1
+│   │       │   │   │   │   │   │   ├── rand_chacha v0.9.0
+│   │       │   │   │   │   │   │   │   ├── ppv-lite86 feature "simd"
+│   │       │   │   │   │   │   │   │   │   └── ppv-lite86 v0.2.21
+│   │       │   │   │   │   │   │   │   │       ├── zerocopy feature "default"
+│   │       │   │   │   │   │   │   │   │       │   └── zerocopy v0.8.26
+│   │       │   │   │   │   │   │   │   │       └── zerocopy feature "simd"
+│   │       │   │   │   │   │   │   │   │           └── zerocopy v0.8.26
+│   │       │   │   │   │   │   │   │   └── rand_core feature "default"
+│   │       │   │   │   │   │   │   │       └── rand_core v0.9.3
+│   │       │   │   │   │   │   │   │           └── getrandom feature "default"
+│   │       │   │   │   │   │   │   │               └── getrandom v0.3.3
+│   │       │   │   │   │   │   │   │                   ├── libc v0.2.174
+│   │       │   │   │   │   │   │   │                   └── cfg-if feature "default"
+│   │       │   │   │   │   │   │   │                       └── cfg-if v1.0.1
+│   │       │   │   │   │   │   │   └── rand_core v0.9.3 (*)
+│   │       │   │   │   │   │   ├── rand feature "os_rng"
+│   │       │   │   │   │   │   │   ├── rand v0.9.1 (*)
+│   │       │   │   │   │   │   │   └── rand_core feature "os_rng"
+│   │       │   │   │   │   │   │       └── rand_core v0.9.3 (*)
+│   │       │   │   │   │   │   ├── rand feature "small_rng"
+│   │       │   │   │   │   │   │   └── rand v0.9.1 (*)
+│   │       │   │   │   │   │   ├── rand feature "std"
+│   │       │   │   │   │   │   │   ├── rand v0.9.1 (*)
+│   │       │   │   │   │   │   │   ├── rand feature "alloc"
+│   │       │   │   │   │   │   │   │   └── rand v0.9.1 (*)
+│   │       │   │   │   │   │   │   ├── rand_chacha feature "std"
+│   │       │   │   │   │   │   │   │   ├── rand_chacha v0.9.0 (*)
+│   │       │   │   │   │   │   │   │   ├── ppv-lite86 feature "std"
+│   │       │   │   │   │   │   │   │   │   └── ppv-lite86 v0.2.21 (*)
+│   │       │   │   │   │   │   │   │   └── rand_core feature "std"
+│   │       │   │   │   │   │   │   │       ├── rand_core v0.9.3 (*)
+│   │       │   │   │   │   │   │   │       └── getrandom feature "std"
+│   │       │   │   │   │   │   │   │           └── getrandom v0.3.3 (*)
+│   │       │   │   │   │   │   │   └── rand_core feature "std" (*)
+│   │       │   │   │   │   │   ├── rand feature "std_rng"
+│   │       │   │   │   │   │   │   └── rand v0.9.1 (*)
+│   │       │   │   │   │   │   └── rand feature "thread_rng"
+│   │       │   │   │   │   │       ├── rand v0.9.1 (*)
+│   │       │   │   │   │   │       ├── rand feature "os_rng" (*)
+│   │       │   │   │   │   │       ├── rand feature "std" (*)
+│   │       │   │   │   │   │       └── rand feature "std_rng" (*)
+│   │       │   │   │   │   ├── ripemd feature "default"
+│   │       │   │   │   │   │   ├── ripemd v0.1.3
+│   │       │   │   │   │   │   │   └── digest feature "default"
+│   │       │   │   │   │   │   │       ├── digest v0.10.7
+│   │       │   │   │   │   │   │       │   ├── subtle v2.6.1
+│   │       │   │   │   │   │   │       │   ├── block-buffer feature "default"
+│   │       │   │   │   │   │   │       │   │   └── block-buffer v0.10.4
+│   │       │   │   │   │   │   │       │   │       └── generic-array feature "default"
+│   │       │   │   │   │   │   │       │   │           └── generic-array v0.14.7
+│   │       │   │   │   │   │   │       │   │               └── typenum feature "default"
+│   │       │   │   │   │   │   │       │   │                   └── typenum v1.18.0
+│   │       │   │   │   │   │   │       │   │               [build-dependencies]
+│   │       │   │   │   │   │   │       │   │               └── version_check feature "default"
+│   │       │   │   │   │   │   │       │   │                   └── version_check v0.9.5
+│   │       │   │   │   │   │   │       │   └── crypto-common feature "default"
+│   │       │   │   │   │   │   │       │       └── crypto-common v0.1.6
+│   │       │   │   │   │   │   │       │           ├── generic-array feature "default" (*)
+│   │       │   │   │   │   │   │       │           ├── generic-array feature "more_lengths"
+│   │       │   │   │   │   │   │       │           │   └── generic-array v0.14.7 (*)
+│   │       │   │   │   │   │   │       │           └── typenum feature "default" (*)
+│   │       │   │   │   │   │   │       └── digest feature "core-api"
+│   │       │   │   │   │   │   │           ├── digest v0.10.7 (*)
+│   │       │   │   │   │   │   │           └── digest feature "block-buffer"
+│   │       │   │   │   │   │   │               └── digest v0.10.7 (*)
+│   │       │   │   │   │   │   └── ripemd feature "std"
+│   │       │   │   │   │   │       ├── ripemd v0.1.3 (*)
+│   │       │   │   │   │   │       └── digest feature "std"
+│   │       │   │   │   │   │           ├── digest v0.10.7 (*)
+│   │       │   │   │   │   │           ├── digest feature "alloc"
+│   │       │   │   │   │   │           │   └── digest v0.10.7 (*)
+│   │       │   │   │   │   │           └── crypto-common feature "std"
+│   │       │   │   │   │   │               └── crypto-common v0.1.6 (*)
+│   │       │   │   │   │   ├── sha2 feature "default"
+│   │       │   │   │   │   │   ├── sha2 v0.10.9
+│   │       │   │   │   │   │   │   ├── cfg-if feature "default" (*)
+│   │       │   │   │   │   │   │   ├── digest feature "default" (*)
+│   │       │   │   │   │   │   │   └── cpufeatures feature "default"
+│   │       │   │   │   │   │   │       └── cpufeatures v0.2.17
+│   │       │   │   │   │   │   └── sha2 feature "std"
+│   │       │   │   │   │   │       ├── sha2 v0.10.9 (*)
+│   │       │   │   │   │   │       └── digest feature "std" (*)
+│   │       │   │   │   │   ├── strict_encoding feature "default"
+│   │       │   │   │   │   │   ├── strict_encoding v2.9.1
+│   │       │   │   │   │   │   │   ├── amplify feature "default" (*)
+│   │       │   │   │   │   │   │   ├── amplify feature "proc_attr"
+│   │       │   │   │   │   │   │   │   ├── amplify v4.9.0 (*)
+│   │       │   │   │   │   │   │   │   └── amplify feature "amplify_syn"
+│   │       │   │   │   │   │   │   │       └── amplify v4.9.0 (*)
+│   │       │   │   │   │   │   │   ├── serde feature "default" (*)
+│   │       │   │   │   │   │   │   ├── serde feature "derive" (*)
+│   │       │   │   │   │   │   │   └── strict_encoding_derive feature "default"
+│   │       │   │   │   │   │   │       └── strict_encoding_derive v2.8.0 (proc-macro)
+│   │       │   │   │   │   │   │           ├── amplify_syn feature "default" (*)
+│   │       │   │   │   │   │   │           ├── proc-macro2 feature "default" (*)
+│   │       │   │   │   │   │   │           ├── quote feature "default" (*)
+│   │       │   │   │   │   │   │           ├── syn feature "default" (*)
+│   │       │   │   │   │   │   │           ├── syn feature "full" (*)
+│   │       │   │   │   │   │   │           └── heck feature "default"
+│   │       │   │   │   │   │   │               └── heck v0.5.0
+│   │       │   │   │   │   │   └── strict_encoding feature "derive"
+│   │       │   │   │   │   │       └── strict_encoding v2.9.1 (*)
+│   │       │   │   │   │   ├── strict_types feature "default"
+│   │       │   │   │   │   │   ├── strict_types v2.9.0
+│   │       │   │   │   │   │   │   ├── amplify feature "default" (*)
+│   │       │   │   │   │   │   │   ├── serde feature "default" (*)
+│   │       │   │   │   │   │   │   ├── sha2 feature "default" (*)
+│   │       │   │   │   │   │   │   ├── strict_encoding feature "default" (*)
+│   │       │   │   │   │   │   │   ├── baid64 feature "default"
+│   │       │   │   │   │   │   │   │   └── baid64 v0.4.2
+│   │       │   │   │   │   │   │   │       ├── amplify feature "default" (*)
+│   │       │   │   │   │   │   │   │       ├── sha2 feature "default" (*)
+│   │       │   │   │   │   │   │   │       ├── base64 feature "default"
+│   │       │   │   │   │   │   │   │       │   ├── base64 v0.22.1
+│   │       │   │   │   │   │   │   │       │   └── base64 feature "std"
+│   │       │   │   │   │   │   │   │       │       ├── base64 v0.22.1
+│   │       │   │   │   │   │   │   │       │       └── base64 feature "alloc"
+│   │       │   │   │   │   │   │   │       │           └── base64 v0.22.1
+│   │       │   │   │   │   │   │   │       └── mnemonic feature "default"
+│   │       │   │   │   │   │   │   │           └── mnemonic v1.1.1
+│   │       │   │   │   │   │   │   ├── indexmap feature "default"
+│   │       │   │   │   │   │   │   │   ├── indexmap v2.10.0
+│   │       │   │   │   │   │   │   │   │   ├── equivalent v1.0.2
+│   │       │   │   │   │   │   │   │   │   ├── hashbrown v0.15.4
+│   │       │   │   │   │   │   │   │   │   └── serde v1.0.219 (*)
+│   │       │   │   │   │   │   │   │   └── indexmap feature "std"
+│   │       │   │   │   │   │   │   │       └── indexmap v2.10.0 (*)
+│   │       │   │   │   │   │   │   ├── serde_json feature "default"
+│   │       │   │   │   │   │   │   │   ├── serde_json v1.0.140
+│   │       │   │   │   │   │   │   │   │   ├── memchr v2.7.5
+│   │       │   │   │   │   │   │   │   │   ├── serde v1.0.219 (*)
+│   │       │   │   │   │   │   │   │   │   ├── itoa feature "default"
+│   │       │   │   │   │   │   │   │   │   │   └── itoa v1.0.15
+│   │       │   │   │   │   │   │   │   │   └── ryu feature "default"
+│   │       │   │   │   │   │   │   │   │       └── ryu v1.0.20
+│   │       │   │   │   │   │   │   │   └── serde_json feature "std"
+│   │       │   │   │   │   │   │   │       ├── serde_json v1.0.140 (*)
+│   │       │   │   │   │   │   │   │       ├── serde feature "std" (*)
+│   │       │   │   │   │   │   │   │       └── memchr feature "std"
+│   │       │   │   │   │   │   │   │           ├── memchr v2.7.5
+│   │       │   │   │   │   │   │   │           └── memchr feature "alloc"
+│   │       │   │   │   │   │   │   │               └── memchr v2.7.5
+│   │       │   │   │   │   │   │   ├── serde_yaml feature "default"
+│   │       │   │   │   │   │   │   │   └── serde_yaml v0.9.34+deprecated
+│   │       │   │   │   │   │   │   │       ├── serde feature "default" (*)
+│   │       │   │   │   │   │   │   │       ├── indexmap feature "default" (*)
+│   │       │   │   │   │   │   │   │       ├── itoa feature "default" (*)
+│   │       │   │   │   │   │   │   │       ├── ryu feature "default" (*)
+│   │       │   │   │   │   │   │   │       └── unsafe-libyaml feature "default"
+│   │       │   │   │   │   │   │   │           └── unsafe-libyaml v0.2.11
+│   │       │   │   │   │   │   │   ├── toml feature "default"
+│   │       │   │   │   │   │   │   │   ├── toml v0.8.23
+│   │       │   │   │   │   │   │   │   │   ├── serde feature "default" (*)
+│   │       │   │   │   │   │   │   │   │   ├── serde_spanned feature "default"
+│   │       │   │   │   │   │   │   │   │   │   └── serde_spanned v0.6.9
+│   │       │   │   │   │   │   │   │   │   │       └── serde feature "default" (*)
+│   │       │   │   │   │   │   │   │   │   ├── serde_spanned feature "serde"
+│   │       │   │   │   │   │   │   │   │   │   └── serde_spanned v0.6.9 (*)
+│   │       │   │   │   │   │   │   │   │   ├── toml_datetime feature "default"
+│   │       │   │   │   │   │   │   │   │   │   └── toml_datetime v0.6.11
+│   │       │   │   │   │   │   │   │   │   │       └── serde feature "default" (*)
+│   │       │   │   │   │   │   │   │   │   ├── toml_datetime feature "serde"
+│   │       │   │   │   │   │   │   │   │   │   └── toml_datetime v0.6.11 (*)
+│   │       │   │   │   │   │   │   │   │   └── toml_edit feature "serde"
+│   │       │   │   │   │   │   │   │   │       ├── toml_edit v0.22.27
+│   │       │   │   │   │   │   │   │   │       │   ├── serde feature "default" (*)
+│   │       │   │   │   │   │   │   │   │       │   ├── indexmap feature "default" (*)
+│   │       │   │   │   │   │   │   │   │       │   ├── indexmap feature "std" (*)
+│   │       │   │   │   │   │   │   │   │       │   ├── serde_spanned feature "default" (*)
+│   │       │   │   │   │   │   │   │   │       │   ├── serde_spanned feature "serde" (*)
+│   │       │   │   │   │   │   │   │   │       │   ├── toml_datetime feature "default" (*)
+│   │       │   │   │   │   │   │   │   │       │   ├── toml_write feature "default"
+│   │       │   │   │   │   │   │   │   │       │   │   ├── toml_write v0.1.2
+│   │       │   │   │   │   │   │   │   │       │   │   └── toml_write feature "std"
+│   │       │   │   │   │   │   │   │   │       │   │       ├── toml_write v0.1.2
+│   │       │   │   │   │   │   │   │   │       │   │       └── toml_write feature "alloc"
+│   │       │   │   │   │   │   │   │   │       │   │           └── toml_write v0.1.2
+│   │       │   │   │   │   │   │   │   │       │   └── winnow feature "default"
+│   │       │   │   │   │   │   │   │   │       │       ├── winnow v0.7.11
+│   │       │   │   │   │   │   │   │   │       │       └── winnow feature "std"
+│   │       │   │   │   │   │   │   │   │       │           ├── winnow v0.7.11
+│   │       │   │   │   │   │   │   │   │       │           └── winnow feature "alloc"
+│   │       │   │   │   │   │   │   │   │       │               └── winnow v0.7.11
+│   │       │   │   │   │   │   │   │   │       └── toml_datetime feature "serde" (*)
+│   │       │   │   │   │   │   │   │   ├── toml feature "display"
+│   │       │   │   │   │   │   │   │   │   ├── toml v0.8.23 (*)
+│   │       │   │   │   │   │   │   │   │   └── toml_edit feature "display"
+│   │       │   │   │   │   │   │   │   │       └── toml_edit v0.22.27 (*)
+│   │       │   │   │   │   │   │   │   └── toml feature "parse"
+│   │       │   │   │   │   │   │   │       ├── toml v0.8.23 (*)
+│   │       │   │   │   │   │   │   │       └── toml_edit feature "parse"
+│   │       │   │   │   │   │   │   │           └── toml_edit v0.22.27 (*)
+│   │       │   │   │   │   │   │   └── vesper-lang feature "default"
+│   │       │   │   │   │   │   │       └── vesper-lang v0.2.1
+│   │       │   │   │   │   │   │           ├── amplify feature "default" (*)
+│   │       │   │   │   │   │   │           └── strict_encoding feature "default" (*)
+│   │       │   │   │   │   │   └── strict_types feature "vesper"
+│   │       │   │   │   │   │       └── strict_types v2.9.0 (*)
+│   │       │   │   │   │   └── vesper-lang feature "default" (*)
+│   │       │   │   │   └── commit_verify feature "derive"
+│   │       │   │   │       └── commit_verify v0.12.0 (*)
+│   │       │   │   ├── strict_encoding feature "default" (*)
+│   │       │   │   ├── secp256k1 feature "default"
+│   │       │   │   │   ├── secp256k1 v0.30.0
+│   │       │   │   │   │   ├── secp256k1-sys v0.10.1
+│   │       │   │   │   │   │   [build-dependencies]
+│   │       │   │   │   │   │   └── cc feature "default"
+│   │       │   │   │   │   │       └── cc v1.2.29
+│   │       │   │   │   │   │           ├── jobserver v0.1.33
+│   │       │   │   │   │   │           │   └── libc feature "default"
+│   │       │   │   │   │   │           │       ├── libc v0.2.174
+│   │       │   │   │   │   │           │       └── libc feature "std"
+│   │       │   │   │   │   │           │           └── libc v0.2.174
+│   │       │   │   │   │   │           ├── libc v0.2.174
+│   │       │   │   │   │   │           └── shlex feature "default"
+│   │       │   │   │   │   │               ├── shlex v1.3.0
+│   │       │   │   │   │   │               └── shlex feature "std"
+│   │       │   │   │   │   │                   └── shlex v1.3.0
+│   │       │   │   │   │   └── serde v1.0.219 (*)
+│   │       │   │   │   └── secp256k1 feature "std"
+│   │       │   │   │       ├── secp256k1 v0.30.0 (*)
+│   │       │   │   │       ├── secp256k1 feature "alloc"
+│   │       │   │   │       │   ├── secp256k1 v0.30.0 (*)
+│   │       │   │   │       │   └── secp256k1-sys feature "alloc"
+│   │       │   │   │       │       └── secp256k1-sys v0.10.1 (*)
+│   │       │   │   │       └── secp256k1-sys feature "std"
+│   │       │   │   │           ├── secp256k1-sys v0.10.1 (*)
+│   │       │   │   │           └── secp256k1-sys feature "alloc" (*)
+│   │       │   │   └── secp256k1 feature "global-context"
+│   │       │   │       ├── secp256k1 v0.30.0 (*)
+│   │       │   │       └── secp256k1 feature "std" (*)
+│   │       │   └── bp-consensus feature "chrono"
+│   │       │       └── bp-consensus v0.12.0 (*)
+│   │       ├── commit_verify feature "default" (*)
+│   │       ├── strict_encoding feature "default" (*)
+│   │       ├── bp-dbc feature "default"
+│   │       │   └── bp-dbc v0.12.0
+│   │       │       ├── amplify feature "default" (*)
+│   │       │       ├── serde feature "default" (*)
+│   │       │       ├── serde feature "derive" (*)
+│   │       │       ├── bp-consensus feature "default" (*)
+│   │       │       ├── commit_verify feature "default" (*)
+│   │       │       ├── commit_verify feature "rand"
+│   │       │       │   └── commit_verify v0.12.0 (*)
+│   │       │       ├── strict_encoding feature "default" (*)
+│   │       │       ├── secp256k1 feature "default" (*)
+│   │       │       ├── secp256k1 feature "global-context" (*)
+│   │       │       └── base85 feature "default"
+│   │       │           └── base85 v2.0.0
+│   │       │               └── thiserror v1.0.69
+│   │       │                   └── thiserror-impl feature "default"
+│   │       │                       └── thiserror-impl v1.0.69 (proc-macro)
+│   │       │                           ├── proc-macro2 feature "default" (*)
+│   │       │                           ├── quote feature "default" (*)
+│   │       │                           └── syn feature "default"
+│   │       │                               ├── syn v2.0.104 (*)
+│   │       │                               ├── syn feature "clone-impls" (*)
+│   │       │                               ├── syn feature "derive" (*)
+│   │       │                               ├── syn feature "parsing" (*)
+│   │       │                               ├── syn feature "printing" (*)
+│   │       │                               └── syn feature "proc-macro" (*)
+│   │       └── bp-seals feature "default"
+│   │           └── bp-seals v0.12.0
+│   │               ├── amplify feature "default" (*)
+│   │               ├── serde feature "default" (*)
+│   │               ├── serde feature "derive" (*)
+│   │               ├── bp-consensus feature "default" (*)
+│   │               ├── commit_verify feature "default" (*)
+│   │               ├── strict_encoding feature "default" (*)
+│   │               ├── bp-dbc feature "default" (*)
+│   │               └── single_use_seals feature "default"
+│   │                   └── single_use_seals v0.12.0
+│   │                       ├── serde feature "default" (*)
+│   │                       ├── serde feature "derive" (*)
+│   │                       └── strict_encoding feature "default" (*)
+│   ├── bp-core feature "serde"
+│   │   ├── bp-core v0.12.0 (*)
+│   │   ├── bp-consensus feature "serde"
+│   │   │   ├── bp-consensus v0.12.0 (*)
+│   │   │   ├── amplify feature "serde" (*)
+│   │   │   └── secp256k1 feature "serde"
+│   │   │       └── secp256k1 v0.30.0 (*)
+│   │   ├── bp-dbc feature "serde"
+│   │   │   ├── bp-dbc v0.12.0 (*)
+│   │   │   ├── bp-consensus feature "serde" (*)
+│   │   │   ├── commit_verify feature "serde"
+│   │   │   │   ├── commit_verify v0.12.0 (*)
+│   │   │   │   └── amplify feature "serde" (*)
+│   │   │   └── secp256k1 feature "serde" (*)
+│   │   └── bp-seals feature "serde"
+│   │       ├── bp-seals v0.12.0 (*)
+│   │       ├── amplify feature "serde" (*)
+│   │       ├── bp-consensus feature "serde" (*)
+│   │       ├── commit_verify feature "serde" (*)
+│   │       └── bp-dbc feature "serde" (*)
+│   ├── sha2 feature "default" (*)
+│   ├── log feature "default"
+│   │   └── log v0.4.27
+│   ├── bp-invoice feature "default"
+│   │   └── bp-invoice v0.12.0-rc.3
+│   │       ├── amplify feature "default" (*)
+│   │       ├── serde feature "default" (*)
+│   │       ├── serde feature "derive" (*)
+│   │       ├── bp-consensus feature "default" (*)
+│   │       ├── commit_verify feature "default" (*)
+│   │       ├── strict_encoding feature "default" (*)
+│   │       └── bech32 feature "default"
+│   │           ├── bech32 v0.9.1
+│   │           └── bech32 feature "std"
+│   │               └── bech32 v0.9.1
+│   ├── minreq feature "default"
+│   │   └── minreq v2.14.0
+│   │       ├── serde feature "default" (*)
+│   │       ├── base64 feature "default" (*)
+│   │       ├── serde_json feature "default" (*)
+│   │       ├── log feature "default" (*)
+│   │       ├── rustls feature "default"
+│   │       │   ├── rustls v0.21.12
+│   │       │   │   ├── log feature "default" (*)
+│   │       │   │   ├── ring feature "default"
+│   │       │   │   │   ├── ring v0.17.14
+│   │       │   │   │   │   ├── cfg-if v1.0.1
+│   │       │   │   │   │   ├── untrusted feature "default"
+│   │       │   │   │   │   │   └── untrusted v0.9.0
+│   │       │   │   │   │   └── getrandom feature "default"
+│   │       │   │   │   │       └── getrandom v0.2.16
+│   │       │   │   │   │           ├── libc v0.2.174
+│   │       │   │   │   │           └── cfg-if feature "default" (*)
+│   │       │   │   │   │   [build-dependencies]
+│   │       │   │   │   │   └── cc v1.2.29 (*)
+│   │       │   │   │   ├── ring feature "alloc"
+│   │       │   │   │   │   └── ring v0.17.14 (*)
+│   │       │   │   │   └── ring feature "dev_urandom_fallback"
+│   │       │   │   │       └── ring v0.17.14 (*)
+│   │       │   │   ├── rustls-webpki feature "alloc"
+│   │       │   │   │   ├── rustls-webpki v0.101.7
+│   │       │   │   │   │   ├── ring v0.17.14 (*)
+│   │       │   │   │   │   └── untrusted feature "default" (*)
+│   │       │   │   │   └── ring feature "alloc" (*)
+│   │       │   │   ├── rustls-webpki feature "default"
+│   │       │   │   │   ├── rustls-webpki v0.101.7 (*)
+│   │       │   │   │   └── rustls-webpki feature "std"
+│   │       │   │   │       ├── rustls-webpki v0.101.7 (*)
+│   │       │   │   │       └── rustls-webpki feature "alloc" (*)
+│   │       │   │   ├── rustls-webpki feature "std" (*)
+│   │       │   │   └── sct feature "default"
+│   │       │   │       └── sct v0.7.1
+│   │       │   │           ├── untrusted feature "default" (*)
+│   │       │   │           └── ring feature "default" (*)
+│   │       │   ├── rustls feature "logging"
+│   │       │   │   ├── rustls v0.21.12 (*)
+│   │       │   │   └── rustls feature "log"
+│   │       │   │       └── rustls v0.21.12 (*)
+│   │       │   └── rustls feature "tls12"
+│   │       │       └── rustls v0.21.12 (*)
+│   │       ├── rustls-webpki feature "default" (*)
+│   │       └── webpki-roots feature "default"
+│   │           └── webpki-roots v0.25.4
+│   ├── minreq feature "json-using-serde"
+│   │   ├── minreq v2.14.0 (*)
+│   │   ├── minreq feature "serde"
+│   │   │   └── minreq v2.14.0 (*)
+│   │   └── minreq feature "serde_json"
+│   │       └── minreq v2.14.0 (*)
+│   ├── serde_with feature "default"
+│   │   ├── serde_with v3.14.0
+│   │   │   ├── hex v0.4.3
+│   │   │   ├── serde v1.0.219 (*)
+│   │   │   ├── serde_derive feature "default" (*)
+│   │   │   └── serde_with_macros feature "default"
+│   │   │       └── serde_with_macros v3.14.0 (proc-macro)
+│   │   │           ├── proc-macro2 feature "default" (*)
+│   │   │           ├── quote feature "default" (*)
+│   │   │           ├── syn feature "default" (*)
+│   │   │           ├── syn feature "extra-traits"
+│   │   │           │   └── syn v2.0.104 (*)
+│   │   │           ├── syn feature "full"
+│   │   │           │   └── syn v2.0.104 (*)
+│   │   │           ├── syn feature "parsing" (*)
+│   │   │           └── darling feature "default"
+│   │   │               ├── darling v0.20.11
+│   │   │               │   ├── darling_core feature "default"
+│   │   │               │   │   └── darling_core v0.20.11
+│   │   │               │   │       ├── proc-macro2 feature "default" (*)
+│   │   │               │   │       ├── quote feature "default" (*)
+│   │   │               │   │       ├── syn feature "default" (*)
+│   │   │               │   │       ├── syn feature "extra-traits" (*)
+│   │   │               │   │       ├── syn feature "full" (*)
+│   │   │               │   │       ├── fnv feature "default"
+│   │   │               │   │       │   ├── fnv v1.0.7
+│   │   │               │   │       │   └── fnv feature "std"
+│   │   │               │   │       │       └── fnv v1.0.7
+│   │   │               │   │       ├── ident_case feature "default"
+│   │   │               │   │       │   └── ident_case v1.0.1
+│   │   │               │   │       └── strsim feature "default"
+│   │   │               │   │           └── strsim v0.11.1
+│   │   │               │   └── darling_macro feature "default"
+│   │   │               │       └── darling_macro v0.20.11 (proc-macro)
+│   │   │               │           ├── quote feature "default" (*)
+│   │   │               │           ├── syn feature "default" (*)
+│   │   │               │           └── darling_core feature "default" (*)
+│   │   │               └── darling feature "suggestions"
+│   │   │                   ├── darling v0.20.11 (*)
+│   │   │                   └── darling_core feature "suggestions"
+│   │   │                       ├── darling_core v0.20.11 (*)
+│   │   │                       └── darling_core feature "strsim"
+│   │   │                           └── darling_core v0.20.11 (*)
+│   │   ├── serde_with feature "macros"
+│   │   │   └── serde_with v3.14.0 (*)
+│   │   └── serde_with feature "std"
+│   │       ├── serde_with v3.14.0 (*)
+│   │       ├── serde feature "std" (*)
+│   │       └── serde_with feature "alloc"
+│   │           ├── serde_with v3.14.0 (*)
+│   │           ├── serde feature "alloc"
+│   │           │   └── serde v1.0.219 (*)
+│   │           └── hex feature "alloc"
+│   │               └── hex v0.4.3
+│   └── serde_with feature "hex"
+│       ├── serde_with v3.14.0 (*)
+│       └── serde_with feature "alloc" (*)
+├── amplify feature "default" (*)
+├── serde feature "default" (*)
+├── serde feature "derive" (*)
+├── anyhow feature "default"
+│   ├── anyhow v1.0.98
+│   └── anyhow feature "std"
+│       └── anyhow v1.0.98
+├── bp-electrum feature "default"
+│   ├── bp-electrum v0.12.0-rc.1
+│   │   ├── amplify feature "default" (*)
+│   │   ├── serde feature "default" (*)
+│   │   ├── serde feature "derive" (*)
+│   │   ├── bp-core feature "default" (*)
+│   │   ├── bp-core feature "serde" (*)
+│   │   ├── libc feature "default" (*)
+│   │   ├── sha2 feature "default" (*)
+│   │   ├── serde_json feature "default" (*)
+│   │   ├── byteorder feature "default"
+│   │   │   ├── byteorder v1.5.0
+│   │   │   └── byteorder feature "std"
+│   │   │       └── byteorder v1.5.0
+│   │   ├── log feature "default" (*)
+│   │   ├── rustls feature "default"
+│   │   │   ├── rustls v0.23.28
+│   │   │   │   ├── aws-lc-rs v1.13.1
+│   │   │   │   │   ├── aws-lc-sys feature "default"
+│   │   │   │   │   │   └── aws-lc-sys v0.29.0
+│   │   │   │   │   │       [build-dependencies]
+│   │   │   │   │   │       ├── cc feature "default" (*)
+│   │   │   │   │   │       ├── cc feature "parallel"
+│   │   │   │   │   │       │   └── cc v1.2.29 (*)
+│   │   │   │   │   │       ├── cmake feature "default"
+│   │   │   │   │   │       │   └── cmake v0.1.54
+│   │   │   │   │   │       │       └── cc feature "default" (*)
+│   │   │   │   │   │       ├── dunce feature "default"
+│   │   │   │   │   │       │   └── dunce v1.0.5
+│   │   │   │   │   │       └── fs_extra feature "default"
+│   │   │   │   │   │           └── fs_extra v1.3.0
+│   │   │   │   │   └── zeroize feature "default"
+│   │   │   │   │       ├── zeroize v1.8.1
+│   │   │   │   │       └── zeroize feature "alloc"
+│   │   │   │   │           └── zeroize v1.8.1
+│   │   │   │   ├── subtle v2.6.1
+│   │   │   │   ├── log feature "default" (*)
+│   │   │   │   ├── zeroize feature "default" (*)
+│   │   │   │   ├── once_cell feature "alloc"
+│   │   │   │   │   ├── once_cell v1.21.3
+│   │   │   │   │   └── once_cell feature "race"
+│   │   │   │   │       └── once_cell v1.21.3
+│   │   │   │   ├── once_cell feature "race" (*)
+│   │   │   │   ├── rustls-pki-types feature "alloc"
+│   │   │   │   │   └── rustls-pki-types v1.12.0
+│   │   │   │   │       └── zeroize feature "default" (*)
+│   │   │   │   ├── rustls-pki-types feature "default"
+│   │   │   │   │   ├── rustls-pki-types v1.12.0 (*)
+│   │   │   │   │   └── rustls-pki-types feature "alloc" (*)
+│   │   │   │   └── rustls-webpki feature "alloc"
+│   │   │   │       ├── rustls-webpki v0.103.3
+│   │   │   │       │   ├── aws-lc-rs v1.13.1 (*)
+│   │   │   │       │   ├── rustls-pki-types v1.12.0 (*)
+│   │   │   │       │   └── untrusted feature "default" (*)
+│   │   │   │       └── rustls-pki-types feature "alloc" (*)
+│   │   │   ├── rustls feature "aws_lc_rs"
+│   │   │   │   ├── rustls v0.23.28 (*)
+│   │   │   │   ├── rustls feature "aws-lc-rs"
+│   │   │   │   │   └── rustls v0.23.28 (*)
+│   │   │   │   ├── aws-lc-rs feature "aws-lc-sys"
+│   │   │   │   │   └── aws-lc-rs v1.13.1 (*)
+│   │   │   │   ├── aws-lc-rs feature "prebuilt-nasm"
+│   │   │   │   │   ├── aws-lc-rs v1.13.1 (*)
+│   │   │   │   │   └── aws-lc-sys feature "prebuilt-nasm"
+│   │   │   │   │       └── aws-lc-sys v0.29.0 (*)
+│   │   │   │   └── rustls-webpki feature "aws-lc-rs"
+│   │   │   │       ├── rustls-webpki v0.103.3 (*)
+│   │   │   │       ├── aws-lc-rs feature "aws-lc-sys" (*)
+│   │   │   │       ├── aws-lc-rs feature "prebuilt-nasm" (*)
+│   │   │   │       └── rustls-webpki feature "aws-lc-rs" (*)
+│   │   │   ├── rustls feature "logging"
+│   │   │   │   ├── rustls v0.23.28 (*)
+│   │   │   │   └── rustls feature "log"
+│   │   │   │       └── rustls v0.23.28 (*)
+│   │   │   ├── rustls feature "prefer-post-quantum"
+│   │   │   │   ├── rustls v0.23.28 (*)
+│   │   │   │   └── rustls feature "aws_lc_rs" (*)
+│   │   │   ├── rustls feature "std"
+│   │   │   │   ├── rustls v0.23.28 (*)
+│   │   │   │   ├── once_cell feature "std"
+│   │   │   │   │   ├── once_cell v1.21.3
+│   │   │   │   │   └── once_cell feature "alloc" (*)
+│   │   │   │   ├── rustls-pki-types feature "std"
+│   │   │   │   │   ├── rustls-pki-types v1.12.0 (*)
+│   │   │   │   │   └── rustls-pki-types feature "alloc" (*)
+│   │   │   │   └── rustls-webpki feature "std"
+│   │   │   │       ├── rustls-webpki v0.103.3 (*)
+│   │   │   │       ├── rustls-pki-types feature "std" (*)
+│   │   │   │       └── rustls-webpki feature "alloc" (*)
+│   │   │   └── rustls feature "tls12"
+│   │   │       └── rustls v0.23.28 (*)
+│   │   └── webpki-roots feature "default"
+│   │       └── webpki-roots v0.26.11
+│   │           └── webpki-roots feature "default"
+│   │               └── webpki-roots v1.0.1
+│   │                   └── rustls-pki-types v1.12.0 (*)
+│   ├── bp-electrum feature "proxy"
+│   │   ├── bp-electrum v0.12.0-rc.1 (*)
+│   │   ├── bp-electrum feature "byteorder"
+│   │   │   └── bp-electrum v0.12.0-rc.1 (*)
+│   │   ├── bp-electrum feature "libc"
+│   │   │   └── bp-electrum v0.12.0-rc.1 (*)
+│   │   └── bp-electrum feature "winapi"
+│   │       └── bp-electrum v0.12.0-rc.1 (*)
+│   └── bp-electrum feature "use-rustls"
+│       ├── bp-electrum v0.12.0-rc.1 (*)
+│       ├── bp-electrum feature "rustls"
+│       │   └── bp-electrum v0.12.0-rc.1 (*)
+│       ├── bp-electrum feature "webpki-roots"
+│       │   └── bp-electrum v0.12.0-rc.1 (*)
+│       └── rustls feature "default" (*)
+├── strict_encoding feature "default" (*)
+├── strict_types feature "default" (*)
+├── serde_yaml feature "default" (*)
+├── bp-std feature "client-side-validation"
+│   ├── bp-std v0.12.0-rc.3
+│   │   ├── amplify feature "default" (*)
+│   │   ├── serde feature "default" (*)
+│   │   ├── serde feature "derive" (*)
+│   │   ├── bp-core feature "default" (*)
+│   │   ├── bp-consensus feature "default" (*)
+│   │   ├── secp256k1 feature "default" (*)
+│   │   ├── bp-invoice feature "default" (*)
+│   │   ├── bp-derive feature "default"
+│   │   │   └── bp-derive v0.12.0-rc.3
+│   │   │       ├── amplify feature "default" (*)
+│   │   │       ├── serde feature "default" (*)
+│   │   │       ├── serde feature "derive" (*)
+│   │   │       ├── bp-consensus feature "default" (*)
+│   │   │       ├── commit_verify feature "default" (*)
+│   │   │       ├── sha2 feature "default" (*)
+│   │   │       ├── indexmap feature "default" (*)
+│   │   │       ├── bp-invoice feature "default" (*)
+│   │   │       └── hmac feature "default"
+│   │   │           └── hmac v0.12.1
+│   │   │               ├── digest feature "default" (*)
+│   │   │               └── digest feature "mac"
+│   │   │                   ├── digest v0.10.7 (*)
+│   │   │                   └── digest feature "subtle"
+│   │   │                       └── digest v0.10.7 (*)
+│   │   ├── descriptors feature "default"
+│   │   │   └── descriptors v0.12.0-rc.3
+│   │   │       ├── amplify feature "default" (*)
+│   │   │       ├── serde feature "default" (*)
+│   │   │       ├── serde feature "derive" (*)
+│   │   │       ├── commit_verify feature "default" (*)
+│   │   │       ├── indexmap feature "default" (*)
+│   │   │       └── bp-derive feature "default" (*)
+│   │   └── psbt feature "default"
+│   │       └── psbt v0.12.0-rc.3
+│   │           ├── amplify feature "default" (*)
+│   │           ├── serde feature "default" (*)
+│   │           ├── serde feature "derive" (*)
+│   │           ├── bp-core feature "default" (*)
+│   │           ├── bp-consensus feature "default" (*)
+│   │           ├── commit_verify feature "default" (*)
+│   │           ├── strict_encoding feature "default" (*)
+│   │           ├── base64 feature "default" (*)
+│   │           ├── indexmap feature "default" (*)
+│   │           ├── bp-derive feature "default" (*)
+│   │           └── descriptors feature "default" (*)
+│   ├── bp-std feature "bp-core"
+│   │   └── bp-std v0.12.0-rc.3 (*)
+│   └── psbt feature "client-side-validation"
+│       ├── psbt v0.12.0-rc.3 (*)
+│       ├── psbt feature "bp-core"
+│       │   └── psbt v0.12.0-rc.3 (*)
+│       ├── psbt feature "commit_verify"
+│       │   └── psbt v0.12.0-rc.3 (*)
+│       └── psbt feature "strict_encoding"
+│           └── psbt v0.12.0-rc.3 (*)
+├── bp-std feature "default"
+│   └── bp-std v0.12.0-rc.3 (*)
+├── clap feature "default"
+│   ├── clap v4.5.41
+│   │   ├── clap_builder v4.5.41
+│   │   │   ├── strsim feature "default" (*)
+│   │   │   ├── anstream feature "default"
+│   │   │   │   ├── anstream v0.6.19
+│   │   │   │   │   ├── anstyle feature "default"
+│   │   │   │   │   │   ├── anstyle v1.0.11
+│   │   │   │   │   │   └── anstyle feature "std"
+│   │   │   │   │   │       └── anstyle v1.0.11
+│   │   │   │   │   ├── anstyle-parse feature "default"
+│   │   │   │   │   │   ├── anstyle-parse v0.2.7
+│   │   │   │   │   │   │   └── utf8parse feature "default"
+│   │   │   │   │   │   │       └── utf8parse v0.2.2
+│   │   │   │   │   │   └── anstyle-parse feature "utf8"
+│   │   │   │   │   │       └── anstyle-parse v0.2.7 (*)
+│   │   │   │   │   ├── utf8parse feature "default" (*)
+│   │   │   │   │   ├── anstyle-query feature "default"
+│   │   │   │   │   │   └── anstyle-query v1.1.3
+│   │   │   │   │   ├── colorchoice feature "default"
+│   │   │   │   │   │   └── colorchoice v1.0.4
+│   │   │   │   │   └── is_terminal_polyfill feature "default"
+│   │   │   │   │       └── is_terminal_polyfill v1.70.1
+│   │   │   │   ├── anstream feature "auto"
+│   │   │   │   │   └── anstream v0.6.19 (*)
+│   │   │   │   └── anstream feature "wincon"
+│   │   │   │       └── anstream v0.6.19 (*)
+│   │   │   ├── anstyle feature "default" (*)
+│   │   │   └── clap_lex feature "default"
+│   │   │       └── clap_lex v0.7.5
+│   │   └── clap_derive feature "default"
+│   │       └── clap_derive v4.5.41 (proc-macro)
+│   │           ├── proc-macro2 feature "default" (*)
+│   │           ├── quote feature "default" (*)
+│   │           ├── syn feature "default" (*)
+│   │           ├── syn feature "full" (*)
+│   │           └── heck feature "default" (*)
+│   ├── clap feature "color"
+│   │   ├── clap v4.5.41 (*)
+│   │   └── clap_builder feature "color"
+│   │       └── clap_builder v4.5.41 (*)
+│   ├── clap feature "error-context"
+│   │   ├── clap v4.5.41 (*)
+│   │   └── clap_builder feature "error-context"
+│   │       └── clap_builder v4.5.41 (*)
+│   ├── clap feature "help"
+│   │   ├── clap v4.5.41 (*)
+│   │   └── clap_builder feature "help"
+│   │       └── clap_builder v4.5.41 (*)
+│   ├── clap feature "std"
+│   │   ├── clap v4.5.41 (*)
+│   │   └── clap_builder feature "std"
+│   │       ├── clap_builder v4.5.41 (*)
+│   │       └── anstyle feature "std" (*)
+│   ├── clap feature "suggestions"
+│   │   ├── clap v4.5.41 (*)
+│   │   └── clap_builder feature "suggestions"
+│   │       ├── clap_builder v4.5.41 (*)
+│   │       └── clap_builder feature "error-context" (*)
+│   └── clap feature "usage"
+│       ├── clap v4.5.41 (*)
+│       └── clap_builder feature "usage"
+│           └── clap_builder v4.5.41 (*)
+├── clap feature "derive"
+│   └── clap v4.5.41 (*)
+├── clap feature "env"
+│   ├── clap v4.5.41 (*)
+│   └── clap_builder feature "env"
+│       └── clap_builder v4.5.41 (*)
+├── rgb-persist-fs feature "default"
+│   └── rgb-persist-fs v0.12.0-rc.3
+│       ├── amplify feature "default" (*)
+│       ├── strict_encoding feature "default" (*)
+│       ├── aora feature "default"
+│       │   ├── aora v0.6.4
+│       │   │   ├── amplify feature "alloc" (*)
+│       │   │   ├── amplify feature "derive" (*)
+│       │   │   ├── amplify feature "hex" (*)
+│       │   │   ├── strict_encoding feature "default" (*)
+│       │   │   ├── indexmap feature "default" (*)
+│       │   │   └── binfile feature "default"
+│       │   │       └── binfile v0.2.0
+│       │   │           └── amplify feature "default" (*)
+│       │   └── aora feature "file-strict"
+│       │       ├── aora v0.6.4 (*)
+│       │       ├── aora feature "binfile"
+│       │       │   └── aora v0.6.4 (*)
+│       │       ├── aora feature "indexmap"
+│       │       │   └── aora v0.6.4 (*)
+│       │       ├── aora feature "std"
+│       │       │   ├── aora v0.6.4 (*)
+│       │       │   └── amplify feature "std" (*)
+│       │       └── aora feature "strict_encoding"
+│       │           └── aora v0.6.4 (*)
+│       ├── rgb-std feature "binfile"
+│       │   ├── rgb-std v0.12.0-rc.3
+│       │   │   ├── amplify feature "default" (*)
+│       │   │   ├── serde feature "default" (*)
+│       │   │   ├── bp-core feature "default" (*)
+│       │   │   ├── chrono feature "default" (*)
+│       │   │   ├── commit_verify feature "default" (*)
+│       │   │   ├── strict_encoding feature "default" (*)
+│       │   │   ├── strict_types feature "default" (*)
+│       │   │   ├── indexmap feature "default" (*)
+│       │   │   ├── single_use_seals feature "default" (*)
+│       │   │   ├── bp-invoice feature "default" (*)
+│       │   │   ├── aora feature "default" (*)
+│       │   │   ├── binfile feature "default" (*)
+│       │   │   ├── hypersonic feature "default"
+│       │   │   │   ├── hypersonic v0.12.0
+│       │   │   │   │   ├── amplify feature "default" (*)
+│       │   │   │   │   ├── serde feature "default" (*)
+│       │   │   │   │   ├── serde feature "derive" (*)
+│       │   │   │   │   ├── commit_verify feature "default" (*)
+│       │   │   │   │   ├── strict_encoding feature "default" (*)
+│       │   │   │   │   ├── strict_types feature "default" (*)
+│       │   │   │   │   ├── indexmap feature "default" (*)
+│       │   │   │   │   ├── binfile feature "default" (*)
+│       │   │   │   │   ├── aluvm feature "default"
+│       │   │   │   │   │   └── aluvm v0.12.0
+│       │   │   │   │   │       ├── amplify feature "derive" (*)
+│       │   │   │   │   │       ├── serde feature "default" (*)
+│       │   │   │   │   │       ├── paste feature "default" (*)
+│       │   │   │   │   │       ├── commit_verify feature "default" (*)
+│       │   │   │   │   │       ├── strict_encoding feature "derive" (*)
+│       │   │   │   │   │       └── baid64 feature "default" (*)
+│       │   │   │   │   ├── sonic-api feature "default"
+│       │   │   │   │   │   ├── sonic-api v0.12.0
+│       │   │   │   │   │   │   ├── amplify feature "default" (*)
+│       │   │   │   │   │   │   ├── serde feature "default" (*)
+│       │   │   │   │   │   │   ├── serde feature "derive" (*)
+│       │   │   │   │   │   │   ├── chrono feature "default" (*)
+│       │   │   │   │   │   │   ├── commit_verify feature "default" (*)
+│       │   │   │   │   │   │   ├── strict_encoding feature "default" (*)
+│       │   │   │   │   │   │   ├── strict_types feature "default" (*)
+│       │   │   │   │   │   │   ├── baid64 feature "default" (*)
+│       │   │   │   │   │   │   ├── indexmap feature "default" (*)
+│       │   │   │   │   │   │   ├── serde_yaml feature "default" (*)
+│       │   │   │   │   │   │   ├── binfile feature "default" (*)
+│       │   │   │   │   │   │   ├── aluvm feature "default" (*)
+│       │   │   │   │   │   │   ├── sonic-callreq feature "default"
+│       │   │   │   │   │   │   │   ├── sonic-callreq v0.12.0
+│       │   │   │   │   │   │   │   │   ├── amplify feature "default" (*)
+│       │   │   │   │   │   │   │   │   ├── serde feature "default" (*)
+│       │   │   │   │   │   │   │   │   ├── serde feature "derive" (*)
+│       │   │   │   │   │   │   │   │   ├── chrono feature "default" (*)
+│       │   │   │   │   │   │   │   │   ├── strict_encoding feature "default" (*)
+│       │   │   │   │   │   │   │   │   ├── strict_types feature "default" (*)
+│       │   │   │   │   │   │   │   │   ├── baid64 feature "default" (*)
+│       │   │   │   │   │   │   │   │   ├── indexmap feature "default" (*)
+│       │   │   │   │   │   │   │   │   ├── fluent-uri feature "default"
+│       │   │   │   │   │   │   │   │   │   ├── fluent-uri v0.3.2
+│       │   │   │   │   │   │   │   │   │   │   ├── borrow-or-share feature "default"
+│       │   │   │   │   │   │   │   │   │   │   │   └── borrow-or-share v0.2.2
+│       │   │   │   │   │   │   │   │   │   │   └── ref-cast feature "default"
+│       │   │   │   │   │   │   │   │   │   │       └── ref-cast v1.0.24
+│       │   │   │   │   │   │   │   │   │   │           └── ref-cast-impl feature "default"
+│       │   │   │   │   │   │   │   │   │   │               └── ref-cast-impl v1.0.24 (proc-macro)
+│       │   │   │   │   │   │   │   │   │   │                   ├── proc-macro2 feature "default" (*)
+│       │   │   │   │   │   │   │   │   │   │                   ├── quote feature "default" (*)
+│       │   │   │   │   │   │   │   │   │   │                   └── syn feature "default" (*)
+│       │   │   │   │   │   │   │   │   │   └── fluent-uri feature "std"
+│       │   │   │   │   │   │   │   │   │       └── fluent-uri v0.3.2 (*)
+│       │   │   │   │   │   │   │   │   ├── percent-encoding feature "default"
+│       │   │   │   │   │   │   │   │   │   ├── percent-encoding v2.3.1
+│       │   │   │   │   │   │   │   │   │   └── percent-encoding feature "std"
+│       │   │   │   │   │   │   │   │   │       ├── percent-encoding v2.3.1
+│       │   │   │   │   │   │   │   │   │       └── percent-encoding feature "alloc"
+│       │   │   │   │   │   │   │   │   │           └── percent-encoding v2.3.1
+│       │   │   │   │   │   │   │   │   └── ultrasonic feature "default"
+│       │   │   │   │   │   │   │   │       ├── ultrasonic v0.12.0
+│       │   │   │   │   │   │   │   │       │   ├── amplify feature "derive" (*)
+│       │   │   │   │   │   │   │   │       │   ├── amplify feature "hex" (*)
+│       │   │   │   │   │   │   │   │       │   ├── serde feature "default" (*)
+│       │   │   │   │   │   │   │   │       │   ├── serde feature "derive" (*)
+│       │   │   │   │   │   │   │   │       │   ├── commit_verify feature "default" (*)
+│       │   │   │   │   │   │   │   │       │   ├── commit_verify feature "derive" (*)
+│       │   │   │   │   │   │   │   │       │   ├── strict_encoding feature "derive" (*)
+│       │   │   │   │   │   │   │   │       │   ├── baid64 feature "default" (*)
+│       │   │   │   │   │   │   │   │       │   └── zk-aluvm feature "default"
+│       │   │   │   │   │   │   │   │       │       └── zk-aluvm v0.12.0
+│       │   │   │   │   │   │   │   │       │           ├── amplify feature "derive" (*)
+│       │   │   │   │   │   │   │   │       │           ├── serde feature "default" (*)
+│       │   │   │   │   │   │   │   │       │           ├── strict_encoding feature "derive" (*)
+│       │   │   │   │   │   │   │   │       │           └── aluvm feature "default" (*)
+│       │   │   │   │   │   │   │   │       ├── ultrasonic feature "baid64"
+│       │   │   │   │   │   │   │   │       │   └── ultrasonic v0.12.0 (*)
+│       │   │   │   │   │   │   │   │       └── ultrasonic feature "chf-sha256"
+│       │   │   │   │   │   │   │   │           └── ultrasonic v0.12.0 (*)
+│       │   │   │   │   │   │   │   └── sonic-callreq feature "std"
+│       │   │   │   │   │   │   │       ├── sonic-callreq v0.12.0 (*)
+│       │   │   │   │   │   │   │       ├── amplify feature "std" (*)
+│       │   │   │   │   │   │   │       ├── chrono feature "std" (*)
+│       │   │   │   │   │   │   │       ├── indexmap feature "std" (*)
+│       │   │   │   │   │   │   │       ├── sonic-callreq feature "fluent-uri"
+│       │   │   │   │   │   │   │       │   └── sonic-callreq v0.12.0 (*)
+│       │   │   │   │   │   │   │       ├── sonic-callreq feature "indexmap"
+│       │   │   │   │   │   │   │       │   └── sonic-callreq v0.12.0 (*)
+│       │   │   │   │   │   │   │       └── fluent-uri feature "std" (*)
+│       │   │   │   │   │   │   └── ultrasonic feature "default" (*)
+│       │   │   │   │   │   ├── sonic-api feature "binfile"
+│       │   │   │   │   │   │   ├── sonic-api v0.12.0 (*)
+│       │   │   │   │   │   │   └── sonic-api feature "std"
+│       │   │   │   │   │   │       ├── sonic-api v0.12.0 (*)
+│       │   │   │   │   │   │       └── sonic-callreq feature "std" (*)
+│       │   │   │   │   │   └── sonic-api feature "std" (*)
+│       │   │   │   │   ├── sonic-callreq feature "default" (*)
+│       │   │   │   │   └── ultrasonic feature "default" (*)
+│       │   │   │   └── hypersonic feature "std"
+│       │   │   │       ├── hypersonic v0.12.0 (*)
+│       │   │   │       ├── sonic-api feature "std" (*)
+│       │   │   │       └── sonic-callreq feature "std" (*)
+│       │   │   ├── rgb-core feature "default"
+│       │   │   │   ├── rgb-core v0.12.0
+│       │   │   │   │   ├── amplify feature "alloc" (*)
+│       │   │   │   │   ├── serde feature "default" (*)
+│       │   │   │   │   ├── bp-core feature "default" (*)
+│       │   │   │   │   ├── commit_verify feature "default" (*)
+│       │   │   │   │   ├── strict_encoding feature "default" (*)
+│       │   │   │   │   ├── single_use_seals feature "default" (*)
+│       │   │   │   │   ├── single_use_seals feature "strict_encoding"
+│       │   │   │   │   │   └── single_use_seals v0.12.0 (*)
+│       │   │   │   │   └── ultrasonic feature "default" (*)
+│       │   │   │   ├── rgb-core feature "bitcoin"
+│       │   │   │   │   ├── rgb-core v0.12.0 (*)
+│       │   │   │   │   └── rgb-core feature "bp-core"
+│       │   │   │   │       └── rgb-core v0.12.0 (*)
+│       │   │   │   └── rgb-core feature "std"
+│       │   │   │       └── rgb-core v0.12.0 (*)
+│       │   │   ├── rgb-invoice feature "default"
+│       │   │   │   ├── rgb-invoice v0.12.0-rc.3
+│       │   │   │   │   ├── amplify feature "default" (*)
+│       │   │   │   │   ├── serde feature "default" (*)
+│       │   │   │   │   ├── bp-core feature "default" (*)
+│       │   │   │   │   ├── commit_verify feature "default" (*)
+│       │   │   │   │   ├── strict_encoding feature "default" (*)
+│       │   │   │   │   ├── baid64 feature "default" (*)
+│       │   │   │   │   ├── bp-invoice feature "default" (*)
+│       │   │   │   │   ├── bp-invoice feature "strict_encoding"
+│       │   │   │   │   │   └── bp-invoice v0.12.0-rc.3 (*)
+│       │   │   │   │   ├── hypersonic feature "default" (*)
+│       │   │   │   │   ├── sonic-callreq feature "default" (*)
+│       │   │   │   │   └── rgb-core feature "default" (*)
+│       │   │   │   ├── rgb-invoice feature "bitcoin"
+│       │   │   │   │   ├── rgb-invoice v0.12.0-rc.3 (*)
+│       │   │   │   │   ├── rgb-core feature "bitcoin" (*)
+│       │   │   │   │   ├── rgb-invoice feature "bp-core"
+│       │   │   │   │   │   └── rgb-invoice v0.12.0-rc.3 (*)
+│       │   │   │   │   └── rgb-invoice feature "bp-invoice"
+│       │   │   │   │       └── rgb-invoice v0.12.0-rc.3 (*)
+│       │   │   │   └── rgb-invoice feature "std"
+│       │   │   │       ├── rgb-invoice v0.12.0-rc.3 (*)
+│       │   │   │       ├── amplify feature "std" (*)
+│       │   │   │       └── sonic-callreq feature "std" (*)
+│       │   │   └── serde_with feature "default"
+│       │   │       ├── serde_with v1.14.0
+│       │   │       │   ├── serde feature "default" (*)
+│       │   │       │   ├── serde feature "derive" (*)
+│       │   │       │   └── serde_with_macros feature "default"
+│       │   │       │       └── serde_with_macros v1.5.2 (proc-macro)
+│       │   │       │           ├── proc-macro2 feature "default" (*)
+│       │   │       │           ├── quote feature "default" (*)
+│       │   │       │           ├── syn feature "default" (*)
+│       │   │       │           ├── syn feature "full" (*)
+│       │   │       │           ├── syn feature "parsing" (*)
+│       │   │       │           └── darling feature "default"
+│       │   │       │               ├── darling v0.13.4
+│       │   │       │               │   ├── darling_core feature "default"
+│       │   │       │               │   │   └── darling_core v0.13.4
+│       │   │       │               │   │       ├── proc-macro2 feature "default" (*)
+│       │   │       │               │   │       ├── quote feature "default" (*)
+│       │   │       │               │   │       ├── syn feature "default" (*)
+│       │   │       │               │   │       ├── syn feature "extra-traits"
+│       │   │       │               │   │       │   └── syn v1.0.109 (*)
+│       │   │       │               │   │       ├── syn feature "full" (*)
+│       │   │       │               │   │       ├── fnv feature "default" (*)
+│       │   │       │               │   │       ├── ident_case feature "default" (*)
+│       │   │       │               │   │       └── strsim feature "default"
+│       │   │       │               │   │           └── strsim v0.10.0
+│       │   │       │               │   └── darling_macro feature "default"
+│       │   │       │               │       └── darling_macro v0.13.4 (proc-macro)
+│       │   │       │               │           ├── quote feature "default" (*)
+│       │   │       │               │           ├── syn feature "default" (*)
+│       │   │       │               │           └── darling_core feature "default" (*)
+│       │   │       │               └── darling feature "suggestions"
+│       │   │       │                   ├── darling v0.13.4 (*)
+│       │   │       │                   └── darling_core feature "suggestions"
+│       │   │       │                       ├── darling_core v0.13.4 (*)
+│       │   │       │                       └── darling_core feature "strsim"
+│       │   │       │                           └── darling_core v0.13.4 (*)
+│       │   │       └── serde_with feature "macros"
+│       │   │           ├── serde_with v1.14.0 (*)
+│       │   │           └── serde_with feature "serde_with_macros"
+│       │   │               └── serde_with v1.14.0 (*)
+│       │   ├── aora feature "file-strict" (*)
+│       │   ├── rgb-std feature "std"
+│       │   │   ├── rgb-std v0.12.0-rc.3 (*)
+│       │   │   ├── indexmap feature "std" (*)
+│       │   │   └── rgb-invoice feature "std" (*)
+│       │   └── hypersonic feature "binfile"
+│       │       ├── hypersonic v0.12.0 (*)
+│       │       └── sonic-api feature "binfile" (*)
+│       ├── rgb-std feature "default"
+│       │   ├── rgb-std v0.12.0-rc.3 (*)
+│       │   ├── rgb-std feature "bitcoin"
+│       │   │   ├── rgb-std v0.12.0-rc.3 (*)
+│       │   │   ├── rgb-std feature "bp-core"
+│       │   │   │   └── rgb-std v0.12.0-rc.3 (*)
+│       │   │   ├── rgb-std feature "bp-invoice"
+│       │   │   │   └── rgb-std v0.12.0-rc.3 (*)
+│       │   │   ├── rgb-core feature "bitcoin" (*)
+│       │   │   └── rgb-invoice feature "bitcoin" (*)
+│       │   └── rgb-std feature "std" (*)
+│       └── sonic-persist-fs feature "default"
+│           └── sonic-persist-fs v0.12.0
+│               ├── amplify feature "default" (*)
+│               ├── amplify feature "serde" (*)
+│               ├── commit_verify feature "default" (*)
+│               ├── commit_verify feature "serde" (*)
+│               ├── strict_encoding feature "default" (*)
+│               ├── strict_encoding feature "serde"
+│               │   ├── strict_encoding v2.9.1 (*)
+│               │   └── amplify feature "serde" (*)
+│               ├── serde_yaml feature "default" (*)
+│               ├── toml feature "default" (*)
+│               ├── aora feature "default" (*)
+│               ├── binfile feature "default" (*)
+│               ├── hypersonic feature "binfile" (*)
+│               ├── hypersonic feature "default" (*)
+│               └── hypersonic feature "serde"
+│                   ├── hypersonic v0.12.0 (*)
+│                   ├── amplify feature "serde" (*)
+│                   ├── commit_verify feature "serde" (*)
+│                   ├── strict_encoding feature "serde" (*)
+│                   ├── sonic-api feature "serde"
+│                   │   ├── sonic-api v0.12.0 (*)
+│                   │   ├── amplify feature "serde" (*)
+│                   │   ├── chrono feature "serde"
+│                   │   │   └── chrono v0.4.41 (*)
+│                   │   ├── commit_verify feature "serde" (*)
+│                   │   ├── strict_encoding feature "serde" (*)
+│                   │   ├── strict_types feature "serde"
+│                   │   │   ├── strict_types v2.9.0 (*)
+│                   │   │   ├── amplify feature "serde" (*)
+│                   │   │   ├── strict_encoding feature "serde" (*)
+│                   │   │   ├── strict_types feature "serde_json"
+│                   │   │   │   └── strict_types v2.9.0 (*)
+│                   │   │   ├── strict_types feature "serde_yaml"
+│                   │   │   │   └── strict_types v2.9.0 (*)
+│                   │   │   ├── strict_types feature "toml"
+│                   │   │   │   └── strict_types v2.9.0 (*)
+│                   │   │   └── indexmap feature "serde"
+│                   │   │       └── indexmap v2.10.0 (*)
+│                   │   ├── aluvm feature "serde"
+│                   │   │   ├── aluvm v0.12.0 (*)
+│                   │   │   ├── amplify feature "serde" (*)
+│                   │   │   └── strict_encoding feature "serde" (*)
+│                   │   ├── sonic-callreq feature "serde"
+│                   │   │   ├── sonic-callreq v0.12.0 (*)
+│                   │   │   ├── amplify feature "serde" (*)
+│                   │   │   ├── chrono feature "serde" (*)
+│                   │   │   ├── strict_types feature "serde" (*)
+│                   │   │   └── ultrasonic feature "serde"
+│                   │   │       ├── ultrasonic v0.12.0 (*)
+│                   │   │       ├── amplify feature "serde" (*)
+│                   │   │       ├── commit_verify feature "serde" (*)
+│                   │   │       └── zk-aluvm feature "serde"
+│                   │   │           ├── zk-aluvm v0.12.0 (*)
+│                   │   │           └── aluvm feature "serde" (*)
+│                   │   └── ultrasonic feature "serde" (*)
+│                   ├── sonic-callreq feature "serde" (*)
+│                   └── ultrasonic feature "serde" (*)
+├── rgb-std feature "binfile" (*)
+├── rgb-std feature "default" (*)
+├── rgb-std feature "serde"
+│   ├── rgb-std v0.12.0-rc.3 (*)
+│   ├── amplify feature "serde" (*)
+│   ├── bp-core feature "serde" (*)
+│   ├── chrono feature "serde" (*)
+│   ├── commit_verify feature "serde" (*)
+│   ├── strict_encoding feature "serde" (*)
+│   ├── strict_types feature "serde" (*)
+│   ├── rgb-std feature "bp-core" (*)
+│   ├── rgb-std feature "std" (*)
+│   ├── hypersonic feature "serde" (*)
+│   ├── rgb-core feature "serde"
+│   │   ├── rgb-core v0.12.0 (*)
+│   │   ├── amplify feature "serde" (*)
+│   │   ├── commit_verify feature "serde" (*)
+│   │   ├── single_use_seals feature "serde"
+│   │   │   └── single_use_seals v0.12.0 (*)
+│   │   └── ultrasonic feature "serde" (*)
+│   └── rgb-invoice feature "serde"
+│       ├── rgb-invoice v0.12.0-rc.3 (*)
+│       ├── bp-core feature "serde" (*)
+│       ├── bp-invoice feature "serde"
+│       │   ├── bp-invoice v0.12.0-rc.3 (*)
+│       │   └── bp-consensus feature "serde" (*)
+│       ├── sonic-callreq feature "serde" (*)
+│       ├── rgb-core feature "serde" (*)
+│       ├── rgb-invoice feature "bp-core" (*)
+│       └── rgb-invoice feature "bp-invoice" (*)
+├── rgb-std feature "uri"
+│   ├── rgb-std v0.12.0-rc.3 (*)
+│   └── rgb-invoice feature "uri"
+│       ├── rgb-invoice v0.12.0-rc.3 (*)
+│       └── sonic-callreq feature "uri"
+│           └── sonic-callreq v0.12.0 (*)
+├── rgb-runtime feature "default"
+│   ├── rgb-runtime v0.12.0-rc.3 (<temporary_workspace>/rgb)
+│   │   ├── bp-esplora v0.12.0-rc.3 (*)
+│   │   ├── amplify feature "default" (*)
+│   │   ├── serde feature "default" (*)
+│   │   ├── serde feature "derive" (*)
+│   │   ├── bp-electrum feature "default" (*)
+│   │   ├── chrono feature "default" (*)
+│   │   ├── chrono feature "serde" (*)
+│   │   ├── commit_verify feature "default" (*)
+│   │   ├── strict_types feature "default" (*)
+│   │   ├── indexmap feature "default" (*)
+│   │   ├── toml feature "default" (*)
+│   │   ├── bp-std feature "client-side-validation" (*)
+│   │   ├── bp-std feature "default" (*)
+│   │   ├── rgb-persist-fs feature "default" (*)
+│   │   ├── rgb-std feature "bitcoin" (*)
+│   │   ├── rgb-std feature "default" (*)
+│   │   ├── rgb-descriptors feature "default"
+│   │   │   └── rgb-descriptors v0.12.0-rc.3 (<temporary_workspace>/rgb/descriptors)
+│   │   │       ├── amplify feature "default" (*)
+│   │   │       ├── serde feature "default" (*)
+│   │   │       ├── serde feature "derive" (*)
+│   │   │       ├── commit_verify feature "default" (*)
+│   │   │       ├── indexmap feature "default" (*)
+│   │   │       ├── bp-std feature "client-side-validation" (*)
+│   │   │       ├── bp-std feature "default" (*)
+│   │   │       ├── rgb-std feature "bitcoin" (*)
+│   │   │       └── rgb-std feature "default" (*)
+│   │   ├── rgb-psbt feature "bp"
+│   │   │   ├── rgb-psbt v0.12.0-rc.3 (<temporary_workspace>/rgb/psbt)
+│   │   │   │   ├── amplify feature "default" (*)
+│   │   │   │   ├── bp-core feature "default" (*)
+│   │   │   │   ├── bp-std feature "client-side-validation" (*)
+│   │   │   │   ├── bp-std feature "default" (*)
+│   │   │   │   ├── rgb-std feature "bitcoin" (*)
+│   │   │   │   └── rgb-std feature "default" (*)
+│   │   │   └── rgb-psbt feature "bp-std"
+│   │   │       └── rgb-psbt v0.12.0-rc.3 (<temporary_workspace>/rgb/psbt) (*)
+│   │   └── rgb-psbt feature "default"
+│   │       └── rgb-psbt v0.12.0-rc.3 (<temporary_workspace>/rgb/psbt) (*)
+│   └── rgb-runtime feature "std"
+│       └── rgb-runtime v0.12.0-rc.3 (<temporary_workspace>/rgb) (*)
+├── rgb-runtime feature "fs"
+│   ├── rgb-runtime v0.12.0-rc.3 (<temporary_workspace>/rgb) (*)
+│   ├── rgb-std feature "binfile" (*)
+│   ├── rgb-runtime feature "serde"
+│   │   ├── rgb-runtime v0.12.0-rc.3 (<temporary_workspace>/rgb) (*)
+│   │   ├── bp-std feature "serde"
+│   │   │   ├── bp-std v0.12.0-rc.3 (*)
+│   │   │   ├── bp-core feature "serde" (*)
+│   │   │   ├── bp-consensus feature "serde" (*)
+│   │   │   ├── bp-invoice feature "serde" (*)
+│   │   │   ├── bp-std feature "bp-core" (*)
+│   │   │   ├── bp-derive feature "serde"
+│   │   │   │   ├── bp-derive v0.12.0-rc.3 (*)
+│   │   │   │   ├── bp-consensus feature "serde" (*)
+│   │   │   │   └── bp-invoice feature "serde" (*)
+│   │   │   ├── descriptors feature "serde"
+│   │   │   │   ├── descriptors v0.12.0-rc.3 (*)
+│   │   │   │   ├── indexmap feature "serde" (*)
+│   │   │   │   └── bp-derive feature "serde" (*)
+│   │   │   └── psbt feature "serde"
+│   │   │       ├── psbt v0.12.0-rc.3 (*)
+│   │   │       ├── indexmap feature "serde" (*)
+│   │   │       └── bp-derive feature "serde" (*)
+│   │   ├── rgb-std feature "serde" (*)
+│   │   ├── rgb-runtime feature "toml"
+│   │   │   └── rgb-runtime v0.12.0-rc.3 (<temporary_workspace>/rgb) (*)
+│   │   └── rgb-descriptors feature "serde"
+│   │       ├── rgb-descriptors v0.12.0-rc.3 (<temporary_workspace>/rgb/descriptors) (*)
+│   │       ├── indexmap feature "serde" (*)
+│   │       ├── bp-std feature "serde" (*)
+│   │       └── rgb-std feature "serde" (*)
+│   └── rgb-runtime feature "std" (*)
+├── rgb-runtime feature "resolvers-all"
+│   ├── rgb-runtime v0.12.0-rc.3 (<temporary_workspace>/rgb) (*)
+│   ├── rgb-runtime feature "resolver-electrum"
+│   │   └── rgb-runtime v0.12.0-rc.3 (<temporary_workspace>/rgb) (*)
+│   └── rgb-runtime feature "resolver-esplora"
+│       ├── rgb-runtime v0.12.0-rc.3 (<temporary_workspace>/rgb) (*)
+│       ├── bp-esplora feature "blocking-https"
+│       │   ├── bp-esplora v0.12.0-rc.3 (*)
+│       │   ├── bp-esplora feature "blocking"
+│       │   │   ├── bp-esplora v0.12.0-rc.3 (*)
+│       │   │   ├── bp-esplora feature "minreq"
+│       │   │   │   └── bp-esplora v0.12.0-rc.3 (*)
+│       │   │   └── minreq feature "proxy"
+│       │   │       ├── minreq v2.14.0 (*)
+│       │   │       └── minreq feature "base64"
+│       │   │           └── minreq v2.14.0 (*)
+│       │   ├── bp-esplora feature "minreq" (*)
+│       │   └── minreq feature "https"
+│       │       ├── minreq v2.14.0 (*)
+│       │       └── minreq feature "https-rustls"
+│       │           ├── minreq v2.14.0 (*)
+│       │           ├── minreq feature "rustls"
+│       │           │   └── minreq v2.14.0 (*)
+│       │           ├── minreq feature "rustls-webpki"
+│       │           │   └── minreq v2.14.0 (*)
+│       │           └── minreq feature "webpki-roots"
+│       │               └── minreq v2.14.0 (*)
+│       └── rgb-runtime feature "bp-esplora"
+│           └── rgb-runtime v0.12.0-rc.3 (<temporary_workspace>/rgb) (*)
+└── rgb-runtime feature "serde" (*)

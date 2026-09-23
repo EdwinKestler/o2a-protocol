@@ -185,6 +185,13 @@ conversion boundary, full O2A lifecycle, dependency advisory scan, and
 independent import remain open. Release CLI behavior was not tested. The run
 therefore does not select the stack.
 
+A [second disposable run](../evidence/phase0/rgb-rc3-regtest-2026-09-23/README.md)
+retained the exact lock and proved a local electrs-backed sync plus a bounded
+public-key conversion after temporary RC3 workarounds. It also found 15
+vulnerabilities and five warnings in the locked 342-package graph. That result
+closes the earlier evidence gaps but fails the dependency-adoption gate; it
+still does not select the stack or authorize `crates/o2a-rgb`.
+
 ## Quality and security gates
 
 The initial CI proposal is:

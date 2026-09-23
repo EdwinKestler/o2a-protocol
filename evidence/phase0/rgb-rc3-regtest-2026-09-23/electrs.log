@@ -1,0 +1,61 @@
+Starting electrs 0.12.0 on x86_64 linux with Config { network: Regtest, db_dir: "<temporary_workspace>/electrs-db", db_log_dir: None, db_parallelism: 1, daemon_auth: CookieFile("<temporary_workspace>/bitcoin-data/regtest/.cookie"), daemon_rpc_addr: 127.0.0.1:19544, electrum_rpc_addr: 127.0.0.1:19546, monitoring_addr: 127.0.0.1:24224, wait_duration: 10s, jsonrpc_timeout: 15s, index_lookup_limit: None, reindex_last_blocks: 0, auto_reindex: true, ignore_mempool: false, sync_once: false, skip_block_download_wait: false, disable_electrum_rpc: false, server_banner: "Welcome to electrs 0.12.0 (Electrum Rust Server)!" }
+[2026-09-23T17:47:08.109Z INFO  electrs::metrics::metrics_impl] serving Prometheus metrics on 127.0.0.1:24224
+[2026-09-23T17:47:08.109Z INFO  electrs::server] serving Electrum RPC on 127.0.0.1:19546
+[2026-09-23T17:47:08.109Z INFO  bindex::chain] index: Config { db_path: "<temporary_workspace>/electrs-db/regtest", url: "http://127.0.0.1:19544" }
+[2026-09-23T17:47:08.158Z INFO  bindex::db] CF config: 0 files, 0.000000 MBs
+[2026-09-23T17:47:08.158Z INFO  bindex::db] CF headers: 0 files, 0.000000 MBs
+[2026-09-23T17:47:08.158Z INFO  bindex::db] CF txpos: 0 files, 0.000000 MBs
+[2026-09-23T17:47:08.158Z INFO  bindex::db] CF txid: 0 files, 0.000000 MBs
+[2026-09-23T17:47:08.158Z INFO  bindex::db] CF script_hash: 0 files, 0.000000 MBs
+[2026-09-23T17:47:08.158Z INFO  bindex::db] CF spending: 0 files, 0.000000 MBs
+[2026-09-23T17:47:08.158Z INFO  bindex::db] CF funding: 0 files, 0.000000 MBs
+[2026-09-23T17:47:08.198Z INFO  bindex::chain] block=6cf68d2c9a67cbba721f98f034fbbf1124e8964f467dce05062f57ae697bed00 height=101: indexed 102 blocks, 0.026[MB], dt = 0.006[s]: 0.063 [ms/block], 0.000 [MB/block], 3.960 [MB/s]
+[2026-09-23T17:47:08.247Z INFO  bindex::db] started auto compactions
+[2026-09-23T17:47:40.022Z INFO  electrs::electrum] your wallet uses less efficient method of querying electrs, consider contacting the developer of your wallet. Reason: blockchain.scripthash.listunspent called for unsubscribed scripthash
+[2026-09-23T17:47:40.054Z INFO  electrs::electrum] your wallet uses less efficient method of querying electrs, consider contacting the developer of your wallet. Reason: blockchain.scripthash.listunspent called for unsubscribed scripthash
+[2026-09-23T17:47:40.055Z INFO  electrs::electrum] your wallet uses less efficient method of querying electrs, consider contacting the developer of your wallet. Reason: blockchain.scripthash.listunspent called for unsubscribed scripthash
+[2026-09-23T17:47:40.056Z INFO  electrs::electrum] your wallet uses less efficient method of querying electrs, consider contacting the developer of your wallet. Reason: blockchain.scripthash.listunspent called for unsubscribed scripthash
+[2026-09-23T17:47:40.057Z INFO  electrs::electrum] your wallet uses less efficient method of querying electrs, consider contacting the developer of your wallet. Reason: blockchain.scripthash.listunspent called for unsubscribed scripthash
+[2026-09-23T17:47:40.057Z INFO  electrs::electrum] your wallet uses less efficient method of querying electrs, consider contacting the developer of your wallet. Reason: blockchain.scripthash.listunspent called for unsubscribed scripthash
+[2026-09-23T17:47:40.058Z INFO  electrs::electrum] your wallet uses less efficient method of querying electrs, consider contacting the developer of your wallet. Reason: blockchain.scripthash.listunspent called for unsubscribed scripthash
+[2026-09-23T17:47:40.059Z INFO  electrs::electrum] your wallet uses less efficient method of querying electrs, consider contacting the developer of your wallet. Reason: blockchain.scripthash.listunspent called for unsubscribed scripthash
+[2026-09-23T17:47:40.059Z INFO  electrs::electrum] your wallet uses less efficient method of querying electrs, consider contacting the developer of your wallet. Reason: blockchain.scripthash.listunspent called for unsubscribed scripthash
+[2026-09-23T17:47:40.060Z INFO  electrs::electrum] your wallet uses less efficient method of querying electrs, consider contacting the developer of your wallet. Reason: blockchain.scripthash.listunspent called for unsubscribed scripthash
+[2026-09-23T17:47:40.060Z INFO  electrs::electrum] your wallet uses less efficient method of querying electrs, consider contacting the developer of your wallet. Reason: blockchain.scripthash.listunspent called for unsubscribed scripthash
+[2026-09-23T17:47:40.061Z INFO  electrs::electrum] your wallet uses less efficient method of querying electrs, consider contacting the developer of your wallet. Reason: blockchain.scripthash.listunspent called for unsubscribed scripthash
+[2026-09-23T17:47:40.061Z INFO  electrs::electrum] your wallet uses less efficient method of querying electrs, consider contacting the developer of your wallet. Reason: blockchain.scripthash.listunspent called for unsubscribed scripthash
+[2026-09-23T17:47:40.062Z INFO  electrs::electrum] your wallet uses less efficient method of querying electrs, consider contacting the developer of your wallet. Reason: blockchain.scripthash.listunspent called for unsubscribed scripthash
+[2026-09-23T17:47:40.063Z INFO  electrs::electrum] your wallet uses less efficient method of querying electrs, consider contacting the developer of your wallet. Reason: blockchain.scripthash.listunspent called for unsubscribed scripthash
+[2026-09-23T17:47:40.063Z INFO  electrs::electrum] your wallet uses less efficient method of querying electrs, consider contacting the developer of your wallet. Reason: blockchain.scripthash.listunspent called for unsubscribed scripthash
+[2026-09-23T17:47:40.064Z INFO  electrs::electrum] your wallet uses less efficient method of querying electrs, consider contacting the developer of your wallet. Reason: blockchain.scripthash.listunspent called for unsubscribed scripthash
+[2026-09-23T17:47:40.064Z INFO  electrs::electrum] your wallet uses less efficient method of querying electrs, consider contacting the developer of your wallet. Reason: blockchain.scripthash.listunspent called for unsubscribed scripthash
+[2026-09-23T17:47:40.065Z INFO  electrs::electrum] your wallet uses less efficient method of querying electrs, consider contacting the developer of your wallet. Reason: blockchain.scripthash.listunspent called for unsubscribed scripthash
+[2026-09-23T17:47:40.065Z INFO  electrs::electrum] your wallet uses less efficient method of querying electrs, consider contacting the developer of your wallet. Reason: blockchain.scripthash.listunspent called for unsubscribed scripthash
+[2026-09-23T17:47:40.082Z INFO  electrs::electrum] your wallet uses less efficient method of querying electrs, consider contacting the developer of your wallet. Reason: blockchain.scripthash.listunspent called for unsubscribed scripthash
+[2026-09-23T17:47:40.083Z INFO  electrs::electrum] your wallet uses less efficient method of querying electrs, consider contacting the developer of your wallet. Reason: blockchain.scripthash.listunspent called for unsubscribed scripthash
+[2026-09-23T17:47:40.084Z INFO  electrs::electrum] your wallet uses less efficient method of querying electrs, consider contacting the developer of your wallet. Reason: blockchain.scripthash.listunspent called for unsubscribed scripthash
+[2026-09-23T17:47:40.085Z INFO  electrs::electrum] your wallet uses less efficient method of querying electrs, consider contacting the developer of your wallet. Reason: blockchain.scripthash.listunspent called for unsubscribed scripthash
+[2026-09-23T17:47:40.085Z INFO  electrs::electrum] your wallet uses less efficient method of querying electrs, consider contacting the developer of your wallet. Reason: blockchain.scripthash.listunspent called for unsubscribed scripthash
+[2026-09-23T17:47:40.086Z INFO  electrs::electrum] your wallet uses less efficient method of querying electrs, consider contacting the developer of your wallet. Reason: blockchain.scripthash.listunspent called for unsubscribed scripthash
+[2026-09-23T17:47:40.087Z INFO  electrs::electrum] your wallet uses less efficient method of querying electrs, consider contacting the developer of your wallet. Reason: blockchain.scripthash.listunspent called for unsubscribed scripthash
+[2026-09-23T17:47:40.087Z INFO  electrs::electrum] your wallet uses less efficient method of querying electrs, consider contacting the developer of your wallet. Reason: blockchain.scripthash.listunspent called for unsubscribed scripthash
+[2026-09-23T17:47:40.087Z INFO  electrs::electrum] your wallet uses less efficient method of querying electrs, consider contacting the developer of your wallet. Reason: blockchain.scripthash.listunspent called for unsubscribed scripthash
+[2026-09-23T17:47:40.088Z INFO  electrs::electrum] your wallet uses less efficient method of querying electrs, consider contacting the developer of your wallet. Reason: blockchain.scripthash.listunspent called for unsubscribed scripthash
+[2026-09-23T17:47:40.088Z INFO  electrs::electrum] your wallet uses less efficient method of querying electrs, consider contacting the developer of your wallet. Reason: blockchain.scripthash.listunspent called for unsubscribed scripthash
+[2026-09-23T17:47:40.088Z INFO  electrs::electrum] your wallet uses less efficient method of querying electrs, consider contacting the developer of your wallet. Reason: blockchain.scripthash.listunspent called for unsubscribed scripthash
+[2026-09-23T17:47:40.089Z INFO  electrs::electrum] your wallet uses less efficient method of querying electrs, consider contacting the developer of your wallet. Reason: blockchain.scripthash.listunspent called for unsubscribed scripthash
+[2026-09-23T17:47:40.089Z INFO  electrs::electrum] your wallet uses less efficient method of querying electrs, consider contacting the developer of your wallet. Reason: blockchain.scripthash.listunspent called for unsubscribed scripthash
+[2026-09-23T17:47:40.089Z INFO  electrs::electrum] your wallet uses less efficient method of querying electrs, consider contacting the developer of your wallet. Reason: blockchain.scripthash.listunspent called for unsubscribed scripthash
+[2026-09-23T17:47:40.090Z INFO  electrs::electrum] your wallet uses less efficient method of querying electrs, consider contacting the developer of your wallet. Reason: blockchain.scripthash.listunspent called for unsubscribed scripthash
+[2026-09-23T17:47:40.090Z INFO  electrs::electrum] your wallet uses less efficient method of querying electrs, consider contacting the developer of your wallet. Reason: blockchain.scripthash.listunspent called for unsubscribed scripthash
+[2026-09-23T17:47:40.090Z INFO  electrs::electrum] your wallet uses less efficient method of querying electrs, consider contacting the developer of your wallet. Reason: blockchain.scripthash.listunspent called for unsubscribed scripthash
+[2026-09-23T17:47:40.090Z INFO  electrs::electrum] your wallet uses less efficient method of querying electrs, consider contacting the developer of your wallet. Reason: blockchain.scripthash.listunspent called for unsubscribed scripthash
+[2026-09-23T17:47:40.091Z INFO  electrs::electrum] your wallet uses less efficient method of querying electrs, consider contacting the developer of your wallet. Reason: blockchain.scripthash.listunspent called for unsubscribed scripthash
+[2026-09-23T17:48:30.286Z ERROR bindex::client] GET http://127.0.0.1:19544/rest/headers/1001/6cf68d2c9a67cbba721f98f034fbbf1124e8964f467dce05062f57ae697bed00.bin failed: Io(Custom { kind: UnexpectedEof, error: "Peer disconnected" })
+Error: electrs failed
+
+Caused by:
+    0: sync failed
+    1: client failed: request failed: io: Peer disconnected
+    2: request failed: io: Peer disconnected
+    3: io: Peer disconnected

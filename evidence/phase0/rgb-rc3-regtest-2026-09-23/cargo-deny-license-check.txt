@@ -1,0 +1,1488 @@
+error[rejected]: failed to satisfy license requirements
+   ┌─ <temporary_workspace>/cargo-home/registry/src/index.crates.io-1949cf8c6b5b557f/aws-lc-rs-1.13.1/Cargo.toml:42:12
+   │
+42 │ license = "ISC AND (Apache-2.0 OR ISC)"
+   │            ━━━────────────────────━━━─
+   │            │                      │
+   │            │                      rejected: license is not explicitly allowed
+   │            rejected: license is not explicitly allowed
+   │
+   ├ ISC - ISC License:
+   ├   - OSI approved
+   ├   - FSF Free/Libre
+   ├ ISC - ISC License:
+   ├   - OSI approved
+   ├   - FSF Free/Libre
+   ├ aws-lc-rs v1.13.1
+     ├── rustls v0.23.28
+     │   └── bp-electrum v0.12.0-rc.1
+     │       └── rgb-runtime v0.12.0-rc.3
+     └── rustls-webpki v0.103.3
+         └── rustls v0.23.28 (*)
+
+error[rejected]: failed to satisfy license requirements
+   ┌─ <temporary_workspace>/cargo-home/registry/src/index.crates.io-1949cf8c6b5b557f/aws-lc-sys-0.29.0/Cargo.toml:71:12
+   │
+71 │ license = "ISC AND (Apache-2.0 OR ISC) AND OpenSSL"
+   │            ━━━────────────────────━━━──────━━━━━━━
+   │            │                      │        │
+   │            │                      │        rejected: license is not explicitly allowed
+   │            │                      rejected: license is not explicitly allowed
+   │            rejected: license is not explicitly allowed
+   │
+   ├ ISC - ISC License:
+   ├   - OSI approved
+   ├   - FSF Free/Libre
+   ├ ISC - ISC License:
+   ├   - OSI approved
+   ├   - FSF Free/Libre
+   ├ OpenSSL - OpenSSL License:
+   ├   - FSF Free/Libre
+   ├ aws-lc-sys v0.29.0
+     └── aws-lc-rs v1.13.1
+         ├── rustls v0.23.28
+         │   └── bp-electrum v0.12.0-rc.1
+         │       └── rgb-runtime v0.12.0-rc.3
+         └── rustls-webpki v0.103.3
+             └── rustls v0.23.28 (*)
+
+error[rejected]: failed to satisfy license requirements
+   ┌─ <temporary_workspace>/cargo-home/registry/src/index.crates.io-1949cf8c6b5b557f/base85-2.0.0/Cargo.toml:27:12
+   │
+27 │ license = "MPL-2.0-no-copyleft-exception"
+   │            ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   │            │
+   │            rejected: license is not explicitly allowed
+   │
+   ├ MPL-2.0-no-copyleft-exception - Mozilla Public License 2.0 (no copyleft exception):
+   ├   - OSI approved
+   ├   - Copyleft
+   ├ base85 v2.0.0
+     └── bp-dbc v0.12.0
+         ├── bp-core v0.12.0
+         │   ├── bp-electrum v0.12.0-rc.1
+         │   │   └── rgb-runtime v0.12.0-rc.3
+         │   ├── bp-esplora v0.12.0-rc.3
+         │   │   └── rgb-runtime v0.12.0-rc.3 (*)
+         │   ├── bp-std v0.12.0-rc.3
+         │   │   ├── rgb-descriptors v0.12.0-rc.3
+         │   │   │   └── rgb-runtime v0.12.0-rc.3 (*)
+         │   │   ├── rgb-psbt v0.12.0-rc.3
+         │   │   │   └── rgb-runtime v0.12.0-rc.3 (*)
+         │   │   └── rgb-runtime v0.12.0-rc.3 (*)
+         │   ├── psbt v0.12.0-rc.3
+         │   │   └── bp-std v0.12.0-rc.3 (*)
+         │   ├── rgb-core v0.12.0
+         │   │   ├── rgb-invoice v0.12.0-rc.3
+         │   │   │   └── rgb-std v0.12.0-rc.3
+         │   │   │       ├── rgb-descriptors v0.12.0-rc.3 (*)
+         │   │   │       ├── rgb-persist-fs v0.12.0-rc.3
+         │   │   │       │   └── rgb-runtime v0.12.0-rc.3 (*)
+         │   │   │       ├── rgb-psbt v0.12.0-rc.3 (*)
+         │   │   │       └── rgb-runtime v0.12.0-rc.3 (*)
+         │   │   └── rgb-std v0.12.0-rc.3 (*)
+         │   ├── rgb-invoice v0.12.0-rc.3 (*)
+         │   ├── rgb-psbt v0.12.0-rc.3 (*)
+         │   └── rgb-std v0.12.0-rc.3 (*)
+         └── bp-seals v0.12.0
+             └── bp-core v0.12.0 (*)
+
+error[rejected]: failed to satisfy license requirements
+   ┌─ <temporary_workspace>/cargo-home/registry/src/index.crates.io-1949cf8c6b5b557f/bindgen-0.69.5/Cargo.toml:41:12
+   │
+41 │ license = "BSD-3-Clause"
+   │            ━━━━━━━━━━━━
+   │            │
+   │            rejected: license is not explicitly allowed
+   │
+   ├ BSD-3-Clause - BSD 3-Clause "New" or "Revised" License:
+   ├   - OSI approved
+   ├   - FSF Free/Libre
+   ├ bindgen v0.69.5
+     └── (build) aws-lc-sys v0.29.0
+         └── aws-lc-rs v1.13.1
+             ├── rustls v0.23.28
+             │   └── bp-electrum v0.12.0-rc.1
+             │       └── rgb-runtime v0.12.0-rc.3
+             └── rustls-webpki v0.103.3
+                 └── rustls v0.23.28 (*)
+
+error[rejected]: failed to satisfy license requirements
+   ┌─ <temporary_workspace>/cargo-home/registry/src/index.crates.io-1949cf8c6b5b557f/borrow-or-share-0.2.2/Cargo.toml:25:12
+   │
+25 │ license = "MIT-0"
+   │            ━━━━━
+   │            │
+   │            rejected: license is not explicitly allowed
+   │
+   ├ MIT-0 - MIT No Attribution:
+   ├   - OSI approved
+   ├ borrow-or-share v0.2.2
+     └── fluent-uri v0.3.2
+         └── sonic-callreq v0.12.0
+             ├── hypersonic v0.12.0
+             │   ├── rgb-invoice v0.12.0-rc.3
+             │   │   └── rgb-std v0.12.0-rc.3
+             │   │       ├── rgb-descriptors v0.12.0-rc.3
+             │   │       │   └── rgb-runtime v0.12.0-rc.3
+             │   │       ├── rgb-persist-fs v0.12.0-rc.3
+             │   │       │   └── rgb-runtime v0.12.0-rc.3 (*)
+             │   │       ├── rgb-psbt v0.12.0-rc.3
+             │   │       │   └── rgb-runtime v0.12.0-rc.3 (*)
+             │   │       └── rgb-runtime v0.12.0-rc.3 (*)
+             │   ├── rgb-std v0.12.0-rc.3 (*)
+             │   └── sonic-persist-fs v0.12.0
+             │       └── rgb-persist-fs v0.12.0-rc.3 (*)
+             ├── rgb-invoice v0.12.0-rc.3 (*)
+             └── sonic-api v0.12.0
+                 └── hypersonic v0.12.0 (*)
+
+error[rejected]: failed to satisfy license requirements
+   ┌─ <temporary_workspace>/cargo-home/registry/src/index.crates.io-1949cf8c6b5b557f/icu_collections-2.0.0/Cargo.toml:39:12
+   │
+39 │ license = "Unicode-3.0"
+   │            ━━━━━━━━━━━
+   │            │
+   │            rejected: license is not explicitly allowed
+   │
+   ├ Unicode-3.0 - Unicode License v3:
+   ├   - OSI approved
+   ├ icu_collections v2.0.0
+     ├── icu_normalizer v2.0.0
+     │   └── idna_adapter v1.2.1
+     │       └── idna v1.0.3
+     │           └── url v2.5.4
+     │               └── reqwest v0.12.22
+     │                   └── bp-esplora v0.12.0-rc.3
+     │                       └── rgb-runtime v0.12.0-rc.3
+     └── icu_properties v2.0.1
+         └── idna_adapter v1.2.1 (*)
+
+error[rejected]: failed to satisfy license requirements
+   ┌─ <temporary_workspace>/cargo-home/registry/src/index.crates.io-1949cf8c6b5b557f/icu_locale_core-2.0.0/Cargo.toml:39:12
+   │
+39 │ license = "Unicode-3.0"
+   │            ━━━━━━━━━━━
+   │            │
+   │            rejected: license is not explicitly allowed
+   │
+   ├ Unicode-3.0 - Unicode License v3:
+   ├   - OSI approved
+   ├ icu_locale_core v2.0.0
+     ├── icu_properties v2.0.1
+     │   └── idna_adapter v1.2.1
+     │       └── idna v1.0.3
+     │           └── url v2.5.4
+     │               └── reqwest v0.12.22
+     │                   └── bp-esplora v0.12.0-rc.3
+     │                       └── rgb-runtime v0.12.0-rc.3
+     └── icu_provider v2.0.0
+         ├── icu_normalizer v2.0.0
+         │   └── idna_adapter v1.2.1 (*)
+         └── icu_properties v2.0.1 (*)
+
+error[rejected]: failed to satisfy license requirements
+   ┌─ <temporary_workspace>/cargo-home/registry/src/index.crates.io-1949cf8c6b5b557f/icu_normalizer-2.0.0/Cargo.toml:39:12
+   │
+39 │ license = "Unicode-3.0"
+   │            ━━━━━━━━━━━
+   │            │
+   │            rejected: license is not explicitly allowed
+   │
+   ├ Unicode-3.0 - Unicode License v3:
+   ├   - OSI approved
+   ├ icu_normalizer v2.0.0
+     └── idna_adapter v1.2.1
+         └── idna v1.0.3
+             └── url v2.5.4
+                 └── reqwest v0.12.22
+                     └── bp-esplora v0.12.0-rc.3
+                         └── rgb-runtime v0.12.0-rc.3
+
+error[rejected]: failed to satisfy license requirements
+   ┌─ <temporary_workspace>/cargo-home/registry/src/index.crates.io-1949cf8c6b5b557f/icu_normalizer_data-2.0.0/Cargo.toml:39:12
+   │
+39 │ license = "Unicode-3.0"
+   │            ━━━━━━━━━━━
+   │            │
+   │            rejected: license is not explicitly allowed
+   │
+   ├ Unicode-3.0 - Unicode License v3:
+   ├   - OSI approved
+   ├ icu_normalizer_data v2.0.0
+     └── icu_normalizer v2.0.0
+         └── idna_adapter v1.2.1
+             └── idna v1.0.3
+                 └── url v2.5.4
+                     └── reqwest v0.12.22
+                         └── bp-esplora v0.12.0-rc.3
+                             └── rgb-runtime v0.12.0-rc.3
+
+error[rejected]: failed to satisfy license requirements
+   ┌─ <temporary_workspace>/cargo-home/registry/src/index.crates.io-1949cf8c6b5b557f/icu_properties-2.0.1/Cargo.toml:39:12
+   │
+39 │ license = "Unicode-3.0"
+   │            ━━━━━━━━━━━
+   │            │
+   │            rejected: license is not explicitly allowed
+   │
+   ├ Unicode-3.0 - Unicode License v3:
+   ├   - OSI approved
+   ├ icu_properties v2.0.1
+     └── idna_adapter v1.2.1
+         └── idna v1.0.3
+             └── url v2.5.4
+                 └── reqwest v0.12.22
+                     └── bp-esplora v0.12.0-rc.3
+                         └── rgb-runtime v0.12.0-rc.3
+
+error[rejected]: failed to satisfy license requirements
+   ┌─ <temporary_workspace>/cargo-home/registry/src/index.crates.io-1949cf8c6b5b557f/icu_properties_data-2.0.1/Cargo.toml:39:12
+   │
+39 │ license = "Unicode-3.0"
+   │            ━━━━━━━━━━━
+   │            │
+   │            rejected: license is not explicitly allowed
+   │
+   ├ Unicode-3.0 - Unicode License v3:
+   ├   - OSI approved
+   ├ icu_properties_data v2.0.1
+     └── icu_properties v2.0.1
+         └── idna_adapter v1.2.1
+             └── idna v1.0.3
+                 └── url v2.5.4
+                     └── reqwest v0.12.22
+                         └── bp-esplora v0.12.0-rc.3
+                             └── rgb-runtime v0.12.0-rc.3
+
+error[rejected]: failed to satisfy license requirements
+   ┌─ <temporary_workspace>/cargo-home/registry/src/index.crates.io-1949cf8c6b5b557f/icu_provider-2.0.0/Cargo.toml:39:12
+   │
+39 │ license = "Unicode-3.0"
+   │            ━━━━━━━━━━━
+   │            │
+   │            rejected: license is not explicitly allowed
+   │
+   ├ Unicode-3.0 - Unicode License v3:
+   ├   - OSI approved
+   ├ icu_provider v2.0.0
+     ├── icu_normalizer v2.0.0
+     │   └── idna_adapter v1.2.1
+     │       └── idna v1.0.3
+     │           └── url v2.5.4
+     │               └── reqwest v0.12.22
+     │                   └── bp-esplora v0.12.0-rc.3
+     │                       └── rgb-runtime v0.12.0-rc.3
+     └── icu_properties v2.0.1
+         └── idna_adapter v1.2.1 (*)
+
+error[rejected]: failed to satisfy license requirements
+   ┌─ <temporary_workspace>/cargo-home/registry/src/index.crates.io-1949cf8c6b5b557f/libloading-0.8.8/Cargo.toml:34:12
+   │
+34 │ license = "ISC"
+   │            ━━━
+   │            │
+   │            rejected: license is not explicitly allowed
+   │
+   ├ ISC - ISC License:
+   ├   - OSI approved
+   ├   - FSF Free/Libre
+   ├ libloading v0.8.8
+     └── clang-sys v1.8.1
+         └── bindgen v0.69.5
+             └── (build) aws-lc-sys v0.29.0
+                 └── aws-lc-rs v1.13.1
+                     ├── rustls v0.23.28
+                     │   └── bp-electrum v0.12.0-rc.1
+                     │       └── rgb-runtime v0.12.0-rc.3
+                     └── rustls-webpki v0.103.3
+                         └── rustls v0.23.28 (*)
+
+error[rejected]: failed to satisfy license requirements
+   ┌─ <temporary_workspace>/cargo-home/registry/src/index.crates.io-1949cf8c6b5b557f/litemap-0.8.0/Cargo.toml:45:12
+   │
+45 │ license = "Unicode-3.0"
+   │            ━━━━━━━━━━━
+   │            │
+   │            rejected: license is not explicitly allowed
+   │
+   ├ Unicode-3.0 - Unicode License v3:
+   ├   - OSI approved
+   ├ litemap v0.8.0
+     └── icu_locale_core v2.0.0
+         ├── icu_properties v2.0.1
+         │   └── idna_adapter v1.2.1
+         │       └── idna v1.0.3
+         │           └── url v2.5.4
+         │               └── reqwest v0.12.22
+         │                   └── bp-esplora v0.12.0-rc.3
+         │                       └── rgb-runtime v0.12.0-rc.3
+         └── icu_provider v2.0.0
+             ├── icu_normalizer v2.0.0
+             │   └── idna_adapter v1.2.1 (*)
+             └── icu_properties v2.0.1 (*)
+
+error[rejected]: failed to satisfy license requirements
+   ┌─ <temporary_workspace>/cargo-home/registry/src/index.crates.io-1949cf8c6b5b557f/minreq-2.14.0/Cargo.toml:35:12
+   │
+35 │ license = "ISC"
+   │            ━━━
+   │            │
+   │            rejected: license is not explicitly allowed
+   │
+   ├ ISC - ISC License:
+   ├   - OSI approved
+   ├   - FSF Free/Libre
+   ├ minreq v2.14.0
+     └── bp-esplora v0.12.0-rc.3
+         └── rgb-runtime v0.12.0-rc.3
+
+error[rejected]: failed to satisfy license requirements
+   ┌─ <temporary_workspace>/cargo-home/registry/src/index.crates.io-1949cf8c6b5b557f/potential_utf-0.1.2/Cargo.toml:38:12
+   │
+38 │ license = "Unicode-3.0"
+   │            ━━━━━━━━━━━
+   │            │
+   │            rejected: license is not explicitly allowed
+   │
+   ├ Unicode-3.0 - Unicode License v3:
+   ├   - OSI approved
+   ├ potential_utf v0.1.2
+     ├── icu_collections v2.0.0
+     │   ├── icu_normalizer v2.0.0
+     │   │   └── idna_adapter v1.2.1
+     │   │       └── idna v1.0.3
+     │   │           └── url v2.5.4
+     │   │               └── reqwest v0.12.22
+     │   │                   └── bp-esplora v0.12.0-rc.3
+     │   │                       └── rgb-runtime v0.12.0-rc.3
+     │   └── icu_properties v2.0.1
+     │       └── idna_adapter v1.2.1 (*)
+     └── icu_properties v2.0.1 (*)
+
+error[rejected]: failed to satisfy license requirements
+    ┌─ <temporary_workspace>/cargo-home/registry/src/index.crates.io-1949cf8c6b5b557f/ring-0.17.14/Cargo.toml:160:27
+    │
+160 │ license = "Apache-2.0 AND ISC"
+    │            ───────────────━━━
+    │                           │
+    │                           rejected: license is not explicitly allowed
+    │
+    ├ ISC - ISC License:
+    ├   - OSI approved
+    ├   - FSF Free/Libre
+    ├ ring v0.17.14
+      ├── rustls v0.21.12
+      │   └── minreq v2.14.0
+      │       └── bp-esplora v0.12.0-rc.3
+      │           └── rgb-runtime v0.12.0-rc.3
+      ├── rustls-webpki v0.101.7
+      │   ├── minreq v2.14.0 (*)
+      │   └── rustls v0.21.12 (*)
+      └── sct v0.7.1
+          └── rustls v0.21.12 (*)
+
+error[rejected]: failed to satisfy license requirements
+   ┌─ <temporary_workspace>/cargo-home/registry/src/index.crates.io-1949cf8c6b5b557f/rustls-webpki-0.101.7/Cargo.toml:49:12
+   │
+49 │ license = "ISC"
+   │            ━━━
+   │            │
+   │            rejected: license is not explicitly allowed
+   │
+   ├ ISC - ISC License:
+   ├   - OSI approved
+   ├   - FSF Free/Libre
+   ├ rustls-webpki v0.101.7
+     ├── minreq v2.14.0
+     │   └── bp-esplora v0.12.0-rc.3
+     │       └── rgb-runtime v0.12.0-rc.3
+     └── rustls v0.21.12
+         └── minreq v2.14.0 (*)
+
+error[rejected]: failed to satisfy license requirements
+   ┌─ <temporary_workspace>/cargo-home/registry/src/index.crates.io-1949cf8c6b5b557f/rustls-webpki-0.103.3/Cargo.toml:59:12
+   │
+59 │ license = "ISC"
+   │            ━━━
+   │            │
+   │            rejected: license is not explicitly allowed
+   │
+   ├ ISC - ISC License:
+   ├   - OSI approved
+   ├   - FSF Free/Libre
+   ├ rustls-webpki v0.103.3
+     └── rustls v0.23.28
+         └── bp-electrum v0.12.0-rc.1
+             └── rgb-runtime v0.12.0-rc.3
+
+error[rejected]: failed to satisfy license requirements
+   ┌─ <temporary_workspace>/cargo-home/registry/src/index.crates.io-1949cf8c6b5b557f/subtle-2.6.1/Cargo.toml:43:12
+   │
+43 │ license = "BSD-3-Clause"
+   │            ━━━━━━━━━━━━
+   │            │
+   │            rejected: license is not explicitly allowed
+   │
+   ├ BSD-3-Clause - BSD 3-Clause "New" or "Revised" License:
+   ├   - OSI approved
+   ├   - FSF Free/Libre
+   ├ subtle v2.6.1
+     ├── digest v0.10.7
+     │   ├── hmac v0.12.1
+     │   │   └── bp-derive v0.12.0-rc.3
+     │   │       ├── bp-std v0.12.0-rc.3
+     │   │       │   ├── rgb-descriptors v0.12.0-rc.3
+     │   │       │   │   └── rgb-runtime v0.12.0-rc.3
+     │   │       │   ├── rgb-psbt v0.12.0-rc.3
+     │   │       │   │   └── rgb-runtime v0.12.0-rc.3 (*)
+     │   │       │   └── rgb-runtime v0.12.0-rc.3 (*)
+     │   │       ├── descriptors v0.12.0-rc.3
+     │   │       │   ├── bp-std v0.12.0-rc.3 (*)
+     │   │       │   └── psbt v0.12.0-rc.3
+     │   │       │       └── bp-std v0.12.0-rc.3 (*)
+     │   │       └── psbt v0.12.0-rc.3 (*)
+     │   ├── ripemd v0.1.3
+     │   │   └── commit_verify v0.12.0
+     │   │       ├── aluvm v0.12.0
+     │   │       │   ├── hypersonic v0.12.0
+     │   │       │   │   ├── rgb-invoice v0.12.0-rc.3
+     │   │       │   │   │   └── rgb-std v0.12.0-rc.3
+     │   │       │   │   │       ├── rgb-descriptors v0.12.0-rc.3 (*)
+     │   │       │   │   │       ├── rgb-persist-fs v0.12.0-rc.3
+     │   │       │   │   │       │   └── rgb-runtime v0.12.0-rc.3 (*)
+     │   │       │   │   │       ├── rgb-psbt v0.12.0-rc.3 (*)
+     │   │       │   │   │       └── rgb-runtime v0.12.0-rc.3 (*)
+     │   │       │   │   ├── rgb-std v0.12.0-rc.3 (*)
+     │   │       │   │   └── sonic-persist-fs v0.12.0
+     │   │       │   │       └── rgb-persist-fs v0.12.0-rc.3 (*)
+     │   │       │   ├── sonic-api v0.12.0
+     │   │       │   │   └── hypersonic v0.12.0 (*)
+     │   │       │   └── zk-aluvm v0.12.0
+     │   │       │       └── ultrasonic v0.12.0
+     │   │       │           ├── hypersonic v0.12.0 (*)
+     │   │       │           ├── rgb-core v0.12.0
+     │   │       │           │   ├── rgb-invoice v0.12.0-rc.3 (*)
+     │   │       │           │   └── rgb-std v0.12.0-rc.3 (*)
+     │   │       │           ├── sonic-api v0.12.0 (*)
+     │   │       │           └── sonic-callreq v0.12.0
+     │   │       │               ├── hypersonic v0.12.0 (*)
+     │   │       │               ├── rgb-invoice v0.12.0-rc.3 (*)
+     │   │       │               └── sonic-api v0.12.0 (*)
+     │   │       ├── bp-consensus v0.12.0
+     │   │       │   ├── bp-core v0.12.0
+     │   │       │   │   ├── bp-electrum v0.12.0-rc.1
+     │   │       │   │   │   └── rgb-runtime v0.12.0-rc.3 (*)
+     │   │       │   │   ├── bp-esplora v0.12.0-rc.3
+     │   │       │   │   │   └── rgb-runtime v0.12.0-rc.3 (*)
+     │   │       │   │   ├── bp-std v0.12.0-rc.3 (*)
+     │   │       │   │   ├── psbt v0.12.0-rc.3 (*)
+     │   │       │   │   ├── rgb-core v0.12.0 (*)
+     │   │       │   │   ├── rgb-invoice v0.12.0-rc.3 (*)
+     │   │       │   │   ├── rgb-psbt v0.12.0-rc.3 (*)
+     │   │       │   │   └── rgb-std v0.12.0-rc.3 (*)
+     │   │       │   ├── bp-dbc v0.12.0
+     │   │       │   │   ├── bp-core v0.12.0 (*)
+     │   │       │   │   └── bp-seals v0.12.0
+     │   │       │   │       └── bp-core v0.12.0 (*)
+     │   │       │   ├── bp-derive v0.12.0-rc.3 (*)
+     │   │       │   ├── bp-invoice v0.12.0-rc.3
+     │   │       │   │   ├── bp-derive v0.12.0-rc.3 (*)
+     │   │       │   │   ├── bp-esplora v0.12.0-rc.3 (*)
+     │   │       │   │   ├── bp-std v0.12.0-rc.3 (*)
+     │   │       │   │   ├── rgb-invoice v0.12.0-rc.3 (*)
+     │   │       │   │   └── rgb-std v0.12.0-rc.3 (*)
+     │   │       │   ├── bp-seals v0.12.0 (*)
+     │   │       │   ├── bp-std v0.12.0-rc.3 (*)
+     │   │       │   └── psbt v0.12.0-rc.3 (*)
+     │   │       ├── bp-core v0.12.0 (*)
+     │   │       ├── bp-dbc v0.12.0 (*)
+     │   │       ├── bp-derive v0.12.0-rc.3 (*)
+     │   │       ├── bp-invoice v0.12.0-rc.3 (*)
+     │   │       ├── bp-seals v0.12.0 (*)
+     │   │       ├── descriptors v0.12.0-rc.3 (*)
+     │   │       ├── hypersonic v0.12.0 (*)
+     │   │       ├── psbt v0.12.0-rc.3 (*)
+     │   │       ├── rgb-core v0.12.0 (*)
+     │   │       ├── rgb-descriptors v0.12.0-rc.3 (*)
+     │   │       ├── rgb-invoice v0.12.0-rc.3 (*)
+     │   │       ├── rgb-runtime v0.12.0-rc.3 (*)
+     │   │       ├── rgb-std v0.12.0-rc.3 (*)
+     │   │       ├── sonic-api v0.12.0 (*)
+     │   │       ├── sonic-persist-fs v0.12.0 (*)
+     │   │       └── ultrasonic v0.12.0 (*)
+     │   └── sha2 v0.10.9
+     │       ├── baid64 v0.4.2
+     │       │   ├── aluvm v0.12.0 (*)
+     │       │   ├── rgb-invoice v0.12.0-rc.3 (*)
+     │       │   ├── sonic-api v0.12.0 (*)
+     │       │   ├── sonic-callreq v0.12.0 (*)
+     │       │   ├── strict_types v2.9.0
+     │       │   │   ├── commit_verify v0.12.0 (*)
+     │       │   │   ├── hypersonic v0.12.0 (*)
+     │       │   │   ├── rgb-runtime v0.12.0-rc.3 (*)
+     │       │   │   ├── rgb-std v0.12.0-rc.3 (*)
+     │       │   │   ├── sonic-api v0.12.0 (*)
+     │       │   │   └── sonic-callreq v0.12.0 (*)
+     │       │   └── ultrasonic v0.12.0 (*)
+     │       ├── bp-derive v0.12.0-rc.3 (*)
+     │       ├── bp-electrum v0.12.0-rc.1 (*)
+     │       ├── bp-esplora v0.12.0-rc.3 (*)
+     │       ├── commit_verify v0.12.0 (*)
+     │       └── strict_types v2.9.0 (*)
+     └── rustls v0.23.28
+         └── bp-electrum v0.12.0-rc.1 (*)
+
+error[rejected]: failed to satisfy license requirements
+   ┌─ <temporary_workspace>/cargo-home/registry/src/index.crates.io-1949cf8c6b5b557f/tinystr-0.8.1/Cargo.toml:44:12
+   │
+44 │ license = "Unicode-3.0"
+   │            ━━━━━━━━━━━
+   │            │
+   │            rejected: license is not explicitly allowed
+   │
+   ├ Unicode-3.0 - Unicode License v3:
+   ├   - OSI approved
+   ├ tinystr v0.8.1
+     ├── icu_locale_core v2.0.0
+     │   ├── icu_properties v2.0.1
+     │   │   └── idna_adapter v1.2.1
+     │   │       └── idna v1.0.3
+     │   │           └── url v2.5.4
+     │   │               └── reqwest v0.12.22
+     │   │                   └── bp-esplora v0.12.0-rc.3
+     │   │                       └── rgb-runtime v0.12.0-rc.3
+     │   └── icu_provider v2.0.0
+     │       ├── icu_normalizer v2.0.0
+     │       │   └── idna_adapter v1.2.1 (*)
+     │       └── icu_properties v2.0.1 (*)
+     └── icu_provider v2.0.0 (*)
+
+error[rejected]: failed to satisfy license requirements
+   ┌─ <temporary_workspace>/cargo-home/registry/src/index.crates.io-1949cf8c6b5b557f/unicode-ident-1.0.18/Cargo.toml:36:36
+   │
+36 │ license = "(MIT OR Apache-2.0) AND Unicode-3.0"
+   │            ────────────────────────━━━━━━━━━━━
+   │                                    │
+   │                                    rejected: license is not explicitly allowed
+   │
+   ├ Unicode-3.0 - Unicode License v3:
+   ├   - OSI approved
+   ├ unicode-ident v1.0.18
+     ├── proc-macro2 v1.0.95
+     │   ├── amplify_derive v4.0.1
+     │   │   └── amplify v4.9.0
+     │   │       ├── aluvm v0.12.0
+     │   │       │   ├── hypersonic v0.12.0
+     │   │       │   │   ├── rgb-invoice v0.12.0-rc.3
+     │   │       │   │   │   └── rgb-std v0.12.0-rc.3
+     │   │       │   │   │       ├── rgb-descriptors v0.12.0-rc.3
+     │   │       │   │   │       │   └── rgb-runtime v0.12.0-rc.3
+     │   │       │   │   │       ├── rgb-persist-fs v0.12.0-rc.3
+     │   │       │   │   │       │   └── rgb-runtime v0.12.0-rc.3 (*)
+     │   │       │   │   │       ├── rgb-psbt v0.12.0-rc.3
+     │   │       │   │   │       │   └── rgb-runtime v0.12.0-rc.3 (*)
+     │   │       │   │   │       └── rgb-runtime v0.12.0-rc.3 (*)
+     │   │       │   │   ├── rgb-std v0.12.0-rc.3 (*)
+     │   │       │   │   └── sonic-persist-fs v0.12.0
+     │   │       │   │       └── rgb-persist-fs v0.12.0-rc.3 (*)
+     │   │       │   ├── sonic-api v0.12.0
+     │   │       │   │   └── hypersonic v0.12.0 (*)
+     │   │       │   └── zk-aluvm v0.12.0
+     │   │       │       └── ultrasonic v0.12.0
+     │   │       │           ├── hypersonic v0.12.0 (*)
+     │   │       │           ├── rgb-core v0.12.0
+     │   │       │           │   ├── rgb-invoice v0.12.0-rc.3 (*)
+     │   │       │           │   └── rgb-std v0.12.0-rc.3 (*)
+     │   │       │           ├── sonic-api v0.12.0 (*)
+     │   │       │           └── sonic-callreq v0.12.0
+     │   │       │               ├── hypersonic v0.12.0 (*)
+     │   │       │               ├── rgb-invoice v0.12.0-rc.3 (*)
+     │   │       │               └── sonic-api v0.12.0 (*)
+     │   │       ├── aora v0.6.4
+     │   │       │   ├── rgb-persist-fs v0.12.0-rc.3 (*)
+     │   │       │   ├── rgb-std v0.12.0-rc.3 (*)
+     │   │       │   └── sonic-persist-fs v0.12.0 (*)
+     │   │       ├── baid64 v0.4.2
+     │   │       │   ├── aluvm v0.12.0 (*)
+     │   │       │   ├── rgb-invoice v0.12.0-rc.3 (*)
+     │   │       │   ├── sonic-api v0.12.0 (*)
+     │   │       │   ├── sonic-callreq v0.12.0 (*)
+     │   │       │   ├── strict_types v2.9.0
+     │   │       │   │   ├── commit_verify v0.12.0
+     │   │       │   │   │   ├── aluvm v0.12.0 (*)
+     │   │       │   │   │   ├── bp-consensus v0.12.0
+     │   │       │   │   │   │   ├── bp-core v0.12.0
+     │   │       │   │   │   │   │   ├── bp-electrum v0.12.0-rc.1
+     │   │       │   │   │   │   │   │   └── rgb-runtime v0.12.0-rc.3 (*)
+     │   │       │   │   │   │   │   ├── bp-esplora v0.12.0-rc.3
+     │   │       │   │   │   │   │   │   └── rgb-runtime v0.12.0-rc.3 (*)
+     │   │       │   │   │   │   │   ├── bp-std v0.12.0-rc.3
+     │   │       │   │   │   │   │   │   ├── rgb-descriptors v0.12.0-rc.3 (*)
+     │   │       │   │   │   │   │   │   ├── rgb-psbt v0.12.0-rc.3 (*)
+     │   │       │   │   │   │   │   │   └── rgb-runtime v0.12.0-rc.3 (*)
+     │   │       │   │   │   │   │   ├── psbt v0.12.0-rc.3
+     │   │       │   │   │   │   │   │   └── bp-std v0.12.0-rc.3 (*)
+     │   │       │   │   │   │   │   ├── rgb-core v0.12.0 (*)
+     │   │       │   │   │   │   │   ├── rgb-invoice v0.12.0-rc.3 (*)
+     │   │       │   │   │   │   │   ├── rgb-psbt v0.12.0-rc.3 (*)
+     │   │       │   │   │   │   │   └── rgb-std v0.12.0-rc.3 (*)
+     │   │       │   │   │   │   ├── bp-dbc v0.12.0
+     │   │       │   │   │   │   │   ├── bp-core v0.12.0 (*)
+     │   │       │   │   │   │   │   └── bp-seals v0.12.0
+     │   │       │   │   │   │   │       └── bp-core v0.12.0 (*)
+     │   │       │   │   │   │   ├── bp-derive v0.12.0-rc.3
+     │   │       │   │   │   │   │   ├── bp-std v0.12.0-rc.3 (*)
+     │   │       │   │   │   │   │   ├── descriptors v0.12.0-rc.3
+     │   │       │   │   │   │   │   │   ├── bp-std v0.12.0-rc.3 (*)
+     │   │       │   │   │   │   │   │   └── psbt v0.12.0-rc.3 (*)
+     │   │       │   │   │   │   │   └── psbt v0.12.0-rc.3 (*)
+     │   │       │   │   │   │   ├── bp-invoice v0.12.0-rc.3
+     │   │       │   │   │   │   │   ├── bp-derive v0.12.0-rc.3 (*)
+     │   │       │   │   │   │   │   ├── bp-esplora v0.12.0-rc.3 (*)
+     │   │       │   │   │   │   │   ├── bp-std v0.12.0-rc.3 (*)
+     │   │       │   │   │   │   │   ├── rgb-invoice v0.12.0-rc.3 (*)
+     │   │       │   │   │   │   │   └── rgb-std v0.12.0-rc.3 (*)
+     │   │       │   │   │   │   ├── bp-seals v0.12.0 (*)
+     │   │       │   │   │   │   ├── bp-std v0.12.0-rc.3 (*)
+     │   │       │   │   │   │   └── psbt v0.12.0-rc.3 (*)
+     │   │       │   │   │   ├── bp-core v0.12.0 (*)
+     │   │       │   │   │   ├── bp-dbc v0.12.0 (*)
+     │   │       │   │   │   ├── bp-derive v0.12.0-rc.3 (*)
+     │   │       │   │   │   ├── bp-invoice v0.12.0-rc.3 (*)
+     │   │       │   │   │   ├── bp-seals v0.12.0 (*)
+     │   │       │   │   │   ├── descriptors v0.12.0-rc.3 (*)
+     │   │       │   │   │   ├── hypersonic v0.12.0 (*)
+     │   │       │   │   │   ├── psbt v0.12.0-rc.3 (*)
+     │   │       │   │   │   ├── rgb-core v0.12.0 (*)
+     │   │       │   │   │   ├── rgb-descriptors v0.12.0-rc.3 (*)
+     │   │       │   │   │   ├── rgb-invoice v0.12.0-rc.3 (*)
+     │   │       │   │   │   ├── rgb-runtime v0.12.0-rc.3 (*)
+     │   │       │   │   │   ├── rgb-std v0.12.0-rc.3 (*)
+     │   │       │   │   │   ├── sonic-api v0.12.0 (*)
+     │   │       │   │   │   ├── sonic-persist-fs v0.12.0 (*)
+     │   │       │   │   │   └── ultrasonic v0.12.0 (*)
+     │   │       │   │   ├── hypersonic v0.12.0 (*)
+     │   │       │   │   ├── rgb-runtime v0.12.0-rc.3 (*)
+     │   │       │   │   ├── rgb-std v0.12.0-rc.3 (*)
+     │   │       │   │   ├── sonic-api v0.12.0 (*)
+     │   │       │   │   └── sonic-callreq v0.12.0 (*)
+     │   │       │   └── ultrasonic v0.12.0 (*)
+     │   │       ├── binfile v0.2.0
+     │   │       │   ├── aora v0.6.4 (*)
+     │   │       │   ├── hypersonic v0.12.0 (*)
+     │   │       │   ├── rgb-std v0.12.0-rc.3 (*)
+     │   │       │   ├── sonic-api v0.12.0 (*)
+     │   │       │   └── sonic-persist-fs v0.12.0 (*)
+     │   │       ├── bp-consensus v0.12.0 (*)
+     │   │       ├── bp-dbc v0.12.0 (*)
+     │   │       ├── bp-derive v0.12.0-rc.3 (*)
+     │   │       ├── bp-electrum v0.12.0-rc.1 (*)
+     │   │       ├── bp-esplora v0.12.0-rc.3 (*)
+     │   │       ├── bp-invoice v0.12.0-rc.3 (*)
+     │   │       ├── bp-seals v0.12.0 (*)
+     │   │       ├── bp-std v0.12.0-rc.3 (*)
+     │   │       ├── commit_encoding_derive v0.12.0
+     │   │       │   └── commit_verify v0.12.0 (*)
+     │   │       ├── commit_verify v0.12.0 (*)
+     │   │       ├── descriptors v0.12.0-rc.3 (*)
+     │   │       ├── hypersonic v0.12.0 (*)
+     │   │       ├── psbt v0.12.0-rc.3 (*)
+     │   │       ├── rgb-core v0.12.0 (*)
+     │   │       ├── rgb-descriptors v0.12.0-rc.3 (*)
+     │   │       ├── rgb-invoice v0.12.0-rc.3 (*)
+     │   │       ├── rgb-persist-fs v0.12.0-rc.3 (*)
+     │   │       ├── rgb-psbt v0.12.0-rc.3 (*)
+     │   │       ├── rgb-runtime v0.12.0-rc.3 (*)
+     │   │       ├── rgb-std v0.12.0-rc.3 (*)
+     │   │       ├── sonic-api v0.12.0 (*)
+     │   │       ├── sonic-callreq v0.12.0 (*)
+     │   │       ├── sonic-persist-fs v0.12.0 (*)
+     │   │       ├── strict_encoding v2.9.1
+     │   │       │   ├── aluvm v0.12.0 (*)
+     │   │       │   ├── aora v0.6.4 (*)
+     │   │       │   ├── bp-consensus v0.12.0 (*)
+     │   │       │   ├── bp-core v0.12.0 (*)
+     │   │       │   ├── bp-dbc v0.12.0 (*)
+     │   │       │   ├── bp-invoice v0.12.0-rc.3 (*)
+     │   │       │   ├── bp-seals v0.12.0 (*)
+     │   │       │   ├── commit_verify v0.12.0 (*)
+     │   │       │   ├── hypersonic v0.12.0 (*)
+     │   │       │   ├── psbt v0.12.0-rc.3 (*)
+     │   │       │   ├── rgb-core v0.12.0 (*)
+     │   │       │   ├── rgb-invoice v0.12.0-rc.3 (*)
+     │   │       │   ├── rgb-persist-fs v0.12.0-rc.3 (*)
+     │   │       │   ├── rgb-std v0.12.0-rc.3 (*)
+     │   │       │   ├── single_use_seals v0.12.0
+     │   │       │   │   ├── bp-seals v0.12.0 (*)
+     │   │       │   │   ├── rgb-core v0.12.0 (*)
+     │   │       │   │   └── rgb-std v0.12.0-rc.3 (*)
+     │   │       │   ├── sonic-api v0.12.0 (*)
+     │   │       │   ├── sonic-callreq v0.12.0 (*)
+     │   │       │   ├── sonic-persist-fs v0.12.0 (*)
+     │   │       │   ├── strict_types v2.9.0 (*)
+     │   │       │   ├── ultrasonic v0.12.0 (*)
+     │   │       │   ├── vesper-lang v0.2.1
+     │   │       │   │   ├── commit_verify v0.12.0 (*)
+     │   │       │   │   └── strict_types v2.9.0 (*)
+     │   │       │   └── zk-aluvm v0.12.0 (*)
+     │   │       ├── strict_types v2.9.0 (*)
+     │   │       ├── ultrasonic v0.12.0 (*)
+     │   │       ├── vesper-lang v0.2.1 (*)
+     │   │       └── zk-aluvm v0.12.0 (*)
+     │   ├── amplify_syn v2.0.1
+     │   │   ├── amplify v4.9.0 (*)
+     │   │   ├── amplify_derive v4.0.1 (*)
+     │   │   ├── commit_encoding_derive v0.12.0 (*)
+     │   │   └── strict_encoding_derive v2.8.0
+     │   │       └── strict_encoding v2.9.1 (*)
+     │   ├── bindgen v0.69.5
+     │   │   └── (build) aws-lc-sys v0.29.0
+     │   │       └── aws-lc-rs v1.13.1
+     │   │           ├── rustls v0.23.28
+     │   │           │   └── bp-electrum v0.12.0-rc.1 (*)
+     │   │           └── rustls-webpki v0.103.3
+     │   │               └── rustls v0.23.28 (*)
+     │   ├── commit_encoding_derive v0.12.0 (*)
+     │   ├── darling_core v0.20.11
+     │   │   ├── darling v0.20.11
+     │   │   │   └── serde_with_macros v3.14.0
+     │   │   │       └── serde_with v3.14.0
+     │   │   │           └── bp-esplora v0.12.0-rc.3 (*)
+     │   │   └── darling_macro v0.20.11
+     │   │       └── darling v0.20.11 (*)
+     │   ├── displaydoc v0.2.5
+     │   │   ├── icu_collections v2.0.0
+     │   │   │   ├── icu_normalizer v2.0.0
+     │   │   │   │   └── idna_adapter v1.2.1
+     │   │   │   │       └── idna v1.0.3
+     │   │   │   │           └── url v2.5.4
+     │   │   │   │               └── reqwest v0.12.22
+     │   │   │   │                   └── bp-esplora v0.12.0-rc.3 (*)
+     │   │   │   └── icu_properties v2.0.1
+     │   │   │       └── idna_adapter v1.2.1 (*)
+     │   │   ├── icu_locale_core v2.0.0
+     │   │   │   ├── icu_properties v2.0.1 (*)
+     │   │   │   └── icu_provider v2.0.0
+     │   │   │       ├── icu_normalizer v2.0.0 (*)
+     │   │   │       └── icu_properties v2.0.1 (*)
+     │   │   ├── icu_normalizer v2.0.0 (*)
+     │   │   ├── icu_properties v2.0.1 (*)
+     │   │   ├── icu_provider v2.0.0 (*)
+     │   │   ├── tinystr v0.8.1
+     │   │   │   ├── icu_locale_core v2.0.0 (*)
+     │   │   │   └── icu_provider v2.0.0 (*)
+     │   │   └── zerotrie v0.2.2
+     │   │       ├── icu_properties v2.0.1 (*)
+     │   │       └── icu_provider v2.0.0 (*)
+     │   ├── futures-macro v0.3.31
+     │   │   └── futures-util v0.3.31
+     │   │       ├── futures v0.3.31
+     │   │       │   └── rgb-runtime v0.12.0-rc.3 (*)
+     │   │       ├── futures-executor v0.3.31
+     │   │       │   └── futures v0.3.31 (*)
+     │   │       ├── hyper v1.6.0
+     │   │       │   ├── hyper-tls v0.6.0
+     │   │       │   │   └── reqwest v0.12.22 (*)
+     │   │       │   ├── hyper-util v0.1.15
+     │   │       │   │   ├── hyper-tls v0.6.0 (*)
+     │   │       │   │   └── reqwest v0.12.22 (*)
+     │   │       │   └── reqwest v0.12.22 (*)
+     │   │       ├── hyper-util v0.1.15 (*)
+     │   │       ├── tower v0.5.2
+     │   │       │   ├── reqwest v0.12.22 (*)
+     │   │       │   └── tower-http v0.6.6
+     │   │       │       └── reqwest v0.12.22 (*)
+     │   │       └── tower-http v0.6.6 (*)
+     │   ├── openssl-macros v0.1.1
+     │   │   └── openssl v0.10.73
+     │   │       └── native-tls v0.2.14
+     │   │           ├── hyper-tls v0.6.0 (*)
+     │   │           ├── reqwest v0.12.22 (*)
+     │   │           └── tokio-native-tls v0.3.1
+     │   │               ├── hyper-tls v0.6.0 (*)
+     │   │               └── reqwest v0.12.22 (*)
+     │   ├── prettyplease v0.2.35
+     │   │   └── bindgen v0.69.5 (*)
+     │   ├── quote v1.0.40
+     │   │   ├── amplify_derive v4.0.1 (*)
+     │   │   ├── amplify_syn v2.0.1 (*)
+     │   │   ├── bindgen v0.69.5 (*)
+     │   │   ├── commit_encoding_derive v0.12.0 (*)
+     │   │   ├── darling_core v0.20.11 (*)
+     │   │   ├── darling_macro v0.20.11 (*)
+     │   │   ├── displaydoc v0.2.5 (*)
+     │   │   ├── futures-macro v0.3.31 (*)
+     │   │   ├── openssl-macros v0.1.1 (*)
+     │   │   ├── ref-cast-impl v1.0.24
+     │   │   │   └── ref-cast v1.0.24
+     │   │   │       └── fluent-uri v0.3.2
+     │   │   │           └── sonic-callreq v0.12.0 (*)
+     │   │   ├── serde_derive v1.0.219
+     │   │   │   ├── serde v1.0.219
+     │   │   │   │   ├── aluvm v0.12.0 (*)
+     │   │   │   │   ├── amplify v4.9.0 (*)
+     │   │   │   │   ├── amplify_num v0.5.3
+     │   │   │   │   │   └── amplify v4.9.0 (*)
+     │   │   │   │   ├── ascii v1.1.0
+     │   │   │   │   │   └── amplify v4.9.0 (*)
+     │   │   │   │   ├── bp-consensus v0.12.0 (*)
+     │   │   │   │   ├── bp-core v0.12.0 (*)
+     │   │   │   │   ├── bp-dbc v0.12.0 (*)
+     │   │   │   │   ├── bp-derive v0.12.0-rc.3 (*)
+     │   │   │   │   ├── bp-electrum v0.12.0-rc.1 (*)
+     │   │   │   │   ├── bp-esplora v0.12.0-rc.3 (*)
+     │   │   │   │   ├── bp-invoice v0.12.0-rc.3 (*)
+     │   │   │   │   ├── bp-seals v0.12.0 (*)
+     │   │   │   │   ├── bp-std v0.12.0-rc.3 (*)
+     │   │   │   │   ├── chrono v0.4.41
+     │   │   │   │   │   ├── bp-consensus v0.12.0 (*)
+     │   │   │   │   │   ├── rgb-runtime v0.12.0-rc.3 (*)
+     │   │   │   │   │   ├── rgb-std v0.12.0-rc.3 (*)
+     │   │   │   │   │   ├── sonic-api v0.12.0 (*)
+     │   │   │   │   │   └── sonic-callreq v0.12.0 (*)
+     │   │   │   │   ├── commit_verify v0.12.0 (*)
+     │   │   │   │   ├── descriptors v0.12.0-rc.3 (*)
+     │   │   │   │   ├── hypersonic v0.12.0 (*)
+     │   │   │   │   ├── indexmap v2.10.0
+     │   │   │   │   │   ├── aora v0.6.4 (*)
+     │   │   │   │   │   ├── bp-derive v0.12.0-rc.3 (*)
+     │   │   │   │   │   ├── descriptors v0.12.0-rc.3 (*)
+     │   │   │   │   │   ├── hypersonic v0.12.0 (*)
+     │   │   │   │   │   ├── psbt v0.12.0-rc.3 (*)
+     │   │   │   │   │   ├── rgb-descriptors v0.12.0-rc.3 (*)
+     │   │   │   │   │   ├── rgb-runtime v0.12.0-rc.3 (*)
+     │   │   │   │   │   ├── rgb-std v0.12.0-rc.3 (*)
+     │   │   │   │   │   ├── serde_yaml v0.9.34+deprecated
+     │   │   │   │   │   │   ├── sonic-api v0.12.0 (*)
+     │   │   │   │   │   │   ├── sonic-persist-fs v0.12.0 (*)
+     │   │   │   │   │   │   └── strict_types v2.9.0 (*)
+     │   │   │   │   │   ├── sonic-api v0.12.0 (*)
+     │   │   │   │   │   ├── sonic-callreq v0.12.0 (*)
+     │   │   │   │   │   ├── strict_types v2.9.0 (*)
+     │   │   │   │   │   └── toml_edit v0.22.27
+     │   │   │   │   │       └── toml v0.8.23
+     │   │   │   │   │           ├── (dev) rgb-descriptors v0.12.0-rc.3 (*)
+     │   │   │   │   │           ├── (dev) rgb-runtime v0.12.0-rc.3 (*)
+     │   │   │   │   │           ├── sonic-persist-fs v0.12.0 (*)
+     │   │   │   │   │           └── strict_types v2.9.0 (*)
+     │   │   │   │   ├── minreq v2.14.0
+     │   │   │   │   │   └── bp-esplora v0.12.0-rc.3 (*)
+     │   │   │   │   ├── psbt v0.12.0-rc.3 (*)
+     │   │   │   │   ├── reqwest v0.12.22 (*)
+     │   │   │   │   ├── rgb-descriptors v0.12.0-rc.3 (*)
+     │   │   │   │   ├── rgb-runtime v0.12.0-rc.3 (*)
+     │   │   │   │   ├── secp256k1 v0.30.0
+     │   │   │   │   │   ├── bp-consensus v0.12.0 (*)
+     │   │   │   │   │   ├── bp-dbc v0.12.0 (*)
+     │   │   │   │   │   └── bp-std v0.12.0-rc.3 (*)
+     │   │   │   │   ├── serde_json v1.0.140
+     │   │   │   │   │   ├── bp-electrum v0.12.0-rc.1 (*)
+     │   │   │   │   │   ├── minreq v2.14.0 (*)
+     │   │   │   │   │   ├── reqwest v0.12.22 (*)
+     │   │   │   │   │   └── strict_types v2.9.0 (*)
+     │   │   │   │   ├── serde_spanned v0.6.9
+     │   │   │   │   │   ├── toml v0.8.23 (*)
+     │   │   │   │   │   └── toml_edit v0.22.27 (*)
+     │   │   │   │   ├── serde_str_helpers v0.1.2
+     │   │   │   │   │   └── stringly_conversions v0.1.1
+     │   │   │   │   │       └── amplify v4.9.0 (*)
+     │   │   │   │   ├── serde_urlencoded v0.7.1
+     │   │   │   │   │   └── reqwest v0.12.22 (*)
+     │   │   │   │   ├── serde_with v3.14.0 (*)
+     │   │   │   │   ├── serde_yaml v0.9.34+deprecated (*)
+     │   │   │   │   ├── sonic-api v0.12.0 (*)
+     │   │   │   │   ├── sonic-callreq v0.12.0 (*)
+     │   │   │   │   ├── strict_encoding v2.9.1 (*)
+     │   │   │   │   ├── strict_types v2.9.0 (*)
+     │   │   │   │   ├── toml v0.8.23 (*)
+     │   │   │   │   ├── toml_datetime v0.6.11
+     │   │   │   │   │   ├── toml v0.8.23 (*)
+     │   │   │   │   │   └── toml_edit v0.22.27 (*)
+     │   │   │   │   ├── toml_edit v0.22.27 (*)
+     │   │   │   │   ├── ultrasonic v0.12.0 (*)
+     │   │   │   │   └── zk-aluvm v0.12.0 (*)
+     │   │   │   ├── serde_str_helpers v0.1.2 (*)
+     │   │   │   └── serde_with v3.14.0 (*)
+     │   │   ├── serde_with_macros v3.14.0 (*)
+     │   │   ├── strict_encoding_derive v2.8.0 (*)
+     │   │   ├── syn v1.0.109
+     │   │   │   ├── amplify_derive v4.0.1 (*)
+     │   │   │   ├── amplify_syn v2.0.1 (*)
+     │   │   │   ├── commit_encoding_derive v0.12.0 (*)
+     │   │   │   └── strict_encoding_derive v2.8.0 (*)
+     │   │   ├── syn v2.0.104
+     │   │   │   ├── bindgen v0.69.5 (*)
+     │   │   │   ├── darling_core v0.20.11 (*)
+     │   │   │   ├── darling_macro v0.20.11 (*)
+     │   │   │   ├── displaydoc v0.2.5 (*)
+     │   │   │   ├── futures-macro v0.3.31 (*)
+     │   │   │   ├── openssl-macros v0.1.1 (*)
+     │   │   │   ├── prettyplease v0.2.35 (*)
+     │   │   │   ├── ref-cast-impl v1.0.24 (*)
+     │   │   │   ├── serde_derive v1.0.219 (*)
+     │   │   │   ├── serde_with_macros v3.14.0 (*)
+     │   │   │   ├── synstructure v0.13.2
+     │   │   │   │   ├── yoke-derive v0.8.0
+     │   │   │   │   │   └── yoke v0.8.0
+     │   │   │   │   │       ├── icu_collections v2.0.0 (*)
+     │   │   │   │   │       ├── icu_provider v2.0.0 (*)
+     │   │   │   │   │       ├── zerotrie v0.2.2 (*)
+     │   │   │   │   │       └── zerovec v0.11.2
+     │   │   │   │   │           ├── icu_collections v2.0.0 (*)
+     │   │   │   │   │           ├── icu_locale_core v2.0.0 (*)
+     │   │   │   │   │           ├── icu_normalizer v2.0.0 (*)
+     │   │   │   │   │           ├── icu_properties v2.0.1 (*)
+     │   │   │   │   │           ├── icu_provider v2.0.0 (*)
+     │   │   │   │   │           ├── potential_utf v0.1.2
+     │   │   │   │   │           │   ├── icu_collections v2.0.0 (*)
+     │   │   │   │   │           │   └── icu_properties v2.0.1 (*)
+     │   │   │   │   │           └── tinystr v0.8.1 (*)
+     │   │   │   │   └── zerofrom-derive v0.1.6
+     │   │   │   │       └── zerofrom v0.1.6
+     │   │   │   │           ├── icu_collections v2.0.0 (*)
+     │   │   │   │           ├── icu_provider v2.0.0 (*)
+     │   │   │   │           ├── yoke v0.8.0 (*)
+     │   │   │   │           ├── zerotrie v0.2.2 (*)
+     │   │   │   │           └── zerovec v0.11.2 (*)
+     │   │   │   ├── thiserror-impl v1.0.69
+     │   │   │   │   └── thiserror v1.0.69
+     │   │   │   │       └── base85 v2.0.0
+     │   │   │   │           └── bp-dbc v0.12.0 (*)
+     │   │   │   ├── wasm-bindgen-backend v0.2.100
+     │   │   │   │   └── wasm-bindgen-macro-support v0.2.100
+     │   │   │   │       └── wasm-bindgen-macro v0.2.100
+     │   │   │   │           └── wasm-bindgen v0.2.100
+     │   │   │   │               ├── aluvm v0.12.0 (*)
+     │   │   │   │               ├── amplify v4.9.0 (*)
+     │   │   │   │               ├── amplify_num v0.5.3 (*)
+     │   │   │   │               ├── aora v0.6.4 (*)
+     │   │   │   │               ├── bp-consensus v0.12.0 (*)
+     │   │   │   │               ├── bp-core v0.12.0 (*)
+     │   │   │   │               ├── bp-dbc v0.12.0 (*)
+     │   │   │   │               ├── bp-seals v0.12.0 (*)
+     │   │   │   │               ├── bp-std v0.12.0-rc.3 (*)
+     │   │   │   │               ├── chrono v0.4.41 (*)
+     │   │   │   │               ├── commit_verify v0.12.0 (*)
+     │   │   │   │               ├── getrandom v0.2.16
+     │   │   │   │               │   ├── aluvm v0.12.0 (*)
+     │   │   │   │               │   ├── amplify v4.9.0 (*)
+     │   │   │   │               │   ├── aora v0.6.4 (*)
+     │   │   │   │               │   ├── bp-consensus v0.12.0 (*)
+     │   │   │   │               │   ├── bp-core v0.12.0 (*)
+     │   │   │   │               │   ├── bp-dbc v0.12.0 (*)
+     │   │   │   │               │   ├── bp-seals v0.12.0 (*)
+     │   │   │   │               │   ├── bp-std v0.12.0-rc.3 (*)
+     │   │   │   │               │   ├── commit_verify v0.12.0 (*)
+     │   │   │   │               │   ├── hypersonic v0.12.0 (*)
+     │   │   │   │               │   ├── rgb-core v0.12.0 (*)
+     │   │   │   │               │   ├── rgb-runtime v0.12.0-rc.3 (*)
+     │   │   │   │               │   ├── rgb-std v0.12.0-rc.3 (*)
+     │   │   │   │               │   ├── ring v0.17.14
+     │   │   │   │               │   │   ├── rustls v0.21.12
+     │   │   │   │               │   │   │   └── minreq v2.14.0 (*)
+     │   │   │   │               │   │   ├── rustls-webpki v0.101.7
+     │   │   │   │               │   │   │   ├── minreq v2.14.0 (*)
+     │   │   │   │               │   │   │   └── rustls v0.21.12 (*)
+     │   │   │   │               │   │   └── sct v0.7.1
+     │   │   │   │               │   │       └── rustls v0.21.12 (*)
+     │   │   │   │               │   ├── sonic-api v0.12.0 (*)
+     │   │   │   │               │   ├── sonic-callreq v0.12.0 (*)
+     │   │   │   │               │   ├── strict_encoding v2.9.1 (*)
+     │   │   │   │               │   ├── strict_types v2.9.0 (*)
+     │   │   │   │               │   ├── ultrasonic v0.12.0 (*)
+     │   │   │   │               │   └── zk-aluvm v0.12.0 (*)
+     │   │   │   │               ├── getrandom v0.3.3
+     │   │   │   │               │   ├── aluvm v0.12.0 (*)
+     │   │   │   │               │   ├── amplify v4.9.0 (*)
+     │   │   │   │               │   ├── bp-consensus v0.12.0 (*)
+     │   │   │   │               │   ├── bp-core v0.12.0 (*)
+     │   │   │   │               │   ├── bp-dbc v0.12.0 (*)
+     │   │   │   │               │   ├── bp-seals v0.12.0 (*)
+     │   │   │   │               │   ├── bp-std v0.12.0-rc.3 (*)
+     │   │   │   │               │   ├── commit_verify v0.12.0 (*)
+     │   │   │   │               │   ├── hypersonic v0.12.0 (*)
+     │   │   │   │               │   ├── jobserver v0.1.33
+     │   │   │   │               │   │   └── cc v1.2.29
+     │   │   │   │               │   │       ├── (build) aws-lc-sys v0.29.0 (*)
+     │   │   │   │               │   │       ├── cmake v0.1.54
+     │   │   │   │               │   │       │   └── (build) aws-lc-sys v0.29.0 (*)
+     │   │   │   │               │   │       ├── (build) iana-time-zone-haiku v0.1.2
+     │   │   │   │               │   │       │   └── iana-time-zone v0.1.63
+     │   │   │   │               │   │       │       └── chrono v0.4.41 (*)
+     │   │   │   │               │   │       ├── (build) minicov v0.3.7
+     │   │   │   │               │   │       │   └── wasm-bindgen-test v0.3.50
+     │   │   │   │               │   │       │       └── (dev) rgb-runtime v0.12.0-rc.3 (*)
+     │   │   │   │               │   │       ├── (build) openssl-sys v0.9.109
+     │   │   │   │               │   │       │   ├── native-tls v0.2.14 (*)
+     │   │   │   │               │   │       │   └── openssl v0.10.73 (*)
+     │   │   │   │               │   │       ├── (build) ring v0.17.14 (*)
+     │   │   │   │               │   │       └── (build) secp256k1-sys v0.10.1
+     │   │   │   │               │   │           └── secp256k1 v0.30.0 (*)
+     │   │   │   │               │   ├── rand_core v0.9.3
+     │   │   │   │               │   │   ├── rand v0.9.1
+     │   │   │   │               │   │   │   ├── commit_verify v0.12.0 (*)
+     │   │   │   │               │   │   │   └── rgb-runtime v0.12.0-rc.3 (*)
+     │   │   │   │               │   │   └── rand_chacha v0.9.0
+     │   │   │   │               │   │       └── rand v0.9.1 (*)
+     │   │   │   │               │   ├── rgb-core v0.12.0 (*)
+     │   │   │   │               │   ├── rgb-runtime v0.12.0-rc.3 (*)
+     │   │   │   │               │   ├── rgb-std v0.12.0-rc.3 (*)
+     │   │   │   │               │   ├── sonic-api v0.12.0 (*)
+     │   │   │   │               │   ├── sonic-callreq v0.12.0 (*)
+     │   │   │   │               │   ├── strict_encoding v2.9.1 (*)
+     │   │   │   │               │   ├── strict_types v2.9.0 (*)
+     │   │   │   │               │   ├── tempfile v3.20.0
+     │   │   │   │               │   │   └── native-tls v0.2.14 (*)
+     │   │   │   │               │   ├── ultrasonic v0.12.0 (*)
+     │   │   │   │               │   └── zk-aluvm v0.12.0 (*)
+     │   │   │   │               ├── hypersonic v0.12.0 (*)
+     │   │   │   │               ├── iana-time-zone v0.1.63 (*)
+     │   │   │   │               ├── js-sys v0.3.77
+     │   │   │   │               │   ├── chrono v0.4.41 (*)
+     │   │   │   │               │   ├── getrandom v0.2.16 (*)
+     │   │   │   │               │   ├── getrandom v0.3.3 (*)
+     │   │   │   │               │   ├── iana-time-zone v0.1.63 (*)
+     │   │   │   │               │   ├── reqwest v0.12.22 (*)
+     │   │   │   │               │   ├── wasm-bindgen-futures v0.4.50
+     │   │   │   │               │   │   ├── reqwest v0.12.22 (*)
+     │   │   │   │               │   │   └── wasm-bindgen-test v0.3.50 (*)
+     │   │   │   │               │   ├── wasm-bindgen-test v0.3.50 (*)
+     │   │   │   │               │   └── web-sys v0.3.77
+     │   │   │   │               │       ├── reqwest v0.12.22 (*)
+     │   │   │   │               │       └── wasm-bindgen-futures v0.4.50 (*)
+     │   │   │   │               ├── reqwest v0.12.22 (*)
+     │   │   │   │               ├── rgb-core v0.12.0 (*)
+     │   │   │   │               ├── rgb-runtime v0.12.0-rc.3 (*)
+     │   │   │   │               ├── rgb-std v0.12.0-rc.3 (*)
+     │   │   │   │               ├── sonic-api v0.12.0 (*)
+     │   │   │   │               ├── sonic-callreq v0.12.0 (*)
+     │   │   │   │               ├── strict_encoding v2.9.1 (*)
+     │   │   │   │               ├── strict_types v2.9.0 (*)
+     │   │   │   │               ├── ultrasonic v0.12.0 (*)
+     │   │   │   │               ├── wasm-bindgen-futures v0.4.50 (*)
+     │   │   │   │               ├── wasm-bindgen-test v0.3.50 (*)
+     │   │   │   │               ├── web-sys v0.3.77 (*)
+     │   │   │   │               └── zk-aluvm v0.12.0 (*)
+     │   │   │   ├── wasm-bindgen-macro-support v0.2.100 (*)
+     │   │   │   ├── wasm-bindgen-test-macro v0.3.50
+     │   │   │   │   └── wasm-bindgen-test v0.3.50 (*)
+     │   │   │   ├── windows-implement v0.60.0
+     │   │   │   │   └── windows-core v0.61.2
+     │   │   │   │       └── iana-time-zone v0.1.63 (*)
+     │   │   │   ├── windows-interface v0.59.1
+     │   │   │   │   └── windows-core v0.61.2 (*)
+     │   │   │   ├── yoke-derive v0.8.0 (*)
+     │   │   │   ├── zerofrom-derive v0.1.6 (*)
+     │   │   │   └── zerovec-derive v0.11.1
+     │   │   │       └── zerovec v0.11.2 (*)
+     │   │   ├── synstructure v0.13.2 (*)
+     │   │   ├── thiserror-impl v1.0.69 (*)
+     │   │   ├── wasm-bindgen-backend v0.2.100 (*)
+     │   │   ├── wasm-bindgen-macro v0.2.100 (*)
+     │   │   ├── wasm-bindgen-macro-support v0.2.100 (*)
+     │   │   ├── wasm-bindgen-test-macro v0.3.50 (*)
+     │   │   ├── windows-implement v0.60.0 (*)
+     │   │   ├── windows-interface v0.59.1 (*)
+     │   │   ├── yoke-derive v0.8.0 (*)
+     │   │   ├── zerofrom-derive v0.1.6 (*)
+     │   │   └── zerovec-derive v0.11.1 (*)
+     │   ├── ref-cast-impl v1.0.24 (*)
+     │   ├── serde_derive v1.0.219 (*)
+     │   ├── serde_with_macros v3.14.0 (*)
+     │   ├── strict_encoding_derive v2.8.0 (*)
+     │   ├── syn v1.0.109 (*)
+     │   ├── syn v2.0.104 (*)
+     │   ├── synstructure v0.13.2 (*)
+     │   ├── thiserror-impl v1.0.69 (*)
+     │   ├── wasm-bindgen-backend v0.2.100 (*)
+     │   ├── wasm-bindgen-macro-support v0.2.100 (*)
+     │   ├── wasm-bindgen-test-macro v0.3.50 (*)
+     │   ├── windows-implement v0.60.0 (*)
+     │   ├── windows-interface v0.59.1 (*)
+     │   ├── yoke-derive v0.8.0 (*)
+     │   ├── zerofrom-derive v0.1.6 (*)
+     │   └── zerovec-derive v0.11.1 (*)
+     ├── syn v1.0.109 (*)
+     ├── syn v2.0.104 (*)
+     └── wasm-bindgen-shared v0.2.100
+         ├── wasm-bindgen-backend v0.2.100 (*)
+         └── wasm-bindgen-macro-support v0.2.100 (*)
+
+error[rejected]: failed to satisfy license requirements
+   ┌─ <temporary_workspace>/cargo-home/registry/src/index.crates.io-1949cf8c6b5b557f/untrusted-0.9.0/Cargo.toml:21:12
+   │
+21 │ license = "ISC"
+   │            ━━━
+   │            │
+   │            rejected: license is not explicitly allowed
+   │
+   ├ ISC - ISC License:
+   ├   - OSI approved
+   ├   - FSF Free/Libre
+   ├ untrusted v0.9.0
+     ├── ring v0.17.14
+     │   ├── rustls v0.21.12
+     │   │   └── minreq v2.14.0
+     │   │       └── bp-esplora v0.12.0-rc.3
+     │   │           └── rgb-runtime v0.12.0-rc.3
+     │   ├── rustls-webpki v0.101.7
+     │   │   ├── minreq v2.14.0 (*)
+     │   │   └── rustls v0.21.12 (*)
+     │   └── sct v0.7.1
+     │       └── rustls v0.21.12 (*)
+     ├── rustls-webpki v0.101.7 (*)
+     ├── rustls-webpki v0.103.3
+     │   └── rustls v0.23.28
+     │       └── bp-electrum v0.12.0-rc.1
+     │           └── rgb-runtime v0.12.0-rc.3 (*)
+     └── sct v0.7.1 (*)
+
+error[rejected]: failed to satisfy license requirements
+   ┌─ <temporary_workspace>/cargo-home/registry/src/index.crates.io-1949cf8c6b5b557f/webpki-roots-0.25.4/Cargo.toml:19:12
+   │
+19 │ license = "MPL-2.0"
+   │            ━━━━━━━
+   │            │
+   │            rejected: license is not explicitly allowed
+   │
+   ├ MPL-2.0 - Mozilla Public License 2.0:
+   ├   - OSI approved
+   ├   - FSF Free/Libre
+   ├   - Copyleft
+   ├ webpki-roots v0.25.4
+     └── minreq v2.14.0
+         └── bp-esplora v0.12.0-rc.3
+             └── rgb-runtime v0.12.0-rc.3
+
+error[rejected]: failed to satisfy license requirements
+   ┌─ <temporary_workspace>/cargo-home/registry/src/index.crates.io-1949cf8c6b5b557f/webpki-roots-0.26.11/Cargo.toml:25:12
+   │
+25 │ license = "CDLA-Permissive-2.0"
+   │            ━━━━━━━━━━━━━━━━━━━
+   │            │
+   │            rejected: license is not explicitly allowed
+   │
+   ├ CDLA-Permissive-2.0 - Community Data License Agreement Permissive 2.0:
+   ├   - No additional metadata available for license
+   ├ webpki-roots v0.26.11
+     └── bp-electrum v0.12.0-rc.1
+         └── rgb-runtime v0.12.0-rc.3
+
+error[rejected]: failed to satisfy license requirements
+   ┌─ <temporary_workspace>/cargo-home/registry/src/index.crates.io-1949cf8c6b5b557f/webpki-roots-1.0.1/Cargo.toml:25:12
+   │
+25 │ license = "CDLA-Permissive-2.0"
+   │            ━━━━━━━━━━━━━━━━━━━
+   │            │
+   │            rejected: license is not explicitly allowed
+   │
+   ├ CDLA-Permissive-2.0 - Community Data License Agreement Permissive 2.0:
+   ├   - No additional metadata available for license
+   ├ webpki-roots v1.0.1
+     └── webpki-roots v0.26.11
+         └── bp-electrum v0.12.0-rc.1
+             └── rgb-runtime v0.12.0-rc.3
+
+error[rejected]: failed to satisfy license requirements
+   ┌─ <temporary_workspace>/cargo-home/registry/src/index.crates.io-1949cf8c6b5b557f/writeable-0.6.1/Cargo.toml:36:12
+   │
+36 │ license = "Unicode-3.0"
+   │            ━━━━━━━━━━━
+   │            │
+   │            rejected: license is not explicitly allowed
+   │
+   ├ Unicode-3.0 - Unicode License v3:
+   ├   - OSI approved
+   ├ writeable v0.6.1
+     ├── icu_locale_core v2.0.0
+     │   ├── icu_properties v2.0.1
+     │   │   └── idna_adapter v1.2.1
+     │   │       └── idna v1.0.3
+     │   │           └── url v2.5.4
+     │   │               └── reqwest v0.12.22
+     │   │                   └── bp-esplora v0.12.0-rc.3
+     │   │                       └── rgb-runtime v0.12.0-rc.3
+     │   └── icu_provider v2.0.0
+     │       ├── icu_normalizer v2.0.0
+     │       │   └── idna_adapter v1.2.1 (*)
+     │       └── icu_properties v2.0.1 (*)
+     └── icu_provider v2.0.0 (*)
+
+error[rejected]: failed to satisfy license requirements
+   ┌─ <temporary_workspace>/cargo-home/registry/src/index.crates.io-1949cf8c6b5b557f/yoke-0.8.0/Cargo.toml:49:12
+   │
+49 │ license = "Unicode-3.0"
+   │            ━━━━━━━━━━━
+   │            │
+   │            rejected: license is not explicitly allowed
+   │
+   ├ Unicode-3.0 - Unicode License v3:
+   ├   - OSI approved
+   ├ yoke v0.8.0
+     ├── icu_collections v2.0.0
+     │   ├── icu_normalizer v2.0.0
+     │   │   └── idna_adapter v1.2.1
+     │   │       └── idna v1.0.3
+     │   │           └── url v2.5.4
+     │   │               └── reqwest v0.12.22
+     │   │                   └── bp-esplora v0.12.0-rc.3
+     │   │                       └── rgb-runtime v0.12.0-rc.3
+     │   └── icu_properties v2.0.1
+     │       └── idna_adapter v1.2.1 (*)
+     ├── icu_provider v2.0.0
+     │   ├── icu_normalizer v2.0.0 (*)
+     │   └── icu_properties v2.0.1 (*)
+     ├── zerotrie v0.2.2
+     │   ├── icu_properties v2.0.1 (*)
+     │   └── icu_provider v2.0.0 (*)
+     └── zerovec v0.11.2
+         ├── icu_collections v2.0.0 (*)
+         ├── icu_locale_core v2.0.0
+         │   ├── icu_properties v2.0.1 (*)
+         │   └── icu_provider v2.0.0 (*)
+         ├── icu_normalizer v2.0.0 (*)
+         ├── icu_properties v2.0.1 (*)
+         ├── icu_provider v2.0.0 (*)
+         ├── potential_utf v0.1.2
+         │   ├── icu_collections v2.0.0 (*)
+         │   └── icu_properties v2.0.1 (*)
+         └── tinystr v0.8.1
+             ├── icu_locale_core v2.0.0 (*)
+             └── icu_provider v2.0.0 (*)
+
+error[rejected]: failed to satisfy license requirements
+   ┌─ <temporary_workspace>/cargo-home/registry/src/index.crates.io-1949cf8c6b5b557f/yoke-derive-0.8.0/Cargo.toml:38:12
+   │
+38 │ license = "Unicode-3.0"
+   │            ━━━━━━━━━━━
+   │            │
+   │            rejected: license is not explicitly allowed
+   │
+   ├ Unicode-3.0 - Unicode License v3:
+   ├   - OSI approved
+   ├ yoke-derive v0.8.0
+     └── yoke v0.8.0
+         ├── icu_collections v2.0.0
+         │   ├── icu_normalizer v2.0.0
+         │   │   └── idna_adapter v1.2.1
+         │   │       └── idna v1.0.3
+         │   │           └── url v2.5.4
+         │   │               └── reqwest v0.12.22
+         │   │                   └── bp-esplora v0.12.0-rc.3
+         │   │                       └── rgb-runtime v0.12.0-rc.3
+         │   └── icu_properties v2.0.1
+         │       └── idna_adapter v1.2.1 (*)
+         ├── icu_provider v2.0.0
+         │   ├── icu_normalizer v2.0.0 (*)
+         │   └── icu_properties v2.0.1 (*)
+         ├── zerotrie v0.2.2
+         │   ├── icu_properties v2.0.1 (*)
+         │   └── icu_provider v2.0.0 (*)
+         └── zerovec v0.11.2
+             ├── icu_collections v2.0.0 (*)
+             ├── icu_locale_core v2.0.0
+             │   ├── icu_properties v2.0.1 (*)
+             │   └── icu_provider v2.0.0 (*)
+             ├── icu_normalizer v2.0.0 (*)
+             ├── icu_properties v2.0.1 (*)
+             ├── icu_provider v2.0.0 (*)
+             ├── potential_utf v0.1.2
+             │   ├── icu_collections v2.0.0 (*)
+             │   └── icu_properties v2.0.1 (*)
+             └── tinystr v0.8.1
+                 ├── icu_locale_core v2.0.0 (*)
+                 └── icu_provider v2.0.0 (*)
+
+error[rejected]: failed to satisfy license requirements
+   ┌─ <temporary_workspace>/cargo-home/registry/src/index.crates.io-1949cf8c6b5b557f/zerofrom-0.1.6/Cargo.toml:47:12
+   │
+47 │ license = "Unicode-3.0"
+   │            ━━━━━━━━━━━
+   │            │
+   │            rejected: license is not explicitly allowed
+   │
+   ├ Unicode-3.0 - Unicode License v3:
+   ├   - OSI approved
+   ├ zerofrom v0.1.6
+     ├── icu_collections v2.0.0
+     │   ├── icu_normalizer v2.0.0
+     │   │   └── idna_adapter v1.2.1
+     │   │       └── idna v1.0.3
+     │   │           └── url v2.5.4
+     │   │               └── reqwest v0.12.22
+     │   │                   └── bp-esplora v0.12.0-rc.3
+     │   │                       └── rgb-runtime v0.12.0-rc.3
+     │   └── icu_properties v2.0.1
+     │       └── idna_adapter v1.2.1 (*)
+     ├── icu_provider v2.0.0
+     │   ├── icu_normalizer v2.0.0 (*)
+     │   └── icu_properties v2.0.1 (*)
+     ├── yoke v0.8.0
+     │   ├── icu_collections v2.0.0 (*)
+     │   ├── icu_provider v2.0.0 (*)
+     │   ├── zerotrie v0.2.2
+     │   │   ├── icu_properties v2.0.1 (*)
+     │   │   └── icu_provider v2.0.0 (*)
+     │   └── zerovec v0.11.2
+     │       ├── icu_collections v2.0.0 (*)
+     │       ├── icu_locale_core v2.0.0
+     │       │   ├── icu_properties v2.0.1 (*)
+     │       │   └── icu_provider v2.0.0 (*)
+     │       ├── icu_normalizer v2.0.0 (*)
+     │       ├── icu_properties v2.0.1 (*)
+     │       ├── icu_provider v2.0.0 (*)
+     │       ├── potential_utf v0.1.2
+     │       │   ├── icu_collections v2.0.0 (*)
+     │       │   └── icu_properties v2.0.1 (*)
+     │       └── tinystr v0.8.1
+     │           ├── icu_locale_core v2.0.0 (*)
+     │           └── icu_provider v2.0.0 (*)
+     ├── zerotrie v0.2.2 (*)
+     └── zerovec v0.11.2 (*)
+
+error[rejected]: failed to satisfy license requirements
+   ┌─ <temporary_workspace>/cargo-home/registry/src/index.crates.io-1949cf8c6b5b557f/zerofrom-derive-0.1.6/Cargo.toml:37:12
+   │
+37 │ license = "Unicode-3.0"
+   │            ━━━━━━━━━━━
+   │            │
+   │            rejected: license is not explicitly allowed
+   │
+   ├ Unicode-3.0 - Unicode License v3:
+   ├   - OSI approved
+   ├ zerofrom-derive v0.1.6
+     └── zerofrom v0.1.6
+         ├── icu_collections v2.0.0
+         │   ├── icu_normalizer v2.0.0
+         │   │   └── idna_adapter v1.2.1
+         │   │       └── idna v1.0.3
+         │   │           └── url v2.5.4
+         │   │               └── reqwest v0.12.22
+         │   │                   └── bp-esplora v0.12.0-rc.3
+         │   │                       └── rgb-runtime v0.12.0-rc.3
+         │   └── icu_properties v2.0.1
+         │       └── idna_adapter v1.2.1 (*)
+         ├── icu_provider v2.0.0
+         │   ├── icu_normalizer v2.0.0 (*)
+         │   └── icu_properties v2.0.1 (*)
+         ├── yoke v0.8.0
+         │   ├── icu_collections v2.0.0 (*)
+         │   ├── icu_provider v2.0.0 (*)
+         │   ├── zerotrie v0.2.2
+         │   │   ├── icu_properties v2.0.1 (*)
+         │   │   └── icu_provider v2.0.0 (*)
+         │   └── zerovec v0.11.2
+         │       ├── icu_collections v2.0.0 (*)
+         │       ├── icu_locale_core v2.0.0
+         │       │   ├── icu_properties v2.0.1 (*)
+         │       │   └── icu_provider v2.0.0 (*)
+         │       ├── icu_normalizer v2.0.0 (*)
+         │       ├── icu_properties v2.0.1 (*)
+         │       ├── icu_provider v2.0.0 (*)
+         │       ├── potential_utf v0.1.2
+         │       │   ├── icu_collections v2.0.0 (*)
+         │       │   └── icu_properties v2.0.1 (*)
+         │       └── tinystr v0.8.1
+         │           ├── icu_locale_core v2.0.0 (*)
+         │           └── icu_provider v2.0.0 (*)
+         ├── zerotrie v0.2.2 (*)
+         └── zerovec v0.11.2 (*)
+
+error[rejected]: failed to satisfy license requirements
+   ┌─ <temporary_workspace>/cargo-home/registry/src/index.crates.io-1949cf8c6b5b557f/zerotrie-0.2.2/Cargo.toml:39:12
+   │
+39 │ license = "Unicode-3.0"
+   │            ━━━━━━━━━━━
+   │            │
+   │            rejected: license is not explicitly allowed
+   │
+   ├ Unicode-3.0 - Unicode License v3:
+   ├   - OSI approved
+   ├ zerotrie v0.2.2
+     ├── icu_properties v2.0.1
+     │   └── idna_adapter v1.2.1
+     │       └── idna v1.0.3
+     │           └── url v2.5.4
+     │               └── reqwest v0.12.22
+     │                   └── bp-esplora v0.12.0-rc.3
+     │                       └── rgb-runtime v0.12.0-rc.3
+     └── icu_provider v2.0.0
+         ├── icu_normalizer v2.0.0
+         │   └── idna_adapter v1.2.1 (*)
+         └── icu_properties v2.0.1 (*)
+
+error[rejected]: failed to satisfy license requirements
+   ┌─ <temporary_workspace>/cargo-home/registry/src/index.crates.io-1949cf8c6b5b557f/zerovec-0.11.2/Cargo.toml:50:12
+   │
+50 │ license = "Unicode-3.0"
+   │            ━━━━━━━━━━━
+   │            │
+   │            rejected: license is not explicitly allowed
+   │
+   ├ Unicode-3.0 - Unicode License v3:
+   ├   - OSI approved
+   ├ zerovec v0.11.2
+     ├── icu_collections v2.0.0
+     │   ├── icu_normalizer v2.0.0
+     │   │   └── idna_adapter v1.2.1
+     │   │       └── idna v1.0.3
+     │   │           └── url v2.5.4
+     │   │               └── reqwest v0.12.22
+     │   │                   └── bp-esplora v0.12.0-rc.3
+     │   │                       └── rgb-runtime v0.12.0-rc.3
+     │   └── icu_properties v2.0.1
+     │       └── idna_adapter v1.2.1 (*)
+     ├── icu_locale_core v2.0.0
+     │   ├── icu_properties v2.0.1 (*)
+     │   └── icu_provider v2.0.0
+     │       ├── icu_normalizer v2.0.0 (*)
+     │       └── icu_properties v2.0.1 (*)
+     ├── icu_normalizer v2.0.0 (*)
+     ├── icu_properties v2.0.1 (*)
+     ├── icu_provider v2.0.0 (*)
+     ├── potential_utf v0.1.2
+     │   ├── icu_collections v2.0.0 (*)
+     │   └── icu_properties v2.0.1 (*)
+     └── tinystr v0.8.1
+         ├── icu_locale_core v2.0.0 (*)
+         └── icu_provider v2.0.0 (*)
+
+error[rejected]: failed to satisfy license requirements
+   ┌─ <temporary_workspace>/cargo-home/registry/src/index.crates.io-1949cf8c6b5b557f/zerovec-derive-0.11.1/Cargo.toml:38:12
+   │
+38 │ license = "Unicode-3.0"
+   │            ━━━━━━━━━━━
+   │            │
+   │            rejected: license is not explicitly allowed
+   │
+   ├ Unicode-3.0 - Unicode License v3:
+   ├   - OSI approved
+   ├ zerovec-derive v0.11.1
+     └── zerovec v0.11.2
+         ├── icu_collections v2.0.0
+         │   ├── icu_normalizer v2.0.0
+         │   │   └── idna_adapter v1.2.1
+         │   │       └── idna v1.0.3
+         │   │           └── url v2.5.4
+         │   │               └── reqwest v0.12.22
+         │   │                   └── bp-esplora v0.12.0-rc.3
+         │   │                       └── rgb-runtime v0.12.0-rc.3
+         │   └── icu_properties v2.0.1
+         │       └── idna_adapter v1.2.1 (*)
+         ├── icu_locale_core v2.0.0
+         │   ├── icu_properties v2.0.1 (*)
+         │   └── icu_provider v2.0.0
+         │       ├── icu_normalizer v2.0.0 (*)
+         │       └── icu_properties v2.0.1 (*)
+         ├── icu_normalizer v2.0.0 (*)
+         ├── icu_properties v2.0.1 (*)
+         ├── icu_provider v2.0.0 (*)
+         ├── potential_utf v0.1.2
+         │   ├── icu_collections v2.0.0 (*)
+         │   └── icu_properties v2.0.1 (*)
+         └── tinystr v0.8.1
+             ├── icu_locale_core v2.0.0 (*)
+             └── icu_provider v2.0.0 (*)
+
+licenses FAILED

@@ -1,0 +1,3 @@
+command=sha256sum --ignore-missing --check SHA256SUMS
+result=bitcoin-31.1-x86_64-linux-gnu.tar.gz: OK
+archive_sha256=b80d9c3e04da78fb6f0569685673418cf686fadba9042d926d13fb87ff503f9e

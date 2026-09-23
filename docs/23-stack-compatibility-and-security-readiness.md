@@ -8,22 +8,22 @@ lineage, freeze a dependency graph, or demonstrate an O2A identity lifecycle.
 
 The proposed development baseline is feasible, but the exact stack is **not
 ready to adopt**. Rust 1.98.1, the RGB-WG RC3 libraries, and Bitcoin Core 31.1
-regtest passed their bounded checks. The debug-built RGB CLI has a reproducible
-argument-parser assertion, Bitcoin Core RPC is not an implemented RGB RC3
-resolver, and the conversion boundary between different secp256k1 crate types
-is untested. A rust-bitcoin correctness fix also landed after the latest stable
-release.
+regtest passed their bounded checks. A second disposable run proved the local
+Electrum resolver and a public-key byte conversion after documented RC3
+workarounds, but the exact 342-package RGB lock has 15 RustSec vulnerability
+findings and five warnings. The unmodified CLI still has defects, Bitcoin Core
+RPC is not an implemented RGB RC3 resolver, and no O2A lifecycle was tested.
 
 | Check | Result | Meaning |
 | --- | --- | --- |
 | Rust 1.98.1 isolated toolchain | Partial pass | Direct `rustc` and `cargo` worked. The isolated `rustup` wrapper exited 1 after installation because its temporary Cargo home lacked the proxy. A checked-in setup script must avoid that layout mistake. |
-| Bitcoin Core 31.1 archive and regtest | Pass with provenance gap | SHA256 matched the published checksum; daemon/RPC, a disposable wallet, 101 blocks, and a 50 BTC mature regtest balance worked with zero peers. The checksum file's signature was not verified. |
+| Bitcoin Core 31.1 archive and regtest | Pass | SHA256 matched the published checksum; 11 checksum signatures validated and the Fanquake fingerprint matched the official verification page. GPG trust remained undefined in the isolated keyring. Daemon/RPC, a disposable wallet, 101 blocks, and a 50 BTC mature regtest balance worked with zero peers. |
 | RGB runtime and wallet RC3 compile | Pass | Locked checks/builds passed with exact RC3 tags and Rust 1.98.1. Four runtime library tests passed. |
 | RGB CLI debug-build invocation | Fail | `rgb sync --help` exited 101 because Clap group `ResolverOpt` names nonexistent argument `mempool`. Release-build and `cargo install` behavior were not tested, so this establishes a debug-build defect rather than every distribution path. Compile success is not CLI readiness. |
-| RGB chain resolver | Blocked | Electrum and Esplora paths exist. The Bitcoin RPC resolver is a commented TODO, so the local resolver profile still needs implementation and proof. |
-| Bitcoin/RGB type conversion | Untested | RGB RC3 locks secp256k1 0.30.0; stable rust-bitcoin 0.32.102 specifies secp256k1 0.29.0. Multiple versions can coexist, but their Rust key types do not directly interoperate; the adapter's serialization and validation boundary remains unproven. |
+| RGB chain resolver | Conditional pass | A temporarily patched debug CLI synced 101 UTXOs through local electrs 0.12.0 backed by the same Core node. The upstream Clap defect and a separate `create`/`sync` wallet-path mismatch required workarounds. Core RPC remains a TODO. |
+| Bitcoin/RGB type conversion | Bounded pass | A separate manifest resolved BP secp256k1 0.30.0 and rust-bitcoin's 0.29.1. Compressed and x-only public keys round-tripped through validated canonical bytes, and malformed keys were rejected. Signatures, authorization, and consensus behavior remain untested. |
 | O2A RGB lifecycle and independent import | Not run | No genesis, rotation, recovery-policy change, authorized recovery, revocation, consignment exchange, or second-client verification was performed. |
-| Locked advisory and license scan | Not run | The disposable upstream lockfile was not retained, and no O2A lockfile exists. Run the scanners on the graph proposed for adoption. |
+| Locked advisory and license scan | Fail for adoption | The retained RGB lock has 342 packages. `cargo audit` found 15 vulnerabilities and five warnings. The source scan passed, while the three-license minimum rejected 34 findings across 16 license expressions that require review. |
 
 These results make the first RGB experiment explicitly disposable. It must not
 be promoted into `crates/o2a-rgb`, and its contract shape must not enter a
@@ -69,6 +69,19 @@ as `ELECRTUM_SERVER`; do not expose that typo as an O2A configuration contract.
 The node was bound to localhost in regtest with zero peers. The disposable
 wallet, chain, sources, toolchain, and build outputs were deleted with the
 temporary directory after the node stopped.
+
+## Second disposable run
+
+The second run closed the evidence-preservation, signed-checksum, local
+resolver, and public-key conversion gaps. Its exact lockfiles, feature tree,
+audit output, signature fingerprints, resolver log, and conversion source are
+retained in the
+[Phase 0 evidence bundle](../evidence/phase0/rgb-rc3-regtest-2026-09-23/README.md).
+
+It does not adopt the graph. The resolver required the known temporary Clap
+patch plus a newly observed wallet-directory rename, and the exact lock failed
+the advisory gate. No O2A contract, identity, signature, transition, or
+independent package validation was performed.
 
 ## Compatibility gates for the next run
 
