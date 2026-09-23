@@ -165,3 +165,27 @@ change.
 This validates the version 2 website bundle, deployment, and access gate within
 the checks above. It does not validate an O2A protocol implementation, payment
 system, or RGB smart contract.
+
+### Version 3 validation — 2026-09-23
+
+- Sites production deployment completed successfully at the existing private
+  review URL as saved version 3.
+- The access policy remained `custom` owner-only at revision 5: one owner, no
+  other viewers or editors, no groups, and no external visitors.
+- Source commit: `14fa1e6b551cc9a281c19fbe72cf3aa290f83330` in the isolated
+  Sites snapshot repository, not the protocol repository.
+- Archive SHA-256:
+  `e441bcbf4242a27881f867b26fbb55b077646f57e25e414f99228076699fbe4b`.
+- Signed-out requests to `/`, `/guide.html`, and
+  `/assets/protocol-stack.svg` returned HTTP 401.
+- Authorized requests loaded both pages and all three protocol figures with
+  HTTP 200 after following the site's canonical redirect.
+- The live homepage, guide, and stack figure contained the new decentralized,
+  Bitcoin-rooted, self-custodial identity language.
+- Ten-file export validation, SVG XML parsing, relative Markdown-link checks,
+  and Git whitespace checks passed. Browser viewport and interaction checks
+  were not rerun for version 3.
+
+This validates the version 3 website bundle, deployment, and access gate within
+the checks above. It does not validate an O2A wallet, Bitcoin/RGB protocol
+implementation, payment system, or mainnet release.
