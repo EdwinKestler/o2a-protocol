@@ -191,3 +191,28 @@ system, or RGB smart contract.
 This validates the version 3 website bundle, deployment, and access gate within
 the checks above. It does not validate an O2A wallet, Bitcoin/RGB protocol
 implementation, payment system, or mainnet release.
+
+### Version 4 validation — 2026-09-23
+
+- Sites production deployment completed successfully at the existing private
+  review URL as saved version 4.
+- The access policy remained `custom` owner-only at revision 5: one owner, no
+  other viewers or editors, no groups, and no external visitors.
+- Source commit: `62a245a79a868e3347c627ec6bfbc305d73d9cd7` in the isolated
+  Sites snapshot repository, not the protocol repository.
+- Archive SHA-256:
+  `1390e2bad205912e611e92412d42f7bd183c94c160c9380776c059b4d11c6d57`.
+- Signed-out requests to `/`, `/guide.html`, and
+  `/assets/protocol-stack.svg` returned HTTP 401.
+- Authorized requests loaded both pages and all three protocol figures with
+  HTTP 200 after following the site's canonical redirect.
+- The live guide contained the immutable-root/controller distinction, public
+  content-addressed proof-package rule, open-source intent and license gate,
+  and the corrected specification-status heading.
+- Ten-file export validation, SVG XML parsing, relative Markdown-link checks,
+  JSON validation, Git whitespace checks, and all 21 Palimnex evaluation cases
+  passed. Browser viewport and interaction checks were not rerun for version 4.
+
+This validates the version 4 website bundle, deployment, and access gate within
+the checks above. It does not validate an O2A wallet, proof-package
+implementation, RGB contract, payment system, or mainnet release.
