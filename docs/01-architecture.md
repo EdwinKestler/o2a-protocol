@@ -53,10 +53,21 @@ Consumes normalized evidence and deterministically derives a verification result
 ### Registries
 
 Artist, venue, and event registries are rebuildable projections for discovery and query performance.
+An optional public-profile discovery adapter (for example Pubky) may provide
+mutable profile data. Its availability or contents cannot silently change a
+protocol verification result; signed claims and proof packages remain portable.
 
 ### Applications
 
 GatePass, SplitNight, sponsorship, merchandise, and future modules consume identifiers and verification results.
+
+Proposed channel-control verification uses online DNS/HTTPS/platform collectors
+to produce signed observations for the evidence layer. The deterministic core
+consumes preserved observations, not live network responses. Internet Identity
+may be evaluated as an optional authentication/credential adapter. Native-BTC
+verification deposits are downstream financial experiments, with their own
+funding/refund state; neither login nor funding establishes artist recognition.
+See [the assessment](17-control-proofs-and-verification-bonds.md).
 
 ## Storage model
 

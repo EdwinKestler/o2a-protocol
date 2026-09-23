@@ -43,3 +43,12 @@ Cross-chain HTLC or atomic-swap functionality should be an optional settlement a
 ## Dependency rule
 
 Economic modules reference O2A identities; economic outcomes do not define who an entity is.
+
+## Related remuneration application
+
+[Artist-authorized uses and payments](16-artist-authorized-use-payments.md)
+proposes signed permission for selected promotional mentions and catalog or
+tour-date links, coupled with payment. A later SplitNight integration could
+allocate that revenue among explicitly authorized participants. A single
+artist payment does not require a split engine, and payment allocation must
+not be inferred from identity or social relationships alone.

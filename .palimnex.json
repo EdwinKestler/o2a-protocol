@@ -6,6 +6,7 @@
   ],
   "include_patterns": [
     "README.md",
+    "codereference.md",
     "AGENTS.md",
     "CLAUDE.md",
     "GEMINI.md",
@@ -15,7 +16,8 @@
     "docs/**/*.md",
     "specs/**/*.md",
     "adr/**/*.md",
-    "scripts/**/*.sh"
+    "scripts/**/*.sh",
+    "scripts/build_site.py"
   ],
   "exclude_directories": [
     ".palimnex",

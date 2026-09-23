@@ -4,6 +4,14 @@
 
 The protocol is designed around a generic **EntityID** primitive so the same trust layer can represent artists, venues, promoters, events, and later other ecosystem participants without redefining identity for each application.
 
+Start with the [project vision and rationale](docs/00-vision.md) for the main
+goal, the problems O2A addresses, the proposed solutions, and why this timing
+and technology are appropriate to test them.
+
+The [project website draft](docs/WEBSITE.md) has an owner-private Sites review
+deployment and a local preview. Public release and GitHub Pages deployment
+remain on hold pending authorization. Examples use generic participants.
+
 ## Design principle
 
 ```text
@@ -28,12 +36,15 @@ Dependencies flow downward only. Application modules consume protocol primitives
 
 ## Source of truth
 
-Registries and databases are projections, not authority.
+Registries and databases are projections, not authority. Public profiles are
+discoverable application data; signed evidence and its validation determine
+protocol results. RGB/Bitcoin proofs contribute only when a policy explicitly
+requires and verifies them.
 
 ```text
-RGB/client-side validated state + signed evidence + policy
-                            ↓
-                    rebuildable registry
+signed evidence + optional RGB/Bitcoin proof + versioned policy
+                              ↓
+                      rebuildable registry
 ```
 
 Given identical evidence, policy, and protocol version, independent verifiers MUST produce the same result.
@@ -61,6 +72,14 @@ adr/    Architecture decision records
 
 Local source discovery and historical memory use Palimnex. See
 [the O2A Palimnex setup](docs/PALIMNEX.md) for installation and validation.
+See [code references](codereference.md) for RGB upstream sources and the
+independent local project knowledge available for research.
+The [identity/discovery assessment](docs/14-identity-discovery-assessment.md)
+records how the original Pubky, claim-recognition, and event ideas affect the
+[roadmap](docs/13-roadmap.md).
+The [control-proof and verification-bond assessment](docs/17-control-proofs-and-verification-bonds.md)
+evaluates DNS/social proofs, independent endorsements, optional satoshi
+deposits, and Internet Identity/id.ai against the same protocol boundaries.
 
 No production implementation code should be introduced until the v0.1 schemas, canonical serialization rules, and deterministic Hello-World test vectors are agreed.
 

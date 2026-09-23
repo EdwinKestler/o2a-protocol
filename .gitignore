@@ -1,5 +1,7 @@
 .venv/
 .palimnex/
+.site-dist/
+.sites-work/
 __pycache__/
 *.py[cod]
 .env
