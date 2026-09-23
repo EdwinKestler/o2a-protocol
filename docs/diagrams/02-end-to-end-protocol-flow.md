@@ -9,12 +9,17 @@ flowchart LR
     I["Entity Identity<br/>BIP340 root · controller keys<br/>rotation · recovery · revocation"]
     C["Claims<br/>self-attestation<br/>signed assertions"]
     A["Attestations<br/>venue · promoter · artist<br/>independent evidence"]
-    X["Challenges / Revocation<br/>disputes · conflicts<br/>corrections"]
+    X["Optional Challenges / Revocation<br/>disputes · conflicts<br/>corrections when present"]
     P["Trust Policy<br/>deterministic rules<br/>verification status"]
-    R["Registries<br/>Artist Catalog<br/>Venue Registry<br/>Event Registry"]
+    R["Registries<br/>Artist · Venue · Promoter<br/>Event · Album"]
     M["Application Modules<br/>GatePass · SplitNight<br/>Sponsors · Merch/F&B"]
 
-    B --> K --> I --> C --> A --> X --> P --> R --> M
+    B --> K --> I
+    I --> C --> P
+    I --> A --> P
+    I --> X
+    X -. "when present" .-> P
+    P --> R --> M
 ```
 
 ## Operational Hello World

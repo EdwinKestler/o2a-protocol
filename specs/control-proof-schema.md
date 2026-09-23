@@ -12,10 +12,13 @@ to an artist, venue, promoter, album, or event name.
 ```json
 {
   "protocol_version": "0.1",
+  "bitcoin_network": "mainnet|testnet|signet|regtest",
   "object_type": "control_challenge",
   "challenge_id": "<canonical-object-id>",
   "subject": "<EntityID>",
   "subject_state": "<validated-rgb-identity-state-id>",
+  "controller_key_id": "<authorized-controller-key-id>",
+  "controller_key_purpose": "control_challenge",
   "resource_type": "DNS_TXT",
   "resource": "_o2a-challenge.artist.example",
   "purpose": "NAME_CONTROL",
@@ -33,9 +36,13 @@ to an artist, venue, promoter, album, or event name.
 ```json
 {
   "protocol_version": "0.1",
+  "bitcoin_network": "mainnet|testnet|signet|regtest",
   "object_type": "control_observation",
   "challenge_id": "<control-challenge-id>",
-  "observer": "<EntityID-or-versioned-observer-key>",
+  "observer": "<EntityID>",
+  "observer_state": "<validated-rgb-identity-state-id>",
+  "observer_key_id": "<authorized-observer-key-id>",
+  "observer_key_purpose": "observation",
   "method": "DNSSEC_OR_DNS_TXT",
   "observed_resource": "<canonical-resource>",
   "observed_value_hash": "<hash-of-exact-observed-bytes>",

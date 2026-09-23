@@ -29,13 +29,15 @@ Draft. This document defines semantic fields; canonical binary encoding is still
     "key_id": "<controller-key-id>",
     "scheme": "bip340-secp256k1",
     "public_key": "<32-byte-x-only-public-key>",
-    "purposes": ["claim", "attest", "admin"]
+    "purposes": ["claim", "attestation", "identity_transition"]
   }],
   "recovery_policy": {
     "policy_hash": "<canonical-recovery-policy-hash>"
   },
   "profile_commitment": null,
   "status": "ACTIVE",
+  "signing_key_id": "<root-identity-key-id>",
+  "signing_key_purpose": "entity_genesis",
   "signature_domain": "O2A/v0.1/entity-genesis",
   "genesis_signature": "<root-key-signature>"
 }

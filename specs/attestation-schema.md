@@ -5,10 +5,12 @@
 ```json
 {
   "protocol_version": "0.1",
+  "bitcoin_network": "mainnet|testnet|signet|regtest",
   "object_type": "attestation",
   "issuer": "<EntityID>",
   "issuer_state": "<validated-rgb-identity-state-id>",
   "controller_key_id": "<authorized-controller-key-id>",
+  "controller_key_purpose": "attestation",
   "subject": "<EntityID-or-object-id>",
   "predicate": "<versioned-predicate>",
   "object": "<canonical-value-or-reference>",

@@ -14,7 +14,8 @@ requires Bitcoin anchoring and RGB client-side validation for identity state.
 - commit canonical objects;
 - anchor identity transitions through the versioned Bitcoin commitment method;
 - export/import proof packages;
-- verify proof-package integrity;
+- verify proof-package content integrity, publisher authorization, tagged-hash
+  domain, and BIP340 package signature;
 - preserve historical validation across controller rotation;
 - validate the BIP340 root/genesis binding;
 - validate the RGB identity schema, consignment history, seals, anchors, and

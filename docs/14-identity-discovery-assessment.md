@@ -58,10 +58,17 @@ signed binding:
 
 ```text
 O2A EntityID
-  signs → Pubky Ed25519 public key + purpose + expiry/version
+  signs discovery binding → Pubky Ed25519 public key + purpose + expiry/version
 Pubky key
-  signs → reciprocal O2A binding and current public-profile location
+  signs in Pubky context → reciprocal immutable O2A binding ID and profile location
 ```
+
+The O2A side is a canonical
+[`discovery_key_binding`](../specs/discovery-binding-schema.md), signed in the
+`O2A/v0.1/discovery-binding` domain. It is claim evidence for policy purposes,
+but it is not encoded or accepted as a generic `claim` object. A Nostr binding
+uses the same O2A object and domain while the bound Nostr key signs its
+adapter-side event under Nostr rules.
 
 Because Pubky key rotation is not yet standardized, O2A controller state must
 authorize replacement of the binding. A lost Pubky key does not replace or
@@ -89,9 +96,10 @@ remain outside public discovery storage. Missing public history produces an
 incomplete result; Bitcoin cannot reconstruct it.
 
 Nostr can provide a signed public-event transport using BIP340 keys. O2A still
-uses an explicit binding and O2A-specific canonical objects rather than
-assuming every Nostr event is an O2A claim. Relay deletion, partial visibility,
-and competing replaceable events remain availability concerns.
+uses an explicit discovery-binding object and O2A-specific canonical objects
+rather than assuming every Nostr event is an O2A claim. Relay deletion,
+partial visibility, and competing replaceable events remain availability
+concerns.
 
 ## Channel-control evidence
 

@@ -100,11 +100,14 @@ spelling to its first claimant.
 
 ## Discovery and payment bindings
 
-Pubky Ed25519 keys, Nostr keys, DNS names, social accounts, Lightning offers,
-and Bitcoin payment descriptors are purpose-bound claims attached to an
-EntityID. They can expire, rotate, or be revoked without replacing the root
-identity when a valid RGB transition or controller-authorized claim updates
-the binding.
+Pubky Ed25519 and Nostr publication keys use purpose-bound
+[`discovery_key_binding`](../specs/discovery-binding-schema.md) objects.
+Those objects are claim evidence in the policy model, but have their own
+canonical type and `O2A/v0.1/discovery-binding` signature domain. DNS names,
+social accounts, Lightning offers, and public payment endpoints use their
+applicable purpose-bound claim or proof types. All can expire, rotate, or be
+revoked without replacing the root identity when the validated RGB state
+authorizes the controller that signs the update.
 
 ```text
 O2A ID (product-facing encoding)

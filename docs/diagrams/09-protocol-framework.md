@@ -1,8 +1,8 @@
 # 09 — Protocol Framework and Authority Boundaries
 
 This framework view shows what each subsystem can prove and which components
-remain replaceable. Arrows mean data or validation dependency, not that one
-layer inherits another layer's authority.
+remain replaceable. Solid arrows point from a dependent operation to the
+prerequisite it must validate or consume; they do not transfer authority.
 
 ```mermaid
 flowchart LR
@@ -18,7 +18,7 @@ flowchart LR
     subgraph STATE["Consensus-ordered identity state"]
         BTC["Bitcoin<br/>order · anchors · seals"]
         RGB["RGB client-side validation<br/>identity schema + history"]
-        BTC --> RGB
+        RGB -->|"checks anchors and seals against"| BTC
     end
 
     subgraph EVIDENCE["Public evidence layer"]
@@ -30,7 +30,7 @@ flowchart LR
     end
 
     subgraph VERIFY["Independent verification"]
-        CHECK["Check package hash<br/>Bitcoin proofs · RGB history<br/>key purpose · signature domain"]
+        CHECK["Check package hash<br/>Bitcoin proofs · RGB history<br/>publisher key · package signature · domain"]
         POLICY["Run named versioned policy<br/>show conflicts + missing evidence"]
         RESULT["Explained result<br/>same inputs => same output"]
         CHECK --> POLICY --> RESULT

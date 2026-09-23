@@ -40,14 +40,29 @@ private attestation, or application record public.
 
 ## Package identity and signature
 
-`package_id` is the hash of the versioned canonical manifest with
-`package_id`, `signature`, and transport-only locator metadata omitted. The
-publisher signs that same digest in the proof-package signing domain. The
-declared `signing_key` MUST be authorized for the declared purpose by
-`publisher_state` on the declared `bitcoin_network`. The final canonical
-encoding and hash algorithm MUST be frozen with positive, mutation, truncation,
-wrong-network, wrong-key-purpose, and cross-domain test vectors before
-implementation.
+`package_id` is the ordinary content hash of the versioned canonical manifest
+with `package_id`, `signature`, and transport-only locator metadata omitted.
+It is an integrity identifier, not the BIP340 message by itself.
+
+Conceptually:
+
+```text
+package_id = Hash(Canonical(manifest without package_id, signature, locators))
+signature_payload = Canonical(manifest without signature and locators)
+signature_message = TaggedHash("O2A/v0.1/proof-package", signature_payload)
+signature = BIP340Sign(signing_key, signature_message)
+```
+
+The signed payload therefore includes the declared `package_id`, Bitcoin
+network, publisher, publisher state, signing-key identifier and purpose, and
+signature domain. The declared `signing_key` MUST be authorized for the
+declared purpose by `publisher_state` on the declared `bitcoin_network`. A
+verifier MUST recompute `package_id`, recompute the tagged signature message,
+and validate the package signature before accepting any included result.
+
+The final canonical encoding and hash algorithm MUST be frozen with positive,
+mutation, truncation, invalid-signature, wrong-network, wrong-key-purpose, and
+cross-domain test vectors before implementation.
 
 Every content-addressed reference contributes its media type, byte length, and
 content hash to the signed manifest. Implementations MUST reject ambiguous
@@ -65,6 +80,8 @@ data for a conforming wallet to validate:
 - each relevant seal, witness, commitment, anchor, confirmation, and stated
   reorg assumption;
 - current controller, recovery-policy commitment, and lifecycle status;
+- the publisher state and purpose-authorized signing key needed to verify the
+  proof-package signature in `O2A/v0.1/proof-package`;
 - signatures and signing domains on included public claims and attestations;
   and
 - the exact policy, evidence boundary, and evaluation context for any included

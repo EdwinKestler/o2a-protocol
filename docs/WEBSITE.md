@@ -14,6 +14,7 @@ The editorial sources are the accepted
 [the architecture](01-architecture.md),
 [the event and album identity profiles](../specs/music-object-schema.md),
 [the cryptographic profile](../specs/cryptographic-profile.md),
+[the discovery-binding schema](../specs/discovery-binding-schema.md),
 [the public proof-package profile](../specs/proof-package-schema.md), and
 [the paid-use proposal](16-artist-authorized-use-payments.md).
 The flow, framework, stack, and pipeline figures follow

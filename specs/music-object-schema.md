@@ -13,6 +13,9 @@ manifest claim includes at least:
 
 ```text
 event EntityID
+Bitcoin network
+authorizing RGB state
+signing key identifier and music_manifest purpose
 manifest version
 title/name claim
 time and place claims
@@ -35,6 +38,9 @@ metadata claim includes at least:
 
 ```text
 album EntityID
+Bitcoin network
+authorizing RGB state
+signing key identifier and music_manifest purpose
 metadata version
 title/name claim
 artist and contributor EntityIDs

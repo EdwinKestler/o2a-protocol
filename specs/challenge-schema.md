@@ -5,9 +5,12 @@
 ```json
 {
   "protocol_version": "0.1",
+  "bitcoin_network": "mainnet|testnet|signet|regtest",
   "object_type": "challenge",
   "challenger": "<EntityID>",
   "challenger_state": "<validated-rgb-identity-state-id>",
+  "controller_key_id": "<authorized-controller-key-id>",
+  "controller_key_purpose": "challenge",
   "target": "<object-id>",
   "reason": "<reason-code>",
   "evidence": ["<object-id>"],
@@ -26,9 +29,12 @@
 ```json
 {
   "protocol_version": "0.1",
+  "bitcoin_network": "mainnet|testnet|signet|regtest",
   "object_type": "revocation",
   "issuer": "<EntityID>",
   "issuer_state": "<validated-rgb-identity-state-id>",
+  "controller_key_id": "<authorized-controller-key-id>",
+  "controller_key_purpose": "revocation",
   "target": "<object-id>",
   "reason": "<reason-code>",
   "context": "<optional-context>",

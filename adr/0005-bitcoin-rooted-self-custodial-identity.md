@@ -100,14 +100,21 @@ decide which claimant is the real-world owner of a name.
 Pubky/PKARR and Nostr are discovery or publication adapters, not replacements
 for the O2A root identity:
 
-- a Pubky Ed25519 key may be bound to an EntityID by a signed, versioned claim;
-- a Nostr BIP340 public key may be separately bound for signed event
-  publication; and
+- a Pubky Ed25519 key may be bound to an EntityID by a signed, versioned
+  `discovery_key_binding` object;
+- a Nostr BIP340 public key may be separately bound by the same object type for
+  signed event publication; and
 - adapter keys can rotate or disappear without changing the O2A EntityID when
   the valid RGB identity state authorizes a replacement.
 
 Public discovery data must not contain private RGB consignments, private
 attestations, wallet seeds, recovery secrets, or Bitcoin spending keys.
+
+A discovery binding is claim evidence in the policy model, but it is not
+encoded or signed as a generic claim. Its O2A signature uses the dedicated
+`O2A/v0.1/discovery-binding` domain; the bound Pubky or Nostr key also proves
+the reciprocal adapter-side statement in its own signing context. See the
+[discovery-binding schema](../specs/discovery-binding-schema.md).
 
 An independently verifiable public identity nevertheless requires publication
 of the deliberately public identity-history shard. The owner wallet MUST be

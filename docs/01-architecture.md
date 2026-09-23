@@ -97,7 +97,9 @@ first-claim global username rule.
 Artist, venue, promoter, album, and event registries are rebuildable
 projections. Pubky/PKARR can publish public profiles and discovery pointers
 through a signed Ed25519-key binding. Nostr can publish BIP340-signed events
-through a separate binding. Neither adapter key replaces the O2A root.
+through a separate binding. Both use the canonical
+[`discovery_key_binding`](../specs/discovery-binding-schema.md) object and its
+dedicated O2A signature domain; neither adapter key replaces the O2A root.
 
 Discovery records advertise signed package hashes and transport locators.
 Another wallet verifies the retrieved bytes; the locator or hosting service is

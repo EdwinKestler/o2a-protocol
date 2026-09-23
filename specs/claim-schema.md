@@ -5,10 +5,12 @@
 ```json
 {
   "protocol_version": "0.1",
+  "bitcoin_network": "<bitcoin-network>",
   "object_type": "claim",
   "issuer": "<EntityID>",
   "issuer_state": "<validated-rgb-identity-state-id>",
   "controller_key_id": "<authorized-controller-key-id>",
+  "controller_key_purpose": "claim",
   "subject": "<EntityID>",
   "predicate": "<versioned-predicate>",
   "object": "<canonical-value-or-reference>",

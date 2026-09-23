@@ -7,15 +7,18 @@ a specific validated RGB identity state.
 
 Conceptually:
 
-[
-C = H(issuer || subject || predicate || object || context || nonce)
-]
+```text
+claim_payload = Canonical(claim without signature)
+claim_message = TaggedHash("O2A/v0.1/claim", claim_payload)
+signature = BIP340Sign(authorized_controller_key, claim_message)
+```
 
-[
-signature = BIP340Sign(SK_{authorized-controller}, C)
-]
-
-Exact serialization is defined in the claim schema.
+The canonical payload includes the protocol version, Bitcoin network, object
+type, issuer EntityID, authorizing RGB state, key identifier and purpose, and
+the domain-specific claim fields. Exact serialization is defined in the
+[claim schema](../specs/claim-schema.md) and
+[cryptographic profile](../specs/cryptographic-profile.md). A plain untagged
+hash is not a valid O2A claim-signing message.
 
 ## Examples
 

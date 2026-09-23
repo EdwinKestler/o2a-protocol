@@ -47,7 +47,27 @@ For a public identity, those inputs MUST be obtainable from a validated
 [public identity proof package](proof-package-schema.md) or direct wallet
 transfer. A package locator is not evidence of availability or validity: the
 verifier fetches the content, checks its hash, validates the RGB history and
-Bitcoin proofs, and reports missing material explicitly.
+Bitcoin proofs, verifies the package publisher's controller authorization and
+BIP340 signature in the proof-package tagged-hash domain, and reports missing
+material explicitly.
+
+Before policy evaluation, a verifier MUST:
+
+1. recompute the package ID from the canonical unsigned content-hash input;
+2. reject a Bitcoin-network, protocol-version, object-type, or package-ID
+   mismatch;
+3. validate the publisher's RGB history through `publisher_state` and confirm
+   that `signing_key` is authorized for `signing_key_purpose`;
+4. reconstruct the canonical package signature payload, compute the
+   `O2A/v0.1/proof-package` tagged hash, and verify the BIP340 signature;
+5. reject a plain-hash signature, unknown domain, cross-domain replay, or
+   signature made by a key not authorized by the stated publisher state; and
+6. validate every referenced identity history, Bitcoin proof, evidence object,
+   policy, and explicit evaluation context required for the result.
+
+Failure at steps 1–5 makes the package invalid. Unavailable referenced content
+needed at step 6 makes the evaluation incomplete unless the named policy
+explicitly excludes that content from its declared evidence boundary.
 
 ## Explainability
 

@@ -99,6 +99,7 @@ The current schema set defines the
 [attestations](specs/attestation-schema.md),
 [challenges](specs/challenge-schema.md),
 [channel-control proofs](specs/control-proof-schema.md),
+[discovery-key bindings](specs/discovery-binding-schema.md),
 [event and album identities](specs/music-object-schema.md),
 [cryptographic signing domains](specs/cryptographic-profile.md),
 [public proof packages](specs/proof-package-schema.md), and
