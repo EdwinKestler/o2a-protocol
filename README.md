@@ -124,9 +124,8 @@ turns the accepted architecture into a CLI-first Rust and Bitcoin Core regtest
 plan while keeping the RGB lineage and dependency set behind a Phase 0 gate.
 The supporting [license/adoption assessment](docs/22-license-and-adoption-assessment.md)
 and [compatibility/security record](docs/23-stack-compatibility-and-security-readiness.md)
-record a proposed licensing alternative, the disposable install smoke,
-blockers, and required mitigations without changing the current license or
-selecting a dependency graph.
+record the accepted dual-license policy, the disposable install smoke,
+blockers, and required mitigations without selecting a dependency graph.
 Supporting projection notes cover the
 [artist catalog](docs/08-artist-catalog.md),
 [venue registry](docs/09-venue-registry.md),
@@ -139,17 +138,15 @@ No production implementation code should be introduced until the v0.1 RGB
 identity schema, canonical serialization, Bitcoin commitment and reorg rules,
 key-derivation profile, and deterministic test vectors are agreed.
 
-This repository and the future official reference wallet and node are licensed
-under the [Apache License 2.0](LICENSE), with copyright held by Edwin Kestler.
-Anyone may inspect, build, run, modify, and distribute them under that license.
-That current decision remains in force; the remaining specification and
-conformance gates still apply before implementation code is accepted.
-
-An adoption review recommends considering `MIT OR Apache-2.0` for O2A-authored
-work and CC0-1.0 for conformance vectors. That is a proposed policy change, not
-the current license. Until the copyright holder explicitly approves and the
-canonical license files are changed, Apache-2.0 remains the only repository
-license.
+O2A-authored specifications, documentation, and future official reference
+software are licensed, at the recipient's option, under
+[`MIT OR Apache-2.0`](LICENSE), with copyright held by Edwin Kestler. The
+[Apache-2.0](LICENSE-APACHE) option retains its express patent grant; the
+[MIT](LICENSE-MIT) option minimizes downstream license friction. Future
+conformance vectors are separately offered under CC0-1.0 only within their
+explicitly marked directory. Third-party material retains its own license.
+The remaining specification and conformance gates still apply before
+implementation code is accepted.
 
 ## First milestone
 

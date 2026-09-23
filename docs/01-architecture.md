@@ -129,10 +129,12 @@ mode MUST disclose its header, inclusion-proof, indexer, privacy, and
 availability assumptions. Offline mode verifies retained packages without
 pretending to know about evidence it has not received.
 
-The repository and future official reference wallet/node use the Apache
-License 2.0 so anyone can inspect, build, run, modify, and distribute the
-software under its terms. This closes the source-license decision; it does not
-close the remaining protocol, dependency, conformance, or security gates.
+O2A-authored specifications, documentation, and future official reference
+wallet/node software use `MIT OR Apache-2.0`. Recipients may select MIT for
+minimal downstream friction or Apache-2.0 for its express patent grant and
+NOTICE terms. Explicitly marked conformance vectors use CC0-1.0. This closes
+the source-license decision; it does not close the remaining protocol,
+dependency, conformance, or security gates.
 
 ## Storage model
 

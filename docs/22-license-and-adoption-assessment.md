@@ -1,66 +1,48 @@
 # 22 — License and Adoption Assessment
 
-**Status:** supporting policy assessment, 2026-09-23. This is a practical
-open-source licensing review, not legal advice and not a license grant. The
-root [LICENSE](../LICENSE) file remains authoritative.
+**Status:** accepted licensing policy, 2026-09-23. This is a practical
+open-source licensing record, not legal advice. The root
+[LICENSE](../LICENSE) notice and its canonical license files are authoritative.
 
 ## Outcome
 
-Apache-2.0 is a sound permissive license for O2A. It allows commercial and
-closed-source use, modification, and redistribution, and it includes an
-explicit contributor patent grant. It is compatible with using MIT-licensed
-Bitcoin Core and Pubky components and CC0-1.0 rust-bitcoin components as
-separate dependencies, subject to every upstream license's own conditions.
-
-If the overriding goal is the least possible downstream friction, the
-recommended future policy is:
+The copyright holder approved this policy to minimize downstream friction:
 
 - license O2A-authored specifications, documentation, reference software, and
   crates under `MIT OR Apache-2.0`;
-- offer public conformance vectors additionally under `CC0-1.0`, so wallet and
+- license public conformance vectors separately under `CC0-1.0`, so wallet and
   node implementers can copy fixtures without license ambiguity; and
 - keep every upstream dependency and bundled executable under its own license,
   with the required notices shipped alongside distributions.
 
-This recommendation does not relicense the repository. The current grant is
-Apache-2.0 only until the copyright holder explicitly approves the change and
-adds both canonical license texts. A recipient choosing the MIT alternative
-would not receive Apache-2.0's express patent grant through that choice. Teams
-that value the patent terms can choose Apache-2.0.
+The repository now carries both canonical license texts. A recipient choosing
+the MIT alternative does not receive Apache-2.0's express patent grant through
+that choice. Teams that value the patent terms can choose Apache-2.0.
 
 ## Why this minimizes friction
 
 | Policy | Adoption effect | Cost or limitation |
 | --- | --- | --- |
-| Apache-2.0 only — current | Permissive, commercial-friendly, explicit patent grant. | Some Rust projects and corporate intake systems prefer an MIT alternative. |
-| `MIT OR Apache-2.0` — recommended | Familiar Rust ecosystem convention; downstream chooses the accepted path while Apache remains available. | Two license texts and precise contribution language are required; an MIT-only recipient does not obtain Apache's patent grant. |
+| Apache-2.0 only — superseded | Permissive, commercial-friendly, explicit patent grant. | Some Rust projects and corporate intake systems prefer an MIT alternative. |
+| `MIT OR Apache-2.0` — accepted | Familiar Rust ecosystem convention; downstream chooses the accepted path while Apache remains available. | Two license texts and precise contribution language are required; an MIT-only recipient does not obtain Apache's patent grant. |
 | CC0-1.0 for vectors only | Makes test vectors easy to embed in independent implementations and follows Bitcoin BIP guidance. | No express patent grant; it should be scoped to fixtures, not silently applied to the wallet or protocol code. |
 | GPL or AGPL | Stronger reciprocal terms for copies of this implementation. | Does not stop a separate closed implementation of a public protocol and adds integration friction, contrary to the adoption goal. |
 
-## Adoption-safe implementation checklist
+## Adoption-safe implementation record
 
-If dual licensing is approved:
-
-1. inventory existing contributions and confirm that every relevant
-   rightsholder consents to relicensing; Git authorship alone is not proof of
-   copyright ownership or authority to relicense;
-2. preserve the canonical Apache text as `LICENSE-APACHE` and add the canonical
-   MIT text as `LICENSE-MIT`;
-3. state the exact SPDX expression `MIT OR Apache-2.0` in the README, package
-   metadata, source headers or a documented directory-level mapping;
-4. add a `CONTRIBUTING.md` saying contributions are submitted under both
-   alternatives and require [Developer Certificate of Origin 1.1](https://developercertificate.org/)
-   sign-off; do not require copyright assignment merely for convenience;
-5. add an explicit CC0-1.0 scope marker and license text under
-   `tests/vectors/` when those fixtures exist;
-6. generate third-party notices and a dependency license bundle for release
-   artifacts, especially when Bitcoin Core or another executable is bundled;
-   and
-7. update every current Apache-only statement, the pipeline source and SVG,
-   and the public site in the same reviewed change.
-
-Do not change only the Cargo manifest or only the README. A partial dual-license
-conversion creates the ambiguity this policy is meant to remove.
+- The copyright holder approved the migration for existing O2A-authored work.
+- `LICENSE-APACHE` preserves the canonical Apache text; `LICENSE-MIT` contains
+  the canonical MIT text; the root `LICENSE` states the scope and SPDX choice.
+- `CONTRIBUTING.md` applies the same dual-license inbound policy and requires
+  [Developer Certificate of Origin 1.1](https://developercertificate.org/)
+  sign-off without copyright assignment.
+- When `tests/vectors/` is created, it must contain an explicit CC0-1.0 scope
+  marker and license text. Until then, no repository content is implicitly
+  CC0-1.0.
+- Release artifacts must include third-party notices and a dependency license
+  bundle, especially when Bitcoin Core or another executable is bundled.
+- Future Rust package metadata must use the exact SPDX expression
+  `MIT OR Apache-2.0`.
 
 ## Dependency license policy
 

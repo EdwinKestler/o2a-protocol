@@ -26,8 +26,9 @@ Diagrams, website, examples, and application proposals
 The higher document wins. Edit the lower document to match. A new protocol
 rule is introduced in an ADR or a normative spec, then copied downward. The
 [README](../README.md) is the index and status summary. It does not introduce
-protocol rules. The [Apache License 2.0](../LICENSE) governs reuse of this
-repository. It is not a protocol rule.
+protocol rules. The root [license notice](../LICENSE) governs reuse of this
+repository's O2A-authored material under `MIT OR Apache-2.0`; explicitly marked
+conformance vectors use CC0-1.0. Licensing is not a protocol rule.
 
 Among accepted ADRs,
 [ADR-0005](../adr/0005-bitcoin-rooted-self-custodial-identity.md) is the

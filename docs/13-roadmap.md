@@ -22,7 +22,8 @@
 - specify competing human-name claims without first-claim ownership;
 - specify bounded evidence retrieval and explicit evaluation context;
 - create deterministic positive and adversarial test vectors; and
-- retain the accepted Apache-2.0 repository and reference wallet/node license.
+- retain the accepted `MIT OR Apache-2.0` license for O2A-authored material and
+  the separately scoped CC0-1.0 license for conformance vectors.
 
 Gate: the vectors cover distinct root/payment keys, duplicate names, invalid
 BIP340 signatures, cross-domain signature replay, wrong Bitcoin network, wrong

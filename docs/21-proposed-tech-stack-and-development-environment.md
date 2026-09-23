@@ -34,7 +34,7 @@ behind the Phase 0 gates in the [roadmap](13-roadmap.md).
 | Registry service | Rust service, PostgreSQL projection, replicated object storage; Redis only as a disposable measured cache | Deferred until a registry/API is required. Axum is a reasonable candidate, not a protocol dependency. |
 | Desktop wallet | Tauri 2 shell over the Rust client core | Optional Phase 2 candidate. Keep its platform and web dependencies out of the base environment until selected. |
 | Browser/SDK | TypeScript or WASM facade over stable protocol interfaces | Deferred. It must not create a second signing or serialization rule. |
-| License | Apache-2.0 for this repository and the reference wallet/node | Current accepted license. The adoption review recommends `MIT OR Apache-2.0` for O2A-authored work and CC0-1.0 for conformance vectors if minimum downstream friction is the overriding goal. Relicensing requires an explicit maintainer decision; dependency licenses remain separate. |
+| License | `MIT OR Apache-2.0` for O2A-authored specifications, documentation, and reference software; CC0-1.0 for explicitly marked conformance vectors | Accepted. Apache-2.0 and its patent grant remain available as an option. Dependency licenses remain separate. |
 
 JSON, YAML, SQL rows, and UI models may be used as human-readable views. They
 must not become signing bytes by accident. Signed and hashed O2A objects use

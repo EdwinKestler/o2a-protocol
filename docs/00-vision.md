@@ -304,6 +304,7 @@ after the identity and evidence model is stable.
   to Bitcoin; ordinary content edits remain off-chain.
 - **Self-custodial:** seeds, identity keys, consignments, and proof packages stay
   under the participant's control.
-- **Open-source infrastructure:** this repository and the future official
-  reference wallet and node use Apache-2.0 so anyone can inspect, build, run,
-  modify, and distribute them under its terms.
+- **Open-source infrastructure:** O2A-authored specifications, documentation,
+  and future official reference software use `MIT OR Apache-2.0`; recipients
+  can select the low-friction MIT terms or Apache-2.0 with its express patent
+  grant. Explicitly marked conformance vectors use CC0-1.0.

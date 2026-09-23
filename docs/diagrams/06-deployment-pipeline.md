@@ -4,7 +4,7 @@ The proposed deployment progression adds two controlled environments between loc
 
 ```mermaid
 flowchart LR
-    P0["Phase 0 — freeze specification<br/>canonical encoding · signing domains<br/>RGB stack/commitment method · vectors<br/>Apache-2.0 accepted"]
+    P0["Phase 0 — freeze specification<br/>canonical encoding · signing domains<br/>RGB stack/commitment method · vectors<br/>MIT OR Apache-2.0 accepted"]
     P1["Phase 1 — deterministic core<br/>Bitcoin/RGB regtest lifecycle<br/>positive + adversarial vectors"]
     P2["Phase 2 — wallet/node<br/>local custody · backup/recovery<br/>proof export/import · full/light modes"]
     P3["Phase 3 — discovery/testnet<br/>DNS/social observations · Pubky/Nostr<br/>collisions · registry rebuild · interop"]
