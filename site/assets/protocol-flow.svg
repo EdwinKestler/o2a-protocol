@@ -1,88 +1,40 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 780" role="img">
-  <title>O2A protocol flow</title>
-  <desc>Hello World path: Bitcoin-anchored RGB identity, non-exclusive name and channel claims, an event with its own key, relationship attestations, visible conflicts, and the same policy result from independent wallets.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" role="img">
+  <title>O2A public proof protocol flow</title>
+  <desc>An owner wallet creates a Bitcoin-rooted RGB identity, evolves controller state, signs purpose-specific evidence, exports a content-addressed proof package, and sends or publishes it for two independent wallets to verify.</desc>
   <defs>
-    <filter id="shadow" x="-8%" y="-8%" width="120%" height="130%">
-      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#112840" flood-opacity="0.08"/>
-    </filter>
-    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M0 1.2L8 5L0 8.8" fill="none" stroke="#1559e9" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-    </marker>
+    <filter id="shadow" x="-8%" y="-10%" width="120%" height="140%"><feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#112840" flood-opacity="0.08"/></filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 1.2L8 5L0 8.8" fill="none" stroke="#1559e9" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker>
   </defs>
-  <rect width="1200" height="780" fill="#f6f8fb"/>
-  <text x="48" y="52" fill="#1559e9" font-family="Helvetica Neue, Arial, sans-serif" font-size="12" font-weight="700" letter-spacing="2.2">PROTOCOL FLOW</text>
-  <text x="48" y="90" fill="#142238" font-family="Helvetica Neue, Arial, sans-serif" font-size="30" font-weight="700">From an identity to the same result</text>
-  <text x="48" y="118" fill="#536379" font-family="Helvetica Neue, Arial, sans-serif" font-size="15">The first scenario. Bitcoin orders identity state; wallets evaluate real-world evidence.</text>
-
+  <rect width="1200" height="900" fill="#f6f8fb"/>
   <g font-family="Helvetica Neue, Arial, sans-serif">
-    <g transform="translate(48 148)" filter="url(#shadow)">
-      <rect width="348" height="176" rx="16" fill="#ffffff" stroke="#dce3ed"/>
-      <circle cx="36" cy="40" r="15" fill="#1559e9"/>
-      <text x="36" y="45" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="700">01</text>
-      <text x="60" y="45" fill="#1559e9" font-size="12" font-weight="700" letter-spacing="1.1">IDENTITY GENESIS</text>
-      <text x="24" y="86" fill="#142238" font-size="20" font-weight="700">Root an EntityID</text>
-      <text x="24" y="118" fill="#536379" font-size="14">BIP340 root + RGB state,</text>
-      <text x="24" y="140" fill="#536379" font-size="14">anchored to Bitcoin.</text>
-    </g>
-    <g transform="translate(426 148)" filter="url(#shadow)">
-      <rect width="348" height="176" rx="16" fill="#ffffff" stroke="#dce3ed"/>
-      <circle cx="36" cy="40" r="15" fill="#1559e9"/>
-      <text x="36" y="45" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="700">02</text>
-      <text x="60" y="45" fill="#1559e9" font-size="12" font-weight="700" letter-spacing="1.1">NAME + CHANNEL</text>
-      <text x="24" y="86" fill="#142238" font-size="20" font-weight="700">Publish evidence</text>
-      <text x="24" y="118" fill="#536379" font-size="14">Sign a non-exclusive name claim</text>
-      <text x="24" y="140" fill="#536379" font-size="14">and DNS or social proof.</text>
-    </g>
-    <g transform="translate(804 148)" filter="url(#shadow)">
-      <rect width="348" height="176" rx="16" fill="#ffffff" stroke="#dce3ed"/>
-      <circle cx="36" cy="40" r="15" fill="#1559e9"/>
-      <text x="36" y="45" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="700">03</text>
-      <text x="60" y="45" fill="#1559e9" font-size="12" font-weight="700" letter-spacing="1.1">EVENT IDENTITY</text>
-      <text x="24" y="86" fill="#142238" font-size="20" font-weight="700">Create an event key</text>
-      <text x="24" y="118" fill="#536379" font-size="14">Its EntityID signs the manifest</text>
-      <text x="24" y="140" fill="#536379" font-size="14">and content hash.</text>
-    </g>
-    <path d="M396 236H418" fill="none" stroke="#1559e9" stroke-width="1.6" marker-end="url(#arrow)"/>
-    <path d="M774 236H796" fill="none" stroke="#1559e9" stroke-width="1.6" marker-end="url(#arrow)"/>
+    <text x="48" y="52" fill="#1559e9" font-size="12" font-weight="700" letter-spacing="2.2">PROTOCOL FLOW</text>
+    <text x="48" y="90" fill="#142238" font-size="30" font-weight="700">From self-custody to independent verification</text>
+    <text x="48" y="118" fill="#536379" font-size="15">The package carries the public history and evidence. The host or locator never becomes authority.</text>
 
-    <g transform="translate(48 360)" filter="url(#shadow)">
-      <rect width="348" height="176" rx="16" fill="#ffffff" stroke="#dce3ed"/>
-      <circle cx="36" cy="40" r="15" fill="#1559e9"/>
-      <text x="36" y="45" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="700">04</text>
-      <text x="60" y="45" fill="#1559e9" font-size="12" font-weight="700" letter-spacing="1.1">ATTESTATIONS</text>
-      <text x="24" y="86" fill="#142238" font-size="20" font-weight="700">Connect the participants</text>
-      <text x="24" y="118" fill="#536379" font-size="14">Artist, venue, and promoter</text>
-      <text x="24" y="140" fill="#536379" font-size="14">sign scoped relationships.</text>
+    <rect x="48" y="148" width="1104" height="332" rx="20" fill="#eaf0f9" stroke="#c8d8ec"/>
+    <text x="72" y="180" fill="#1559e9" font-size="11" font-weight="700" letter-spacing="1.5">OWNER WALLET / NODE</text>
+    <g filter="url(#shadow)">
+      <g transform="translate(72 202)"><rect width="238" height="230" rx="16" fill="#ffffff" stroke="#dce3ed"/><circle cx="28" cy="31" r="14" fill="#1559e9"/><text x="28" y="36" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="700">01</text><text x="50" y="35" fill="#1559e9" font-size="11" font-weight="700" letter-spacing="1">CREATE</text><text x="20" y="79" fill="#142238" font-size="18" font-weight="700">Root the EntityID</text><text x="20" y="110" fill="#536379" font-size="13">Immutable BIP340 root</text><text x="20" y="132" fill="#536379" font-size="13">RGB genesis + Bitcoin anchor</text><text x="20" y="171" fill="#80521d" font-size="12" font-weight="700">KEY SEPARATION</text><text x="20" y="194" fill="#536379" font-size="12">Identity key ≠ spending key</text></g>
+      <g transform="translate(338 202)"><rect width="238" height="230" rx="16" fill="#ffffff" stroke="#dce3ed"/><circle cx="28" cy="31" r="14" fill="#1559e9"/><text x="28" y="36" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="700">02</text><text x="50" y="35" fill="#1559e9" font-size="11" font-weight="700" letter-spacing="1">EVOLVE</text><text x="20" y="79" fill="#142238" font-size="18" font-weight="700">Update control</text><text x="20" y="110" fill="#536379" font-size="13">Rotate controller keys</text><text x="20" y="132" fill="#536379" font-size="13">Change recovery rules</text><text x="20" y="154" fill="#536379" font-size="13">Recover or revoke</text><text x="20" y="194" fill="#536379" font-size="12">RGB validates the lifecycle</text></g>
+      <g transform="translate(604 202)"><rect width="238" height="230" rx="16" fill="#ffffff" stroke="#dce3ed"/><circle cx="28" cy="31" r="14" fill="#1559e9"/><text x="28" y="36" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="700">03</text><text x="50" y="35" fill="#1559e9" font-size="11" font-weight="700" letter-spacing="1">ATTEST</text><text x="20" y="79" fill="#142238" font-size="18" font-weight="700">Sign typed evidence</text><text x="20" y="110" fill="#536379" font-size="13">Name + DNS/social control</text><text x="20" y="132" fill="#536379" font-size="13">Relationships + challenges</text><text x="20" y="154" fill="#536379" font-size="13">Event / album manifests</text><text x="20" y="194" fill="#536379" font-size="12">One signing domain per purpose</text></g>
+      <g transform="translate(870 202)"><rect width="258" height="230" rx="16" fill="#112840"/><circle cx="28" cy="31" r="14" fill="#a9edd6"/><text x="28" y="36" text-anchor="middle" fill="#112840" font-size="11" font-weight="700">04</text><text x="50" y="35" fill="#a9edd6" font-size="11" font-weight="700" letter-spacing="1">PACKAGE</text><text x="20" y="79" fill="#ffffff" font-size="18" font-weight="700">Export public proof</text><text x="20" y="110" fill="#b7d3ee" font-size="13">Identity-history shard</text><text x="20" y="132" fill="#b7d3ee" font-size="13">Bitcoin proofs + evidence</text><text x="20" y="154" fill="#b7d3ee" font-size="13">Policy + explicit context</text><text x="20" y="194" fill="#a9edd6" font-size="12">Immutable package hash</text></g>
     </g>
-    <g transform="translate(426 360)" filter="url(#shadow)">
-      <rect width="348" height="176" rx="16" fill="#ffffff" stroke="#dce3ed"/>
-      <circle cx="36" cy="40" r="15" fill="#1559e9"/>
-      <text x="36" y="45" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="700">05</text>
-      <text x="60" y="45" fill="#1559e9" font-size="12" font-weight="700" letter-spacing="1.1">CONFLICTS + POLICY</text>
-      <text x="24" y="86" fill="#142238" font-size="20" font-weight="700">Show competing claims</text>
-      <text x="24" y="118" fill="#536379" font-size="14">A named policy weighs evidence;</text>
-      <text x="24" y="140" fill="#536379" font-size="14">first claim does not own a name.</text>
+    <g fill="none" stroke="#1559e9" stroke-width="1.6" marker-end="url(#arrow)"><path d="M310 317H330"/><path d="M576 317H596"/><path d="M842 317H862"/></g>
+
+    <rect x="48" y="510" width="1104" height="86" rx="16" fill="#ffffff" stroke="#dce3ed"/>
+    <text x="72" y="540" fill="#1559e9" font-size="11" font-weight="700" letter-spacing="1.3">05 / TRANSFER OR DISCOVER</text>
+    <text x="72" y="568" fill="#142238" font-size="15">Direct wallet exchange · HTTPS · Pubky / PKARR · optional Nostr pointer</text>
+    <rect x="842" y="531" width="286" height="40" rx="20" fill="#fff4e8" stroke="#e6c69f"/>
+    <text x="985" y="556" text-anchor="middle" fill="#80521d" font-size="12" font-weight="700">LOCATOR ≠ AUTHORITY</text>
+
+    <text x="48" y="638" fill="#1559e9" font-size="11" font-weight="700" letter-spacing="1.4">06 / VERIFY INDEPENDENTLY</text>
+    <g filter="url(#shadow)">
+      <g transform="translate(48 660)"><rect width="306" height="156" rx="16" fill="#ffffff" stroke="#dce3ed"/><text x="22" y="36" fill="#1559e9" font-size="11" font-weight="700">WALLET A</text><text x="22" y="70" fill="#142238" font-size="16" font-weight="700">Validate every boundary</text><text x="22" y="100" fill="#536379" font-size="13">Package hash · Bitcoin · RGB</text><text x="22" y="123" fill="#536379" font-size="13">keys · domains · evidence · policy</text></g>
+      <g transform="translate(380 660)"><rect width="306" height="156" rx="16" fill="#ffffff" stroke="#dce3ed"/><text x="22" y="36" fill="#1559e9" font-size="11" font-weight="700">WALLET B</text><text x="22" y="70" fill="#142238" font-size="16" font-weight="700">Validate every boundary</text><text x="22" y="100" fill="#536379" font-size="13">Package hash · Bitcoin · RGB</text><text x="22" y="123" fill="#536379" font-size="13">keys · domains · evidence · policy</text></g>
+      <g transform="translate(712 660)"><rect width="440" height="156" rx="16" fill="#112840"/><text x="24" y="36" fill="#a9edd6" font-size="11" font-weight="700">DETERMINISM INVARIANT</text><text x="24" y="75" fill="#ffffff" font-size="20" font-weight="700">Same bounded inputs → same result</text><text x="24" y="107" fill="#b7d3ee" font-size="13">Conflicts and missing evidence remain visible.</text><text x="24" y="130" fill="#b7d3ee" font-size="13">A registry may present the result, never redefine it.</text></g>
     </g>
-    <g transform="translate(804 360)" filter="url(#shadow)">
-      <rect width="348" height="176" rx="16" fill="#112840"/>
-      <circle cx="36" cy="40" r="15" fill="#a9edd6"/>
-      <text x="36" y="45" text-anchor="middle" fill="#112840" font-size="12" font-weight="700">06</text>
-      <text x="60" y="45" fill="#a9edd6" font-size="12" font-weight="700" letter-spacing="1.1">SAME RESULT</text>
-      <text x="24" y="86" fill="#ffffff" font-size="20" font-weight="700">Independent wallets</text>
-      <text x="24" y="118" fill="#b7d3ee" font-size="14">Same identity history, evidence,</text>
-      <text x="24" y="140" fill="#b7d3ee" font-size="14">policy, and context. Same result.</text>
-    </g>
-    <path d="M396 448H418" fill="none" stroke="#1559e9" stroke-width="1.6" marker-end="url(#arrow)"/>
-    <path d="M774 448H796" fill="none" stroke="#1559e9" stroke-width="1.6" marker-end="url(#arrow)"/>
+    <path d="M354 738H372" fill="none" stroke="#1559e9" stroke-width="1.6" marker-end="url(#arrow)"/>
+    <path d="M686 738H704" fill="none" stroke="#1559e9" stroke-width="1.6" marker-end="url(#arrow)"/>
+    <text x="48" y="864" fill="#536379" font-size="12">If required history is absent, a reference is unavailable, or a hash fails, the result is incomplete or invalid—not silently reconstructed.</text>
   </g>
-
-  <rect x="48" y="564" width="1104" height="168" rx="16" fill="#112840"/>
-  <text x="76" y="604" fill="#a9edd6" font-family="Helvetica Neue, Arial, sans-serif" font-size="12" font-weight="700" letter-spacing="1.4">PROJECTIONS</text>
-  <text x="76" y="634" fill="#ffffff" font-family="Helvetica Neue, Arial, sans-serif" font-size="15">Artist, venue, event, and album registries</text>
-  <text x="76" y="658" fill="#b7d3ee" font-family="Helvetica Neue, Arial, sans-serif" font-size="14">are rebuilt from signed evidence.</text>
-  <text x="76" y="682" fill="#b7d3ee" font-family="Helvetica Neue, Arial, sans-serif" font-size="14">Replacing the index does not change the result.</text>
-  <text x="620" y="604" fill="#a9edd6" font-family="Helvetica Neue, Arial, sans-serif" font-size="12" font-weight="700" letter-spacing="1.4">APPLICATIONS</text>
-  <text x="620" y="634" fill="#ffffff" font-family="Helvetica Neue, Arial, sans-serif" font-size="15">GatePass, SplitNight, and payments</text>
-  <text x="620" y="658" fill="#b7d3ee" font-family="Helvetica Neue, Arial, sans-serif" font-size="14">consume the verification result.</text>
-  <text x="620" y="682" fill="#b7d3ee" font-family="Helvetica Neue, Arial, sans-serif" font-size="14">They cannot redefine identity validity.</text>
 </svg>

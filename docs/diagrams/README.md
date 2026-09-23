@@ -14,6 +14,7 @@ All diagrams use Mermaid so they render directly in GitHub and remain editable/v
 6. [Development-to-public-release pipeline](./06-deployment-pipeline.md)
 7. [Hello-World pilot](./07-hello-world-pilot.md)
 8. [O2A ecosystem and namespace map](./08-o2a-ecosystem-map.md)
+9. [Protocol framework and authority boundaries](./09-protocol-framework.md)
 
 ## Design rules reflected in these diagrams
 
@@ -26,6 +27,9 @@ All diagrams use Mermaid so they render directly in GitHub and remain editable/v
   packages, with a full Bitcoin node or an explicitly labeled light mode;
 - human-readable names are non-exclusive evidence-backed claims;
 - signed claims and attestations are evidence, not truth by themselves;
+- every signature uses a purpose-specific domain and an authorized key purpose;
+- public proof packages are immutable, content-addressed, and independently
+  retrievable; transport and hosting never become identity authority;
 - verification is a deterministic policy result over evidence;
 - registries are rebuildable projections, not the source of truth;
 - GatePass and SplitNight remain downstream application modules;

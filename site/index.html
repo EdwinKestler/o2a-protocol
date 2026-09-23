@@ -70,20 +70,24 @@
 
     <section class="section wrap" id="protocol" aria-labelledby="protocol-title">
       <div class="section-top"><p class="eyebrow">03 / THE PROTOCOL</p><span class="section-note">Figures follow the specification.</span></div>
-      <div class="split-heading"><h2 id="protocol-title">Flow, stack,<br>and release path.</h2><p>These drawings match the current design notes. They describe a proposal. They are not a running network, a payment service, or a proof that a performance occurred.</p></div>
+      <div class="split-heading"><h2 id="protocol-title">Flow, framework,<br>stack, and release path.</h2><p>These drawings match the current design notes. They separate custody, identity state, public proof, verification, and replaceable services. They describe a proposal, not a running network or proof that a performance occurred.</p></div>
       <p class="diagram-hint">Swipe each figure sideways to read it.</p>
       <div class="diagram-list">
         <figure class="diagram" id="flow">
-          <img src="assets/protocol-flow.svg" width="1200" height="780" alt="Protocol flow in six steps: create a BIP340-rooted EntityID through RGB anchored to Bitcoin, publish non-exclusive name and channel evidence, create an event with its own key and manifest hash, collect relationship attestations, keep conflicts visible under a named policy, and require independent wallets to return the same result.">
-          <figcaption><strong>Protocol flow.</strong> Bitcoin establishes ordered identity state. An event has its own key-rooted ID. Wallets evaluate channel and relationship evidence without a registrar voting on the real artist.</figcaption>
+          <img src="assets/protocol-flow.svg" width="1200" height="900" alt="Protocol flow: an owner wallet creates a BIP340-rooted EntityID, evolves its RGB lifecycle anchored to Bitcoin, signs typed evidence, exports a content-addressed public proof package, transfers or publishes it, and lets independent wallets validate the same bounded inputs.">
+          <figcaption><strong>Protocol flow.</strong> The owner exports the public identity-history shard, Bitcoin proofs, evidence, policy, and context in an immutable package. A direct recipient or stranger wallet verifies the bytes and every authority boundary.</figcaption>
+        </figure>
+        <figure class="diagram" id="framework">
+          <img src="assets/protocol-framework.svg" width="1200" height="920" alt="Protocol framework with five boundaries: owner-controlled identity keys, Bitcoin and RGB identity state, purpose-domain signed evidence, a content-addressed public proof package, and independent wallet verification; discovery and registries remain replaceable views.">
+          <figcaption><strong>Protocol framework.</strong> Bitcoin orders and seals. RGB validates identity state. O2A signatures establish typed authorship. A named policy interprets evidence. Discovery and registries do not inherit any of those powers.</figcaption>
         </figure>
         <figure class="diagram" id="stack">
-          <img src="assets/protocol-stack.svg" width="1200" height="860" alt="Proposed protocol stack: a self-custodial wallet stores keys and proof packages; the protocol engine checks BIP340 authorization, RGB history, Bitcoin anchors, evidence, and policy. Databases are projections. DNS, social, Pubky, and Nostr provide evidence or discovery but cannot replace the Bitcoin identity root.">
-          <figcaption><strong>Protocol stack.</strong> Bitcoin and RGB are the required identity foundation. Signed external evidence and named policy evaluate real-world claims. PostgreSQL and Redis remain rebuildable infrastructure.</figcaption>
+          <img src="assets/protocol-stack.svg" width="1200" height="960" alt="Proposed technology stack: a self-custodial client combines a wallet interface, encrypted local vault, and deterministic protocol core; Bitcoin and RGB form the required identity foundation; evidence and discovery adapters plus database services remain replaceable.">
+          <figcaption><strong>Technology stack.</strong> Keys, consignments, evidence, and packages stay in the client. Bitcoin and RGB are required for identity lifecycle validity. DNS, social, Pubky, Nostr, APIs, databases, caches, and storage have narrower replaceable roles.</figcaption>
         </figure>
         <figure class="diagram" id="pipeline">
-          <img src="assets/protocol-pipeline.svg" width="1200" height="820" alt="Proposed release pipeline: a local self-custodial Bitcoin and RGB regtest, lifecycle and recovery conformance, independent wallet exchange, public testnet, public beta, then a mainnet identity release. One signed artifact is promoted from a git commit through dev and testnet to production.">
-          <figcaption><strong>Release pipeline.</strong> A design target while the specification is still open. The first public release is identity, evidence, and verification. The same tested artifact is promoted rather than rebuilt.</figcaption>
+          <img src="assets/protocol-pipeline.svg" width="1200" height="920" alt="Proposed protocol and release pipeline: freeze the specification, prove the deterministic Bitcoin and RGB core, build the self-custodial wallet and node, test discovery and interoperability, release identity version one, then add applications; promote one reproducible signed artifact.">
+          <figcaption><strong>Protocol and release pipeline.</strong> The specification, conformance, custody, interoperability, and identity-v1 gates close in order. A reviewed commit produces one reproducible signed artifact for promotion; local evidence is never presented as a public release.</figcaption>
         </figure>
       </div>
     </section>

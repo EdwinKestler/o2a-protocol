@@ -12,7 +12,8 @@ DEST = ROOT / ".site-dist"
 PUBLIC_FILES = (
     "index.html", "guide.html", "assets/style.css", "assets/site.js",
     "assets/mark.svg", "assets/protocol-flow.svg", "assets/protocol-stack.svg",
-    "assets/protocol-pipeline.svg", "robots.txt", ".nojekyll",
+    "assets/protocol-pipeline.svg", "assets/protocol-framework.svg",
+    "robots.txt", ".nojekyll",
 )
 
 

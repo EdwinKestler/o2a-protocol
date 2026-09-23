@@ -1,7 +1,7 @@
 # Project website draft
 
 The website draft is maintained in `site/`. It contains a landing page, project
-notes, an SVG mark, three protocol figures, local CSS, and a small
+notes, an SVG mark, four protocol figures, local CSS, and a small
 evidence-policy teaching example. All participant examples are generic. No
 individual artist names, account identifiers, or profile URLs belong in public
 content. The demo uses fictional inputs and does not verify signatures or
@@ -16,8 +16,9 @@ The editorial sources are the accepted
 [the cryptographic profile](../specs/cryptographic-profile.md),
 [the public proof-package profile](../specs/proof-package-schema.md), and
 [the paid-use proposal](16-artist-authorized-use-payments.md).
-The flow, stack, and pipeline figures follow
+The flow, framework, stack, and pipeline figures follow
 [the protocol flow](diagrams/02-end-to-end-protocol-flow.md),
+[the protocol framework](diagrams/09-protocol-framework.md),
 [the software stack](diagrams/05-software-stack-architecture.md), and
 [the release pipeline](diagrams/06-deployment-pipeline.md).
 Update the public summaries and those figures when the sources change. Keep
@@ -30,7 +31,7 @@ python3 scripts/build_site.py
 python3 -m http.server 8080 --bind 127.0.0.1 --directory .site-dist
 ```
 
-Open `http://127.0.0.1:8080`. The export has an explicit ten-file allowlist;
+Open `http://127.0.0.1:8080`. The export has an explicit eleven-file allowlist;
 only those curated files are included. The script checks page structure,
 local links/anchors, project-relative asset URLs, and obvious private paths
 or artist-profile URLs. Manual review still checks text and any indirect
@@ -71,7 +72,7 @@ The hosted draft is an actual deployment with restricted access; the URL
 does not grant access by itself. Public publication remains a separate step.
 
 `.openai/hosting.json` records the existing Sites project ID. Reuse it; never
-create a replacement site for an update. Only the ten curated website files
+create a replacement site for an update. Only the eleven curated website files
 and this hosting manifest belong in the Sites source snapshot. Protocol
 documents, GitHub history, Palimnex data, and credentials are excluded.
 

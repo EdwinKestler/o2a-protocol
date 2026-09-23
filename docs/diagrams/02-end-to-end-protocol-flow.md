@@ -22,15 +22,34 @@ flowchart LR
 This is the first complete scenario. It matches the [roadmap](../13-roadmap.md) and the [vision](../00-vision.md). Booking, performance, and settlement remain distinct claims. A promoter statement is additional evidence, not a requirement for creating an EntityID.
 
 ```mermaid
-flowchart LR
-    E["1 Identity genesis<br/>BIP340 root · RGB state<br/>anchored to Bitcoin"] --> C["2 Name + channel claims<br/>non-exclusive · signed<br/>DNS / social evidence"]
-    C --> V["3 Event EntityID<br/>its own key + manifest hash<br/>held by venue or promoter"]
-    V --> A["4 Relationship attestations<br/>artist · venue · promoter"]
-    A --> X["5 Challenges + competing names<br/>remain visible"]
-    X --> P["6 Same result<br/>same package + policy<br/>independent wallets"]
+flowchart TB
+    subgraph OWNER["Owner wallet / node"]
+        E["1 Create EntityID<br/>immutable BIP340 root<br/>separate from spending keys"]
+        L["2 Evolve identity<br/>controller rotation · recovery<br/>revocation under RGB state"]
+        S["3 Sign typed evidence<br/>name · DNS/social control<br/>event/album manifests · relationships"]
+        PKG["4 Export public proof package<br/>identity-history shard · Bitcoin proofs<br/>evidence · policy · context"]
+        E --> L --> S --> PKG
+    end
+
+    BTC["Bitcoin consensus<br/>order · anchors · seals"] --> L
+    RGB["RGB client-side validation<br/>schema · transitions · consignments"] --> L
+    TAG["BIP340 signing domains<br/>purpose-specific tagged hashes"] --> S
+
+    PKG --> X["5 Publish / transfer<br/>direct wallet exchange<br/>HTTPS · Pubky · optional Nostr locators"]
+    X --> V1["6 Verifier wallet A"]
+    X --> V2["6 Verifier wallet B"]
+    V1 --> R1["Same explained result"]
+    V2 --> R2["Same explained result"]
+
+    LOC["Locator or host<br/>transport, never authority"] -.-> X
 ```
 
-Registries are rebuildable projections over that evidence. GatePass, SplitNight, and payment modules consume the result; they do not redefine identity.
+Both verifier wallets check the package hash, Bitcoin proofs, RGB history,
+signatures and domains, evidence boundary, named policy, protocol version, and
+evaluation context. Missing history or unavailable referenced content produces
+an incomplete or invalid result. Registries are rebuildable projections over
+the validated packages. GatePass, SplitNight, and payment modules consume the
+result; they do not redefine identity.
 
 ## Verification-state lifecycle
 
