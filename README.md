@@ -35,7 +35,7 @@ BIP340 key-rooted EntityID
     ↓
 Claims and attestations
     ↓
-Challenges / Revocation
+Optional challenges / evidence revocation when present
     ↓
 Trust Policy
     ↓
@@ -92,6 +92,12 @@ docs/   Narrative protocol design
 specs/  Canonical data and verification contracts
 adr/    Architecture decision records
 ```
+
+When two documents disagree, follow
+[document authority](docs/DOCUMENT-AUTHORITY.md). Accepted ADRs prevail over
+normative specs, specs prevail over explanations, and explanations prevail
+over diagrams, the website, and application proposals. This README is the
+index and status summary.
 
 The current schema set defines the
 [Bitcoin-rooted entity](specs/entity-schema.md),

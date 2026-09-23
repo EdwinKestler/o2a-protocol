@@ -11,19 +11,10 @@ evaluates signed evidence under a deterministic, versioned policy.
 
 ## Basic form
 
-For subject x:
-
-[
-V(x)=1 quad 	ext{if} quad sum_i w_i A_i(x) geq 	heta
-]
-
-otherwise:
-
-[
-V(x)=0
-]
-
-This equation is illustrative. v0.1 should begin with explicit logical rules rather than opaque learned weights.
+A policy result is an explained decision over explicit evidence. The normative
+sequence and determinism rules are in the
+[verification policy](../specs/verification-policy.md). v0.1 uses explicit
+logical rules. A weighted or learned score is not a protocol rule.
 
 ## Example policy
 

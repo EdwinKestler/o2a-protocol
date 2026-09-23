@@ -2,9 +2,11 @@
 
 ## Role
 
-The Artist Catalog is the first user-visible read model and the recommended Hello-World application.
+The Artist Catalog is a user-visible projection for inspecting identity
+evidence. The protocol Hello World is the self-custodial verification scenario
+in the roadmap, not this catalog.
 
-It is a projection over protocol evidence, not an authority.
+The catalog is a projection over protocol evidence, not an authority.
 
 ## Suggested projection
 

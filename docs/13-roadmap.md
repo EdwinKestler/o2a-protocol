@@ -112,8 +112,8 @@ test Lightning payment. Payment, identity, permission delivery, and optional
 asset conversion remain separate states. See
 [the paid-use proposal](16-artist-authorized-use-payments.md).
 
-Public release of the website remains on hold as recorded in
-[WEBSITE.md](WEBSITE.md).
+The website's audience and deployment record live in
+[WEBSITE.md](WEBSITE.md). A public site draft does not release the protocol.
 
 ## Phase 4 — Public beta and mainnet v1
 

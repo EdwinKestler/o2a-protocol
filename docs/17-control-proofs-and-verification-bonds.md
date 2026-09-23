@@ -222,6 +222,13 @@ indefinitely by submitting repeated challenges.
 
 ## Fit with the O2A stack
 
+The rows below are a bond-experiment sketch. They do not choose the reference
+wallet language or a web framework. The
+[software stack](diagrams/05-software-stack-architecture.md) is the technology
+boundary, and the
+[channel-control proof schema](../specs/control-proof-schema.md) is the
+normative evidence contract.
+
 | Component | Responsibility |
 | --- | --- |
 | Self-custodial wallet/node | Store the seed, dedicated identity keys, controller history, RGB consignments, attestations, and proof packages; use a full Bitcoin node or an explicit light mode. |
