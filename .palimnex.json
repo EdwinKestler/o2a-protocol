@@ -1,0 +1,41 @@
+{
+  "project_slug": "o2a-protocol",
+  "project_id": "40094c37-b68b-45f8-8597-cffcc245a83d",
+  "redis_url_envs": [
+    "PALIMNEX_URL"
+  ],
+  "include_patterns": [
+    "README.md",
+    "AGENTS.md",
+    "CLAUDE.md",
+    "GEMINI.md",
+    ".github/copilot-instructions.md",
+    ".gitignore",
+    ".palimnex.json",
+    "docs/**/*.md",
+    "specs/**/*.md",
+    "adr/**/*.md",
+    "scripts/**/*.sh"
+  ],
+  "exclude_directories": [
+    ".palimnex",
+    ".venv",
+    "secrets",
+    "data",
+    "dist",
+    "build"
+  ],
+  "exclude_paths": [
+    "evaluation/palimnex-v1.json"
+  ],
+  "include_palimnex": false,
+  "cache_mode": "on",
+  "content_scan_allowlist_sha256": [],
+  "evaluation_fixture": "evaluation/palimnex-v1.json",
+  "evaluation_fixture_sha256": "4b18e39148d33eacd69fe582257dcc056060d48f634f87d30e639be955ecf73c",
+  "redis_socket_path": ".palimnex/redis/redis.sock",
+  "durable_ledger_path": ".palimnex/memory.sqlite3",
+  "semantic_provider": {
+    "mode": "disabled"
+  }
+}

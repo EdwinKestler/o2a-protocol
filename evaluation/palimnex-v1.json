@@ -1,0 +1,27 @@
+{
+  "schema": "project-memory:evaluation:v1",
+  "frozen": true,
+  "description": "O2A v0.1 design-phase retrieval checks over the public repository corpus; this fixture is excluded from indexing.",
+  "cases": [
+    {"id":"entity-id","mode":"search","query":"EntityID generic identity artist venue promoter event","expected_paths":["adr/0002-entity-id-over-artist-id.md"],"forbidden_paths":["evaluation/palimnex-v1.json"],"limit":5,"critical":true},
+    {"id":"modular-dependencies","mode":"search","query":"modular architecture downward dependencies protocol kernel applications","expected_paths":["adr/0001-modular-protocol-architecture.md"],"forbidden_paths":["evaluation/palimnex-v1.json"],"limit":5,"critical":true},
+    {"id":"catalog-authority","mode":"search","query":"catalog rebuildable projection source of truth destroy registry regenerate","expected_paths":["adr/0003-catalog-is-not-source-of-truth.md"],"forbidden_paths":["evaluation/palimnex-v1.json"],"limit":5,"critical":true},
+    {"id":"consensus-policy","mode":"search","query":"consensus policy not new blockchain oracle stage name claim","expected_paths":["adr/0004-consensus-as-policy-not-blockchain.md"],"forbidden_paths":["evaluation/palimnex-v1.json"],"limit":5,"critical":true},
+    {"id":"entity-sequence","mode":"search","query":"entity sequence previous_state controller rotation profile_commitment ACTIVE","expected_paths":["specs/entity-schema.md"],"forbidden_paths":["evaluation/palimnex-v1.json"],"limit":5,"critical":true},
+    {"id":"claim-supersedes","mode":"search","query":"claim supersedes nonce predicate canonical signature issuer","expected_paths":["specs/claim-schema.md"],"forbidden_paths":["evaluation/palimnex-v1.json"],"limit":5,"critical":true},
+    {"id":"attestation-independence","mode":"search","query":"attestation identity target claim attester independence conflicts immutable evidence","expected_paths":["specs/attestation-schema.md"],"forbidden_paths":["evaluation/palimnex-v1.json"],"limit":5,"critical":true},
+    {"id":"challenge-revocation","mode":"search","query":"challenge revocation issuer target reason evidence signature status","expected_paths":["specs/challenge-schema.md"],"forbidden_paths":["evaluation/palimnex-v1.json"],"limit":5,"critical":true},
+    {"id":"policy-determinism","mode":"search","query":"policy deterministic database row order wall clock floating point explanation","expected_paths":["specs/verification-policy.md"],"forbidden_paths":["evaluation/palimnex-v1.json"],"limit":5,"critical":true},
+    {"id":"vision-nongoals","mode":"search","query":"O2A vision non goals KYC DSP identifier social network","expected_paths":["docs/00-vision.md"],"forbidden_paths":["evaluation/palimnex-v1.json"],"limit":5,"critical":true},
+    {"id":"architecture-storage","mode":"search","query":"architecture storage model PostgreSQL API search UI projection builder","expected_paths":["docs/01-architecture.md"],"forbidden_paths":["evaluation/palimnex-v1.json"],"limit":5,"critical":true},
+    {"id":"kernel-api","mode":"search","query":"kernel issue transition validate prove consume_seal anchor export_consignment import_consignment","expected_paths":["docs/02-protocol-kernel.md"],"forbidden_paths":["evaluation/palimnex-v1.json"],"limit":5,"critical":true},
+    {"id":"identity-history","mode":"search","query":"historical signatures controller state issuance rotation EntityID","expected_paths":["docs/03-entity-identity.md"],"forbidden_paths":["evaluation/palimnex-v1.json"],"limit":5,"critical":true},
+    {"id":"claim-predicates","mode":"search","query":"official_name alias controls_domain represented_by performed_at booked_by hosted_event settlement_endpoint","expected_paths":["docs/04-claims.md"],"forbidden_paths":["evaluation/palimnex-v1.json"],"limit":5,"critical":true},
+    {"id":"evidence-graph","mode":"search","query":"attestations directed graph edge issuer subject predicate object context signature","expected_paths":["docs/05-attestations.md"],"forbidden_paths":["evaluation/palimnex-v1.json"],"limit":5,"critical":true},
+    {"id":"challenge-lifecycle","mode":"search","query":"UNVERIFIED SELF_ATTESTED ENDORSED VERIFIED CHALLENGED DISPUTED RESOLVED","expected_paths":["docs/06-challenges-revocation.md"],"forbidden_paths":["evaluation/palimnex-v1.json"],"limit":5,"critical":true},
+    {"id":"trust-examples","mode":"search","query":"two independently verified venues one verified venue promoter three artists","expected_paths":["docs/07-trust-policy.md"],"forbidden_paths":["evaluation/palimnex-v1.json"],"limit":5,"critical":true},
+    {"id":"artist-catalog","mode":"search","query":"Artist Catalog proof export conflicting evidence status supporting evidence","expected_paths":["docs/08-artist-catalog.md"],"forbidden_paths":["evaluation/palimnex-v1.json"],"limit":5,"critical":true},
+    {"id":"venue-reciprocity","mode":"search","query":"venue hosted event artist performed promoter booked reciprocal evidence","expected_paths":["docs/09-venue-registry.md"],"forbidden_paths":["evaluation/palimnex-v1.json"],"limit":5,"critical":true},
+    {"id":"event-junction","mode":"search","query":"events evidence junction multi party artist venue promoter ticket inventory","expected_paths":["docs/10-event-registry.md"],"forbidden_paths":["evaluation/palimnex-v1.json"],"limit":5,"critical":true}
+  ]
+}

@@ -1,0 +1,12 @@
+.venv/
+.palimnex/
+__pycache__/
+*.py[cod]
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.pmem
+*.sqlite3
+*.sqlite3-*

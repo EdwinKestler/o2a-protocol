@@ -59,6 +59,9 @@ specs/  Canonical data and verification contracts
 adr/    Architecture decision records
 ```
 
+Local source discovery and historical memory use Palimnex. See
+[the O2A Palimnex setup](docs/PALIMNEX.md) for installation and validation.
+
 No production implementation code should be introduced until the v0.1 schemas, canonical serialization rules, and deterministic Hello-World test vectors are agreed.
 
 ## First milestone
