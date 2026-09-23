@@ -119,6 +119,12 @@ The [identity/discovery assessment](docs/14-identity-discovery-assessment.md)
 maps Pubky, Nostr, DNS/social proofs, and wallet custody into the architecture.
 The [control-proof assessment](docs/17-control-proofs-and-verification-bonds.md)
 defines the channel-proof and independent-observation boundary.
+Supporting projection notes cover the
+[artist catalog](docs/08-artist-catalog.md),
+[venue registry](docs/09-venue-registry.md),
+[event registry](docs/10-event-registry.md),
+[promoter registry](docs/18-promoter-registry.md), and
+[album registry](docs/19-album-registry.md).
 
 No production implementation code should be introduced until the v0.1 RGB
 identity schema, canonical serialization, Bitcoin commitment and reorg rules,
@@ -134,19 +140,22 @@ gates still apply before implementation code is accepted.
 
 The first complete protocol scenario is:
 
-1. An artist, a venue, and a live event create distinct key-rooted EntityIDs
-   through RGB genesis transitions on Bitcoin regtest.
+1. An artist, venue, promoter, live event, and album create distinct key-rooted
+   EntityIDs through RGB genesis transitions on Bitcoin regtest.
 2. Their wallets validate the RGB histories and current controller keys.
-3. The artist signs a name claim and publishes a fresh DNS or social control
-   proof; a competing name claim remains visible.
-4. The event key signs a canonical event manifest. The artist and venue sign
-   separate attestations over its exact hash; a promoter may add booking
-   evidence.
-5. Known challenges and revocations remain visible in the package. Booking,
-   performance, and settlement stay distinct claims.
-6. Independent clients apply the same versioned trust policy to the same
-   Bitcoin/RGB history and evidence.
-7. Each client derives the same verification result and explanation.
+3. Day-to-day controller keys sign typed objects while root and Bitcoin
+   spending keys remain separate.
+4. The artist publishes a fresh DNS or social name-control proof; a competing
+   EntityID claiming the same name remains visible.
+5. The event and album keys sign canonical manifest and content hashes.
+6. Counterparties issue separate attestations. Any challenge or evidence
+   revocation that exists remains visible; none is a mandatory verification
+   hop.
+7. The owner exports a content-addressed public proof package containing the
+   required RGB history, Bitcoin proofs, signing domains, disclosed evidence,
+   named policy, protocol version, and evaluation context.
+8. Two independent clients validate that same bounded package and derive the
+   same explained result.
 
 ```text
 same Bitcoin/RGB history + same evidence + same policy

@@ -56,9 +56,13 @@ Hello World:
 4. the artist publishes a DNS or social name-control proof;
 5. a competing EntityID claims the same name and remains visible;
 6. the event and album keys sign canonical content hashes;
-7. counterparties issue separate attestations and a challenge; and
-8. two independent verifier implementations return the same explained result
-   from the same bounded package.
+7. counterparties issue separate attestations, and any challenge or evidence
+   revocation that exists remains visible;
+8. the owner exports a content-addressed public proof package containing the
+   required RGB history, Bitcoin proofs, signing domains, disclosed evidence,
+   named policy, protocol version, and evaluation context; and
+9. two independent verifier implementations validate that same bounded package
+   and return the same explained result.
 
 Exit condition: fixed vectors pass in independent implementations, including
 invalid and incomplete cases. A catalog can be destroyed and rebuilt from RGB
