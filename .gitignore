@@ -4,12 +4,41 @@
 .sites-work/
 __pycache__/
 *.py[cod]
+target/
+
+# Local environment overrides. Only reviewed, placeholder-only templates are
+# allowed in Git.
 .env
 .env.*
 !.env.example
 !dev/.env.example
+
+# Credentials and private key material.
 *.key
 *.pem
+*.p12
+*.pfx
+*.jks
+*.keystore
+*.agekey
+*.seed
+*.mnemonic
+*.xprv
+*.cookie
+wallet.dat
+*.wallet
+
+# Local databases and disposable Bitcoin/RGB development state.
+*.db
+*.db-*
+*.sqlite
+*.sqlite-*
 *.pmem
 *.sqlite3
 *.sqlite3-*
+.local/
+bitcoin-data/
+electrs-data/
+rgb-data/
+wallet-data/
+secrets/
