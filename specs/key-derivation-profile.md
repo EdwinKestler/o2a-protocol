@@ -2,9 +2,10 @@
 
 ## Status
 
-**Proposed, not frozen.** This profile is a Phase 0 candidate. It does not
-authorize production identities, change an EntityID, adopt an RGB dependency,
-or reserve a BIP43 purpose.
+**Demo-stable v0.1 (2026-09-24, ADR-0006). Freeze deferred to the mainnet track.**
+
+This status does not authorize production identities, change an EntityID,
+adopt an RGB dependency, or reserve a BIP43 purpose.
 
 Every mnemonic, seed, extended private key, and private key published with the
 conformance vectors for this profile is permanently unsafe for funds.
@@ -122,6 +123,21 @@ A generic hardware wallet will not derive these keys unaided. A signing
 device must explicitly implement this profile, including BIP85 application
 `32'`, the fixed O2A index, the network mapping, and the hardened identity
 subtree.
+
+## Change control
+
+Outputs for the paths defined by v0.1 do not change within v0.1. A change to
+any defined path or to the `O2A_INDEX` derivation requires a new profile
+version and a new tagged-hash label, such as `O2A/v0.2/wallet-root`; the new
+label yields a distinct `xprv_o2a`.
+
+## Out of scope: restore and discovery
+
+Recovering the set of allocated `entity'` indexes and per-role indexes from a
+seed alone is not defined by this profile. A wallet restoring from a mnemonic
+must rebuild that set from its RGB identity history, retained proof packages,
+or a discovery rule to be specified separately. This document does not design
+that rule.
 
 ## Source basis
 
