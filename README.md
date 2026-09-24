@@ -188,7 +188,8 @@ same Bitcoin/RGB history + same evidence + same policy
 The BIP340 root and required Bitcoin/RGB identity lifecycle are accepted design
 constraints. O2A-CANON-1 now specifies the candidate EntityID and object bytes,
 and the RGB identity-contract draft specifies candidate lifecycle, recovery,
-confirmation, and reorg behavior. Phase 0 remains open: the identity derivation
-purpose is unallocated, RGB program/schema bytes and the Bitcoin commitment
-carrier are unbound, no compatible dependency lock is adopted, and most
-roadmap conformance cases are not yet executable.
+confirmation, and reorg behavior. The Route B key-derivation profile is
+**demo-stable v0.1** under [ADR-0006](adr/0006-route-b-key-derivation-via-bip85.md);
+its mainnet freeze is deferred. Phase 0 remains open for the final RGB 0.12
+mainnet stack, concrete O2A RGB program bytes, execution and custody evidence,
+the restore/discovery rule, mainnet derivation freeze, and later lock adoption.
