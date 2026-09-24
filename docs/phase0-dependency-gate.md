@@ -122,3 +122,26 @@ demonstrate that this shape excludes the CLI's direct Esplora dependency and
 the lock-wide `rustls-webpki` advisories. This statement fixes the consumer
 boundary only; it does not adopt the RC3 lock, define an O2A RGB program, or
 close the dependency gate.
+
+## Gate restatement — 2026-09-24
+
+The dependency gate remains **OPEN**. After the feature-aware measurement and
+the maintainer's license and advisory decisions, these blockers remain:
+
+1. The matching RGB 0.12 application/runtime stack is not a final release.
+   RGB Core 0.12.0 is final, but the standard library and runtime used by this
+   consumer remain at `v0.12.0-rc.3`; their contract shape may change before a
+   mainnet-capable O2A release.
+2. The concrete O2A RGB program bytes and identifiers are not yet defined or
+   bound to the semantic identity contract.
+3. RGB execution fixtures have not run for genesis, rotation, recovery,
+   cancellation, revocation, bad seals, forked history, reorgs, or independent
+   package import.
+
+A disposable regtest or testnet consumer pinned to RGB-WG `rgb`
+`v0.12.0-rc.3` commit `a1e6b415` is permitted as the 2026-09-24 demo lineage
+for evidence and demonstration only. It must remain isolated from production
+custody and use disposable test identities and test-value bitcoin. Nothing
+derived from that consumer enters normative specifications or persistent O2A
+identities. This permission does not adopt an RGB lock, authorize a production
+crate, or close Phase 0.
