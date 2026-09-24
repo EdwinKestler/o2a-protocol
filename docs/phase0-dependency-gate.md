@@ -102,3 +102,13 @@ validator. The registry note is
 An open dependency gate does not finish Phase 0. The roadmap still requires a
 selected and pinned compatible RGB stack. This decision does not close Phase 0
 and does not authorize a production RGB crate.
+
+## Feature-aware measurement — 2026-09-24
+
+This entry does not change the criteria above and does not adopt a lock.
+Evidence: [rgb-rc3-compiled-graph-2026-09-24](../evidence/phase0/rgb-rc3-compiled-graph-2026-09-24/RUN.md).
+
+1. `bp-esplora` on `rgb-runtime` is optional (`resolver-esplora`); the default feature set does not reach it, `minreq`, or `rustls` 0.21. Measurement artifact. The CLI package `rgb-wallet` still depends on it directly.
+2. `rustls-webpki` 0.101.7 is absent from the `resolver-electrum` + `fs` tree. The three lock-wide advisories are a measurement artifact. `paste` 1.0.15 remains in that tree, and feature-aware `cargo deny` still fails on it.
+3. An unmodified library consumer synced 101 regtest UTXOs through electrs. The CLI patch blocker is a measurement artifact for a library consumer.
+4. License failures on the compiled graph are a real allowlist blocker: ISC, MIT-0, Unicode-3.0, CDLA-Permissive-2.0, and copyleft `MPL-2.0-no-copyleft-exception`. This is triage, not an accepted exception list.

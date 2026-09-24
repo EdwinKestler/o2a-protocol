@@ -1,0 +1,4 @@
+command: library sync against local regtest electrs
+result: utxos 101
+exit: 0
+patch: none

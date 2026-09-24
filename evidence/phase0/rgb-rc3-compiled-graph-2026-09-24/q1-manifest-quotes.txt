@@ -1,0 +1,91 @@
+===== rgb-runtime features and esplora dependency =====
+[dependencies]
+amplify = { workspace = true }
+commit_verify = { workspace = true }
+strict_types = { workspace = true }
+bp-std = { workspace = true }
+bp-electrum = { workspace = true, optional = true }
+bp-esplora = { workspace = true, optional = true }
+rgb-std = { workspace = true, features = ["bitcoin"] }
+rgb-psbt = { workspace = true, features = ["bp"] }
+rgb-descriptors = { workspace = true }
+rgb-persist-fs = { workspace = true, optional = true }
+futures = { workspace = true, optional = true }
+indexmap = { workspace = true }
+chrono = { workspace = true }
+serde = { workspace = true, optional = true }
+toml = { workspace = true, optional = true }
+log = { workspace = true, optional = true }
+
+[dev-dependencies]
+toml.workspace = true
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+wasm-bindgen = "0.2"
+rand = { version = "0.9.1", optional = true }
+getrandom = { version = "0.3", features = ["wasm_js"] }
+getrandom2 = { package = "getrandom", version = "0.2", features = ["js"] }
+
+[target.'cfg(target_arch = "wasm32")'.dev-dependencies]
+wasm-bindgen-test = "0.3"
+
+[features]
+default = ["std"]
+all = [
+    "std",
+    "serde", "log", "fs",
+    "resolvers-all",
+]
+all-async = [
+    "std", "async",
+    "serde", "log",
+    "resolvers-all-async",
+]
+std = []
+async = ["futures", "rgb-std/async"]
+fs = [
+    "std",
+    "serde",
+    "rgb-std/binfile",
+    "dep:rgb-persist-fs",
+]
+log = ["dep:log"]
+
+resolvers-all = [
+    "resolver-electrum",
+    "resolver-esplora",
+    #"resolver-bitcoinrpc"
+]
+resolver-electrum = ["dep:bp-electrum"]
+resolver-esplora = ["bp-esplora/blocking-https"]
+#resolver-bitcoinrpc = [] # TODO
+
+resolvers-all-async = [
+    #"resolver-electrum-async",
+    "resolver-esplora-async",
+    #"resolver-bitcoinrpc-async"
+]
+#resolver-electrum-async = ["async", "dep:bp-electrum"] # TODO: ["bp-electrum/async"]
+resolver-esplora-async = ["async", "bp-esplora/async", "bp-esplora/async-https", "bp-esplora/tokio"]
+#resolver-bitcoinrpc-async = ["async"] # TODO
+
+===== rgb-wallet dependencies =====
+[dependencies]
+amplify.workspace = true
+strict_encoding.workspace = true
+strict_types.workspace = true
+bp-std = { workspace = true }
+bp-electrum = { workspace = true }
+bp-esplora = { workspace = true }
+rgb-std = { workspace = true, features = ["binfile", "uri", "serde"] }
+rgb-runtime = { workspace = true, features = ["resolvers-all", "fs", "serde"] }
+rgb-persist-fs.workspace = true
+serde.workspace = true
+serde_yaml = "0.9.34"
+anyhow = "1.0.93"
+clap = { version = "4.5.21", features = ["derive", "env"] }
+
+[features]
+default = []
+all = ["log"]
+log = ["rgb-runtime/log"]

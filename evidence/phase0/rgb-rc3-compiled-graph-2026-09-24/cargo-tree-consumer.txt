@@ -1,0 +1,388 @@
+o2a-rgb-measure v0.0.0 (<consumer>)
+└── rgb-runtime v0.12.0-rc.3 (<rc3-checkout>)
+    ├── amplify v4.9.0
+    │   ├── amplify_derive v4.0.1 (proc-macro)
+    │   │   ├── amplify_syn v2.0.1
+    │   │   │   ├── proc-macro2 v1.0.107
+    │   │   │   │   └── unicode-ident v1.0.26
+    │   │   │   ├── quote v1.0.47
+    │   │   │   │   └── proc-macro2 v1.0.107 (*)
+    │   │   │   └── syn v1.0.109
+    │   │   │       ├── proc-macro2 v1.0.107 (*)
+    │   │   │       ├── quote v1.0.47 (*)
+    │   │   │       └── unicode-ident v1.0.26
+    │   │   ├── proc-macro2 v1.0.107 (*)
+    │   │   ├── quote v1.0.47 (*)
+    │   │   └── syn v1.0.109 (*)
+    │   ├── amplify_num v0.5.3
+    │   │   └── serde v1.0.229
+    │   │       ├── serde_core v1.0.229
+    │   │       └── serde_derive v1.0.229 (proc-macro)
+    │   │           ├── proc-macro2 v1.0.107 (*)
+    │   │           ├── quote v1.0.47 (*)
+    │   │           └── syn v3.0.6
+    │   │               ├── proc-macro2 v1.0.107 (*)
+    │   │               ├── quote v1.0.47 (*)
+    │   │               └── unicode-ident v1.0.26
+    │   ├── amplify_syn v2.0.1 (*)
+    │   ├── ascii v1.1.0
+    │   │   └── serde v1.0.229 (*)
+    │   ├── serde v1.0.229 (*)
+    │   └── stringly_conversions v0.1.1
+    │       ├── paste v1.0.15 (proc-macro)
+    │       └── serde_str_helpers v0.1.2
+    │           ├── serde v1.0.229 (*)
+    │           └── serde_derive v1.0.229 (proc-macro) (*)
+    ├── bp-electrum v0.12.0-rc.1
+    │   ├── amplify v4.9.0 (*)
+    │   ├── bp-core v0.12.0
+    │   │   ├── bp-consensus v0.12.0
+    │   │   │   ├── amplify v4.9.0 (*)
+    │   │   │   ├── chrono v0.4.41
+    │   │   │   │   ├── iana-time-zone v0.1.63
+    │   │   │   │   ├── num-traits v0.2.19
+    │   │   │   │   │   [build-dependencies]
+    │   │   │   │   │   └── autocfg v1.5.0
+    │   │   │   │   └── serde v1.0.229 (*)
+    │   │   │   ├── commit_verify v0.12.0
+    │   │   │   │   ├── amplify v4.9.0 (*)
+    │   │   │   │   ├── commit_encoding_derive v0.12.0 (proc-macro)
+    │   │   │   │   │   ├── amplify v4.9.0
+    │   │   │   │   │   │   ├── amplify_derive v4.0.1 (proc-macro) (*)
+    │   │   │   │   │   │   ├── amplify_num v0.5.3
+    │   │   │   │   │   │   └── ascii v1.1.0
+    │   │   │   │   │   ├── amplify_syn v2.0.1 (*)
+    │   │   │   │   │   ├── proc-macro2 v1.0.107 (*)
+    │   │   │   │   │   ├── quote v1.0.47 (*)
+    │   │   │   │   │   └── syn v1.0.109 (*)
+    │   │   │   │   ├── rand v0.9.5
+    │   │   │   │   │   ├── rand_chacha v0.9.0
+    │   │   │   │   │   │   ├── ppv-lite86 v0.2.21
+    │   │   │   │   │   │   │   └── zerocopy v0.8.26
+    │   │   │   │   │   │   └── rand_core v0.9.3
+    │   │   │   │   │   │       └── getrandom v0.3.3
+    │   │   │   │   │   │           ├── cfg-if v1.0.1
+    │   │   │   │   │   │           └── libc v0.2.174
+    │   │   │   │   │   └── rand_core v0.9.3 (*)
+    │   │   │   │   ├── ripemd v0.1.3
+    │   │   │   │   │   └── digest v0.10.7
+    │   │   │   │   │       ├── block-buffer v0.10.4
+    │   │   │   │   │       │   └── generic-array v0.14.7
+    │   │   │   │   │       │       └── typenum v1.18.0
+    │   │   │   │   │       │       [build-dependencies]
+    │   │   │   │   │       │       └── version_check v0.9.5
+    │   │   │   │   │       ├── crypto-common v0.1.6
+    │   │   │   │   │       │   ├── generic-array v0.14.7 (*)
+    │   │   │   │   │       │   └── typenum v1.18.0
+    │   │   │   │   │       └── subtle v2.6.1
+    │   │   │   │   ├── serde v1.0.229 (*)
+    │   │   │   │   ├── sha2 v0.10.9
+    │   │   │   │   │   ├── cfg-if v1.0.1
+    │   │   │   │   │   ├── cpufeatures v0.2.17
+    │   │   │   │   │   └── digest v0.10.7 (*)
+    │   │   │   │   ├── strict_encoding v2.9.1
+    │   │   │   │   │   ├── amplify v4.9.0 (*)
+    │   │   │   │   │   ├── serde v1.0.229 (*)
+    │   │   │   │   │   └── strict_encoding_derive v2.8.0 (proc-macro)
+    │   │   │   │   │       ├── amplify_syn v2.0.1 (*)
+    │   │   │   │   │       ├── heck v0.5.0
+    │   │   │   │   │       ├── proc-macro2 v1.0.107 (*)
+    │   │   │   │   │       ├── quote v1.0.47 (*)
+    │   │   │   │   │       └── syn v1.0.109 (*)
+    │   │   │   │   ├── strict_types v2.9.0
+    │   │   │   │   │   ├── amplify v4.9.0 (*)
+    │   │   │   │   │   ├── baid64 v0.4.2
+    │   │   │   │   │   │   ├── amplify v4.9.0 (*)
+    │   │   │   │   │   │   ├── base64 v0.22.1
+    │   │   │   │   │   │   ├── mnemonic v1.1.1
+    │   │   │   │   │   │   └── sha2 v0.10.9 (*)
+    │   │   │   │   │   ├── indexmap v2.10.0
+    │   │   │   │   │   │   ├── equivalent v1.0.2
+    │   │   │   │   │   │   ├── hashbrown v0.15.4
+    │   │   │   │   │   │   └── serde v1.0.229 (*)
+    │   │   │   │   │   ├── serde v1.0.229 (*)
+    │   │   │   │   │   ├── serde_json v1.0.140
+    │   │   │   │   │   │   ├── itoa v1.0.15
+    │   │   │   │   │   │   ├── memchr v2.7.5
+    │   │   │   │   │   │   ├── ryu v1.0.20
+    │   │   │   │   │   │   └── serde v1.0.229 (*)
+    │   │   │   │   │   ├── serde_yaml v0.9.34+deprecated
+    │   │   │   │   │   │   ├── indexmap v2.10.0 (*)
+    │   │   │   │   │   │   ├── itoa v1.0.15
+    │   │   │   │   │   │   ├── ryu v1.0.20
+    │   │   │   │   │   │   ├── serde v1.0.229 (*)
+    │   │   │   │   │   │   └── unsafe-libyaml v0.2.11
+    │   │   │   │   │   ├── sha2 v0.10.9 (*)
+    │   │   │   │   │   ├── strict_encoding v2.9.1 (*)
+    │   │   │   │   │   ├── toml v0.8.23
+    │   │   │   │   │   │   ├── serde v1.0.229 (*)
+    │   │   │   │   │   │   ├── serde_spanned v0.6.9
+    │   │   │   │   │   │   │   └── serde v1.0.229 (*)
+    │   │   │   │   │   │   ├── toml_datetime v0.6.11
+    │   │   │   │   │   │   │   └── serde v1.0.229 (*)
+    │   │   │   │   │   │   └── toml_edit v0.22.27
+    │   │   │   │   │   │       ├── indexmap v2.10.0 (*)
+    │   │   │   │   │   │       ├── serde v1.0.229 (*)
+    │   │   │   │   │   │       ├── serde_spanned v0.6.9 (*)
+    │   │   │   │   │   │       ├── toml_datetime v0.6.11 (*)
+    │   │   │   │   │   │       ├── toml_write v0.1.2
+    │   │   │   │   │   │       └── winnow v0.7.11
+    │   │   │   │   │   └── vesper-lang v0.2.1
+    │   │   │   │   │       ├── amplify v4.9.0 (*)
+    │   │   │   │   │       └── strict_encoding v2.9.1 (*)
+    │   │   │   │   └── vesper-lang v0.2.1 (*)
+    │   │   │   ├── secp256k1 v0.30.0
+    │   │   │   │   ├── secp256k1-sys v0.10.1
+    │   │   │   │   │   [build-dependencies]
+    │   │   │   │   │   └── cc v1.4.7
+    │   │   │   │   │       ├── find-msvc-tools v0.1.13
+    │   │   │   │   │       ├── jobserver v0.1.33
+    │   │   │   │   │       │   └── libc v0.2.174
+    │   │   │   │   │       ├── libc v0.2.174
+    │   │   │   │   │       └── shlex v2.0.1
+    │   │   │   │   └── serde v1.0.229 (*)
+    │   │   │   ├── serde v1.0.229 (*)
+    │   │   │   └── strict_encoding v2.9.1 (*)
+    │   │   ├── bp-dbc v0.12.0
+    │   │   │   ├── amplify v4.9.0 (*)
+    │   │   │   ├── base85 v2.0.0
+    │   │   │   │   └── thiserror v1.0.69
+    │   │   │   │       └── thiserror-impl v1.0.69 (proc-macro)
+    │   │   │   │           ├── proc-macro2 v1.0.107 (*)
+    │   │   │   │           ├── quote v1.0.47 (*)
+    │   │   │   │           └── syn v2.0.104
+    │   │   │   │               ├── proc-macro2 v1.0.107 (*)
+    │   │   │   │               ├── quote v1.0.47 (*)
+    │   │   │   │               └── unicode-ident v1.0.26
+    │   │   │   ├── bp-consensus v0.12.0 (*)
+    │   │   │   ├── commit_verify v0.12.0 (*)
+    │   │   │   ├── secp256k1 v0.30.0 (*)
+    │   │   │   ├── serde v1.0.229 (*)
+    │   │   │   └── strict_encoding v2.9.1 (*)
+    │   │   ├── bp-seals v0.12.0
+    │   │   │   ├── amplify v4.9.0 (*)
+    │   │   │   ├── bp-consensus v0.12.0 (*)
+    │   │   │   ├── bp-dbc v0.12.0 (*)
+    │   │   │   ├── commit_verify v0.12.0 (*)
+    │   │   │   ├── serde v1.0.229 (*)
+    │   │   │   ├── single_use_seals v0.12.0
+    │   │   │   │   ├── serde v1.0.229 (*)
+    │   │   │   │   └── strict_encoding v2.9.1 (*)
+    │   │   │   └── strict_encoding v2.9.1 (*)
+    │   │   ├── commit_verify v0.12.0 (*)
+    │   │   ├── serde v1.0.229 (*)
+    │   │   └── strict_encoding v2.9.1 (*)
+    │   ├── byteorder v1.5.0
+    │   ├── libc v0.2.174
+    │   ├── log v0.4.27
+    │   ├── rustls v0.23.45
+    │   │   ├── aws-lc-rs v1.18.1
+    │   │   │   ├── aws-lc-sys v0.45.0
+    │   │   │   │   [build-dependencies]
+    │   │   │   │   ├── cc v1.4.7 (*)
+    │   │   │   │   ├── cmake v0.1.54
+    │   │   │   │   │   └── cc v1.4.7 (*)
+    │   │   │   │   ├── dunce v1.0.5
+    │   │   │   │   ├── fs_extra v1.3.0
+    │   │   │   │   └── pkg-config v0.3.32
+    │   │   │   └── zeroize v1.8.1
+    │   │   ├── log v0.4.27
+    │   │   ├── once_cell v1.21.3
+    │   │   ├── rustls-pki-types v1.12.0
+    │   │   │   └── zeroize v1.8.1
+    │   │   ├── rustls-webpki v0.103.15
+    │   │   │   ├── aws-lc-rs v1.18.1 (*)
+    │   │   │   ├── rustls-pki-types v1.12.0 (*)
+    │   │   │   └── untrusted v0.9.0
+    │   │   ├── subtle v2.6.1
+    │   │   └── zeroize v1.8.1
+    │   ├── serde v1.0.229 (*)
+    │   ├── serde_json v1.0.140 (*)
+    │   ├── sha2 v0.10.9 (*)
+    │   └── webpki-roots v0.26.11
+    │       └── webpki-roots v1.0.1
+    │           └── rustls-pki-types v1.12.0 (*)
+    ├── bp-std v0.12.0-rc.3
+    │   ├── amplify v4.9.0 (*)
+    │   ├── bp-consensus v0.12.0 (*)
+    │   ├── bp-core v0.12.0 (*)
+    │   ├── bp-derive v0.12.0-rc.3
+    │   │   ├── amplify v4.9.0 (*)
+    │   │   ├── bp-consensus v0.12.0 (*)
+    │   │   ├── bp-invoice v0.12.0-rc.3
+    │   │   │   ├── amplify v4.9.0 (*)
+    │   │   │   ├── bech32 v0.9.1
+    │   │   │   ├── bp-consensus v0.12.0 (*)
+    │   │   │   ├── commit_verify v0.12.0 (*)
+    │   │   │   ├── serde v1.0.229 (*)
+    │   │   │   └── strict_encoding v2.9.1 (*)
+    │   │   ├── commit_verify v0.12.0 (*)
+    │   │   ├── hmac v0.12.1
+    │   │   │   └── digest v0.10.7 (*)
+    │   │   ├── indexmap v2.10.0 (*)
+    │   │   ├── serde v1.0.229 (*)
+    │   │   └── sha2 v0.10.9 (*)
+    │   ├── bp-invoice v0.12.0-rc.3 (*)
+    │   ├── descriptors v0.12.0-rc.3
+    │   │   ├── amplify v4.9.0 (*)
+    │   │   ├── bp-derive v0.12.0-rc.3 (*)
+    │   │   ├── commit_verify v0.12.0 (*)
+    │   │   ├── indexmap v2.10.0 (*)
+    │   │   └── serde v1.0.229 (*)
+    │   ├── psbt v0.12.0-rc.3
+    │   │   ├── amplify v4.9.0 (*)
+    │   │   ├── base64 v0.22.1
+    │   │   ├── bp-consensus v0.12.0 (*)
+    │   │   ├── bp-core v0.12.0 (*)
+    │   │   ├── bp-derive v0.12.0-rc.3 (*)
+    │   │   ├── commit_verify v0.12.0 (*)
+    │   │   ├── descriptors v0.12.0-rc.3 (*)
+    │   │   ├── indexmap v2.10.0 (*)
+    │   │   ├── serde v1.0.229 (*)
+    │   │   └── strict_encoding v2.9.1 (*)
+    │   ├── secp256k1 v0.30.0 (*)
+    │   └── serde v1.0.229 (*)
+    ├── chrono v0.4.41 (*)
+    ├── commit_verify v0.12.0 (*)
+    ├── indexmap v2.10.0 (*)
+    ├── rgb-descriptors v0.12.0-rc.3 (<rc3-checkout>/descriptors)
+    │   ├── amplify v4.9.0 (*)
+    │   ├── bp-std v0.12.0-rc.3 (*)
+    │   ├── commit_verify v0.12.0 (*)
+    │   ├── indexmap v2.10.0 (*)
+    │   ├── rgb-std v0.12.0-rc.3
+    │   │   ├── amplify v4.9.0 (*)
+    │   │   ├── aora v0.6.4
+    │   │   │   ├── amplify v4.9.0 (*)
+    │   │   │   ├── binfile v0.2.0
+    │   │   │   │   └── amplify v4.9.0 (*)
+    │   │   │   ├── indexmap v2.10.0 (*)
+    │   │   │   └── strict_encoding v2.9.1 (*)
+    │   │   ├── binfile v0.2.0 (*)
+    │   │   ├── bp-core v0.12.0 (*)
+    │   │   ├── bp-invoice v0.12.0-rc.3 (*)
+    │   │   ├── chrono v0.4.41 (*)
+    │   │   ├── commit_verify v0.12.0 (*)
+    │   │   ├── hypersonic v0.12.0
+    │   │   │   ├── aluvm v0.12.0
+    │   │   │   │   ├── amplify v4.9.0 (*)
+    │   │   │   │   ├── baid64 v0.4.2 (*)
+    │   │   │   │   ├── commit_verify v0.12.0 (*)
+    │   │   │   │   ├── paste v1.0.15 (proc-macro)
+    │   │   │   │   ├── serde v1.0.229 (*)
+    │   │   │   │   └── strict_encoding v2.9.1 (*)
+    │   │   │   ├── amplify v4.9.0 (*)
+    │   │   │   ├── binfile v0.2.0 (*)
+    │   │   │   ├── commit_verify v0.12.0 (*)
+    │   │   │   ├── indexmap v2.10.0 (*)
+    │   │   │   ├── serde v1.0.229 (*)
+    │   │   │   ├── sonic-api v0.12.0
+    │   │   │   │   ├── aluvm v0.12.0 (*)
+    │   │   │   │   ├── amplify v4.9.0 (*)
+    │   │   │   │   ├── baid64 v0.4.2 (*)
+    │   │   │   │   ├── binfile v0.2.0 (*)
+    │   │   │   │   ├── chrono v0.4.41 (*)
+    │   │   │   │   ├── commit_verify v0.12.0 (*)
+    │   │   │   │   ├── indexmap v2.10.0 (*)
+    │   │   │   │   ├── serde v1.0.229 (*)
+    │   │   │   │   ├── serde_yaml v0.9.34+deprecated (*)
+    │   │   │   │   ├── sonic-callreq v0.12.0
+    │   │   │   │   │   ├── amplify v4.9.0 (*)
+    │   │   │   │   │   ├── baid64 v0.4.2 (*)
+    │   │   │   │   │   ├── chrono v0.4.41 (*)
+    │   │   │   │   │   ├── fluent-uri v0.3.2
+    │   │   │   │   │   │   ├── borrow-or-share v0.2.2
+    │   │   │   │   │   │   └── ref-cast v1.0.24
+    │   │   │   │   │   │       └── ref-cast-impl v1.0.24 (proc-macro)
+    │   │   │   │   │   │           ├── proc-macro2 v1.0.107 (*)
+    │   │   │   │   │   │           ├── quote v1.0.47 (*)
+    │   │   │   │   │   │           └── syn v2.0.104 (*)
+    │   │   │   │   │   ├── indexmap v2.10.0 (*)
+    │   │   │   │   │   ├── serde v1.0.229 (*)
+    │   │   │   │   │   ├── strict_encoding v2.9.1 (*)
+    │   │   │   │   │   ├── strict_types v2.9.0 (*)
+    │   │   │   │   │   └── ultrasonic v0.12.0
+    │   │   │   │   │       ├── amplify v4.9.0 (*)
+    │   │   │   │   │       ├── baid64 v0.4.2 (*)
+    │   │   │   │   │       ├── commit_verify v0.12.0 (*)
+    │   │   │   │   │       ├── serde v1.0.229 (*)
+    │   │   │   │   │       ├── strict_encoding v2.9.1 (*)
+    │   │   │   │   │       └── zk-aluvm v0.12.0
+    │   │   │   │   │           ├── aluvm v0.12.0 (*)
+    │   │   │   │   │           ├── amplify v4.9.0 (*)
+    │   │   │   │   │           ├── serde v1.0.229 (*)
+    │   │   │   │   │           └── strict_encoding v2.9.1 (*)
+    │   │   │   │   ├── strict_encoding v2.9.1 (*)
+    │   │   │   │   ├── strict_types v2.9.0 (*)
+    │   │   │   │   └── ultrasonic v0.12.0 (*)
+    │   │   │   ├── sonic-callreq v0.12.0 (*)
+    │   │   │   ├── strict_encoding v2.9.1 (*)
+    │   │   │   ├── strict_types v2.9.0 (*)
+    │   │   │   └── ultrasonic v0.12.0 (*)
+    │   │   ├── indexmap v2.10.0 (*)
+    │   │   ├── rgb-core v0.12.0
+    │   │   │   ├── amplify v4.9.0 (*)
+    │   │   │   ├── bp-core v0.12.0 (*)
+    │   │   │   ├── commit_verify v0.12.0 (*)
+    │   │   │   ├── serde v1.0.229 (*)
+    │   │   │   ├── single_use_seals v0.12.0 (*)
+    │   │   │   ├── strict_encoding v2.9.1 (*)
+    │   │   │   └── ultrasonic v0.12.0 (*)
+    │   │   ├── rgb-invoice v0.12.0-rc.3
+    │   │   │   ├── amplify v4.9.0 (*)
+    │   │   │   ├── baid64 v0.4.2 (*)
+    │   │   │   ├── bp-core v0.12.0 (*)
+    │   │   │   ├── bp-invoice v0.12.0-rc.3 (*)
+    │   │   │   ├── commit_verify v0.12.0 (*)
+    │   │   │   ├── hypersonic v0.12.0 (*)
+    │   │   │   ├── rgb-core v0.12.0 (*)
+    │   │   │   ├── serde v1.0.229 (*)
+    │   │   │   ├── sonic-callreq v0.12.0 (*)
+    │   │   │   └── strict_encoding v2.9.1 (*)
+    │   │   ├── serde v1.0.229 (*)
+    │   │   ├── serde_with v1.14.0
+    │   │   │   ├── serde v1.0.229 (*)
+    │   │   │   └── serde_with_macros v1.5.2 (proc-macro)
+    │   │   │       ├── darling v0.13.4
+    │   │   │       │   ├── darling_core v0.13.4
+    │   │   │       │   │   ├── fnv v1.0.7
+    │   │   │       │   │   ├── ident_case v1.0.1
+    │   │   │       │   │   ├── proc-macro2 v1.0.107 (*)
+    │   │   │       │   │   ├── quote v1.0.47 (*)
+    │   │   │       │   │   ├── strsim v0.10.0
+    │   │   │       │   │   └── syn v1.0.109 (*)
+    │   │   │       │   └── darling_macro v0.13.4 (proc-macro)
+    │   │   │       │       ├── darling_core v0.13.4 (*)
+    │   │   │       │       ├── quote v1.0.47 (*)
+    │   │   │       │       └── syn v1.0.109 (*)
+    │   │   │       ├── proc-macro2 v1.0.107 (*)
+    │   │   │       ├── quote v1.0.47 (*)
+    │   │   │       └── syn v1.0.109 (*)
+    │   │   ├── single_use_seals v0.12.0 (*)
+    │   │   ├── strict_encoding v2.9.1 (*)
+    │   │   └── strict_types v2.9.0 (*)
+    │   └── serde v1.0.229 (*)
+    ├── rgb-persist-fs v0.12.0-rc.3
+    │   ├── amplify v4.9.0 (*)
+    │   ├── aora v0.6.4 (*)
+    │   ├── rgb-std v0.12.0-rc.3 (*)
+    │   ├── sonic-persist-fs v0.12.0
+    │   │   ├── amplify v4.9.0 (*)
+    │   │   ├── aora v0.6.4 (*)
+    │   │   ├── binfile v0.2.0 (*)
+    │   │   ├── commit_verify v0.12.0 (*)
+    │   │   ├── hypersonic v0.12.0 (*)
+    │   │   ├── serde_yaml v0.9.34+deprecated (*)
+    │   │   ├── strict_encoding v2.9.1 (*)
+    │   │   └── toml v0.8.23 (*)
+    │   └── strict_encoding v2.9.1 (*)
+    ├── rgb-psbt v0.12.0-rc.3 (<rc3-checkout>/psbt)
+    │   ├── amplify v4.9.0 (*)
+    │   ├── bp-core v0.12.0 (*)
+    │   ├── bp-std v0.12.0-rc.3 (*)
+    │   └── rgb-std v0.12.0-rc.3 (*)
+    ├── rgb-std v0.12.0-rc.3 (*)
+    ├── serde v1.0.229 (*)
+    ├── strict_types v2.9.0 (*)
+    └── toml v0.8.23 (*)
+CONSUMER_TREE:0
