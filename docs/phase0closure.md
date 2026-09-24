@@ -103,11 +103,12 @@ recovery-policy hash. RGB execution fixtures remain open.
 - `python3 tests/vectors/check_vectors.py` exited 0.
 - `cargo test --locked` passed for the scoped vector helper.
 - In the pinned Rust 1.98.1 toolchain container, cargo-audit 0.22.2 found no
-  advisories in the seven-package vector-helper lock, and cargo-deny 0.20.2
-  passed advisories, bans, licenses, and sources. This result applies only to
-  the vector helper, not the rejected RGB RC3 graph.
+  advisories in the 21-package vector-helper lock. With development
+  dependencies excluded, its executable plus build graph has ten packages.
+  Cargo-deny 0.20.2 passed advisories, bans, licenses, and sources. This result
+  applies only to the vector helper, not the rejected RGB RC3 graph.
 - The vector-helper lock SHA-256 is
-  `749cbb90ab97ec334adbb7891f1b0bc7e5b8bbb9dd32193ab6a6e273f60e506b`.
+  `ca8019a81488103cd345edccb4865a487c5e97ee393bff045005d36214eb6a8f`.
 - Palimnex deep validation passed.
 - All 21 evaluation cases passed.
 - Palimnex ledger integrity is `ok`, and the latest remediation outcomes are
