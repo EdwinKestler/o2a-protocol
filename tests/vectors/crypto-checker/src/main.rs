@@ -5,7 +5,7 @@ use bitcoin_hashes::{
     sha512, Hash, HashEngine,
 };
 use secp256k1::{
-    schnorr::Signature, Keypair, Message, Scalar, Secp256k1, SecretKey, XOnlyPublicKey,
+    schnorr::Signature, Keypair, Message, PublicKey, Scalar, Secp256k1, SecretKey, XOnlyPublicKey,
 };
 use std::{env, process::ExitCode, str::FromStr};
 
@@ -57,12 +57,16 @@ fn bip32_master(seed: &[u8]) -> Result<TestXprv, String> {
     Ok(TestXprv { secret, chain_code })
 }
 
-fn bip32_ckd_hard(parent: TestXprv, index: u32) -> Result<TestXprv, String> {
-    if index < HARDENED {
-        return Err("hardened BIP32 child index must be at least 2^31".to_owned());
-    }
+fn bip32_child(parent: TestXprv, index: u32) -> Result<TestXprv, String> {
     let mut data = [0u8; 37];
-    data[1..33].copy_from_slice(&parent.secret);
+    if index >= HARDENED {
+        data[1..33].copy_from_slice(&parent.secret);
+    } else {
+        let secret = SecretKey::from_slice(&parent.secret)
+            .map_err(|error| format!("invalid parent private key: {error}"))?;
+        data[..33]
+            .copy_from_slice(&PublicKey::from_secret_key(&Secp256k1::new(), &secret).serialize());
+    }
     data[33..].copy_from_slice(&index.to_be_bytes());
     let digest = hmac_sha512(&parent.chain_code, &data);
     let mut left = [0u8; 32];
@@ -80,6 +84,13 @@ fn bip32_ckd_hard(parent: TestXprv, index: u32) -> Result<TestXprv, String> {
         secret: child.secret_bytes(),
         chain_code,
     })
+}
+
+fn bip32_ckd_hard(parent: TestXprv, index: u32) -> Result<TestXprv, String> {
+    if index < HARDENED {
+        return Err("hardened BIP32 child index must be at least 2^31".to_owned());
+    }
+    bip32_child(parent, index)
 }
 
 fn hardened_index(index: u32) -> Result<u32, String> {
@@ -111,7 +122,62 @@ fn xonly_pub(xprv: TestXprv) -> Result<String, String> {
     Ok(XOnlyPublicKey::from_keypair(&keypair).0.to_string())
 }
 
-fn self_test() -> Result<(), String> {
+fn derive_path(root: TestXprv, path: &[u32]) -> Result<TestXprv, String> {
+    let mut key = root;
+    for index in path {
+        key = bip32_child(key, *index)?;
+    }
+    Ok(key)
+}
+
+fn derive_route_b(seed: &[u8], network: &str, entity: u32) -> Result<(), String> {
+    self_test_quiet()?;
+    if entity >= HARDENED {
+        return Err("entity index must fit in 31 bits".to_owned());
+    }
+    let coin = match network {
+        "mainnet" => 0,
+        "regtest" => 1,
+        _ => return Err("fixture network must be mainnet or regtest".to_owned()),
+    };
+    let master = bip32_master(seed)?;
+    let o2a = bip85_xprv(master, 998_536_622)?;
+
+    println!("network={network}");
+    println!("coin_type={coin}");
+    println!("entity={entity}");
+    println!("xprv_o2a={}", o2a.encode());
+    println!("bip85_path=m/83696968'/32'/998536622'");
+    for (name, role) in [
+        ("root_identity", 0),
+        ("controller_0", 1),
+        ("recovery_0", 2),
+        ("nostr_0", 3),
+    ] {
+        let path = [
+            hardened_index(coin)?,
+            hardened_index(entity)?,
+            hardened_index(role)?,
+            hardened_index(0)?,
+        ];
+        let key = derive_path(o2a, &path)?;
+        println!("{name}_path=m/{coin}'/{entity}'/{role}'/0'");
+        println!("{name}_xonly={}", xonly_pub(key)?);
+    }
+    let payment_path = [
+        hardened_index(86)?,
+        hardened_index(coin)?,
+        hardened_index(0)?,
+        0,
+        0,
+    ];
+    let payment = derive_path(master, &payment_path)?;
+    println!("payment_path=m/86'/{coin}'/0'/0/0");
+    println!("payment_xonly={}", xonly_pub(payment)?);
+    Ok(())
+}
+
+fn self_test_quiet() -> Result<(), String> {
     // BIP32 test vector 1: seed and chain m/0H.
     let seed = hex::decode("000102030405060708090a0b0c0d0e0f")
         .map_err(|error| format!("invalid embedded BIP32 vector: {error}"))?;
@@ -130,6 +196,11 @@ fn self_test() -> Result<(), String> {
         return Err("BIP85 BIP32-XPRV test vector mismatch".to_owned());
     }
 
+    Ok(())
+}
+
+fn self_test() -> Result<(), String> {
+    self_test_quiet()?;
     println!("BIP32 vector 1 m/0H: ok");
     println!("BIP85 BIP32-XPRV app 32 index 0: ok");
     Ok(())
@@ -217,6 +288,13 @@ fn run() -> Result<(), String> {
             println!("{}", xonly_pub(TestXprv::parse(xprv)?)?);
             Ok(())
         }
+        [_, command, seed, network, entity] if command == "derive-route-b" => {
+            let seed = hex::decode(seed).map_err(|error| format!("invalid seed hex: {error}"))?;
+            let entity = entity
+                .parse::<u32>()
+                .map_err(|error| format!("invalid entity index: {error}"))?;
+            derive_route_b(&seed, network, entity)
+        }
         [_, command, public_key, message, signature] if command == "verify" => {
             verify(public_key, message, signature)
         }
@@ -228,7 +306,7 @@ fn run() -> Result<(), String> {
             sign_test_vector(key_name, message)
         }
         _ => Err(
-            "usage: o2a-vector-crypto-checker self-test\n       o2a-vector-crypto-checker bip32-master SEED_HEX\n       o2a-vector-crypto-checker bip32-ckd-hard XPRV_HEX INDEX\n       o2a-vector-crypto-checker bip85-xprv XPRV_HEX INDEX\n       o2a-vector-crypto-checker xonly-pub XPRV_HEX\n       o2a-vector-crypto-checker verify PUBKEY MESSAGE SIGNATURE\n       o2a-vector-crypto-checker validate-xonly PUBKEY\n       o2a-vector-crypto-checker sign-public-test-vector [scalar-3|bip340-vector-1|bip340-vector-2] MESSAGE"
+            "usage: o2a-vector-crypto-checker self-test\n       o2a-vector-crypto-checker bip32-master SEED_HEX\n       o2a-vector-crypto-checker bip32-ckd-hard XPRV_HEX INDEX\n       o2a-vector-crypto-checker bip85-xprv XPRV_HEX INDEX\n       o2a-vector-crypto-checker xonly-pub XPRV_HEX\n       o2a-vector-crypto-checker derive-route-b SEED_HEX NETWORK ENTITY\n       o2a-vector-crypto-checker verify PUBKEY MESSAGE SIGNATURE\n       o2a-vector-crypto-checker validate-xonly PUBKEY\n       o2a-vector-crypto-checker sign-public-test-vector [scalar-3|bip340-vector-1|bip340-vector-2] MESSAGE"
                 .to_owned(),
         ),
     }
