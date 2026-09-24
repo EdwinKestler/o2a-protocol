@@ -1,7 +1,7 @@
 # Phase 0 identity derivation allocation
 
-**Status:** Route B evidence complete, 2026-09-24. The profile remains proposed
-and is not frozen for production use.
+**Status:** Route B is demo-stable v0.1 under ADR-0006. The allocation question
+is closed for the demo track and reopens only for the mainnet freeze.
 
 ## Decision record
 
@@ -21,6 +21,13 @@ allocation. The former provisional purpose is retired except in historical
 records and explicit rejection vectors. Selection and completed conformance
 evidence do not freeze the profile; freezing remains a separate maintainer
 decision.
+
+2026-09-24 — [ADR-0006](../adr/0006-route-b-key-derivation-via-bip85.md)
+designates Route B **demo-stable v0.1**. All seven evidence gates remain
+satisfied. Freezing is deferred because demonstration identities are
+disposable; a mainnet-capable release requires a separate maintainer ADR.
+The allocation question is therefore closed for the demo track and reopens
+only when the mainnet derivation profile is frozen.
 
 O2A needs deterministic wallet separation between root identity, controller,
 recovery, Nostr-publication, and Bitcoin payment keys. Route B derives an
@@ -81,8 +88,8 @@ does not itself freeze the wallet profile.
 | 6 | satisfied | The derivation fixture executes the required invalid cases against both implementations. |
 | 7 | satisfied | Normative references use Route B; the retired path remains only in history, an explicit rejection, or unrelated hexadecimal evidence. |
 
-All seven evidence gates are satisfied. The profile remains **proposed, not
-frozen**, until the maintainer records the separate freeze decision.
+All seven evidence gates remain satisfied. The profile is **demo-stable v0.1**
+under ADR-0006 and is not frozen for mainnet or production identities.
 
 ## Collision review — 2026-09-23
 
