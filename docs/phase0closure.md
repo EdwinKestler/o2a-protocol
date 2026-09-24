@@ -36,9 +36,9 @@ Palimnex session ids are 32 hex characters. The logical names
 - EntityID is the tagged hash of version, network, and the BIP340 root.
   Recovery does not change it.
 - Identity, controller, recovery, discovery, and payment keys remain separate.
-  The proposed BIP32 purpose `827'` is provisional until an interoperable
-  allocation decision is recorded. Payment keys do not sign O2A objects.
-  Pubky keys stay independent Ed25519 keys.
+  Proposed Route B derives an independent `xprv_o2a` with BIP85 and keeps its
+  identity subtree outside the BIP43 purpose slot. Payment keys do not sign O2A
+  objects. Pubky keys stay independent Ed25519 keys.
 - Every signed object requires canonical bytes. Key role and authorization
   capability are separate signed fields. The same payload under two tags is
   two messages.
@@ -66,9 +66,9 @@ Palimnex session ids are 32 hex characters. The logical names
   rust-secp256k1 helper verifies valid, mutated, and cross-domain signatures.
   The fixture also exercises manifest ID, complete-envelope package ID,
   truncation, and mutation.
-- The [identity path note](phase0-derivation-allocation.md) explicitly keeps
-  `827'` provisional and defines the evidence required before any derivation
-  allocation is frozen.
+- The [identity path note](phase0-derivation-allocation.md) records Route B,
+  the completed conformance gates, and the separate maintainer decision still
+  required before the profile is frozen.
 
 These corrections replace the earlier ready results. They do not convert an
 open conformance track into a closed one.
@@ -90,10 +90,10 @@ open conformance track into a closed one.
 Until a lock is adopted, the RGB 0.12 program bytes stay unbound and
 implementation code stays unauthorized.
 
-A follow-up pass kept the derivation allocation open after a BIP43 collision
-review: `827'` is not an assigned purpose, and no BIP or SLIP number was
-granted. The commitment carrier is the 32-byte tagged hash inside the
-consignment that closes the seal. No script template is frozen. A same-day
+A follow-up pass rejected an unassigned BIP43 purpose and selected Route B's
+BIP85-derived independent root. The derivation evidence gates now pass, but
+the profile is not frozen. The commitment carrier is the 32-byte tagged hash
+inside the consignment that closes the seal. No script template is frozen. A same-day
 upstream recheck found no adoptable RGB release. Protocol-only fixtures now
 also cover a wrong capability, a wrong network, duplicate name bytes, and a
 recovery-policy hash. RGB execution fixtures remain open.

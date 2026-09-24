@@ -9,11 +9,14 @@ layouts. `check_vectors.py` runs both bounded checkers and delegates BIP340 to
 the pinned rust-secp256k1 helper in `crypto-checker/`. These are vector tools,
 not a wallet, and they do not use the network. The helper's lock hash, audit,
 and license result are recorded in [DEPENDENCIES.md](DEPENDENCIES.md).
+`derivation-v0.1.json` records Route B paths and expected keys;
+`check_derivation_cross.py` requires the independent Python and Rust
+implementations to produce identical results.
 
 The vector track remains **OPEN**. This directory has no adopted RGB
-consignment, Bitcoin anchor/header proof, seal execution, reorg execution, or
-wallet derivation fixture. The new lifecycle fixtures cover canonical bytes
-and local authorization inputs only; they do not execute an RGB transition.
+consignment, Bitcoin anchor/header proof, seal execution, or reorg execution.
+The new lifecycle fixtures cover canonical bytes and local authorization
+inputs only; they do not execute an RGB transition.
 Reciprocal discovery proofs, full rebinding-history validation, live adapter
 checks, present claim optional-field branches, and general parser
 interoperability also remain open.
@@ -22,8 +25,8 @@ interoperability also remain open.
 for funds. It contains no wallet seed. It publishes two regtest EntityIDs,
 role-bound controller key IDs, signed claim variants with separately encoded
 capabilities and networks, and one non-circular proof-package envelope.
-Identity BIP32 purpose `827'` is no longer treated as frozen and is not
-recomputed by the checker.
+Wallet derivation uses the separate permanently unsafe BIP39 vector recorded
+in `derivation-v0.1.json`; it is not a funding or production seed.
 
 | Area | Current executable evidence |
 | --- | --- |
@@ -44,6 +47,7 @@ recomputed by the checker.
 | Music manifests | Fixed signed EVENT and ALBUM manifests; signer-entity and required album track checks |
 | Object framing | Each fixed signed-object payload rejects truncation and trailing bytes before evaluation |
 | Unknown state capability | Independently re-signed state with an unassigned capability value is rejected |
+| Wallet derivation | Route B master, BIP85 `xprv_o2a`, identity roles, and BIP86 payment keys agree across independent Rust and Python implementations for mainnet and regtest, entities 0 and 1; all required misuse cases reject |
 | Bitcoin/RGB execution | Open; no consignment, anchor, header, seal-spend, fork, or reorg fixture |
 
 The current claim decoder fixture exercises absent `context`, `supersedes`, and
@@ -84,8 +88,9 @@ key or seed.
 ## Distinct root vs payment key
 
 Accept a root identity key and a payment key that are different public keys.
-The intended identity hierarchy uses a still-unallocated BIP43 purpose. The
-payment key is the BIP32 x-only key at the BIP86 path
+The proposed Route B identity hierarchy is rooted at a BIP85-derived
+`xprv_o2a` outside the BIP43 purpose slot. The payment key is the BIP32 x-only
+key at the BIP86 path
 `m/86'/coin'/account'/0/index`. The payment key has no O2A purpose byte and
 no O2A key identifier. Controller, recovery, and Nostr publication keys are
 separate hardened identity keys and are not payment keys.
@@ -94,8 +99,10 @@ Reject a payment key used as the root, as an EntityID input, or as the signer
 of an O2A object. Reject `O2A/v0.1/key-id` for a payment key. Reject one key
 filling both roles.
 
-No payment or derivation fixture is current while the identity purpose remains
-unallocated. This case cannot become ready from the older `827'` data.
+`derivation-v0.1.json` executes the separation and rejects unhardened identity
+components, role or entity reuse, path aliases, a wrong coin type, an
+unsupported profile version, the retired path, and payment-key signing of an
+O2A object. Passing these fixtures does not freeze the proposed profile.
 
 ## Duplicate names
 

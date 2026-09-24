@@ -116,23 +116,23 @@ right key role does not imply a capability. A verifier MUST confirm both.
 
 ## Derivation status
 
-Identity key derivation remains a Phase 0 gate under the
-[allocation note](../docs/phase0-derivation-allocation.md). The previous draft's
-`m/827'/coin'/account'/role'/index'` hierarchy is a proposal, not a registered
-interoperability allocation, and MUST NOT be presented as frozen. Its intended
-shape is retained for allocation review:
+Identity key derivation follows the proposed, not frozen
+[key-derivation profile](key-derivation-profile.md) and remains a Phase 0 gate
+under the [allocation note](../docs/phase0-derivation-allocation.md). BIP85
+application `32'` derives `xprv_o2a`; in the paths below, `m` means that
+independent extended private root:
 
 ```text
-m/purpose'/coin'/account'/0'/0'       root
-m/purpose'/coin'/account'/1'/index'   controller
-m/purpose'/coin'/account'/2'/index'   recovery
-m/purpose'/coin'/account'/3'/index'   Nostr publication
+m/coin'/entity'/0'/0'       root
+m/coin'/entity'/1'/index'   controller
+m/coin'/entity'/2'/index'   recovery
+m/coin'/entity'/3'/index'   Nostr publication
 ```
 
-Payment keys use BIP86 `m/86'/coin'/account'/0/index`. The identity `purpose'`
-will be frozen only after an allocation decision prevents collision with other
-BIP43 applications. Existing `827'` fixtures are retained as provisional test
-data and MUST be regenerated after that decision.
+Payment keys use BIP86 `m/86'/coin'/account'/0/index` from the wallet master,
+not from `xprv_o2a`. The proposed profile, its fixed BIP85 application index,
+and its collision-free entity allocation rule MUST pass the allocation note's
+freeze gate before production use. Conformance fixtures do not freeze it.
 
 ## Object types and domains
 

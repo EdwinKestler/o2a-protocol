@@ -1,7 +1,7 @@
 # Phase 0 identity derivation allocation
 
-**Status:** open decision record, 2026-09-23. This note does not allocate or
-freeze a BIP32 purpose.
+**Status:** Route B evidence complete, 2026-09-24. The profile remains proposed
+and is not frozen for production use.
 
 ## Decision record
 
@@ -13,20 +13,30 @@ published unsafe test seed; (c) a collision-free indexing rule for multiple
 EntityIDs in one wallet. Route (request an allocation vs. specify an
 alternative) is not yet chosen.
 
+2026-09-24 — Route B is the selected candidate. It uses BIP85's registered
+BIP32-XPRV application `m/83696968'/32'/998536622'` to derive `xprv_o2a`, then
+uses a fully hardened network/entity/role/index subtree below that independent
+root. This avoids occupying a BIP43 purpose slot and requires no BIP or SLIP
+allocation. The former provisional purpose is retired except in historical
+records and explicit rejection vectors. Selection and completed conformance
+evidence do not freeze the profile; freezing remains a separate maintainer
+decision.
+
 O2A needs deterministic wallet separation between root identity, controller,
-recovery, Nostr-publication, and Bitcoin payment keys. The path shape in
-O2A-CANON-1 records those roles, but the earlier literal purpose `827'` has no
-accepted interoperability allocation in this repository. It is provisional
-test data and must not ship as a frozen wallet convention.
+recovery, Nostr-publication, and Bitcoin payment keys. Route B derives an
+independent `xprv_o2a` with BIP85 and records those roles below it. The retired
+literal purpose has no accepted interoperability allocation and is not a valid
+O2A path.
 
 ## Candidate shape
 
 ```text
-m/purpose'/coin'/account'/0'/0'       root identity
-m/purpose'/coin'/account'/1'/index'   controller
-m/purpose'/coin'/account'/2'/index'   recovery
-m/purpose'/coin'/account'/3'/index'   Nostr publication
-m/86'/coin'/account'/0/index          Bitcoin payment
+wallet master: m/83696968'/32'/998536622' -> xprv_o2a
+xprv_o2a:     m/coin'/entity'/0'/0'       root identity
+xprv_o2a:     m/coin'/entity'/1'/index'   controller
+xprv_o2a:     m/coin'/entity'/2'/index'   recovery
+xprv_o2a:     m/coin'/entity'/3'/index'   Nostr publication
+wallet master: m/86'/coin'/account'/0/index Bitcoin payment
 ```
 
 Pubky remains outside this hierarchy because its key is Ed25519. A payment key
@@ -34,11 +44,12 @@ has no O2A key role or O2A key identifier and must never sign an O2A object.
 
 ## Acceptance gate
 
-The identity `purpose'` becomes normative only after all of these are recorded:
+The Route B profile becomes eligible for a separate freeze decision only after
+all of these are recorded:
 
 1. a collision review against existing BIP43 application purposes;
-2. official evidence for the allocation and its exact purpose semantics;
-   merely choosing a value in the SLIP-reserved range is not an allocation;
+2. a selected collision-safe mechanism and its exact semantics, without
+   claiming an unassigned BIP43 or SLIP purpose;
 3. two independent implementations deriving the same keys from one published,
    explicitly unsafe test seed, with seed format, passphrase, wordlist,
    network-to-coin-type mapping, and implementation/library versions recorded;
@@ -52,12 +63,26 @@ The identity `purpose'` becomes normative only after all of these are recorded:
 6. invalid-case vectors for unhardened identity roles, cross-role or
    cross-entity key reuse, path aliases, wrong coin type/network, unsupported
    derivation versions, and payment-key use in an O2A signature; and
-7. regeneration of every provisional `827'` fixture, or an explicit inventory
-   marking each such fixture obsolete.
+7. regeneration of every fixture that used the retired provisional path, or an
+   explicit inventory marking it obsolete.
 
-If a collision-safe shared allocation cannot be obtained, Phase 0 must choose
-and document another interoperable derivation mechanism before freezing the
-wallet profile. Local use of `827'` is not sufficient evidence.
+Route B is that documented alternative mechanism. Passing these evidence gates
+does not itself freeze the wallet profile.
+
+## Gate status — 2026-09-24
+
+| Gate | Status | Evidence |
+| ---: | --- | --- |
+| 1 | satisfied | Route B uses registered BIP85 application `32'` and a deterministic application index outside the BIP43 purpose slot. |
+| 2 | satisfied | `specs/key-derivation-profile.md` specifies the BIP85 path, HMAC operation, raw `xprv_o2a`, and hardened subtree. |
+| 3 | satisfied | Independent Rust and Python implementations agree from the published unsafe BIP39 test seed; Rust consumes seed bytes and Python also checks BIP39. |
+| 4 | satisfied | `tests/vectors/derivation-v0.1.json` records exact paths, raw extended private roots, and x-only keys for mainnet and regtest, entities 0 and 1. |
+| 5 | satisfied | The profile monotonically allocates and never reuses wallet-local `entity'` indexes; each artist, venue, promoter, label, EVENT, and ALBUM gets its own index. |
+| 6 | satisfied | The derivation fixture executes the required invalid cases against both implementations. |
+| 7 | satisfied | Normative references use Route B; the retired path remains only in history, an explicit rejection, or unrelated hexadecimal evidence. |
+
+All seven evidence gates are satisfied. The profile remains **proposed, not
+frozen**, until the maintainer records the separate freeze decision.
 
 ## Collision review — 2026-09-23
 
@@ -66,13 +91,14 @@ wallet trees do not overlap. Purposes `10001'` through `19999'` are reserved
 for SLIPs. Deployed Bitcoin purposes that this profile must not reuse include
 `44'`, `45'`, `48'`, `49'`, `84'`, and `86'`. Payment keys already use `86'`.
 
-Purpose `827'` is not an assigned BIP. No BIP or SLIP number was requested or
-granted in this pass. The allocation gate therefore stays **open**. `827'`
-remains provisional test data and is not an interoperable wallet convention.
+The retired provisional purpose is not an assigned BIP. No BIP or SLIP number
+was requested or granted. Route B avoids that allocation requirement by using
+BIP85's registered BIP32-XPRV application and a deterministic application
+index.
 
 ## Effect on current work
 
-EntityID derivation from an already supplied root public key is specified and
-testable. Seed-to-root wallet derivation is not. Implementations may use
-explicit public test keys while working on canonical bytes, but must not create
-persistent identities whose recovery depends on the provisional path.
+Seed-to-root derivation is now specified and independently tested with public,
+permanently unsafe fixtures. Implementations may use those fixtures while
+working on canonical bytes, but MUST NOT create persistent production
+identities until the proposed profile is explicitly frozen.
