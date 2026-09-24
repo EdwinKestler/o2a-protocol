@@ -3,6 +3,16 @@
 **Status:** open decision record, 2026-09-23. This note does not allocate or
 freeze a BIP32 purpose.
 
+## Decision record
+
+2026-09-23 — purpose `827'` is PROVISIONAL test data. Freeze is blocked on:
+(a) an official BIP or SLIP allocation, or a written and tested
+collision-safe alternative scheme that does not occupy the BIP43 purpose
+slot; (b) two independent implementations deriving identical keys from the
+published unsafe test seed; (c) a collision-free indexing rule for multiple
+EntityIDs in one wallet. Route (request an allocation vs. specify an
+alternative) is not yet chosen.
+
 O2A needs deterministic wallet separation between root identity, controller,
 recovery, Nostr-publication, and Bitcoin payment keys. The path shape in
 O2A-CANON-1 records those roles, but the earlier literal purpose `827'` has no
