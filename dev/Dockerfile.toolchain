@@ -36,6 +36,8 @@ ENV PATH=/home/o2a/.cargo/bin:/usr/local/cargo/bin:${PATH}
 
 COPY dev/toolchain-profile.sh /etc/profile.d/o2a-toolchain.sh
 
+RUN rustup component add rustfmt clippy
+
 USER o2a
 WORKDIR /workspace
 CMD ["bash"]

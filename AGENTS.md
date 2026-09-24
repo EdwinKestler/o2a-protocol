@@ -32,4 +32,6 @@ files out of Git. The ledger is historical context; do not activate retention,
 erase records, or import packs without a specific task authorizing that action.
 
 O2A remains in the specification phase. Follow README.md and the accepted ADRs
-before adding production implementation code.
+before adding production implementation code. Before using Docker or running
+development tools, follow the isolated environment guide in
+`devinstructions.md`.

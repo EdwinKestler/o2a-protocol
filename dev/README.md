@@ -79,7 +79,7 @@ the operating system:
 ```bash
 docker compose --file dev/compose.yaml --profile tools build toolchain
 docker compose --file dev/compose.yaml --profile tools run --rm toolchain \
-  bash -lc 'rustc --version && cargo --version && cargo audit --version && cargo deny --version && sqlite3 --version'
+  bash -lc 'rustc --version && cargo --version && rustfmt --version && cargo clippy --version && cargo audit --version && cargo deny --version && sqlite3 --version'
 ```
 
 Enter an interactive container with the repository mounted at `/workspace`:
