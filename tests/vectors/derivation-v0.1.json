@@ -1,0 +1,78 @@
+{
+  "license": "CC0-1.0",
+  "warning": "Permanently unsafe public test seed and derived keys. Never use for funds.",
+  "profile_version": 1,
+  "seed": {
+    "format": "BIP39 English mnemonic with NFKD PBKDF2-HMAC-SHA512",
+    "mnemonic": "abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon about",
+    "passphrase": "TREZOR",
+    "seed_hex": "c55257c360c07c72029aebc1b53c05ed0362ada38ead3e3e9efa3708e53495531f09a6987599d18264c1e1c92f2cf141630c7a3c4ab7c81b2f001698e7463b04"
+  },
+  "o2a_index": 998536622,
+  "bip85_path": "m/83696968'/32'/998536622'",
+  "positives": [
+    {
+      "network": "mainnet",
+      "coin_type": 0,
+      "entity": 0,
+      "xprv_o2a": "cb4aabaed484766c4be18d21723aa351c82a3a5707d69958accb27a3bef3e8b32e7ce52950114c05dfdd3aab7b3c08cd0899af7bf93b4137d7e1f0f6952f2505",
+      "keys": {
+        "root_identity": {"path": "m/0'/0'/0'/0'", "xonly": "95e5b5d6882c86957fb293dfd74a72d1795cf8736c026e1e13bc63a6c5710b36"},
+        "controller_0": {"path": "m/0'/0'/1'/0'", "xonly": "f3adf5ea9efb7576ccc79a330ce2cc916595a45193611779e2c6a210b1d05e17"},
+        "recovery_0": {"path": "m/0'/0'/2'/0'", "xonly": "7d9c1d5b9a3ad96294b43587ba81b2c147d1aa672c9269dd8c234c1fdddbd62b"},
+        "nostr_0": {"path": "m/0'/0'/3'/0'", "xonly": "472771847b566f7757be3eca96e484f50f2b7ae002b770c020c9fcbe63af97d1"}
+      },
+      "payment": {"path": "m/86'/0'/0'/0/0", "xonly": "6cf32115c2fd0dc462fe82e267d89a17e5f5b43087cfcb3be52b89ac70fac245"}
+    },
+    {
+      "network": "mainnet",
+      "coin_type": 0,
+      "entity": 1,
+      "xprv_o2a": "cb4aabaed484766c4be18d21723aa351c82a3a5707d69958accb27a3bef3e8b32e7ce52950114c05dfdd3aab7b3c08cd0899af7bf93b4137d7e1f0f6952f2505",
+      "keys": {
+        "root_identity": {"path": "m/0'/1'/0'/0'", "xonly": "44eec350058c0f989cb2d1af8468aa2f1a12e99e98226cc36db446c54824374c"},
+        "controller_0": {"path": "m/0'/1'/1'/0'", "xonly": "1ae475832feb3331f8e760fcd7803a48078bb0b38f5e15b1fb52017fd8757917"},
+        "recovery_0": {"path": "m/0'/1'/2'/0'", "xonly": "31e6b765372e8f0f5561a05012e4e1d803d3c7b6667793208da7e9abd5fc40d8"},
+        "nostr_0": {"path": "m/0'/1'/3'/0'", "xonly": "cad4d9f2eb17e895b3e49921892255ddb7bf35c7a9fe865b89f71a3745bf53f0"}
+      },
+      "payment": {"path": "m/86'/0'/0'/0/0", "xonly": "6cf32115c2fd0dc462fe82e267d89a17e5f5b43087cfcb3be52b89ac70fac245"}
+    },
+    {
+      "network": "regtest",
+      "coin_type": 1,
+      "entity": 0,
+      "xprv_o2a": "cb4aabaed484766c4be18d21723aa351c82a3a5707d69958accb27a3bef3e8b32e7ce52950114c05dfdd3aab7b3c08cd0899af7bf93b4137d7e1f0f6952f2505",
+      "keys": {
+        "root_identity": {"path": "m/1'/0'/0'/0'", "xonly": "f53704a3e4d3ddad5efb561617489c31522a0cf5a3098f5feb15f900b5ded236"},
+        "controller_0": {"path": "m/1'/0'/1'/0'", "xonly": "ff96950266bcbdc5f9131f722305116cd5e51fe9c1d9e2c1073e4fcb4618c3c6"},
+        "recovery_0": {"path": "m/1'/0'/2'/0'", "xonly": "851bbbf4a54b784d635a5f07fea3a2548dcaee887d75fd744191eb37770da590"},
+        "nostr_0": {"path": "m/1'/0'/3'/0'", "xonly": "8b3574abf95b90ed396a6ffc83676dfeabe91596106afbc6e8ff778d470445cb"}
+      },
+      "payment": {"path": "m/86'/1'/0'/0/0", "xonly": "24b8f010a21dc5b52a6a1be88feeb23ae9b55dfa5da698cecde29ff2077387b2"}
+    },
+    {
+      "network": "regtest",
+      "coin_type": 1,
+      "entity": 1,
+      "xprv_o2a": "cb4aabaed484766c4be18d21723aa351c82a3a5707d69958accb27a3bef3e8b32e7ce52950114c05dfdd3aab7b3c08cd0899af7bf93b4137d7e1f0f6952f2505",
+      "keys": {
+        "root_identity": {"path": "m/1'/1'/0'/0'", "xonly": "2524dced5700ec964fb67e1b446acbc1388cccb0998bc429ec5f4e6cd67f6d87"},
+        "controller_0": {"path": "m/1'/1'/1'/0'", "xonly": "769b1160e553d25be96c774e0fb15e023f874f758c47bd4d1110b6d39852ebb2"},
+        "recovery_0": {"path": "m/1'/1'/2'/0'", "xonly": "87383029dae6c5d60eee53fb31954f4892b04e94829de4bafda29e91ad5213af"},
+        "nostr_0": {"path": "m/1'/1'/3'/0'", "xonly": "6bbfd3daa26f57e1c9865530038632cd0937a33232dc18b7c3908af8f8f1b053"}
+      },
+      "payment": {"path": "m/86'/1'/0'/0/0", "xonly": "24b8f010a21dc5b52a6a1be88feeb23ae9b55dfa5da698cecde29ff2077387b2"}
+    }
+  ],
+  "rejections": [
+    {"id": "unhardened-role", "profile_version": 1, "network": "mainnet", "entity": 0, "key_class": "controller_0", "path": "m/0'/0'/1/0'", "candidate_xonly": "f3adf5ea9efb7576ccc79a330ce2cc916595a45193611779e2c6a210b1d05e17", "reason": "identity role must be hardened"},
+    {"id": "unhardened-index", "profile_version": 1, "network": "mainnet", "entity": 0, "key_class": "controller_0", "path": "m/0'/0'/1'/0", "candidate_xonly": "f3adf5ea9efb7576ccc79a330ce2cc916595a45193611779e2c6a210b1d05e17", "reason": "identity key index must be hardened"},
+    {"id": "cross-role-reuse", "profile_version": 1, "network": "mainnet", "entity": 0, "key_class": "controller_0", "path": "m/0'/0'/1'/0'", "candidate_xonly": "95e5b5d6882c86957fb293dfd74a72d1795cf8736c026e1e13bc63a6c5710b36", "reason": "root key cannot fill controller role"},
+    {"id": "cross-entity-reuse", "profile_version": 1, "network": "mainnet", "entity": 1, "key_class": "root_identity", "path": "m/0'/1'/0'/0'", "candidate_xonly": "95e5b5d6882c86957fb293dfd74a72d1795cf8736c026e1e13bc63a6c5710b36", "reason": "entity 0 key cannot fill entity 1 path"},
+    {"id": "path-alias", "profile_version": 1, "network": "mainnet", "entity": 0, "key_class": "root_identity", "path": "m/0'/0'/0'/1'", "candidate_xonly": "95e5b5d6882c86957fb293dfd74a72d1795cf8736c026e1e13bc63a6c5710b36", "reason": "root terminal index is fixed at zero"},
+    {"id": "wrong-coin-type", "profile_version": 1, "network": "mainnet", "entity": 0, "key_class": "root_identity", "path": "m/1'/0'/0'/0'", "candidate_xonly": "f53704a3e4d3ddad5efb561617489c31522a0cf5a3098f5feb15f900b5ded236", "reason": "coin type does not match declared network"},
+    {"id": "unsupported-profile-version", "profile_version": 2, "network": "mainnet", "entity": 0, "key_class": "root_identity", "path": "m/0'/0'/0'/0'", "candidate_xonly": "95e5b5d6882c86957fb293dfd74a72d1795cf8736c026e1e13bc63a6c5710b36", "reason": "unknown derivation profile version"},
+    {"id": "retired-827-path", "profile_version": 1, "network": "mainnet", "entity": 0, "key_class": "root_identity", "path": "m/827'/0'/0'/0'/0'", "candidate_xonly": "95e5b5d6882c86957fb293dfd74a72d1795cf8736c026e1e13bc63a6c5710b36", "reason": "retired purpose path is outside Route B"},
+    {"id": "payment-key-o2a-signature", "profile_version": 1, "network": "mainnet", "entity": 0, "key_class": "payment_as_o2a", "path": "m/86'/0'/0'/0/0", "candidate_xonly": "6cf32115c2fd0dc462fe82e267d89a17e5f5b43087cfcb3be52b89ac70fac245", "reason": "payment keys have no O2A signing role"}
+  ]
+}

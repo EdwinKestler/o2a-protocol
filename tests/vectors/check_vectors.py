@@ -13,10 +13,13 @@ import subprocess
 import sys
 from pathlib import Path
 
+from check_derivation_cross import cross_check
+
 HERE = Path(__file__).resolve().parent
 FIXTURE_PATH = HERE / "v0.1.json"
 CRYPTO_MANIFEST = HERE / "crypto-checker" / "Cargo.toml"
 PROTOCOL_CHECKER = HERE / "check_protocol_objects.py"
+DERIVATION_FIXTURE_PATH = HERE / "derivation-v0.1.json"
 
 ENTITY_TAG = "O2A/v0.1/entity-id"
 KEY_TAG = "O2A/v0.1/key-id"
@@ -26,6 +29,49 @@ PACKAGE_TAG = "O2A/v0.1/proof-package"
 MAX_BYTES_LENGTH = 1_048_576
 MAX_TEXT_LENGTH = 4_096
 KNOWN_NETWORKS = {0, 1, 2, 3, 4}
+
+
+def derivation_case_accepts(case: dict, derived: dict) -> bool:
+    if case["profile_version"] != 1:
+        return False
+    if case["network"] != derived["network"] or case["entity"] != derived["entity"]:
+        return False
+    key_class = case["key_class"]
+    if key_class == "payment_as_o2a":
+        return False
+    key = derived["keys"].get(key_class)
+    if key is None:
+        return False
+    return case["path"] == key["path"] and case["candidate_xonly"] == key["xonly"]
+
+
+def check_derivation_vectors() -> None:
+    fixture = json.loads(DERIVATION_FIXTURE_PATH.read_text(encoding="utf-8"))
+    if fixture["license"] != "CC0-1.0" or fixture["profile_version"] != 1:
+        fail("invalid derivation fixture license or profile version")
+    rows = cross_check()
+    by_case = {(row["network"], row["entity"]): row for row in rows}
+    if len(fixture["positives"]) != len(by_case):
+        fail("derivation positive-case count mismatch")
+    for expected in fixture["positives"]:
+        row = by_case.get((expected["network"], expected["entity"]))
+        if row is None:
+            fail("missing derivation implementation result")
+        normalized = dict(expected)
+        normalized["bip85_path"] = fixture["bip85_path"]
+        for implementation in ("python", "rust"):
+            if row[implementation] != normalized:
+                fail(
+                    f"{implementation} derivation does not match fixture for "
+                    f"{expected['network']} entity {expected['entity']}"
+                )
+    for case in fixture["rejections"]:
+        row = by_case.get((case["network"], case["entity"]))
+        if row is None:
+            fail(f"rejection {case['id']} lacks a derived comparison case")
+        for implementation in ("python", "rust"):
+            if derivation_case_accepts(case, row[implementation]):
+                fail(f"{implementation} accepted derivation rejection {case['id']}")
 
 
 def fail(message: str) -> None:
@@ -696,6 +742,8 @@ def check() -> None:
         fail("recovery-policy hash was not domain separated")
     if policy[:2] != b"\x01\x00" or policy[-1:] != b"\x01":
         fail("recovery policy version or cancellation rule mismatch")
+
+    check_derivation_vectors()
 
     protocol_result = subprocess.run(
         [sys.executable, str(PROTOCOL_CHECKER)],
