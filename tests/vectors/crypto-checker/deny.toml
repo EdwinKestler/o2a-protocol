@@ -5,10 +5,31 @@ exclude-dev = true
 
 [advisories]
 yanked = "deny"
+# Maintainer decision 2026-09-24: paste is a compile-time-only proc macro
+# with no runtime code path. Track replacement with pastey upstream.
+ignore = ["RUSTSEC-2024-0436"]
 
 [licenses]
-allow = ["Apache-2.0", "MIT", "CC0-1.0"]
+allow = [
+    "Apache-2.0",
+    "BSD-2-Clause",
+    "BSD-3-Clause",
+    "CC0-1.0",
+    "CDLA-Permissive-2.0",
+    "ISC",
+    "MIT",
+    "MIT-0",
+    "Unicode-3.0",
+    "Zlib",
+]
 confidence-threshold = 0.8
+
+# MPL-2.0 and MPL-2.0-no-copyleft-exception are never global allowances.
+# A future graph may use a package-scoped exception only for a reviewed,
+# unmodified third-party dependency. Patching or forking it is a stop.
+# The current reviewed instance, outside this checker graph, is unmodified
+# base85 2.0.0 under MPL-2.0-no-copyleft-exception.
+# MITNFA and every GPL/LGPL/AGPL expression remain disallowed.
 
 [bans]
 multiple-versions = "warn"

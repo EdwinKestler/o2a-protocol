@@ -72,6 +72,46 @@ Recheck exact packages, features, license files, and revisions when the
 dependency lockfile is selected. `cargo-deny` assists that review; it does not
 replace the notices or a manual distribution audit.
 
+## Maintainer dependency-license decision — 2026-09-24
+
+The feature-aware RGB measurement at commit `3b9c397` separated the compiled
+library graph from packages present only in the upstream lock or CLI. The
+maintainer approved the following repository-wide dependency policy. This
+policy does not adopt the measured RGB graph or close its Phase 0 gate.
+
+Permissive dependencies may use `CC0-1.0`, `MIT`, `MIT-0`, `Apache-2.0`,
+`BSD-2-Clause`, `BSD-3-Clause`, `ISC`, `Zlib`, `Unicode-3.0`, or
+`CDLA-Permissive-2.0`. SPDX `OR` expressions composed only of those approved
+licenses are also allowed. A `deny.toml` expresses this by allowing the
+individual identifiers; it must continue to fail unknown or unlicensed
+packages.
+
+`MPL-2.0` and `MPL-2.0-no-copyleft-exception` are allowed only through a
+package-scoped exception for an unmodified third-party dependency. O2A does
+not fork or patch an MPL-licensed crate. A required modification is a stop and
+requires a new maintainer and license review before work continues. The current
+measured instance is unmodified `base85 2.0.0` under
+`MPL-2.0-no-copyleft-exception`. MPL is intentionally absent from the global
+allowlist so a newly introduced MPL package cannot pass without that review.
+
+`MITNFA` remains disallowed. Any dependency expression containing `GPL`,
+`LGPL`, or `AGPL` is a stop. An alternative disjunct does not silently waive
+the review: the selected and distributed licensing path must be recorded.
+
+`RUSTSEC-2024-0436` for `paste 1.0.15` is ignored as a maintenance advisory
+for the measured graph because `paste` is a proc macro used at compile time and
+has no runtime code path. This is not a claim that unmaintained dependencies
+are generally acceptable. The replacement request—migrate from `paste` to the
+drop-in maintained fork `pastey`—is tracked in
+[upstream needs](upstream-needs.md). Every ignore entry must cite this dated
+decision.
+
+Future repository `deny.toml` files must implement this policy. The scoped
+checker policy under `tests/vectors/crypto-checker/` carries the permissive
+allowlist and the dated advisory ignore. A future RGB consumer must additionally
+use a package-and-version-scoped MPL exception for `base85 2.0.0` after
+confirming that its source is unmodified.
+
 ## Primary references
 
 - [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0.html),

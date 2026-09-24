@@ -112,3 +112,13 @@ Evidence: [rgb-rc3-compiled-graph-2026-09-24](../evidence/phase0/rgb-rc3-compile
 2. `rustls-webpki` 0.101.7 is absent from the `resolver-electrum` + `fs` tree. The three lock-wide advisories are a measurement artifact. `paste` 1.0.15 remains in that tree, and feature-aware `cargo deny` still fails on it.
 3. An unmodified library consumer synced 101 regtest UTXOs through electrs. The CLI patch blocker is a measurement artifact for a library consumer.
 4. License failures on the compiled graph are a real allowlist blocker: ISC, MIT-0, Unicode-3.0, CDLA-Permissive-2.0, and copyleft `MPL-2.0-no-copyleft-exception`. This is triage, not an accepted exception list.
+
+## Consumer dependency shape — 2026-09-24
+
+O2A consumes `rgb-runtime` as a library with `default-features = false` and
+features `resolver-electrum` and `fs`. It does not depend on `rgb-wallet`, the
+CLI package. The retained feature-aware consumer manifest and compiled tree
+demonstrate that this shape excludes the CLI's direct Esplora dependency and
+the lock-wide `rustls-webpki` advisories. This statement fixes the consumer
+boundary only; it does not adopt the RC3 lock, define an O2A RGB program, or
+close the dependency gate.
