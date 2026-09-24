@@ -26,3 +26,10 @@ fork, patch, dependency adoption, or production implementation.
    `--electrum` explicitly and did not turn this upstream spelling into an O2A
    configuration contract. Evidence:
    [RC3 remediation run](../evidence/phase0/rgb-rc3-remediation-2026-09-23/RUN.md).
+5. **Correct the Electrum witness-height off-by-one calculation.** At commit
+   `a1e6b415`, `rgb-runtime` computes the mined height as
+   `last_height - confirmations`; Bitcoin confirmations include the containing
+   block, so the conversion requires `+ 1`. With the anchor at Bitcoin height
+   103, RGB reported `Mined(102)` both before and after the tip advanced from
+   103 to 104. Evidence:
+   `../o2a-testnet-demo/evidence/regtest-genesis-rotation-2026-09-24/WITNESS-HEIGHT.md`.
