@@ -199,13 +199,6 @@ fn self_test_quiet() -> Result<(), String> {
     Ok(())
 }
 
-fn self_test() -> Result<(), String> {
-    self_test_quiet()?;
-    println!("BIP32 vector 1 m/0H: ok");
-    println!("BIP85 BIP32-XPRV app 32 index 0: ok");
-    Ok(())
-}
-
 fn decode_32(value: &str, label: &str) -> Result<[u8; 32], String> {
     let bytes = hex::decode(value).map_err(|error| format!("invalid {label} hex: {error}"))?;
     bytes
@@ -263,8 +256,15 @@ fn sign_test_vector(key_name: &str, message: &str) -> Result<(), String> {
 
 fn run() -> Result<(), String> {
     let args: Vec<String> = env::args().collect();
+    // Every command is gated by the embedded official vectors. A mismatch
+    // disables the checker instead of allowing another operation to proceed.
+    self_test_quiet()?;
     match args.as_slice() {
-        [_, command] if command == "self-test" => self_test(),
+        [_, command] if command == "self-test" => {
+            println!("BIP32 vector 1 m/0H: ok");
+            println!("BIP85 BIP32-XPRV app 32 index 0: ok");
+            Ok(())
+        }
         [_, command, seed] if command == "bip32-master" => {
             let seed = hex::decode(seed).map_err(|error| format!("invalid seed hex: {error}"))?;
             println!("{}", bip32_master(&seed)?.encode());
