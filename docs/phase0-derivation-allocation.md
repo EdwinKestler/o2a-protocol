@@ -39,6 +39,17 @@ If a collision-safe shared allocation cannot be obtained, Phase 0 must choose
 and document another interoperable derivation mechanism before freezing the
 wallet profile. Local use of `827'` is not sufficient evidence.
 
+## Collision review — 2026-09-23
+
+BIP43 says a new scheme should use its BIP number as the hardened purpose so
+wallet trees do not overlap. Purposes `10001'` through `19999'` are reserved
+for SLIPs. Deployed Bitcoin purposes that this profile must not reuse include
+`44'`, `45'`, `48'`, `49'`, `84'`, and `86'`. Payment keys already use `86'`.
+
+Purpose `827'` is not an assigned BIP. No BIP or SLIP number was requested or
+granted in this pass. The allocation gate therefore stays **open**. `827'`
+remains provisional test data and is not an interoperable wallet convention.
+
 ## Effect on current work
 
 EntityID derivation from an already supplied root public key is specified and

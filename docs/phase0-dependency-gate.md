@@ -12,6 +12,15 @@ and its
 This page does not select an RGB lineage, vendor RGB, or close the
 [Phase 0 roadmap](13-roadmap.md).
 
+## Recheck — 2026-09-23
+
+The published RGB-WG `rgb` tag list still ends at `v0.12.0-rc.3` from
+15 July 2025. RGB Core `v0.12.0` remains the latest consensus tag. A separate
+`v0.11.1` line is in production use and must not be mixed with the 0.12
+family. Neither line meets the adoption checklist: the 0.12 standard library
+and runtime remain release candidates with the retained audit findings, and
+`v0.11.1` is a different protocol. No new lock was built. The gate stays open.
+
 ## 1. CLI overlay
 
 **Decision:** the three-line patch in

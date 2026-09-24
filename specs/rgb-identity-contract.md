@@ -120,9 +120,15 @@ TaggedHash("O2A/v0.1/recovery", recovery payload)
 
 `TaggedHash` is the purpose-specific tagged hash in the cryptographic profile.
 Transition, recovery, and genesis payloads are the exact O2A-CANON-1 bytes.
-The script or RGB structure that carries the digest is part of the unbound RGB
-program bytes. Genesis uses the same seal shape and its commitment domain
-remains `O2A/v0.1/entity-genesis`.
+The O2A commitment carrier is that 32-byte digest inside the consignment for
+the transition that closes the seal. A verifier recomputes the digest from the
+canonical payload and checks that the consignment names the same outpoint. A
+digest that exists only in a registry row is not a commitment. This profile
+does not freeze an OP_RETURN, Taproot annex, or Tapret template. RGB 0.12
+abstracts the seal protocol, and the program bytes that place the digest in a
+particular RGB transition stay unbound until the dependency gate adopts a lock.
+Genesis uses the same seal shape and its commitment domain remains
+`O2A/v0.1/entity-genesis`.
 
 Spending the seal closes it. The next transition requires a new seal. A
 transaction id or a public key alone is not an identity proof.

@@ -90,6 +90,14 @@ open conformance track into a closed one.
 Until a lock is adopted, the RGB 0.12 program bytes stay unbound and
 implementation code stays unauthorized.
 
+A follow-up pass kept the derivation allocation open after a BIP43 collision
+review: `827'` is not an assigned purpose, and no BIP or SLIP number was
+granted. The commitment carrier is the 32-byte tagged hash inside the
+consignment that closes the seal. No script template is frozen. A same-day
+upstream recheck found no adoptable RGB release. Protocol-only fixtures now
+also cover a wrong capability, a wrong network, duplicate name bytes, and a
+recovery-policy hash. RGB execution fixtures remain open.
+
 ## Checks
 
 - `python3 tests/vectors/check_vectors.py` exited 0.

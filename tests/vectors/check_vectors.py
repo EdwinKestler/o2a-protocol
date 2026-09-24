@@ -221,6 +221,49 @@ def check() -> None:
     if hashlib.sha256(mutated).hexdigest() == package_id:
         fail("mutated package retained the package ID")
 
+    wrong_capability = bytearray(claim)
+    capability_at = 2 + 1 + 2 + 32 + 1 + 32 + 32 + 1
+    wrong_capability[capability_at : capability_at + 2] = u16(5)
+    if bytes(wrong_capability) == claim:
+        fail("wrong capability did not change the claim")
+    if tagged_hash(CLAIM_TAG, bytes(wrong_capability)) == claim_digest:
+        fail("wrong capability preserved the claim digest")
+
+    wrong_network = bytearray(claim)
+    wrong_network[2] = 0
+    if tagged_hash(CLAIM_TAG, bytes(wrong_network)) == claim_digest:
+        fail("wrong network preserved the claim digest")
+
+    other_root = bytes.fromhex(public_key)
+    other_entity = tagged_hash(ENTITY_TAG, u16(1) + bytes([4]) + other_root)
+    if other_entity == entity:
+        fail("distinct roots produced one EntityID")
+    other_claim = build_claim(fixture, other_entity, state, key_id)
+    if other_claim == claim:
+        fail("duplicate name claims were byte-identical")
+    if claim_fixture["object_utf8"].encode("utf-8") not in other_claim:
+        fail("duplicate name text missing from the second claim")
+
+    key_a = bytes([0x11]) * 32
+    key_b = bytes([0x22]) * 32
+    policy = b"".join(
+        (
+            u16(1),
+            u64(1),
+            u16(2),
+            u32(2),
+            key_a,
+            key_b,
+            u32(6),
+            bytes([1]),
+        )
+    )
+    policy_hash = tagged_hash("O2A/v0.1/recovery-policy", policy)
+    if len(policy_hash) != 32 or policy_hash == hashlib.sha256(policy).digest():
+        fail("recovery-policy hash was not domain separated")
+    if policy[:2] != b"\x01\x00" or policy[-1:] != b"\x01":
+        fail("recovery policy version or cancellation rule mismatch")
+
 
 if __name__ == "__main__":
     check()

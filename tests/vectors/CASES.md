@@ -27,7 +27,10 @@ checker.
 | Claim | Canonical payload, tagged hash, valid signature, mutated signature rejection |
 | Cross-domain replay | Claim signature rejected under the attestation tag |
 | Proof package | Manifest ID, signature, signed-envelope package ID, truncation and mutation hashes |
-| RGB/recovery/evidence/discovery/music | Open; prose cases only |
+| Wrong capability and wrong network | Mutations of the claim fixture; digests must change |
+| Duplicate names | Two EntityIDs, one name string, unequal claim payloads |
+| Recovery-policy hash | Canonical threshold policy under `O2A/v0.1/recovery-policy` |
+| RGB/evidence/discovery/music execution | Open; prose cases only |
 
 ## Distinct root vs payment key
 
