@@ -27,13 +27,23 @@ has no O2A key role or O2A key identifier and must never sign an O2A object.
 The identity `purpose'` becomes normative only after all of these are recorded:
 
 1. a collision review against existing BIP43 application purposes;
-2. the allocation or standards mechanism used by independent wallets;
-3. two independent derivations from the same public, unsafe test mnemonic;
-4. distinct expected public keys for root, controller, recovery, Nostr, and
-   BIP86 payment paths on mainnet and test networks;
-5. invalid-case vectors for unhardened identity roles, cross-role key use,
-   wrong coin type, and payment-key use in an O2A signature; and
-6. regeneration of every provisional `827'` fixture.
+2. official evidence for the allocation and its exact purpose semantics;
+   merely choosing a value in the SLIP-reserved range is not an allocation;
+3. two independent implementations deriving the same keys from one published,
+   explicitly unsafe test seed, with seed format, passphrase, wordlist,
+   network-to-coin-type mapping, and implementation/library versions recorded;
+4. exact expected public keys and paths for root identity, controller,
+   recovery, Nostr publication, and BIP86 payment keys on mainnet and test
+   networks;
+5. a collision-free account/entity indexing rule for multiple independent
+   identities in one wallet, including artist, venue, promoter, label, EVENT,
+   and ALBUM roots. EVENT and ALBUM are separate EntityIDs, not child roles of
+   the artist's EntityID;
+6. invalid-case vectors for unhardened identity roles, cross-role or
+   cross-entity key reuse, path aliases, wrong coin type/network, unsupported
+   derivation versions, and payment-key use in an O2A signature; and
+7. regeneration of every provisional `827'` fixture, or an explicit inventory
+   marking each such fixture obsolete.
 
 If a collision-safe shared allocation cannot be obtained, Phase 0 must choose
 and document another interoperable derivation mechanism before freezing the

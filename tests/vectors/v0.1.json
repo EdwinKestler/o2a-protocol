@@ -4,8 +4,8 @@
   "vector_version": "v0.1-remediation-1",
   "unsafe_for_funds": true,
   "scope": {
-    "executed": "EntityID, role-bound key ID, remediated claim header and payload, cross-domain rejection, BIP340 verification through rust-secp256k1, and non-circular proof-package manifest and envelope hashes.",
-    "not_executed": "Identity derivation remains provisional. RGB consignments, anchors, reorgs, recovery transitions, channel observations, discovery rebinding, and music custody remain open fixtures."
+    "executed": "EntityID, role-bound key ID, remediated claim header and payload, cross-domain rejection, BIP340 verification through rust-secp256k1, claim authorization and verifier-network evaluation, two visible competing same-name claims, strict claim truncation rejection, and non-circular proof-package manifest and envelope hashes.",
+    "not_executed": "Identity derivation remains provisional. Bitcoin/RGB execution, live channel observation, reciprocal discovery proofs, full rebinding-history evaluation, and custody transitions remain open. Additional protocol-only signed layouts are exercised separately in protocol-objects-v0.1.json."
   },
   "public_test_key": {
     "description": "Published BIP340 test key for scalar 3; permanently unsafe for funds.",
@@ -32,6 +32,86 @@
     "digest_hex": "e99fbde2204571026df74573be9c71f28fd3825e636649e63107ca4d9ebacd36",
     "cross_domain_digest_hex": "359bd3e701e90b3383ce6a01399cc68b7adb66b9b212f53236eaf42206d5b113",
     "signature_hex": "c7ecdf1b96efcd8c2dd322ea1d35dedb50c6fe657c9a56c71dcbd4b742236df95e7117dbb48451c3ed8324fe164253297775f923ab6a5d696ba1e38353642c87"
+  },
+  "semantic_claims": {
+    "expected_network": 4,
+    "decoder_bounds": {
+      "bytes_max": 1048576,
+      "text_max": 4096,
+      "accepted_object_length": 4097,
+      "rejected_object_length": 1048577,
+      "rejected_text_length": 4097
+    },
+    "root_validation": {
+      "invalid_xonly_hex": "fffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc30",
+      "source": "published BIP340 invalid public-key test vector 14",
+      "expected_result": "reject before EntityID hashing"
+    },
+    "primary_authorization": {
+      "entity": "fbef7e8be958e2c27663f1fde0f14968b9f56af9693e56be0403619b7d3d7856",
+      "state": "2222222222222222222222222222222222222222222222222222222222222222",
+      "key_id": "6961ab163fd710e167be20af4d320b50904303b432b46dde4deb5de60bca9e51",
+      "public_key": "f9308a019258c31049344f85f89d5229b531c845836f99b08601f113bce036f9",
+      "key_role": 1,
+      "capabilities": [4]
+    },
+    "wrong_capability": {
+      "payload_hex": "0100040400fbef7e8be958e2c27663f1fde0f14968b9f56af9693e56be0403619b7d3d78560122222222222222222222222222222222222222222222222222222222222222226961ab163fd710e167be20af4d320b50904303b432b46dde4deb5de60bca9e51010500fbef7e8be958e2c27663f1fde0f14968b9f56af9693e56be0403619b7d3d7856130000006f32612e6578616d706c652f6e616d652f7631070000004578616d706c650033333333333333333333333333333333333333333333333333333333333333330000",
+      "digest_hex": "7b75f3a3001ec7bf7541afffbaa5f47ebd57797ee5b5a80c5157e55b15c0ab3a",
+      "signature_hex": "49a76246c8f7de013838a4138af8f0638152a73252d86c028b2a1e3aa8524132444674935a81ef4a697e195822c3785a3e5ce634c6915778f12bbb4d3571a942",
+      "expected_result": "reject: object/domain/capability mismatch"
+    },
+    "wrong_role": {
+      "key_role": 2,
+      "payload_hex": "0100040400fbef7e8be958e2c27663f1fde0f14968b9f56af9693e56be0403619b7d3d78560122222222222222222222222222222222222222222222222222222222222222226961ab163fd710e167be20af4d320b50904303b432b46dde4deb5de60bca9e51020400fbef7e8be958e2c27663f1fde0f14968b9f56af9693e56be0403619b7d3d7856130000006f32612e6578616d706c652f6e616d652f7631070000004578616d706c650033333333333333333333333333333333333333333333333333333333333333330000",
+      "digest_hex": "936262be591d702ea1c7bac5309774296d74bc08536f484e5a5bbcff5c9d352a",
+      "signature_hex": "29efb622f628178dc4125ae179a232d4fcce7bf84c9163dbdd50180e3cf134a58568b576990fd0c9d1335efe1107fea296631047f4d4d3bea8b804bad389e0d4",
+      "expected_result": "reject: wrong signing-key role"
+    },
+    "wrong_network": {
+      "network": 0,
+      "entity": "9d79d43839156f3ec59d6998b6d15d577810202953a53243adeb490d2c96846c",
+      "payload_hex": "01000004009d79d43839156f3ec59d6998b6d15d577810202953a53243adeb490d2c96846c0122222222222222222222222222222222222222222222222222222222222222226961ab163fd710e167be20af4d320b50904303b432b46dde4deb5de60bca9e510104009d79d43839156f3ec59d6998b6d15d577810202953a53243adeb490d2c96846c130000006f32612e6578616d706c652f6e616d652f7631070000004578616d706c650033333333333333333333333333333333333333333333333333333333333333330000",
+      "digest_hex": "0445e2a87fac62d85cc3516768faed7d923b408cc58102c4991ce236ec68f56d",
+      "signature_hex": "16bd8800bd46b75fc58a2528a4693b54314a5e388d76337b7fb173f3d97265fd58b7a18d0e339704d55282287526fd42d24b0fd1be71e30ed0ce7a3a5e88b31e",
+      "authorization": {
+        "entity": "9d79d43839156f3ec59d6998b6d15d577810202953a53243adeb490d2c96846c",
+        "state": "2222222222222222222222222222222222222222222222222222222222222222",
+        "key_id": "6961ab163fd710e167be20af4d320b50904303b432b46dde4deb5de60bca9e51",
+        "public_key": "f9308a019258c31049344f85f89d5229b531c845836f99b08601f113bce036f9",
+        "key_role": 1,
+        "capabilities": [4]
+      },
+      "expected_result": "reject in regtest context; accept in mainnet context"
+    },
+    "unknown_network": {
+      "network": 5,
+      "payload_hex": "0100050400fbef7e8be958e2c27663f1fde0f14968b9f56af9693e56be0403619b7d3d78560122222222222222222222222222222222222222222222222222222222222222226961ab163fd710e167be20af4d320b50904303b432b46dde4deb5de60bca9e51010400fbef7e8be958e2c27663f1fde0f14968b9f56af9693e56be0403619b7d3d7856130000006f32612e6578616d706c652f6e616d652f7631070000004578616d706c650033333333333333333333333333333333333333333333333333333333333333330000",
+      "digest_hex": "9b6940f02cefb7926b8b0dfd1dbe610d9befc449857cbfab129f5667945f1b9e",
+      "signature_hex": "66c0c603be29dd23289e7fb77b4f6e2a67bee912533a0025ed1cffdfdc17ca1b23135976a925f4f5cc86a4752bdd9184002e7baf1d7e250444e2ae057e8a8d36",
+      "expected_result": "reject even when verifier context also names network 5"
+    },
+    "competing_name_claim": {
+      "root_public_test_key": "dd308afec5777e13121fa72b9cc1b7cc0139715309b086c960e18fd969774eb8",
+      "controller_public_test_key": "published BIP340 vector 1 key; permanently unsafe for funds",
+      "public_key": "dff1d77f2a671c5f36183726db2341be58feae1da2deced843240f7b502ba659",
+      "entity": "97974d48bfdb45ccd79b3bdebebc7885b71ca9e18c4aa5fc13a8167503eb3de0",
+      "payload_hex": "010004040097974d48bfdb45ccd79b3bdebebc7885b71ca9e18c4aa5fc13a8167503eb3de00144444444444444444444444444444444444444444444444444444444444444442616e2c288a5e99447ed748b2216cdee01b375a1a84332f1349e671c716be71201040097974d48bfdb45ccd79b3bdebebc7885b71ca9e18c4aa5fc13a8167503eb3de0130000006f32612e6578616d706c652f6e616d652f7631070000004578616d706c650033333333333333333333333333333333333333333333333333333333333333330000",
+      "digest_hex": "f397b46c7f6201fc68274c2073619e3daea32a8e6ebdce27146edb4d9c377166",
+      "signature_hex": "1b2d525f6000da8486248fdca859c65f864950bfb646e02750d92c037fc2d158004f430bdc62c0eb63ca0ef7c50de61fac176f9c72fad4f36d0efd7afa301414",
+      "authorization": {
+        "entity": "97974d48bfdb45ccd79b3bdebebc7885b71ca9e18c4aa5fc13a8167503eb3de0",
+        "state": "4444444444444444444444444444444444444444444444444444444444444444",
+        "key_id": "2616e2c288a5e99447ed748b2216cdee01b375a1a84332f1349e671c716be712",
+        "public_key": "dff1d77f2a671c5f36183726db2341be58feae1da2deced843240f7b502ba659",
+        "key_role": 1,
+        "capabilities": [4]
+      }
+    },
+    "expected_visible_claims": {
+      "fbef7e8be958e2c27663f1fde0f14968b9f56af9693e56be0403619b7d3d7856": "e99fbde2204571026df74573be9c71f28fd3825e636649e63107ca4d9ebacd36",
+      "97974d48bfdb45ccd79b3bdebebc7885b71ca9e18c4aa5fc13a8167503eb3de0": "f397b46c7f6201fc68274c2073619e3daea32a8e6ebdce27146edb4d9c377166"
+    }
   },
   "proof_package": {
     "object_type": 12,

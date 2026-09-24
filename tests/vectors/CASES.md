@@ -3,34 +3,83 @@
 SPDX-License-Identifier: CC0-1.0
 
 This directory tracks the Phase 0 roadmap gate. `v0.1.json` contains the
-current executable O2A-CANON-1 claim and proof-package fixtures.
-`check_vectors.py` recomputes their bytes and hashes and delegates BIP340 to
-the pinned rust-secp256k1 helper in `crypto-checker/`. It is a vector tool, not
-a wallet, and it does not use the network. The helper's lock hash, audit, and
-license result are recorded in [DEPENDENCIES.md](DEPENDENCIES.md).
+claim and proof-package fixtures. `protocol-objects-v0.1.json` contains fixed
+payloads, tagged hashes, and signatures for the remaining signed-object
+layouts. `check_vectors.py` runs both bounded checkers and delegates BIP340 to
+the pinned rust-secp256k1 helper in `crypto-checker/`. These are vector tools,
+not a wallet, and they do not use the network. The helper's lock hash, audit,
+and license result are recorded in [DEPENDENCIES.md](DEPENDENCIES.md).
 
 The vector track remains **OPEN**. This directory has no adopted RGB
-consignment, anchor/header proof, recovery transition, control observation,
-discovery transcript, or music manifest fixture. Those cases remain expected
-results only and are not made executable by the passing claim/package checker.
+consignment, Bitcoin anchor/header proof, seal execution, reorg execution, or
+wallet derivation fixture. The new lifecycle fixtures cover canonical bytes
+and local authorization inputs only; they do not execute an RGB transition.
+Reciprocal discovery proofs, full rebinding-history validation, live adapter
+checks, present claim optional-field branches, and general parser
+interoperability also remain open.
 
-`v0.1.json` uses the published BIP340 public test key for scalar 3, permanently
-unsafe for funds. It contains no wallet seed. It publishes one regtest
-EntityID, a role-bound controller key ID, one claim with a separately encoded
-claim capability, and one non-circular proof-package envelope. Identity BIP32
-purpose `827'` is no longer treated as frozen and is not recomputed by the
-checker.
+`v0.1.json` uses published BIP340 test-vector keys that are permanently unsafe
+for funds. It contains no wallet seed. It publishes two regtest EntityIDs,
+role-bound controller key IDs, signed claim variants with separately encoded
+capabilities and networks, and one non-circular proof-package envelope.
+Identity BIP32 purpose `827'` is no longer treated as frozen and is not
+recomputed by the checker.
 
 | Area | Current executable evidence |
 | --- | --- |
-| Entity/key boundary | EntityID and controller-role key ID |
-| Claim | Canonical payload, tagged hash, valid signature, mutated signature rejection |
+| Entity/key boundary | EntityID, BIP340 x-only root parsing, invalid-root rejection, and controller-role key ID |
+| Claim | Canonical payload, fixture-scoped bounded decoding, distinct bytes/text limits, tagged hash, valid signature, mutated signature rejection |
 | Cross-domain replay | Claim signature rejected under the attestation tag |
 | Proof package | Manifest ID, signature, signed-envelope package ID, truncation and mutation hashes |
-| Wrong capability and wrong network | Mutations of the claim fixture; digests must change |
-| Duplicate names | Two EntityIDs, one name string, unequal claim payloads |
+| Wrong capability | Original signature rejection after mutation; independently re-signed payload rejected by object/domain/capability evaluation |
+| Wrong role | Original signature rejection after controller-to-recovery role mutation; independently re-signed payload rejected by semantic evaluation |
+| Claim header authorization | Re-signed absent-state and arbitrary-key-ID claims are rejected |
+| Wrong network | Independently signed mainnet claim accepted in mainnet context and rejected in regtest context; signed unknown-network claim rejected |
+| Duplicate names | Two independently signed claims from distinct EntityIDs both verify and remain separately visible |
 | Recovery-policy hash | Canonical threshold policy under `O2A/v0.1/recovery-policy` |
-| RGB/evidence/discovery/music execution | Open; prose cases only |
+| Genesis and identity transition | Fixed signed bytes; root/EntityID match; controller-rotation sequence checks; unsupported operations fail closed |
+| Recovery authorization | Fixed one-signer bytes; committed policy hash and not-before checks; thresholds above one return incomplete until a signature bundle is verified |
+| Evidence objects | Fixed signed attestation, challenge, and evidence-revocation bytes with duplicate/sort/target negatives |
+| Control and discovery | Fixed signed challenge, observation, Pubky rebinding, and Nostr rebinding; explicit expiry and signed-omission evaluation |
+| Music manifests | Fixed signed EVENT and ALBUM manifests; signer-entity and required album track checks |
+| Object framing | Each fixed signed-object payload rejects truncation and trailing bytes before evaluation |
+| Unknown state capability | Independently re-signed state with an unassigned capability value is rejected |
+| Bitcoin/RGB execution | Open; no consignment, anchor, header, seal-spend, fork, or reorg fixture |
+
+The current claim decoder fixture exercises absent `context`, `supersedes`, and
+`checkpoint` forms only. Present optional-field branches, unknown enum values
+other than the executable network rejection, and general parser
+interoperability remain open. This bounded checker is not a general-purpose
+O2A validator.
+
+`check_protocol_objects.py` reconstructs the fixed protocol-object payloads,
+checks every stored digest and signature, flips every signature for a negative
+case, rejects truncated and trailing-byte payloads, and rejects every
+signature under a different O2A tag. Its bounded
+decoder reads the exact signed bytes before object-specific evaluation. The
+well-formed invalid byte cases are independently re-signed before rejection;
+fixture metadata is expected-output description, not verifier input. State
+authorization, block height, observation time, and target classification are
+explicit evaluation-context inputs. Its state IDs and outpoints remain
+synthetic. Passing it does not prove an RGB state transition, Bitcoin
+commitment, external DNS/social observation, or discovery-adapter reciprocal
+signature.
+Attestation, challenge, and evidence-revocation checks cover serialization,
+signature authorization, sorted evidence inputs, and target classification;
+they do not decide whether an assertion is socially true or satisfy a complete
+trust policy.
+
+## Primitive bounds and EntityID root parsing
+
+Accept a claim object `bytes` field of 4,097 bytes even though that size would
+be too large for `text`. Reject a `bytes` field of 1,048,577 bytes and a `text`
+field of 4,097 bytes. These cases keep the one-megabyte `bytes` limit separate
+from the 4,096-byte `text` limit.
+
+Accept EntityID roots only after the 32 bytes parse as a secp256k1 BIP340
+x-only public key. Reject the published BIP340 invalid public-key test-vector
+bytes before EntityID hashing. This is public conformance data, not a wallet
+key or seed.
 
 ## Distinct root vs payment key
 
@@ -52,15 +101,17 @@ unallocated. This case cannot become ready from the older `827'` data.
 
 Accept two EntityIDs that use the same human-readable name. Each name is a
 claim signed in `O2A/v0.1/claim` by a controller-role key the issuer state
-authorizes for capability `claim`. Both claims stay visible. Anchor order is chronology, not
-ownership of the spelling.
+authorizes for capability `claim`. Both claims stay visible. Anchor order is
+chronology, not ownership of the spelling.
 
 Reject a first-claim registry, a merge of the two EntityIDs, hiding either
 claim, a name claim signed outside `O2A/v0.1/claim`, and a name claim signed
 by a key the stated state does not authorize for `claim`.
 
-No second name claim is in the byte fixture. The one claim payload there is
-only the canonical layout for a single self-name claim.
+Byte fixtures contain two independently signed self-name claims from distinct
+EntityIDs. The checker verifies both authorization contexts and requires an
+evaluation result containing both EntityID-to-claim-digest entries. It never
+selects a spelling owner or merges the entities.
 
 ## Invalid BIP340 signature
 
@@ -110,8 +161,37 @@ or anchor whose network does not match the entity. Reject an unknown network
 byte. An anchor on a Bitcoin network that has no confirmation depth in the
 RGB identity contract is not current.
 
-The executable claim uses network byte 4. A mainnet/wrong-network fixture and
-anchor check remain open.
+The fixture includes a valid, independently signed mainnet claim. The checker
+accepts it when the explicit verifier context is mainnet and rejects the same
+claim when that context is regtest. Bitcoin anchor/network checking remains
+open until an RGB execution fixture exists.
+
+A separately signed payload using unknown network byte 5 is rejected even when
+the caller supplies 5 as the expected verifier network. Unknown networks are
+also rejected before EntityID construction.
+
+## Wrong capability
+
+Accept a claim only when object type `claim`, the claim signing domain, the
+claim capability, the controller role, and the authorizing fixture state all
+agree.
+
+Reject the original signature after the capability byte is changed. Also
+reject a cryptographically valid, independently re-signed payload whose
+capability is not `claim`; re-signing cannot turn an object/domain/capability
+mismatch into authorization. The executable fixture covers both rejection
+paths rather than treating a changed digest as sufficient evidence.
+
+## Wrong role
+
+Accept an ordinary name claim only when the signed key role is controller and
+the stated authorizing context binds that controller-role key to capability
+`claim`.
+
+Reject the original signature after the signed role byte is changed from
+controller to recovery. Also reject an independently re-signed payload that
+retains the recovery role: a valid signature by the same public key does not
+authorize a recovery-role header to sign an ordinary claim.
 
 ## Wrong RGB contract
 
@@ -208,8 +288,13 @@ name. Reject a recovery that changes the root or the EntityID. Reject use of
 a replacement policy before that replacement is itself a prior valid state.
 A recovery-policy change does not authorize itself.
 
-Not executed on regtest. The byte fixture publishes the recovery x-only key
-and its key identifier only.
+The protocol-only fixture now fixes recovery payload bytes, policy hash,
+recovery-role key identifier, one signature, a 1-of-1 prior threshold,
+six-block delay, and `not_before_height`. It accepts at the explicit eligible
+height and rejects one block early and a policy hash that differs from the
+prior committed input. It returns `incomplete` for a threshold above one; this
+checker does not verify a multi-signer recovery bundle and does not execute or
+anchor the resulting RGB transition.
 
 ## Recovery when no path remains (new EntityID)
 
@@ -220,7 +305,8 @@ Reject those claims as a transition of the old EntityID. Reject keeping the
 old EntityID while replacing its root. The protocol does not treat the old
 EntityID as cryptographically recovered.
 
-Not executed on regtest.
+Not executed. The fixture does not replace a root, derive a successor key, or
+claim continuity for an unrecoverable EntityID.
 
 ## Revocation
 
@@ -240,7 +326,10 @@ identity revocation by a key the current state does not authorize for
 identity transition. Reject an evidence object that tries to mutate the
 identity lifecycle by itself.
 
-Not executed on regtest.
+The evidence-revocation and challenge payloads now have fixed signatures and
+cross-domain negatives. The checker rejects an evidence-revocation target
+classified as an EntityID. Identity lifecycle revocation and its Bitcoin/RGB
+execution remain unexecuted.
 
 ## Expired control proof
 
@@ -248,12 +337,16 @@ Accept a DNS, HTTPS, or social observation whose expiry input is present and
 whose evaluation time is inside that window. It is channel-control evidence
 for that window, not entitlement to a name.
 
-Reject an expired observation. It fails the control check and is not current
-channel control. Reject a missing expiry. Policies report missing, expired,
-conflicting, or unverifiable evidence instead of inferring a positive
-result.
+Reject an expired observation or an evaluation time before `observed_at`. It
+is not current channel control. Reject a missing expiry. Policies report
+missing, future-dated, expired, conflicting, or unverifiable evidence instead
+of inferring a positive result.
 
-Not executed on regtest.
+Fixed control-challenge and observation payloads are signed in their distinct
+domains. With an explicit evaluation time, the observation is current only
+from `observed_at` through expiry, returns `not_yet_observed` before that time,
+and `expired` after it. The checker also rejects non-increasing challenge and
+observation time windows. No DNS, HTTPS, or social request is performed.
 
 ## Pubky rebinding
 
@@ -269,8 +362,11 @@ in every domain except `O2A/v0.1/discovery-binding`. The Pubky reciprocal
 signature stays in Pubky's signing context and does not replace the O2A
 signature.
 
-Not executed on regtest. Pubky keys are not derived on the secp256k1 paths
-in `v0.1.json`.
+The fixed Pubky binding contains a 32-byte Ed25519 adapter key and is signed by
+the O2A BIP340 controller in the discovery-binding domain. The checker rejects
+the Pubky/BIP340 scheme pairing and cross-domain replay. Its signed payload now
+contains a `supersedes` object ID. Validation of the referenced earlier binding,
+full rebinding history, and Pubky's reciprocal signature remain open.
 
 ## Nostr rebinding
 
@@ -283,7 +379,11 @@ binding in the generic claim domain or any other O2A domain. A Nostr event
 signature follows Nostr's rules and does not replace the O2A binding
 signature.
 
-Not executed on regtest. No current rebinding transcript is present.
+The fixed Nostr binding uses a published unsafe BIP340 test key distinct from
+the issuer root, carries a signed `supersedes` object ID, and rejects an
+Ed25519 scheme pairing and cross-domain replay. Validation of the referenced
+earlier binding and full rebinding history remain open. The checker does not
+verify a Nostr event, contact a relay, or execute a reciprocal proof.
 
 ## Album custody
 
@@ -293,7 +393,10 @@ Accept an album manifest signed by that album entity's own key in
 Reject another entity's key as that manifest signature. Reject the manifest
 hash as proof of copyright ownership.
 
-Not executed. No album-manifest fixture is present.
+The fixed ALBUM payload, hash, and signature use the album EntityID as signer,
+carry a track-manifest hash, and remain distinct from the EVENT payload. The
+checker rejects the album case when the required track manifest is absent.
+RGB custody transfer and copyright claims are not executed or inferred.
 
 ## Event custody
 
@@ -303,7 +406,9 @@ Accept an event manifest signed by that event entity's own key in
 Reject another entity's key as that manifest signature. Reject the manifest
 hash as proof the event occurred.
 
-Not executed. No event-manifest fixture is present.
+The fixed EVENT payload, hash, and signature use the event EntityID as signer.
+The checker rejects a mismatched signing entity. RGB custody transfer and proof
+that the event occurred are not executed or inferred.
 
 ## Proof-package envelope
 
@@ -317,8 +422,10 @@ Reject a manifest-ID mismatch, package-ID mismatch, invalid publisher
 capability, invalid signature, truncated body, trailing bytes, or an HTTPS body
 whose SHA-256 differs from the advertised package ID. The executable fixture
 recomputes both identifiers and the signature and proves that truncation or a
-one-byte mutation changes the package ID. Missing-object evaluation remains a
-separate open fixture.
+one-byte mutation changes the package ID. A separately signed canonical
+manifest names the discovery-binding digest in its omission list; parsing those
+signed package bytes returns `incomplete`. This is bounded missing-object
+policy evaluation, not a new proof-package wire layout.
 
 ## Unavailable discovery
 
@@ -334,4 +441,7 @@ transaction id, a registry row, or a profile badge. If referenced content
 that the named policy requires is unavailable, the evaluation is incomplete,
 not a silent acceptance.
 
-Not executed on regtest.
+The missing-discovery requirement case returns `incomplete` rather than
+accepting silently. Verification of a complete retained package during an
+actual discovery-service outage, and all live Pubky/Nostr behavior, remain
+unexecuted.

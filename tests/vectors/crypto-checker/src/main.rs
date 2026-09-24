@@ -21,12 +21,32 @@ fn verify(public_key: &str, message: &str, signature: &str) -> Result<(), String
         .map_err(|error| format!("BIP340 verification failed: {error}"))
 }
 
-fn sign_test_vector(message: &str) -> Result<(), String> {
-    // Public vector key only: scalar 3 is the published BIP340 test key and is
-    // permanently unsafe for funds. This command exists only to regenerate
-    // CC0 fixtures; the verifier path never loads a secret.
-    let mut scalar = [0u8; 32];
-    scalar[31] = 3;
+fn validate_xonly(public_key: &str) -> Result<(), String> {
+    XOnlyPublicKey::from_str(public_key)
+        .map(|_| ())
+        .map_err(|error| format!("invalid x-only public key: {error}"))
+}
+
+fn sign_test_vector(key_name: &str, message: &str) -> Result<(), String> {
+    // Published BIP340 test-vector keys only. They are permanently unsafe for
+    // funds. This command exists only to regenerate CC0 fixtures; the verifier
+    // path never loads a secret.
+    let scalar = match key_name {
+        "scalar-3" => {
+            let mut scalar = [0u8; 32];
+            scalar[31] = 3;
+            scalar
+        }
+        "bip340-vector-1" => decode_32(
+            "b7e151628aed2a6abf7158809cf4f3c762e7160f38b4da56a784d9045190cfef",
+            "published test secret",
+        )?,
+        "bip340-vector-2" => decode_32(
+            "c90fdaa22168c234c4c6628b80dc1cd129024e088a67cc74020bbea63b14e5c9",
+            "published test secret",
+        )?,
+        _ => return Err("unknown public test-vector key".to_owned()),
+    };
     let secret = SecretKey::from_slice(&scalar)
         .map_err(|error| format!("invalid public test secret: {error}"))?;
     let secp = Secp256k1::new();
@@ -44,11 +64,15 @@ fn run() -> Result<(), String> {
         [_, command, public_key, message, signature] if command == "verify" => {
             verify(public_key, message, signature)
         }
+        [_, command, public_key] if command == "validate-xonly" => validate_xonly(public_key),
         [_, command, message] if command == "sign-public-test-vector" => {
-            sign_test_vector(message)
+            sign_test_vector("scalar-3", message)
+        }
+        [_, command, key_name, message] if command == "sign-public-test-vector" => {
+            sign_test_vector(key_name, message)
         }
         _ => Err(
-            "usage: o2a-vector-crypto-checker verify PUBKEY MESSAGE SIGNATURE\n       o2a-vector-crypto-checker sign-public-test-vector MESSAGE"
+            "usage: o2a-vector-crypto-checker verify PUBKEY MESSAGE SIGNATURE\n       o2a-vector-crypto-checker validate-xonly PUBKEY\n       o2a-vector-crypto-checker sign-public-test-vector [scalar-3|bip340-vector-1|bip340-vector-2] MESSAGE"
                 .to_owned(),
         ),
     }
