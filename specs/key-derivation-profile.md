@@ -16,18 +16,20 @@ private root from the wallet's master BIP32 tree:
 
 ```text
 wallet_root_tagged_hash = TaggedHash("O2A/v0.1/wallet-root", empty)
-O2A_INDEX = u31be(wallet_root_tagged_hash[0..31 bits]) = 998536622
+O2A_INDEX = be32(wallet_root_tagged_hash[0..4]) >> 1 = 998536622
 bip85_path = m/83696968'/32'/998536622'
 xprv_o2a = BIP85-BIP32-XPRV(master_xprv, O2A_INDEX)
 ```
 
-`u31be` takes the first 31 bits in network bit order: interpret the first four
-hash bytes as a big-endian unsigned integer and shift right by one. The full
-tagged hash is
+`O2A_INDEX` is exact: compute
+`TaggedHash("O2A/v0.1/wallet-root", empty)`, take bytes `0..4` as a
+big-endian `u32`, and shift that value right by one bit. The full tagged hash is
 `7708eb5c35e272440dd51e4b1d4bff3304e9aa8ce2eae38b7e8ad59e4d11c38d`.
-The resulting index is deterministic, documented, nonzero, and does not claim
-a shared registry entry. Its residual collision surface is explicit: another
-BIP85 BIP32-XPRV consumer would have to choose the same application index.
+The result is `998536622`. Reading the low 31 bits instead would produce
+`1997073244`; that value is **not** this profile. The selected index is
+deterministic, documented, nonzero, and does not claim a shared registry
+entry. Its residual collision surface is explicit: another BIP85 BIP32-XPRV
+consumer would have to choose the same application index.
 
 BIP85 purpose `83696968'` and application `32'` are registered by BIP85.
 BIP85 derives entropy from the hardened application path, using
@@ -36,6 +38,23 @@ first 32 output bytes become the new chain code and the second 32 bytes become
 the new private key; depth, parent fingerprint, and child number are zero.
 Thus `xprv_o2a` is an independent BIP32 root, not a key reused from the master
 tree.
+
+## Permanently unsafe test seed
+
+The conformance vectors use the published BIP39 English test mnemonic
+`abandon` repeated eleven times followed by `about`, with passphrase `TREZOR`.
+It produces this 64-byte seed:
+
+```text
+c55257c360c07c72029aebc1b53c05ed0362ada38ead3e3e9efa3708e5349553
+1f09a6987599d18264c1e1c92f2cf141630c7a3c4ab7c81b2f001698e7463b04
+```
+
+The Python conformance implementation derives this seed from the mnemonic and
+asserts equality with the published bytes. The independent Rust implementation
+takes the seed bytes as input and does not implement BIP39. The mnemonic,
+passphrase, seed, extended keys, and every derived key are permanently unsafe
+for funds.
 
 ## Identity tree below `xprv_o2a`
 
