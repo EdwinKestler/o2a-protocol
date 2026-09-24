@@ -8,8 +8,9 @@ recovery, confirmation, and reorg rules. Claim and proof-package fixtures now
 exercise a maintained BIP340 verifier, but they cover only a subset of this
 phase's gate.
 
-The blocking items are the
-[identity derivation allocation](phase0-derivation-allocation.md), concrete RGB
+The blocking items are the mainnet freeze of the
+[demo-stable identity derivation profile](phase0-derivation-allocation.md), a
+restore/discovery rule for allocated identity and role indexes, concrete RGB
 program/schema and Bitcoin commitment carrier, an adopted compatible RGB lock,
 and executable positive and adversarial fixtures for the remaining lifecycle,
 evidence, discovery, music, and chain cases. See the
@@ -24,6 +25,9 @@ production wallet or identity crate.
   proof packages, and music manifests;
 - freeze separated root, controller, recovery, discovery, and payment key
   purposes and wallet derivation rules;
+- define how a restoring wallet discovers and verifies its allocated
+  `entity'` and per-role indexes from RGB history, retained proof packages, or
+  a separately specified discovery mechanism;
 - define the RGB identity contract/schema for genesis, controller rotation,
   recovery-policy change, authorized recovery, custody transfer, and revocation;
 - select and pin a compatible RGB stack and Bitcoin commitment method;
