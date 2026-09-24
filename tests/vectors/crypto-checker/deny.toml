@@ -1,3 +1,8 @@
+[graph]
+# Development-only crates are never built into or distributed with this
+# standalone CC0 conformance checker.
+exclude-dev = true
+
 [advisories]
 yanked = "deny"
 
