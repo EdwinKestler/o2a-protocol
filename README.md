@@ -100,7 +100,9 @@ over diagrams, the website, and application proposals. This README is the
 index and status summary.
 
 The current schema set defines the
+[canonical byte encoding and signed payload layouts](specs/canonical-encoding.md),
 [Bitcoin-rooted entity](specs/entity-schema.md),
+[RGB identity state machine](specs/rgb-identity-contract.md),
 [claims](specs/claim-schema.md),
 [attestations](specs/attestation-schema.md),
 [challenges](specs/challenge-schema.md),
@@ -137,9 +139,10 @@ Supporting projection notes cover the
 [album registry](docs/19-album-registry.md), and
 [label registry](docs/20-label-registry.md).
 
-No production implementation code should be introduced until the v0.1 RGB
-identity schema, canonical serialization, Bitcoin commitment and reorg rules,
-key-derivation profile, and deterministic test vectors are agreed.
+No production implementation code should be introduced until the candidate
+v0.1 encoding and lifecycle rules are completed by an adopted RGB program and
+commitment carrier, a collision-safe identity derivation allocation, a
+compatible dependency lock, and complete deterministic conformance vectors.
 
 O2A-authored specifications, documentation, and future official reference
 software are licensed, at the recipient's option, under
@@ -183,7 +186,9 @@ same Bitcoin/RGB history + same evidence + same policy
 
 **Design / specification phase.**  
 The BIP340 root and required Bitcoin/RGB identity lifecycle are accepted design
-constraints. The exact EntityID encoding, RGB schema, commitment method,
-confirmation/reorg policy, key-derivation profile, serialization rules, and
-compatible dependency set remain subject to specification and regtest
-validation before v0.1 implementation is accepted.
+constraints. O2A-CANON-1 now specifies the candidate EntityID and object bytes,
+and the RGB identity-contract draft specifies candidate lifecycle, recovery,
+confirmation, and reorg behavior. Phase 0 remains open: the identity derivation
+purpose is unallocated, RGB program/schema bytes and the Bitcoin commitment
+carrier are unbound, no compatible dependency lock is adopted, and most
+roadmap conformance cases are not yet executable.

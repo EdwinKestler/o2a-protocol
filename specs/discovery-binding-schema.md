@@ -17,7 +17,8 @@ generic `claim`.
   "issuer": "<EntityID>",
   "issuer_state": "<validated-rgb-identity-state-id>",
   "controller_key_id": "<authorized-controller-key-id>",
-  "controller_key_purpose": "discovery_binding",
+  "controller_key_role": "controller",
+  "authorization_capability": "discovery_binding",
   "adapter": "PUBKY_OR_NOSTR",
   "adapter_key_scheme": "<ed25519-or-bip340>",
   "adapter_public_key": "<canonical-public-key>",
@@ -56,16 +57,35 @@ the required reciprocal or publication proof.
 
 ## Requirements
 
-- the issuer state and controller purpose MUST authorize discovery bindings;
+- the issuer state MUST authorize the controller role and discovery-binding
+  capability separately;
+- Pubky Ed25519 and Nostr keys are bound in domain
+  `O2A/v0.1/discovery-binding` and signed by the BIP340 controller-role key
+  authorized for that capability;
+- the foreign key is payload, not the O2A root;
 - a binding signature MUST validate only in the discovery-binding domain and
   MUST be rejected in the generic claim domain and every other O2A domain;
 - the Bitcoin network, adapter, key scheme, public key, purpose, expiry,
   supersession reference, and nonce MUST be inside the signed payload;
 - unknown adapters, key schemes, purposes, or signature domains MUST fail
   closed;
-- rotation creates a new binding that supersedes the old object; it does not
-  replace the EntityID root;
+- rebinding is a new binding, and the previous binding remains visible. A
+  supersession reference does not erase it or replace the EntityID root;
 - expired, revoked, conflicting, or missing reciprocal proofs MUST remain
   visible to policy; and
 - discovery bindings locate signed packages or profiles but do not establish
   identity truth, package validity, or exclusive name ownership.
+
+## Vector obligations
+
+Canonical bytes are defined in O2A-CANON-1. Executable fixtures must cover:
+
+- Pubky rebinding: accept a new binding whose payload contains a Pubky
+  Ed25519 key, signed in `O2A/v0.1/discovery-binding` by a BIP340
+  controller-role key authorized for that capability, while the previous Pubky
+  binding remains visible. Reject treating the Pubky key as the O2A root or as
+  a new EntityID;
+  and
+- Nostr rebinding: accept the same shape for a Nostr key in that domain, with
+  the previous Nostr binding still visible. Reject treating the Nostr key as
+  the O2A root or as a new EntityID.

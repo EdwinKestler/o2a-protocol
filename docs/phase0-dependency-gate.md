@@ -1,0 +1,95 @@
+# Phase 0 RGB dependency gate
+
+**Status:** recorded 2026-09-23 from retained evidence only. This decision does
+not start a new experiment, regtest, crate, or lock adoption. The RGB
+dependency gate remains **OPEN**. An open dependency gate does not finish
+Phase 0.
+
+Three questions are decided from the
+[third disposable remediation run](../evidence/phase0/rgb-rc3-remediation-2026-09-23/RUN.md)
+and its
+[lock review](../evidence/phase0/rgb-rc3-remediation-2026-09-23/lock-review/SUMMARY.md).
+This page does not select an RGB lineage, vendor RGB, or close the
+[Phase 0 roadmap](13-roadmap.md).
+
+## 1. CLI overlay
+
+**Decision:** the three-line patch in
+[rgb-rc3-cli.patch](../evidence/phase0/rgb-rc3-remediation-2026-09-23/rgb-rc3-cli.patch)
+is a disposable compatibility overlay for dev checks. It is not an upstream
+fix and not a production pin.
+
+The retained patch changes three lines in the RGB-WG `v0.12.0-rc.3` CLI. It
+drops the nonexistent `mempool` member from the Clap resolver group, and it
+makes `create` write the `.wallet` path that `sync` loads. The unmodified tag
+still fails `rgb sync --help` with exit 101. A read-only check of upstream
+`master` at `275382240ae1b8a56beb120e926e60d86f49785b`, recorded in that same
+run, still found the `mempool` group entry, the `create` path mismatch, and
+the `ELECRTUM_SERVER` name. The overlay does not change that environment-name
+typo.
+
+The dev check that synced 101 regtest UTXOs used this overlay on the tagged
+lock. That result shows a disposable dev path. It does not adopt the patch or
+the lock.
+
+## 2. Lock adoption
+
+**Decision:** no lock is adopted. The RGB dependency gate remains **OPEN**.
+
+The full RC3 lock has 15 vulnerability advisories. The tagged 342-package lock,
+SHA-256 `3103095dac0a9f7aaa3d72c16770e833765b588d2f124b4b718f92398257dda1`,
+failed `cargo audit` with 15 vulnerabilities and five warnings, including
+unmaintained `paste` 1.0.15. That scan used `cargo-audit` 0.22.2 against
+RustSec database revision `1e640cd56d7604993e3a9ec392060666e3b95ccc`. The lock
+remains unadopted.
+
+Compatible updates under Rust 1.98.1 left three `rustls-webpki` 0.101.7
+advisories (`RUSTSEC-2026-0104`, `RUSTSEC-2026-0099`, and `RUSTSEC-2026-0098`)
+on the resulting 313-package lock. No compatible update was available for
+`rustls` 0.21.12 or `rustls-webpki` 0.101.7. The reachable path is:
+
+```text
+rgb-wallet -> rgb-runtime/resolvers-all -> resolver-esplora
+  -> bp-esplora/blocking-https -> minreq HTTPS/Rustls
+  -> rustls 0.21.12 -> rustls-webpki 0.101.7
+```
+
+The unmaintained `paste` warning remained after those updates.
+
+The Electrum-only experiment reaches zero vulnerability advisories but keeps
+unmaintained `paste` 1.0.15 (`RUSTSEC-2024-0436`), needs an unreleased source
+patch, and has unreviewed extra license expressions. Removing Esplora produced
+a 213-package lock that passed locked workspace checks and five tests. That
+subtask did not sync it against a local Electrum network. The source change is
+the retained `electrum-only-experiment.patch`, an experiment-only patch to the
+RC3 tag, not an upstream-compatible dependency update. Its license scan was
+metadata triage, not a `cargo-deny` run: 25 expressions, including
+`MPL-2.0-no-copyleft-exception`, `CDLA-Permissive-2.0`, and `Unlicense`/LGPL
+alternatives, were not accepted. Neither candidate lock is adopted.
+
+## 3. rust-bitcoin 0.32.102
+
+**Decision:** `rust-bitcoin` 0.32.102 stays excluded from consensus-sensitive
+signing. No later stable 0.32 release was recorded. Do not substitute
+`0.33.0-beta`.
+
+The retained registry check on 2026-09-23, using crates.io through
+`cargo info` and `cargo search`, found `0.32.102` published as a stable
+release. It did not find `0.32.103`, `0.32.104`, or `0.32.105`. The registry
+latest it recorded was `0.33.0-beta` only. The checked decision keeps 0.32.102
+off the affected consensus-sensitive validation and signing path and does not
+substitute a beta without a separate review. This gate does not perform that
+review.
+
+The standing exclusion, which that check left in force, is the one in the
+[compatibility record](23-stack-compatibility-and-security-readiness.md):
+stable 0.32.102 predates the merged fix for a SegWit-v0 nonstandard-sighash
+correctness gap, and rust-bitcoin warns against using the crate as a consensus
+validator. The registry note is
+[rust-bitcoin-release-check.txt](../evidence/phase0/rgb-rc3-remediation-2026-09-23/rust-bitcoin-release-check.txt).
+
+## Phase 0
+
+An open dependency gate does not finish Phase 0. The roadmap still requires a
+selected and pinned compatible RGB stack. This decision does not close Phase 0
+and does not authorize a production RGB crate.

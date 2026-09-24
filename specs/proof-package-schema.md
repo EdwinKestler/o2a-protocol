@@ -1,5 +1,13 @@
 # Public Identity Proof Package — Draft v0.1
 
+## Status
+
+Draft remediation profile. Publication locators, the privacy boundary,
+omission rules, and offline checks are specified below. The exact manifest,
+signed-envelope, `manifest_id`, and `package_id` bytes are defined in
+[canonical encoding](canonical-encoding.md). Executable package vectors remain
+a Phase 0 gate.
+
 ## Purpose
 
 A public O2A identity is independently verifiable only when another wallet can
@@ -18,7 +26,7 @@ private attestation, or application record public.
   "protocol_version": "0.1",
   "bitcoin_network": "<bitcoin-network>",
   "object_type": "public_identity_proof_package",
-  "package_id": "<hash-of-canonical-package-manifest>",
+  "manifest_id": "<hash-of-canonical-manifest-payload>",
   "subject": "<EntityID>",
   "subject_state": "<validated-rgb-identity-state-id>",
   "identity_profile": "o2a-bitcoin-rgb-v0.1",
@@ -26,48 +34,58 @@ private attestation, or application record public.
   "identity_history": "<public-identity-consignment-reference>",
   "bitcoin_proofs": ["<anchor-witness-and-header-proof-reference>"],
   "evidence": ["<included-object-or-content-addressed-reference>"],
+  "omitted": [{
+    "object_id": "<omitted-object-id>",
+    "disclosure_class": "PRIVATE|WITHHELD|UNAVAILABLE",
+    "reason": "<versioned-reason>"
+  }],
   "policy": "<policy-id-and-hash>",
   "evaluation_context": "<explicit-context>",
-  "previous_package": null,
+  "previous_manifest": null,
   "publisher": "<EntityID>",
   "publisher_state": "<authorizing-rgb-state-id>",
   "signing_key": "<authorized-controller-key-id>",
-  "signing_key_purpose": "proof_package_publisher",
+  "signing_key_role": "controller",
+  "authorization_capability": "proof_package_publication",
   "signature_domain": "O2A/v0.1/proof-package",
   "signature": "<authorized-controller-bip340-signature>"
 }
 ```
 
+`package_id` and locators are advertised outside the signed envelope. They are
+not fields of the manifest.
+
 ## Package identity and signature
 
-`package_id` is the ordinary content hash of the versioned canonical manifest
-with `package_id`, `signature`, and transport-only locator metadata omitted.
-It is an integrity identifier, not the BIP340 message by itself.
-
-Conceptually:
+The canonical manifest payload excludes `manifest_id`, signature,
+`package_id`, and locators. Its ordinary SHA-256 is `manifest_id`. The BIP340
+message is the proof-package tagged hash of
+`manifest_payload || manifest_id`. The transmitted signed envelope is:
 
 ```text
-package_id = Hash(Canonical(manifest without package_id, signature, locators))
-signature_payload = Canonical(manifest without signature and locators)
-signature_message = TaggedHash("O2A/v0.1/proof-package", signature_payload)
-signature = BIP340Sign(signing_key, signature_message)
+manifest_payload || manifest_id || signature64
 ```
 
-The signed payload therefore includes the declared `package_id`, Bitcoin
-network, publisher, publisher state, signing-key identifier and purpose, and
-signature domain. The declared `signing_key` MUST be authorized for the
-declared purpose by `publisher_state` on the declared `bitcoin_network`. A
-verifier MUST recompute `package_id`, recompute the tagged signature message,
-and validate the package signature before accepting any included result.
+`package_id` is SHA-256 of that complete signed envelope. This construction is
+non-circular: the signature commits to the manifest and `manifest_id`, while
+`package_id` content-addresses the resulting signed bytes.
 
-The final canonical encoding and hash algorithm MUST be frozen with positive,
-mutation, truncation, invalid-signature, wrong-network, wrong-key-purpose, and
-cross-domain test vectors before implementation.
+Locators and the externally advertised `package_id` are not signed. The exact
+signed envelope bytes are the input to `package_id`. A locator is not evidence
+that the object is valid.
+
+The declared `signing_key`, controller role, and proof-package-publication
+capability MUST be authorized by `publisher_state` on the declared network. A
+verifier MUST recompute both identifiers and validate the package signature
+before accepting any included result.
+
+A declared `manifest_id` or advertised `package_id` that is not its defined
+digest is invalid. Implementations
+MUST reject ambiguous encodings, duplicate logical fields, hash cycles, and a
+package whose identifiers do not match its canonical bytes.
 
 Every content-addressed reference contributes its media type, byte length, and
-content hash to the signed manifest. Implementations MUST reject ambiguous
-encodings, duplicate logical fields, hash cycles, and a package whose declared
-ID does not match its canonical manifest.
+content hash to the signed manifest.
 
 ## Minimum public identity material
 
@@ -80,44 +98,84 @@ data for a conforming wallet to validate:
 - each relevant seal, witness, commitment, anchor, confirmation, and stated
   reorg assumption;
 - current controller, recovery-policy commitment, and lifecycle status;
-- the publisher state and purpose-authorized signing key needed to verify the
+- the publisher state and capability-authorized signing key needed to verify the
   proof-package signature in `O2A/v0.1/proof-package`;
 - signatures and signing domains on included public claims and attestations;
   and
 - the exact policy, evidence boundary, and evaluation context for any included
   verification result.
 
-Missing required history, an unavailable referenced object, or a hash mismatch
-MUST produce an incomplete or invalid result. A verifier MUST NOT reconstruct
-missing client-side state from a transaction ID, registry row, or profile badge.
+The manifest names omitted objects. A missing named object makes evaluation
+incomplete. A named omission records an intentional absence; the missing
+object is one the manifest includes or references and whose bytes are absent.
+A hash mismatch is invalid. A verifier MUST NOT reconstruct missing
+client-side state from a transaction ID, registry row, profile badge, or
+discovery binding.
 
 ## Publication and retrieval
 
-The owner wallet MUST be able to export the package directly to another wallet.
+This profile has three locators:
+
+1. a local file package, whose bytes are already retained by the verifier;
+2. a direct wallet transfer, in which the owner wallet gives those bytes to
+   another wallet; and
+3. an HTTPS URL whose response body is the complete signed envelope and whose
+   SHA-256 MUST equal the advertised `package_id`. For a referenced object, the
+   response body must match the content hash named by its content reference.
+
+These are the only locators. Locators are not signed and are not evidence that
+the object is valid. A body that matches the content hash shows only that the
+fetched bytes are the addressed bytes. An HTTPS body that does not match is a
+failed retrieval of that object, not proof that a package already retained
+from another locator is invalid.
+
+Pubky and Nostr are discovery bindings, not the history store. A binding may
+advertise `package_id` and one of the three locators. A Pubky profile, a Nostr
+event or relay, a homeserver, a registry, or any other discovery host does not
+hold identity history and does not become authority by advertising a pointer.
+Identity history is the package and the objects the package includes.
+
+The owner wallet MUST be able to export the package by direct wallet transfer.
 For public discovery, an authorized O2A claim SHOULD advertise the package ID,
-media type, size, expiry or supersession information, and one or more locators.
-Locators may use HTTPS, a bound Pubky profile, a Nostr event containing a
-content-addressed pointer, or another explicitly versioned transport.
+media type, size, expiry or supersession information, and one or more of these
+locators.
 
 The package ID, not a mutable URL, is the integrity reference. Wallets SHOULD
 replicate public packages across at least two independently administered
-retrieval paths and MUST verify the package ID after every fetch. No transport,
-indexer, relay, or homeserver becomes identity authority by hosting the bytes.
+retrieval paths and MUST verify the content hash after every fetch. No
+transport, indexer, relay, or homeserver becomes identity authority by hosting
+the bytes.
 
-Every update creates a new immutable package with `previous_package` pointing
-to the earlier package where applicable. Removing a locator does not erase a
+Every update creates a new immutable package whose `previous_manifest` points
+to the earlier manifest where applicable. Removing a locator does not erase a
 package already retained by another wallet.
+
+## Offline checks
+
+A verifier holding a local file package, or the bytes received by direct
+wallet transfer, MUST recompute `package_id`, parse the signed envelope,
+recompute `manifest_id`, and check the
+`O2A/v0.1/proof-package` signature without a network request. After an HTTPS
+body is retained and matched to its content hash, the same checks apply
+offline.
+
+Offline checks use only the retained bytes, the manifest, and the rules in
+[canonical encoding](canonical-encoding.md). They MUST NOT call Pubky, Nostr,
+a registry, an indexer, or an HTTPS host to supply history the package does
+not contain. A locator is not a substitute for a missing object.
 
 ## Privacy boundary
 
-Public packages MUST NOT contain:
+Public packages exclude Bitcoin spending descriptors. Public packages MUST NOT
+contain:
 
 - seeds, private keys, recovery secrets, or Bitcoin spending descriptors;
 - private RGB state unrelated to the public identity-history shard;
 - private attestations or undisclosed evidence; or
 - access tokens, private API responses, or unnecessary personal data.
 
-The package manifest MUST identify omitted evidence and disclosure class where
-the policy needs to distinguish absent data from intentionally private data.
-Selective disclosure and encrypted peer-to-peer packages may extend this
-profile, but they cannot be treated as public availability.
+The manifest names omitted objects, including a disclosure class where the
+policy must distinguish absent data from intentionally private data. A named
+omission is not included history. A missing named object makes evaluation
+incomplete. Selective disclosure and encrypted peer-to-peer packages may
+extend this profile, but they cannot be treated as public availability.

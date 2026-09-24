@@ -3,12 +3,14 @@
 ## Status
 
 Draft. This document fixes the requirement for separate signing domains. The
-final canonical byte encoding and conformance vectors remain Phase 0 gates.
+remediated byte grammar and object payloads are specified in
+[canonical encoding](canonical-encoding.md). Identity-key derivation,
+conformance vectors, and RGB-dependent fixtures remain Phase 0 gates.
 
 ## Rule
 
-Every O2A BIP340 signature MUST sign a 32-byte digest produced from a
-purpose-specific tagged hash over the canonical payload. Implementations MUST
+Every O2A BIP340 signature MUST sign a 32-byte digest produced from an
+object-specific tagged hash over the canonical payload. Implementations MUST
 NOT accept a signature created for one domain as authorization in another
 domain, even when the underlying payload fields happen to be identical.
 
@@ -16,13 +18,15 @@ Conceptually:
 
 ```text
 message = SHA256(SHA256(tag) || SHA256(tag) || canonical_payload)
-signature = BIP340Sign(purpose_key, message)
+signature = BIP340Sign(authorized_key, message)
 ```
 
 The canonical payload MUST include the protocol version, Bitcoin network,
-object type, signer EntityID, authorizing RGB state, key identifier and purpose,
-and every domain-specific field. It MUST NOT rely on an HTTP route, filename,
-database table, or other transport metadata for domain separation.
+object type, signer EntityID, authorizing RGB state or the canonical genesis
+absence marker, key identifier, key role, authorization capability, and every
+domain-specific field. Key role and authorization capability are distinct.
+The payload MUST NOT rely on an HTTP route, filename, database table, or other
+transport metadata for domain separation.
 
 ## Reserved v0.1 domains
 
@@ -43,10 +47,10 @@ The v0.1 profile MUST keep at least these domains distinct:
 | Event or album manifest claim | `O2A/v0.1/music-manifest` |
 | Public proof-package manifest | `O2A/v0.1/proof-package` |
 
-The exact UTF-8 tag bytes, canonical payload bytes, and positive and
-cross-domain negative vectors MUST be frozen together. A verifier MUST reject
+The exact UTF-8 tag bytes and canonical payload grammar are specified in
+[canonical encoding](canonical-encoding.md). A verifier MUST reject
 unknown tags, wrong object types, wrong networks, wrong authorizing states, and
-tags that do not match the key purpose authorized by that state.
+tags or capabilities that do not match the key authorization in that state.
 
 ## External signing domains
 

@@ -53,11 +53,14 @@ material explicitly.
 
 Before policy evaluation, a verifier MUST:
 
-1. recompute the package ID from the canonical unsigned content-hash input;
-2. reject a Bitcoin-network, protocol-version, object-type, or package-ID
+1. recompute `package_id` from the complete signed envelope and parse exactly
+   one bounded envelope with no trailing bytes;
+2. recompute `manifest_id` from the canonical manifest payload and reject a
+   Bitcoin-network, protocol-version, object-type, manifest-ID, or package-ID
    mismatch;
 3. validate the publisher's RGB history through `publisher_state` and confirm
-   that `signing_key` is authorized for `signing_key_purpose`;
+   that `signing_key`, key role, and proof-package-publication capability are
+   authorized together;
 4. reconstruct the canonical package signature payload, compute the
    `O2A/v0.1/proof-package` tagged hash, and verify the BIP340 signature;
 5. reject a plain-hash signature, unknown domain, cross-domain replay, or
@@ -68,6 +71,16 @@ Before policy evaluation, a verifier MUST:
 Failure at steps 1–5 makes the package invalid. Unavailable referenced content
 needed at step 6 makes the evaluation incomplete unless the named policy
 explicitly excludes that content from its declared evidence boundary.
+
+## Confirmation and reorg
+
+Identity anchors use the confirmation depth and reorg rule in the
+[RGB identity contract](rgb-identity-contract.md)
+(`specs/rgb-identity-contract.md`). Required depth is 1 on regtest, signet,
+testnet, and testnet4, and 6 on mainnet. The evaluation context names the best
+block hash, height, and required depth. An anchor absent from that best chain
+at the required depth is not current. A reorg that removes the anchor drops
+dependent transitions.
 
 ## Explainability
 

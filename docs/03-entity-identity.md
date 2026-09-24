@@ -9,7 +9,8 @@ deterministically rooted in:
 O2A protocol profile + Bitcoin network + dedicated BIP340 root public key
 ```
 
-The final byte and human-readable encodings remain to be frozen. The root key
+O2A-CANON-1 specifies the candidate EntityID bytes. A human-readable display
+encoding and the seed-to-root derivation allocation remain open. The root key
 is an identity key, never a Bitcoin spending key. Each entity uses a different
 root key even when one wallet holds several of them.
 
@@ -32,11 +33,11 @@ Domain categories are entity types, not incompatible identifier systems.
 The root key signs genesis. Genesis creates the first RGB identity state and
 anchors it to a Bitcoin single-use seal. Later valid transitions can change:
 
-- operational controller keys and their allowed purposes;
+- operational controller keys and their allowed capabilities;
 - the committed recovery policy;
 - custodian or representative bindings;
 - optional profile commitments; and
-- ACTIVE, SUSPENDED, or REVOKED lifecycle status.
+- ACTIVE or REVOKED lifecycle status.
 
 Every transition references the previous valid state, closes the expected
 seal, commits the successor state, and is authorized by the previous state.
@@ -47,9 +48,9 @@ The newest profile document or database row is never sufficient.
 
 The root public key gives the EntityID its stable cryptographic root and signs
 genesis. Day-to-day controller keys sign claims, attestations, and
-administrative transitions according to explicit purposes in the current RGB
-state. The root is not an unconditional forever-controller unless the current
-state says so.
+administrative transitions according to explicit capabilities in the current
+RGB state. Key role and authorization capability are separate. The root is not
+an unconditional forever-controller unless the current state says so.
 
 The root public key never changes: it is part of the EntityID derivation.
 Replacing it creates a new EntityID. Recovery rotates controller authority
@@ -100,12 +101,12 @@ spelling to its first claimant.
 
 ## Discovery and payment bindings
 
-Pubky Ed25519 and Nostr publication keys use purpose-bound
+Pubky Ed25519 and Nostr publication keys use capability-authorized
 [`discovery_key_binding`](../specs/discovery-binding-schema.md) objects.
 Those objects are claim evidence in the policy model, but have their own
 canonical type and `O2A/v0.1/discovery-binding` signature domain. DNS names,
 social accounts, Lightning offers, and public payment endpoints use their
-applicable purpose-bound claim or proof types. All can expire, rotate, or be
+applicable capability-authorized claim or proof types. All can expire, rotate, or be
 revoked without replacing the root identity when the validated RGB state
 authorizes the controller that signs the update.
 

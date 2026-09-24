@@ -38,9 +38,9 @@ An attestation is evidence, not truth by itself.
 
 Verification occurs only when a named policy evaluates the complete applicable evidence set.
 
-The issuer's EntityID, RGB state, controller purpose, and Bitcoin anchor must
-validate before its attestation can be considered. This establishes who signed
-the statement, not whether the statement is true.
+The issuer's EntityID, RGB state, controller key role, attestation capability,
+and Bitcoin anchor must validate before its attestation can be considered.
+This establishes who signed the statement, not whether the statement is true.
 
 ## Independence
 

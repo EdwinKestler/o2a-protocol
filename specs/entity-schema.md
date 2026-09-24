@@ -2,7 +2,9 @@
 
 ## Status
 
-Draft. This document defines semantic fields; canonical binary encoding is still TBD.
+Draft. This document defines semantic fields. The candidate exact EntityID
+encoding is specified in [canonical encoding](canonical-encoding.md); Phase 0
+has not frozen the full wallet profile.
 
 ## Object
 
@@ -29,15 +31,23 @@ Draft. This document defines semantic fields; canonical binary encoding is still
     "key_id": "<controller-key-id>",
     "scheme": "bip340-secp256k1",
     "public_key": "<32-byte-x-only-public-key>",
-    "purposes": ["claim", "attestation", "identity_transition"]
+    "key_role": "controller",
+    "capabilities": ["claim", "attestation", "identity_transition"]
   }],
   "recovery_policy": {
+    "version": 1,
+    "sequence": 0,
+    "threshold": 2,
+    "recovery_key_ids": ["<sorted-recovery-key-id>"],
+    "delay_blocks": 144,
+    "cancellation_rule": "CONTROLLER_SPENDS_PRIOR_SEAL_BEFORE_NOT_BEFORE",
     "policy_hash": "<canonical-recovery-policy-hash>"
   },
   "profile_commitment": null,
   "status": "ACTIVE",
   "signing_key_id": "<root-identity-key-id>",
-  "signing_key_purpose": "entity_genesis",
+  "signing_key_role": "root_identity",
+  "signing_capability": "entity_genesis",
   "signature_domain": "O2A/v0.1/entity-genesis",
   "genesis_signature": "<root-key-signature>"
 }
@@ -47,6 +57,8 @@ Draft. This document defines semantic fields; canonical binary encoding is still
 
 - every entity MUST have its own dedicated BIP340/secp256k1 root identity key;
 - identity and controller keys MUST be separate from Bitcoin spending keys;
+- key role and authorization capability MUST be encoded and validated as
+  separate values;
 - `entity_id` MUST be deterministically rooted in the protocol profile,
   Bitcoin network, and root identity public key;
 - genesis MUST be signed by the root key and represented by an RGB state
@@ -60,16 +72,20 @@ Draft. This document defines semantic fields; canonical binary encoding is still
 - transitions MUST reference the previous valid RGB state;
 - controller, recovery-policy, and revocation changes MUST be authorized by the
   previous valid state and anchored through a new RGB transition;
+- the recovery policy MUST commit its version, sequence, threshold, sorted key
+  IDs, block delay, and cancellation rule using O2A-CANON-1;
 - the root identity key MUST NOT remain an unconditional controller unless the
-  current valid state grants it that purpose;
+  current valid state grants it the required capability;
 - `entity_id` MUST remain stable across operational-controller rotation and
   authorized recovery;
 - the root public key MUST remain immutable. A replacement root produces a new
   EntityID rather than a recovery transition;
 - canonical serialization MUST exclude transport-only metadata;
 - human-readable profiles SHOULD remain separable from identity-critical state;
-- the exact EntityID encoding, RGB schema, Bitcoin commitment method,
-  confirmation policy, and reorg behavior MUST be frozen before implementation.
+- the exact EntityID encoding and O2A state payload grammar are specified in
+  [canonical encoding](canonical-encoding.md); the identity derivation purpose,
+  RGB program/schema bytes, and Bitcoin commitment carrier remain open until
+  the Phase 0 dependency gate passes.
 
 ## Initial entity types
 

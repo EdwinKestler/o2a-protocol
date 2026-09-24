@@ -1,0 +1,14 @@
+Conformance vectors in this directory
+
+The files in this directory only, tests/vectors/, are licensed under CC0-1.0.
+
+https://creativecommons.org/publicdomain/zero/1.0/
+
+SPDX-License-Identifier: CC0-1.0
+
+To the extent allowed by law, the copyright holder waives all copyright and
+related rights in these files. Anyone may copy, modify, and distribute them,
+including for commercial use, without asking permission.
+
+The rest of the repository stays MIT OR Apache-2.0, as stated in the
+repository root LICENSE. CC0-1.0 does not apply outside this directory.

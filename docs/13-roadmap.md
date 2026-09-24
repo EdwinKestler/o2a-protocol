@@ -1,5 +1,21 @@
 # 13 — Roadmap
 
+## Current Phase 0 position
+
+Phase 0 is open. O2A-CANON-1 defines the candidate byte grammar and signed
+payload layouts. The RGB identity contract defines the candidate lifecycle,
+recovery, confirmation, and reorg rules. Claim and proof-package fixtures now
+exercise a maintained BIP340 verifier, but they cover only a subset of this
+phase's gate.
+
+The blocking items are the
+[identity derivation allocation](phase0-derivation-allocation.md), concrete RGB
+program/schema and Bitcoin commitment carrier, an adopted compatible RGB lock,
+and executable positive and adversarial fixtures for the remaining lifecycle,
+evidence, discovery, music, and chain cases. See the
+[Phase 0 status report](phase0closure.md). Nothing in this status authorizes a
+production wallet or identity crate.
+
 ## Phase 0 — Freeze the Bitcoin-native specification
 
 - freeze the EntityID encoding rooted in a dedicated BIP340 public key;

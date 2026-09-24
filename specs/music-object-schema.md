@@ -6,6 +6,10 @@ EVENT and ALBUM are public-key-rooted O2A entities. They are uniquely
 referenceable, can self-attest through keys held by their custodian, and can
 receive attestations from artists, venues, promoters, labels, and organizers.
 
+Event and album manifests are signed by that entity's own key in domain
+`O2A/v0.1/music-manifest`. The manifest hash does not prove that the event
+occurred or that anyone owns the copyright.
+
 ## Event identity profile
 
 An EVENT entity has its own root identity key and RGB lifecycle. Its canonical
@@ -15,7 +19,7 @@ manifest claim includes at least:
 event EntityID
 Bitcoin network
 authorizing RGB state
-signing key identifier and music_manifest purpose
+signing key identifier, controller role, and music_manifest capability
 manifest version
 title/name claim
 time and place claims
@@ -40,7 +44,7 @@ metadata claim includes at least:
 album EntityID
 Bitcoin network
 authorizing RGB state
-signing key identifier and music_manifest purpose
+signing key identifier, controller role, and music_manifest capability
 metadata version
 title/name claim
 artist and contributor EntityIDs
@@ -59,6 +63,8 @@ or authenticity of undisclosed media.
 ## Custody and recovery
 
 - each EVENT and ALBUM MUST use a distinct identity key;
+- each manifest signer MUST be a controller-role key that the event or album's
+  named RGB state authorizes for the music-manifest capability;
 - manifest signatures MUST use the music-manifest tagged-hash domain and MUST
   NOT validate as ordinary claims, identity transitions, or Bitcoin spends;
 - wallet derivation MUST separate entity keys from payment keys and from one
@@ -69,3 +75,16 @@ or authenticity of undisclosed media.
   signed history; and
 - wallets MUST show the controlling custodian, supporting attestations,
   challenges, and competing name or metadata claims.
+
+## Vector obligations
+
+Canonical bytes are defined in O2A-CANON-1. Executable fixtures must cover:
+
+- event custody: accept an event manifest signed by that event entity's own
+  key in `O2A/v0.1/music-manifest`. Reject another entity's key as that
+  manifest signature, and reject the manifest hash as proof the event
+  occurred; and
+- album custody: accept an album manifest signed by that album entity's own
+  key in `O2A/v0.1/music-manifest`. Reject another entity's key as that
+  manifest signature, and reject the manifest hash as proof of copyright
+  ownership.

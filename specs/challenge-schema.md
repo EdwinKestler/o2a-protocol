@@ -10,7 +10,8 @@
   "challenger": "<EntityID>",
   "challenger_state": "<validated-rgb-identity-state-id>",
   "controller_key_id": "<authorized-controller-key-id>",
-  "controller_key_purpose": "challenge",
+  "controller_key_role": "controller",
+  "authorization_capability": "challenge",
   "target": "<object-id>",
   "reason": "<reason-code>",
   "evidence": ["<object-id>"],
@@ -34,7 +35,8 @@
   "issuer": "<EntityID>",
   "issuer_state": "<validated-rgb-identity-state-id>",
   "controller_key_id": "<authorized-controller-key-id>",
-  "controller_key_purpose": "revocation",
+  "controller_key_role": "controller",
+  "authorization_capability": "evidence_revocation",
   "target": "<object-id>",
   "reason": "<reason-code>",
   "context": "<optional-context>",
@@ -51,14 +53,31 @@
 
 - a challenge does not erase its target;
 - revocation authority MUST be validated explicitly;
+- the controller role and the object's challenge or evidence-revocation
+  capability MUST both be authorized by the named issuer state;
 - challenge and revocation objects are themselves immutable signed evidence;
 - challenge and revocation signatures MUST use distinct tagged-hash domains
   from the [cryptographic profile](cryptographic-profile.md);
 - resolution SHOULD create new evidence rather than mutate old evidence;
-- policies MUST state how unresolved challenges affect verification.
+- policies MUST state how unresolved challenges affect verification;
+- challenges and evidence revocations are optional evidence;
+- a challenge does not by itself revoke; and
+- an evidence revocation MUST use domain `O2A/v0.1/revocation` and MUST NOT
+  revoke the identity root.
 
 This evidence-level revocation object revokes or qualifies a claim,
 attestation, binding, or other signed object. Revoking an EntityID itself is an
 RGB identity-state transition anchored to Bitcoin under
 [the entity schema](entity-schema.md); an evidence object alone cannot mutate
 the identity lifecycle.
+
+## Vector obligations
+
+Canonical bytes are defined in O2A-CANON-1. Executable fixtures must cover:
+
+- challenge present: accept a valid challenge in `O2A/v0.1/challenge` as
+  visible optional evidence, and reject treating that challenge alone as
+  revocation of its target or of the identity root; and
+- evidence revocation present: accept a valid evidence revocation in
+  `O2A/v0.1/revocation` as visible qualification of its target object, and
+  reject treating it as revocation of the identity root.

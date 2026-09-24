@@ -4,10 +4,12 @@
 govern when two O2A texts disagree. It does not add protocol rules.
 
 The project is in the specification phase. The normative specs below are Draft
-v0.1. Exact byte encoding, RGB contract identifiers, Bitcoin commitment and
-reorg rules, key-derivation paths, and conformance vectors remain Phase 0
-gates. Until those gates close, a draft schema controls other documents, and
-it is not yet a frozen wire format.
+v0.1. O2A-CANON-1 now defines the candidate byte grammar and signed payload
+layouts, and the RGB identity contract defines the candidate state, recovery,
+confirmation, and reorg rules. The identity derivation allocation, concrete
+RGB program and commitment carrier, compatible dependency lock, and complete
+conformance vectors remain Phase 0 gates. Until those gates close, a draft
+schema controls other documents, and it is not yet a frozen wire format.
 
 ## Precedence
 
@@ -51,8 +53,10 @@ These contracts control implementations, schemas, examples, and diagrams.
 
 | Document | Governs |
 | --- | --- |
-| [Cryptographic profile](../specs/cryptographic-profile.md) | Signature domains, tagged hashes, and network and key-purpose binding |
+| [Canonical encoding](../specs/canonical-encoding.md) | Primitive byte grammar, identifiers, signed payload layouts, and package envelope |
+| [Cryptographic profile](../specs/cryptographic-profile.md) | Signature domains, tagged hashes, and network, key-role, and capability binding |
 | [Entity schema](../specs/entity-schema.md) | EntityID, root key, RGB state, controllers, recovery, and revocation |
+| [RGB identity contract](../specs/rgb-identity-contract.md) | Lifecycle state machine, seals, recovery, confirmations, and reorg behavior |
 | [Claim schema](../specs/claim-schema.md) | Self-attested claims and competing names |
 | [Attestation schema](../specs/attestation-schema.md) | Evidence issued by other identities |
 | [Challenge schema](../specs/challenge-schema.md) | Disputes and evidence-level revocation |
@@ -104,7 +108,9 @@ above. They do not redefine the protocol.
    affected.
 5. When an entity, recovery, or name rule changes, update ADR-0005 or the
    entity and claim specs first, then the entity and claims explanations.
-6. After editing indexed files, reindex and validate the local Palimnex cache
+6. Do not call a derivation path, RGB program, dependency graph, or vector set
+   frozen while its Phase 0 gate remains open.
+7. After editing indexed files, reindex and validate the local Palimnex cache
    and run its evaluation fixture.
-7. Leave both wordings in force only while a documented conflict is being
+8. Leave both wordings in force only while a documented conflict is being
    fixed. The open conflict must cite the higher document that wins.

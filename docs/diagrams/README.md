@@ -38,7 +38,8 @@ repeated a master in an older form:
   packages, with a full Bitcoin node or an explicitly labeled light mode;
 - human-readable names are non-exclusive evidence-backed claims;
 - signed claims and attestations are evidence, not truth by themselves;
-- every signature uses a purpose-specific domain and an authorized key purpose;
+- every signature uses an object-specific domain plus separately validated key
+  role and authorization capability;
 - public proof packages are immutable, content-addressed, and independently
   retrievable; transport and hosting never become identity authority;
 - verification is a deterministic policy result over evidence;

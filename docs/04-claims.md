@@ -14,8 +14,9 @@ signature = BIP340Sign(authorized_controller_key, claim_message)
 ```
 
 The canonical payload includes the protocol version, Bitcoin network, object
-type, issuer EntityID, authorizing RGB state, key identifier and purpose, and
-the domain-specific claim fields. Exact serialization is defined in the
+type, issuer EntityID, authorizing RGB state, key identifier, key role,
+authorization capability, and the domain-specific claim fields. Exact
+serialization is defined in the
 [claim schema](../specs/claim-schema.md) and
 [cryptographic profile](../specs/cryptographic-profile.md). A plain untagged
 hash is not a valid O2A claim-signing message.

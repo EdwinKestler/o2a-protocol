@@ -14,11 +14,12 @@ to an artist, venue, promoter, album, or event name.
   "protocol_version": "0.1",
   "bitcoin_network": "mainnet|testnet|signet|regtest",
   "object_type": "control_challenge",
-  "challenge_id": "<canonical-object-id>",
+  "challenge_id": "<derived-canonical-object-id; display-only>",
   "subject": "<EntityID>",
   "subject_state": "<validated-rgb-identity-state-id>",
   "controller_key_id": "<authorized-controller-key-id>",
-  "controller_key_purpose": "control_challenge",
+  "controller_key_role": "controller",
+  "authorization_capability": "control_challenge",
   "resource_type": "DNS_TXT",
   "resource": "_o2a-challenge.artist.example",
   "purpose": "NAME_CONTROL",
@@ -31,6 +32,9 @@ to an artist, venue, promoter, album, or event name.
 }
 ```
 
+`challenge_id` is derived from the canonical challenge payload. It is not a
+field inside the signed payload and therefore cannot create a hash cycle.
+
 ## Observation object
 
 ```json
@@ -42,7 +46,8 @@ to an artist, venue, promoter, album, or event name.
   "observer": "<EntityID>",
   "observer_state": "<validated-rgb-identity-state-id>",
   "observer_key_id": "<authorized-observer-key-id>",
-  "observer_key_purpose": "observation",
+  "observer_key_role": "controller",
+  "authorization_capability": "observation",
   "method": "DNSSEC_OR_DNS_TXT",
   "observed_resource": "<canonical-resource>",
   "observed_value_hash": "<hash-of-exact-observed-bytes>",
@@ -71,6 +76,19 @@ to an artist, venue, promoter, album, or event name.
 - online collection MUST defend against SSRF, DNS rebinding, redirect abuse,
   oversized responses, ambiguous encodings, and stale cached data;
 - offline verification MUST validate retained observation objects without
-  silently re-fetching the network; and
+  silently re-fetching the network;
+- DNS, HTTPS, and social observations are channel-control evidence and MUST
+  carry an expiry input;
+- an expired observation fails the control check; and
 - policies MUST report missing, expired, conflicting, or unverifiable evidence
   rather than infer a positive result.
+
+## Vector obligations
+
+Canonical bytes are defined in O2A-CANON-1. Executable fixtures must cover the
+expired-control-proof case:
+
+- accept a DNS, HTTPS, or social observation whose expiry input is present and
+  whose evaluation time is inside that window; and
+- reject an expired observation. It fails the control check and MUST NOT be
+  treated as current channel control.

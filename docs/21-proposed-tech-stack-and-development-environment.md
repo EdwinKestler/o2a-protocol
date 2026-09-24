@@ -121,16 +121,23 @@ provides the Compose file, Bitcoin configuration, pinned toolchain image, and
 opt-in electrs/RGB compatibility images. It deliberately does not add a Rust
 workspace, O2A crate, adopted dependency lock, or identity implementation.
 
-Artifacts still deferred until implementation begins are:
+Current Phase 0 artifacts are deliberately split between checked-in
+specification tools and deferred production-workspace files:
 
 ```text
-rust-toolchain.toml        exact compiler plus rustfmt/clippy
-Cargo.toml / Cargo.lock    workspace and locked dependency graph
-deny.toml                  advisories, sources and license policy
-justfile                   bootstrap, lint, unit, vectors and regtest tasks
+tests/vectors/             partial CC0 conformance fixtures and scoped checker lock
 .env.example               names and safe placeholders only
-tests/vectors/             public positive and adversarial fixtures
+dev/                       pinned containerized Phase 0 environment
+
+rust-toolchain.toml        deferred production compiler pin
+Cargo.toml / Cargo.lock    deferred production workspace and dependency graph
+deny.toml                  deferred production dependency policy
+justfile                   deferred task runner
 ```
+
+The scoped lock and `deny.toml` under `tests/vectors/crypto-checker/` govern
+only the CC0 vector verifier. They are not the production workspace lock and do
+not adopt the RGB graph.
 
 The initial `deny.toml` license allowlist must include `Apache-2.0`, `MIT`, and
 `CC0-1.0`; rust-bitcoin is currently CC0-1.0. Add other licenses only after
@@ -206,6 +213,9 @@ Compatible dependency updates leave three Esplora-path advisories; removing
 Esplora yields an Electrum-only graph with zero vulnerability advisories but an
 unmaintained dependency warning and unreviewed license expressions. These are
 useful compatibility results, not an adopted fork, lock, or identity crate.
+
+The [RGB dependency gate](phase0-dependency-gate.md) records the decision from
+this retained evidence. No lock is adopted, and the gate remains open.
 
 ## Quality and security gates
 

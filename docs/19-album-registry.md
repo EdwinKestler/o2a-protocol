@@ -9,8 +9,8 @@ manifest rules remain in the accepted ADRs and
 An album is a key-rooted O2A entity with its own EntityID and RGB lifecycle. It
 is distinct from the artist, label, or other custodian that holds its keys. The
 responsible artist or label may keep the album keys in the same self-custodial
-wallet as its other identities while preserving separate derivation and
-authorization purposes.
+wallet as its other identities while preserving separate derivation roles and
+authorization capabilities.
 
 The Album Registry is a rebuildable projection over validated album identity
 history, signed metadata and manifest claims, participant attestations, and
@@ -33,8 +33,8 @@ named-policy results. It is not the source of album identity or rights.
 
 ## Manifest and participant evidence
 
-A purpose-authorized album key signs the canonical metadata and track-manifest
-commitments in the music-manifest signing domain. Artists, contributors,
+A capability-authorized album controller signs the canonical metadata and
+track-manifest commitments in the music-manifest signing domain. Artists, contributors,
 labels, and other participants issue separate attestations over exact immutable
 references. A new metadata or track version creates a new signed claim and
 content hash rather than rewriting earlier evidence.
