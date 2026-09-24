@@ -145,3 +145,5 @@ custody and use disposable test identities and test-value bitcoin. Nothing
 derived from that consumer enters normative specifications or persistent O2A
 identities. This permission does not adopt an RGB lock, authorize a production
 crate, or close Phase 0.
+
+The demo network is the default public Bitcoin signet specified by [ADR-0007](../adr/0007-signet-for-demonstration.md).
