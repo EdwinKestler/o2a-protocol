@@ -146,4 +146,5 @@ derived from that consumer enters normative specifications or persistent O2A
 identities. This permission does not adopt an RGB lock, authorize a production
 crate, or close Phase 0.
 
+Demo lineage evidence: `../o2a-testnet-demo` at commit `cb491dbefe28b36fdfce24d1fe8f7ce0213e96de` records the regtest genesis and controller-rotation run.
 The demo network is the default public Bitcoin signet specified by [ADR-0007](../adr/0007-signet-for-demonstration.md).
