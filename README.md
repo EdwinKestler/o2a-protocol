@@ -7,8 +7,9 @@ Each artist, venue, promoter, label, live event, and album has a public O2A
 EntityID rooted in its own dedicated BIP340/secp256k1 identity key. The owner
 holds that key and its proof data in a self-custodial wallet/node. Identity
 genesis, controller changes, recovery-policy changes, and revocation are RGB
-client-side state transitions anchored to Bitcoin. Identity keys are never
-Bitcoin spending keys.
+client-side state transitions anchored to Bitcoin. O2A-signing keys are never
+Bitcoin spending keys; dedicated role-4 seal keys spend the identity's
+deterministic P2TR seal outputs and remain separate from payment keys.
 
 Human-readable names remain evidence-backed claims rather than globally locked
 usernames. Wallets can show DNS and social control proofs, attestations from

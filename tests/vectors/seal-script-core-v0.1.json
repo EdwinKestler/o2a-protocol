@@ -1,0 +1,49 @@
+{
+  "bitcoin_core_subversion": "/Satoshi:31.1.0/",
+  "cases": {
+    "one_controller": {
+      "deriveaddresses": [
+        "bcrt1pqmle3u5k6nkhg79p2d2upldu0w7wp6xj2mz7ea75dvz57jn85xxsgjvfse"
+      ],
+      "getdescriptorinfo": {
+        "checksum": "cfd6trtv",
+        "descriptor": "tr(50929b74c1a04954b78b4b6035e97a5e078a5a0f28ec96d547bfee9ace803ac0,{pk(d25ed00ba7188d413f7c0ed100bb092460be1eaed2e69596c3dfc43dc43e5c06),and_v(v:multi_a(2,6e5382b91922ab39a3995429c0a60fd2caa301c060cb9b2b428f20865e9d11d8,f65fb6a087c9ac77b26ddff1f70df9a9f73bca85a3882f2f2bd4cb0df79b82da,fa1baf4a1b37fe1bb4a58770162d396934ce9ff5433599acaa61aa9fd83ca421),older(144))})#cfd6trtv",
+        "hasprivatekeys": false,
+        "isrange": false,
+        "issolvable": true
+      },
+      "input_descriptor": "tr(50929b74c1a04954b78b4b6035e97a5e078a5a0f28ec96d547bfee9ace803ac0,{pk(d25ed00ba7188d413f7c0ed100bb092460be1eaed2e69596c3dfc43dc43e5c06),and_v(v:multi_a(2,6e5382b91922ab39a3995429c0a60fd2caa301c060cb9b2b428f20865e9d11d8,f65fb6a087c9ac77b26ddff1f70df9a9f73bca85a3882f2f2bd4cb0df79b82da,fa1baf4a1b37fe1bb4a58770162d396934ce9ff5433599acaa61aa9fd83ca421),older(144))})",
+      "script_pubkey": "512006ff98f296d4ed7478a15355c0fdbc7bbce0e8d256c5ecf7d46b054f4a67a18d"
+    },
+    "three_controllers": {
+      "deriveaddresses": [
+        "bcrt1p6j4dajczgw5845ahsjlxx5h2zrdee252dlh50m4znn2n4q2h050qp820ua"
+      ],
+      "getdescriptorinfo": {
+        "checksum": "jjavu3tx",
+        "descriptor": "tr(50929b74c1a04954b78b4b6035e97a5e078a5a0f28ec96d547bfee9ace803ac0,{{pk(416e0730739014f342fc0247dc2aa2aab96463c7c49b56d1eaa499afe31f713e),pk(d25ed00ba7188d413f7c0ed100bb092460be1eaed2e69596c3dfc43dc43e5c06)},{pk(fd5b54671e58d4029cc5685038894ed2b2efde93ce9de62f25f00885346bb106),and_v(v:multi_a(2,6e5382b91922ab39a3995429c0a60fd2caa301c060cb9b2b428f20865e9d11d8,f65fb6a087c9ac77b26ddff1f70df9a9f73bca85a3882f2f2bd4cb0df79b82da,fa1baf4a1b37fe1bb4a58770162d396934ce9ff5433599acaa61aa9fd83ca421),older(144))}})#jjavu3tx",
+        "hasprivatekeys": false,
+        "isrange": false,
+        "issolvable": true
+      },
+      "input_descriptor": "tr(50929b74c1a04954b78b4b6035e97a5e078a5a0f28ec96d547bfee9ace803ac0,{{pk(416e0730739014f342fc0247dc2aa2aab96463c7c49b56d1eaa499afe31f713e),pk(d25ed00ba7188d413f7c0ed100bb092460be1eaed2e69596c3dfc43dc43e5c06)},{pk(fd5b54671e58d4029cc5685038894ed2b2efde93ce9de62f25f00885346bb106),and_v(v:multi_a(2,6e5382b91922ab39a3995429c0a60fd2caa301c060cb9b2b428f20865e9d11d8,f65fb6a087c9ac77b26ddff1f70df9a9f73bca85a3882f2f2bd4cb0df79b82da,fa1baf4a1b37fe1bb4a58770162d396934ce9ff5433599acaa61aa9fd83ca421),older(144))}})",
+      "script_pubkey": "5120d4aadecb0243a87ad3b784be6352ea10db9caa8a6fef47eea29cd53a81577d1e"
+    },
+    "two_controllers_odd": {
+      "deriveaddresses": [
+        "bcrt1pgt76k0fkxsyjq2pe6n6utjklmvn350vgnncxweh2nf038s94vums4frzk0"
+      ],
+      "getdescriptorinfo": {
+        "checksum": "j9y82mpc",
+        "descriptor": "tr(50929b74c1a04954b78b4b6035e97a5e078a5a0f28ec96d547bfee9ace803ac0,{{pk(416e0730739014f342fc0247dc2aa2aab96463c7c49b56d1eaa499afe31f713e),pk(d25ed00ba7188d413f7c0ed100bb092460be1eaed2e69596c3dfc43dc43e5c06)},and_v(v:multi_a(2,6e5382b91922ab39a3995429c0a60fd2caa301c060cb9b2b428f20865e9d11d8,f65fb6a087c9ac77b26ddff1f70df9a9f73bca85a3882f2f2bd4cb0df79b82da,fa1baf4a1b37fe1bb4a58770162d396934ce9ff5433599acaa61aa9fd83ca421),older(144))})#j9y82mpc",
+        "hasprivatekeys": false,
+        "isrange": false,
+        "issolvable": true
+      },
+      "input_descriptor": "tr(50929b74c1a04954b78b4b6035e97a5e078a5a0f28ec96d547bfee9ace803ac0,{{pk(416e0730739014f342fc0247dc2aa2aab96463c7c49b56d1eaa499afe31f713e),pk(d25ed00ba7188d413f7c0ed100bb092460be1eaed2e69596c3dfc43dc43e5c06)},and_v(v:multi_a(2,6e5382b91922ab39a3995429c0a60fd2caa301c060cb9b2b428f20865e9d11d8,f65fb6a087c9ac77b26ddff1f70df9a9f73bca85a3882f2f2bd4cb0df79b82da,fa1baf4a1b37fe1bb4a58770162d396934ce9ff5433599acaa61aa9fd83ca421),older(144))})",
+      "script_pubkey": "512042fdab3d363409202839d4f5c5cadfdb271a3d889cf06766ea9a5f13c0b56737"
+    }
+  },
+  "profile": "O2A seal output Bitcoin Core oracle Draft v0.1",
+  "spdx": "CC0-1.0"
+}

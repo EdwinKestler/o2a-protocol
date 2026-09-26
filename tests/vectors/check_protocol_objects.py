@@ -14,13 +14,41 @@ import subprocess
 import sys
 from pathlib import Path
 
+from derive_route_b import CURVE_N, CURVE_P, _point_add, public_point
+
 HERE = Path(__file__).resolve().parent
 FIXTURE_PATH = HERE / "protocol-objects-v0.1.json"
+SEAL_FIXTURE_PATH = HERE / "seal-script-v0.1.json"
 CRYPTO_MANIFEST = HERE / "crypto-checker" / "Cargo.toml"
 
 ENTITY_TAG = "O2A/v0.1/entity-id"
 KEY_TAG = "O2A/v0.1/key-id"
 POLICY_TAG = "O2A/v0.1/recovery-policy"
+SEAL_INTERNAL_KEY = bytes.fromhex(
+    "50929b74c1a04954b78b4b6035e97a5e078a5a0f28ec96d547bfee9ace803ac0"
+)
+SEAL_VECTOR_KEYS = [
+    bytes.fromhex(value)
+    for value in (
+        "d25ed00ba7188d413f7c0ed100bb092460be1eaed2e69596c3dfc43dc43e5c06",
+        "416e0730739014f342fc0247dc2aa2aab96463c7c49b56d1eaa499afe31f713e",
+        "fd5b54671e58d4029cc5685038894ed2b2efde93ce9de62f25f00885346bb106",
+        "6e5382b91922ab39a3995429c0a60fd2caa301c060cb9b2b428f20865e9d11d8",
+        "fa1baf4a1b37fe1bb4a58770162d396934ce9ff5433599acaa61aa9fd83ca421",
+        "f65fb6a087c9ac77b26ddff1f70df9a9f73bca85a3882f2f2bd4cb0df79b82da",
+    )
+]
+AUTHORIZER_VECTOR_KEYS = [
+    bytes.fromhex(value)
+    for value in (
+        "44eec350058c0f989cb2d1af8468aa2f1a12e99e98226cc36db446c54824374c",
+        "1ae475832feb3331f8e760fcd7803a48078bb0b38f5e15b1fb52017fd8757917",
+        "31e6b765372e8f0f5561a05012e4e1d803d3c7b6667793208da7e9abd5fc40d8",
+        "f53704a3e4d3ddad5efb561617489c31522a0cf5a3098f5feb15f900b5ded236",
+        "ff96950266bcbdc5f9131f722305116cd5e51fe9c1d9e2c1073e4fcb4618c3c6",
+        "851bbbf4a54b784d635a5f07fea3a2548dcaee887d75fd744191eb37770da590",
+    )
+]
 TAGS = {
     "entity_genesis": "O2A/v0.1/entity-genesis",
     "identity_transition": "O2A/v0.1/identity-transition",
@@ -118,6 +146,123 @@ def tagged_hash(tag: str, payload: bytes) -> bytes:
     return hashlib.sha256(tag_hash + tag_hash + payload).digest()
 
 
+def compact_size(value: int) -> bytes:
+    if value < 0:
+        raise ValueError("negative CompactSize")
+    if value < 253:
+        return bytes([value])
+    if value <= 0xFFFF:
+        return b"\xfd" + value.to_bytes(2, "little")
+    raise ValueError("fixture CompactSize is too large")
+
+
+def push_script_num(value: int) -> bytes:
+    if value < 0:
+        raise ValueError("negative script number")
+    if value == 0:
+        return b"\x00"
+    if value <= 16:
+        return bytes([0x50 + value])
+    data = bytearray()
+    number = value
+    while number:
+        data.append(number & 0xFF)
+        number >>= 8
+    if data[-1] & 0x80:
+        data.append(0)
+    if len(data) > 75:
+        raise ValueError("fixture script number requires PUSHDATA")
+    return bytes([len(data)]) + bytes(data)
+
+
+def binding_bytes(binding: tuple[bytes, bytes]) -> bytes:
+    authorizing_key_id, seal_xonly = binding
+    return authorizing_key_id + seal_xonly
+
+
+def seal_policy(
+    controller_bindings: list[tuple[bytes, bytes]],
+    recovery_bindings: list[tuple[bytes, bytes]],
+) -> bytes:
+    return u16(1) + list_items(
+        [binding_bytes(binding) for binding in controller_bindings]
+    ) + list_items([binding_bytes(binding) for binding in recovery_bindings])
+
+
+def recovery_leaf(recovery_keys: list[bytes], threshold: int, delay: int) -> bytes:
+    script = bytearray()
+    for index, public_key in enumerate(recovery_keys):
+        script.extend(b"\x20" + public_key)
+        script.append(0xAC if index == 0 else 0xBA)
+    script.extend(push_script_num(threshold))
+    script.append(0x9D)
+    script.extend(push_script_num(delay))
+    script.append(0xB2)
+    return bytes(script)
+
+
+def tapleaf_hash(script: bytes) -> bytes:
+    return tagged_hash("TapLeaf", b"\xc0" + compact_size(len(script)) + script)
+
+
+def taproot_root(nodes: list[bytes]) -> bytes:
+    if not nodes:
+        raise ValueError("empty TapTree")
+    current = list(nodes)
+    while len(current) > 1:
+        next_round = []
+        for index in range(0, len(current), 2):
+            if index + 1 == len(current):
+                next_round.append(current[index])
+                continue
+            left, right = sorted((current[index], current[index + 1]))
+            next_round.append(tagged_hash("TapBranch", left + right))
+        current = next_round
+    return current[0]
+
+
+def lift_x(x_bytes: bytes) -> tuple[int, int]:
+    x = int.from_bytes(x_bytes, "big")
+    if x >= CURVE_P:
+        raise ValueError("x-only key exceeds field")
+    y = pow((pow(x, 3, CURVE_P) + 7) % CURVE_P, (CURVE_P + 1) // 4, CURVE_P)
+    if (y * y - (pow(x, 3, CURVE_P) + 7)) % CURVE_P:
+        raise ValueError("x-only key is not on secp256k1")
+    return x, y if y % 2 == 0 else CURVE_P - y
+
+
+def seal_output(
+    controller_bindings: list[tuple[bytes, bytes]],
+    recovery_bindings: list[tuple[bytes, bytes]],
+    threshold: int,
+    delay: int,
+) -> dict:
+    controller_keys = sorted(seal_xonly for _, seal_xonly in controller_bindings)
+    recovery_keys = sorted(seal_xonly for _, seal_xonly in recovery_bindings)
+    controller_scripts = [b"\x20" + key + b"\xac" for key in controller_keys]
+    recovery_script = recovery_leaf(recovery_keys, threshold, delay)
+    scripts = controller_scripts + [recovery_script]
+    leaf_hashes = [tapleaf_hash(script) for script in scripts]
+    merkle_root = taproot_root(leaf_hashes)
+    tweak = tagged_hash("TapTweak", SEAL_INTERNAL_KEY + merkle_root)
+    tweak_value = int.from_bytes(tweak, "big")
+    if tweak_value >= CURVE_N:
+        raise ValueError("TapTweak exceeds group order")
+    tweak_point = None if tweak_value == 0 else public_point(tweak_value)
+    output_point = _point_add(lift_x(SEAL_INTERNAL_KEY), tweak_point)
+    if output_point is None:
+        raise ValueError("Taproot output point is infinity")
+    output_key = output_point[0].to_bytes(32, "big")
+    return {
+        "policy_hex": seal_policy(controller_bindings, recovery_bindings).hex(),
+        "scripts_hex": [script.hex() for script in scripts],
+        "leaf_hashes": [leaf.hex() for leaf in leaf_hashes],
+        "merkle_root": merkle_root.hex(),
+        "output_key": output_key.hex(),
+        "script_pubkey": (b"\x51\x20" + output_key).hex(),
+    }
+
+
 def entity_id(root: bytes) -> bytes:
     return tagged_hash(ENTITY_TAG, u16(1) + bytes([NETWORK]) + root)
 
@@ -186,9 +331,17 @@ def resulting_state(
     next_seal: bytes,
     controller_public: bytes,
     policy: bytes,
+    controller_seal_bindings: list[tuple[bytes, bytes]] | None = None,
+    recovery_seal_bindings: list[tuple[bytes, bytes]] | None = None,
     status: int = 1,
 ) -> bytes:
     capabilities = [2, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+    if controller_seal_bindings is None:
+        controller_seal_bindings = [
+            (key_id(1, controller_public), SEAL_VECTOR_KEYS[0])
+        ]
+    if recovery_seal_bindings is None:
+        recovery_seal_bindings = [(key_id(2, RECOVERY_PUBLIC), SEAL_VECTOR_KEYS[3])]
     return b"".join(
         (
             u64(sequence),
@@ -197,6 +350,7 @@ def resulting_state(
             next_seal,
             list_items([controller(controller_public, capabilities)]),
             policy,
+            seal_policy(controller_seal_bindings, recovery_seal_bindings),
             option(None),
             bytes([status]),
             option(None),
@@ -310,6 +464,23 @@ def decode_recovery_policy(reader: Reader) -> dict:
     }
 
 
+def decode_seal_policy(reader: Reader) -> dict:
+    start = reader.offset
+    policy_version = reader.u16()
+    controller_seal_bindings = reader.list(
+        lambda: (reader.take(32), reader.take(32))
+    )
+    recovery_seal_bindings = reader.list(
+        lambda: (reader.take(32), reader.take(32))
+    )
+    return {
+        "policy_version": policy_version,
+        "controller_seal_bindings": controller_seal_bindings,
+        "recovery_seal_bindings": recovery_seal_bindings,
+        "canonical": reader.payload[start : reader.offset],
+    }
+
+
 def decode_controller(reader: Reader) -> dict:
     key = reader.take(32)
     public_key = reader.take(32)
@@ -330,6 +501,7 @@ def decode_state(reader: Reader) -> dict:
     next_seal = reader.take(36)
     controllers = reader.list(lambda: decode_controller(reader))
     recovery = decode_recovery_policy(reader)
+    seal = decode_seal_policy(reader)
     custodian = reader.option_fixed(32)
     lifecycle_status = reader.u8()
     custody_acceptance = reader.option_fixed(32)
@@ -341,6 +513,7 @@ def decode_state(reader: Reader) -> dict:
         "next_seal": next_seal,
         "controllers": controllers,
         "recovery_policy": recovery,
+        "seal_policy": seal,
         "custodian": custodian,
         "lifecycle_status": lifecycle_status,
         "custody_acceptance": custody_acceptance,
@@ -388,7 +561,7 @@ def decode_payload(payload: bytes) -> dict:
     elif object_type == 3:
         operation, spans["operation"] = span(reader, reader.u8)
         policy_hash, spans["policy_hash"] = span(reader, lambda: reader.take(32))
-        not_before_height = reader.u32()
+        not_before_height, spans["not_before_height"] = span(reader, reader.u32)
         body = {
             "operation": operation,
             "policy_hash": policy_hash,
@@ -649,7 +822,8 @@ def build_cases() -> list[dict]:
                 "committed_policy_hash": tagged_hash(POLICY_TAG, policy).hex(),
                 "recovery_key_ids": [recovery_key.hex()],
                 "threshold": 1,
-                "anchor_height": 100,
+                "prior_anchor_height": 90,
+                "seal_creation_height": 100,
                 "delay_blocks": 6,
                 "not_before_height": 106,
                 "sequence": 2,
@@ -660,7 +834,8 @@ def build_cases() -> list[dict]:
                 "prior_policy_hash": tagged_hash(POLICY_TAG, policy),
                 "prior_recovery_key_ids": [recovery_key],
                 "prior_threshold": 1,
-                "anchor_height": 100,
+                "prior_anchor_height": 90,
+                "seal_creation_height": 100,
                 "delay_blocks": 6,
                 "block_height": 106,
             },
@@ -923,6 +1098,377 @@ def crypto_sign(key_name: str, message: bytes) -> tuple[str, str]:
     return public_key, signature
 
 
+def build_seal_cases() -> dict[str, dict]:
+    controller_key_ids = [key_id(1, key) for key in AUTHORIZER_VECTOR_KEYS[:3]]
+    recovery_key_ids = [key_id(2, key) for key in AUTHORIZER_VECTOR_KEYS[3:6]]
+    recovery_bindings = sorted(
+        zip(recovery_key_ids, SEAL_VECTOR_KEYS[3:6]), key=binding_bytes
+    )
+
+    def controller_bindings(count: int) -> list[tuple[bytes, bytes]]:
+        return sorted(
+            zip(controller_key_ids[:count], SEAL_VECTOR_KEYS[:count]),
+            key=binding_bytes,
+        )
+
+    return {
+        "one_controller": {
+            "policy_version": 1,
+            "controller_seal_bindings": controller_bindings(1),
+            "recovery_seal_bindings": recovery_bindings,
+            "threshold": 2,
+            "delay_blocks": 144,
+        },
+        "two_controllers_odd": {
+            "policy_version": 1,
+            "controller_seal_bindings": controller_bindings(2),
+            "recovery_seal_bindings": recovery_bindings,
+            "threshold": 2,
+            "delay_blocks": 144,
+        },
+        "three_controllers": {
+            "policy_version": 1,
+            "controller_seal_bindings": controller_bindings(3),
+            "recovery_seal_bindings": recovery_bindings,
+            "threshold": 2,
+            "delay_blocks": 144,
+        },
+    }
+
+
+def rust_seal_output(case: dict) -> dict:
+    result = crypto(
+        [
+            "seal-output",
+            str(case["policy_version"]),
+            str(case["threshold"]),
+            str(case["delay_blocks"]),
+            ",".join(
+                f"{authorizing.hex()}:{seal.hex()}"
+                for authorizing, seal in case["controller_seal_bindings"]
+            ),
+            ",".join(
+                f"{authorizing.hex()}:{seal.hex()}"
+                for authorizing, seal in case["recovery_seal_bindings"]
+            ),
+        ]
+    )
+    if result.returncode != 0:
+        fail(result.stderr.strip() or "Rust seal-output checker failed")
+    fields = dict(line.split("=", 1) for line in result.stdout.strip().splitlines())
+    return {
+        "policy_hex": fields["policy_hex"],
+        "scripts_hex": fields["scripts_hex"].split(","),
+        "leaf_hashes": fields["leaf_hashes"].split(","),
+        "merkle_root": fields["merkle_root"],
+        "output_key": fields["output_key"],
+        "script_pubkey": fields["script_pubkey"],
+    }
+
+
+def fixture_seal_case(case: dict) -> dict:
+    def display_bindings(bindings: list[tuple[bytes, bytes]], label: str) -> list[dict]:
+        return [
+            {label: authorizing.hex(), "seal_xonly": seal.hex()}
+            for authorizing, seal in bindings
+        ]
+
+    return {
+        "policy_version": case["policy_version"],
+        "controller_seal_bindings": display_bindings(
+            case["controller_seal_bindings"], "controller_key_id"
+        ),
+        "recovery_seal_bindings": display_bindings(
+            case["recovery_seal_bindings"], "recovery_key_id"
+        ),
+        "threshold": case["threshold"],
+        "delay_blocks": case["delay_blocks"],
+        "expected": seal_output(
+            case["controller_seal_bindings"],
+            case["recovery_seal_bindings"],
+            case["threshold"],
+            case["delay_blocks"],
+        ),
+    }
+
+
+def emit_seal_vectors() -> None:
+    output = {
+        "spdx": "CC0-1.0",
+        "profile": "O2A seal output Draft v0.1",
+        "unsafe_for_funds": True,
+        "internal_key": SEAL_INTERNAL_KEY.hex(),
+        "cases": {
+            name: fixture_seal_case(case) for name, case in build_seal_cases().items()
+        },
+    }
+    print(json.dumps(output, indent=2, sort_keys=True))
+
+
+def identity_history_outcome(
+    *,
+    bitcoin_view_source: str | None,
+    best_block_hash: bytes | None,
+    observed_height: int | None,
+    seal_observation: str | None,
+    spend_proof: bool,
+    spend_confirmations: int,
+    required_depth: int,
+    valid_transition: bool,
+) -> dict:
+    result = {
+        "bitcoin_view_source": bitcoin_view_source,
+        "best_block_hash": best_block_hash,
+        "observed_height": observed_height,
+    }
+    if (
+        bitcoin_view_source is None
+        or best_block_hash is None
+        or observed_height is None
+        or seal_observation is None
+    ):
+        return dict(result, state="INCOMPLETE")
+    if seal_observation == "unspent":
+        return dict(result, state="CURRENT")
+    if (
+        seal_observation != "spent"
+        or not spend_proof
+        or spend_confirmations < required_depth
+    ):
+        return dict(result, state="INCOMPLETE")
+    if not valid_transition:
+        return dict(result, state="SEAL_CLOSED_WITHOUT_VALID_TRANSITION")
+    return dict(result, state="CURRENT")
+
+
+def seal_output_matches(expected_script: bytes, actual_script: bytes) -> bool:
+    return expected_script == actual_script
+
+
+def check_seal_vectors() -> None:
+    fixture = json.loads(SEAL_FIXTURE_PATH.read_text(encoding="utf-8"))
+    if (
+        fixture["spdx"] != "CC0-1.0"
+        or not fixture["unsafe_for_funds"]
+        or fixture["internal_key"] != SEAL_INTERNAL_KEY.hex()
+    ):
+        fail("invalid seal fixture metadata")
+    cases = build_seal_cases()
+    if set(fixture["cases"]) != set(cases):
+        fail("seal fixture case set mismatch")
+    for name, case in cases.items():
+        expected_fixture = fixture_seal_case(case)
+        if fixture["cases"][name] != expected_fixture:
+            fail(f"{name}: seal fixture mismatch")
+        if rust_seal_output(case) != expected_fixture["expected"]:
+            fail(f"{name}: Python and Rust seal outputs differ")
+        reader = Reader(bytes.fromhex(expected_fixture["expected"]["policy_hex"]))
+        decoded = decode_seal_policy(reader)
+        reader.done()
+        if decoded["canonical"].hex() != expected_fixture["expected"]["policy_hex"]:
+            fail(f"{name}: seal policy bytes were not canonical")
+
+    base = cases["one_controller"]
+    recovery_policy_value = {
+        "policy_version": 1,
+        "policy_sequence": 1,
+        "threshold": 2,
+        "recovery_key_ids": [bytes([1]) * 32, bytes([2]) * 32, bytes([3]) * 32],
+        "delay_blocks": 144,
+        "cancellation_rule": 1,
+    }
+    for delay in (0, 65_536):
+        invalid = dict(recovery_policy_value, delay_blocks=delay)
+        if valid_recovery_policy(invalid):
+            fail(f"delay_blocks {delay} was accepted")
+    if valid_recovery_policy(dict(recovery_policy_value, threshold=4)):
+        fail("recovery threshold above key count was accepted")
+
+    controller_bindings = base["controller_seal_bindings"]
+    recovery_bindings = base["recovery_seal_bindings"]
+    controller_ids = {authorizing for authorizing, _ in controller_bindings}
+    recovery_ids = {authorizing for authorizing, _ in recovery_bindings}
+    valid_policy = {
+        "policy_version": 1,
+        "controller_seal_bindings": controller_bindings,
+        "recovery_seal_bindings": recovery_bindings,
+    }
+    if not valid_seal_policy(
+        valid_policy,
+        transition_controller_ids=controller_ids,
+        recovery_key_ids=recovery_ids,
+        forbidden_keys=set(),
+    ):
+        fail("valid seal policy rejected")
+    two_controller_bindings = cases["two_controllers_odd"][
+        "controller_seal_bindings"
+    ]
+    stale_controller = [
+        (bytes([0xFF]) * 32, controller_bindings[0][1])
+    ]
+    duplicate_seal = list(recovery_bindings)
+    duplicate_seal[1] = (duplicate_seal[1][0], duplicate_seal[0][1])
+    duplicate_seal.sort(key=binding_bytes)
+    rejection_cases = (
+        (
+            dict(valid_policy, policy_version=2),
+            controller_ids,
+            recovery_ids,
+            "unknown seal-policy version",
+        ),
+        (
+            dict(
+                valid_policy,
+                controller_seal_bindings=list(reversed(two_controller_bindings)),
+            ),
+            {binding[0] for binding in two_controller_bindings},
+            recovery_ids,
+            "unsorted controller seal bindings",
+        ),
+        (
+            dict(
+                valid_policy,
+                recovery_seal_bindings=list(reversed(recovery_bindings)),
+            ),
+            controller_ids,
+            recovery_ids,
+            "unsorted recovery seal bindings",
+        ),
+        (
+            dict(valid_policy, recovery_seal_bindings=duplicate_seal),
+            controller_ids,
+            recovery_ids,
+            "duplicate recovery seal key",
+        ),
+        (
+            dict(valid_policy, controller_seal_bindings=stale_controller),
+            controller_ids,
+            recovery_ids,
+            "stale controller seal binding",
+        ),
+        (
+            valid_policy,
+            controller_ids | {bytes([0xEE]) * 32},
+            recovery_ids,
+            "unpaired controller key",
+        ),
+        (
+            dict(valid_policy, recovery_seal_bindings=recovery_bindings[:2]),
+            controller_ids,
+            recovery_ids,
+            "unpaired recovery key",
+        ),
+    )
+    for invalid, expected_controllers, expected_recovery, label in rejection_cases:
+        if valid_seal_policy(
+            invalid,
+            transition_controller_ids=expected_controllers,
+            recovery_key_ids=expected_recovery,
+            forbidden_keys=set(),
+        ):
+            fail(f"{label} was accepted")
+    controller_seal = controller_bindings[0][1]
+    if valid_seal_policy(
+        valid_policy,
+        transition_controller_ids=controller_ids,
+        recovery_key_ids=recovery_ids,
+        forbidden_keys={controller_seal},
+    ):
+        fail("seal key reused as controller key was accepted")
+    expected_script = bytes.fromhex(
+        fixture["cases"]["one_controller"]["expected"]["script_pubkey"]
+    )
+    mismatched_script = expected_script[:-1] + bytes([expected_script[-1] ^ 1])
+    if seal_output_matches(expected_script, mismatched_script):
+        fail("mismatched seal output script was accepted")
+    if (
+        identity_history_outcome(
+            bitcoin_view_source="regtest-rpc",
+            best_block_hash=bytes([0x44]) * 32,
+            observed_height=120,
+            seal_observation="unspent",
+            spend_proof=False,
+            spend_confirmations=0,
+            required_depth=1,
+            valid_transition=False,
+        )["state"]
+        != "CURRENT"
+    ):
+        fail("open seal was not reported current")
+    if (
+        identity_history_outcome(
+            bitcoin_view_source=None,
+            best_block_hash=None,
+            observed_height=None,
+            seal_observation=None,
+            spend_proof=False,
+            spend_confirmations=0,
+            required_depth=1,
+            valid_transition=False,
+        )["state"]
+        != "INCOMPLETE"
+    ):
+        fail("missing current-seal observation was not incomplete")
+    if (
+        identity_history_outcome(
+            bitcoin_view_source="regtest-rpc",
+            best_block_hash=bytes([0x44]) * 32,
+            observed_height=120,
+            seal_observation="spent",
+            spend_proof=False,
+            spend_confirmations=1,
+            required_depth=1,
+            valid_transition=False,
+        )["state"]
+        != "INCOMPLETE"
+    ):
+        fail("unproven seal spend was treated as terminal")
+    if (
+        identity_history_outcome(
+            bitcoin_view_source="regtest-rpc",
+            best_block_hash=bytes([0x44]) * 32,
+            observed_height=120,
+            seal_observation="spent",
+            spend_proof=True,
+            spend_confirmations=0,
+            required_depth=1,
+            valid_transition=False,
+        )["state"]
+        != "INCOMPLETE"
+    ):
+        fail("under-depth seal spend was treated as terminal")
+    if (
+        identity_history_outcome(
+            bitcoin_view_source="regtest-rpc",
+            best_block_hash=bytes([0x44]) * 32,
+            observed_height=120,
+            seal_observation="spent",
+            spend_proof=True,
+            spend_confirmations=1,
+            required_depth=1,
+            valid_transition=True,
+        )["state"]
+        != "CURRENT"
+    ):
+        fail("valid successor transition was not reported current")
+    if (
+        identity_history_outcome(
+            bitcoin_view_source="regtest-rpc",
+            best_block_hash=bytes([0x44]) * 32,
+            observed_height=120,
+            seal_observation="spent",
+            spend_proof=True,
+            spend_confirmations=1,
+            required_depth=1,
+            valid_transition=False,
+        )["state"]
+        != "SEAL_CLOSED_WITHOUT_VALID_TRANSITION"
+    ):
+        fail("terminal seal closure was not reported distinctly")
+    if key_id(4, controller_seal) == key_id(1, controller_seal):
+        fail("seal and controller key IDs were not role-bound")
+
+
 def sorted_unique(values: list) -> bool:
     return values == sorted(values) and len(values) == len(set(values))
 
@@ -938,7 +1484,39 @@ def valid_recovery_policy(policy: dict) -> bool:
         and policy["policy_sequence"] >= 0
         and 0 < policy["threshold"] <= len(keys) <= 16
         and strictly_sorted(keys)
+        and 1 <= policy["delay_blocks"] <= 65_535
         and policy["cancellation_rule"] == 1
+    )
+
+
+def valid_seal_policy(
+    policy: dict,
+    *,
+    transition_controller_ids: set[bytes],
+    recovery_key_ids: set[bytes],
+    forbidden_keys: set[bytes],
+) -> bool:
+    controller_bindings = policy["controller_seal_bindings"]
+    recovery_bindings = policy["recovery_seal_bindings"]
+    all_bindings = controller_bindings + recovery_bindings
+    controller_ids = [authorizing for authorizing, _ in controller_bindings]
+    recovery_ids = [authorizing for authorizing, _ in recovery_bindings]
+    all_authorizing_ids = controller_ids + recovery_ids
+    all_keys = [seal_xonly for _, seal_xonly in all_bindings]
+    return (
+        policy["policy_version"] == 1
+        and 0 < len(controller_bindings) <= 16
+        and 0 < len(recovery_bindings) <= 16
+        and strictly_sorted([binding_bytes(binding) for binding in controller_bindings])
+        and strictly_sorted([binding_bytes(binding) for binding in recovery_bindings])
+        and len(controller_ids) == len(set(controller_ids))
+        and len(recovery_ids) == len(set(recovery_ids))
+        and len(all_authorizing_ids) == len(set(all_authorizing_ids))
+        and set(controller_ids) == transition_controller_ids
+        and set(recovery_ids) == recovery_key_ids
+        and len(all_keys) == len(set(all_keys))
+        and not (set(all_keys) & forbidden_keys)
+        and all(crypto_xonly_valid(key) for key in all_keys)
     )
 
 
@@ -958,7 +1536,20 @@ def valid_state(state: dict, *, genesis: bool) -> bool:
             or any(capability not in KNOWN_CAPABILITIES for capability in capabilities)
         ):
             return False
-    if not valid_recovery_policy(state["recovery_policy"]):
+    recovery = state["recovery_policy"]
+    transition_controller_ids = {
+        controller_value["key_id"]
+        for controller_value in controllers
+        if 2 in controller_value["capabilities"]
+    }
+    if not valid_recovery_policy(recovery):
+        return False
+    if not valid_seal_policy(
+        state["seal_policy"],
+        transition_controller_ids=transition_controller_ids,
+        recovery_key_ids=set(recovery["recovery_key_ids"]),
+        forbidden_keys={controller_value["public_key"] for controller_value in controllers},
+    ):
         return False
     if state["lifecycle_status"] not in {1, 2}:
         return False
@@ -1031,6 +1622,14 @@ def evaluate_signed_payload(
             and body["root"] == public_key
             and header["signer_entity"] == entity_id(body["root"])
             and valid_state(body["state"], genesis=True)
+            and body["root"]
+            not in set(
+                binding[1]
+                for binding in (
+                    body["state"]["seal_policy"]["controller_seal_bindings"]
+                    + body["state"]["seal_policy"]["recovery_seal_bindings"]
+                )
+            )
             else "invalid"
         )
     if object_type == 2:
@@ -1057,7 +1656,8 @@ def evaluate_signed_payload(
             and key_id(2, public_key) in context.get("prior_recovery_key_ids", [])
             and 0 < context.get("prior_threshold", 0)
             and body["not_before_height"]
-            == context.get("anchor_height", -1) + context.get("delay_blocks", -1)
+            == context.get("seal_creation_height", -1)
+            + context.get("delay_blocks", -1)
         )
         if not valid:
             return "invalid"
@@ -1259,6 +1859,7 @@ def emit() -> None:
 
 
 def check() -> None:
+    check_seal_vectors()
     fixture = json.loads(FIXTURE_PATH.read_text(encoding="utf-8"))
     cases = build_cases()
     for public_key in {
@@ -1413,6 +2014,12 @@ def check() -> None:
         recovery["payload"], recovery_decoded["spans"]["policy_hash"], bytes(32)
     )
     resign_and_evaluate(recovery, wrong_policy, "invalid")
+    anchor_based_not_before = patch_span(
+        recovery["payload"],
+        recovery_decoded["spans"]["not_before_height"],
+        u32(96),
+    )
+    resign_and_evaluate(recovery, anchor_based_not_before, "invalid")
 
     attestation = by_name["attestation"]
     attestation_decoded = decode_payload(attestation["payload"])
@@ -1582,8 +2189,10 @@ def check() -> None:
 if __name__ == "__main__":
     if sys.argv[1:] == ["--emit"]:
         emit()
+    elif sys.argv[1:] == ["--emit-seal"]:
+        emit_seal_vectors()
     elif sys.argv[1:]:
-        fail("usage: check_protocol_objects.py [--emit]")
+        fail("usage: check_protocol_objects.py [--emit|--emit-seal]")
     else:
         check()
         print("protocol objects ok")

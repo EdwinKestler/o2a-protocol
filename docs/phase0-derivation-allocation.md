@@ -30,7 +30,7 @@ The allocation question is therefore closed for the demo track and reopens
 only when the mainnet derivation profile is frozen.
 
 O2A needs deterministic wallet separation between root identity, controller,
-recovery, Nostr-publication, and Bitcoin payment keys. Route B derives an
+recovery, Nostr-publication, seal, and Bitcoin payment keys. Route B derives an
 independent `xprv_o2a` with BIP85 and records those roles below it. The retired
 literal purpose has no accepted interoperability allocation and is not a valid
 O2A path.
@@ -43,11 +43,15 @@ xprv_o2a:     m/coin'/entity'/0'/0'       root identity
 xprv_o2a:     m/coin'/entity'/1'/index'   controller
 xprv_o2a:     m/coin'/entity'/2'/index'   recovery
 xprv_o2a:     m/coin'/entity'/3'/index'   Nostr publication
+xprv_o2a:     m/coin'/entity'/4'/index'   seal
 wallet master: m/86'/coin'/account'/0/index Bitcoin payment
 ```
 
 Pubky remains outside this hierarchy because its key is Ed25519. A payment key
 has no O2A key role or O2A key identifier and must never sign an O2A object.
+Seal keys are Bitcoin spending keys with role 4 but no O2A capability; adding
+this sibling role leaves every previously defined Route B path output
+unchanged.
 
 ## Acceptance gate
 
@@ -61,7 +65,7 @@ all of these are recorded:
    explicitly unsafe test seed, with seed format, passphrase, wordlist,
    network-to-coin-type mapping, and implementation/library versions recorded;
 4. exact expected public keys and paths for root identity, controller,
-   recovery, Nostr publication, and BIP86 payment keys on mainnet and test
+   recovery, Nostr publication, seal, and BIP86 payment keys on mainnet and test
    networks;
 5. a collision-free account/entity indexing rule for multiple independent
    identities in one wallet, including artist, venue, promoter, label, EVENT,
@@ -83,7 +87,7 @@ does not itself freeze the wallet profile.
 | 1 | satisfied | Route B uses registered BIP85 application `32'` and a deterministic application index outside the BIP43 purpose slot. |
 | 2 | satisfied | `specs/key-derivation-profile.md` specifies the BIP85 path, HMAC operation, raw `xprv_o2a`, and hardened subtree. |
 | 3 | satisfied | Independent Rust and Python implementations agree from the published unsafe BIP39 test seed; Rust consumes seed bytes and Python also checks BIP39. |
-| 4 | satisfied | `tests/vectors/derivation-v0.1.json` records exact paths, raw extended private roots, and x-only keys for mainnet and regtest, entities 0 and 1. |
+| 4 | satisfied | `tests/vectors/derivation-v0.1.json` records exact root, controller, recovery, Nostr, seal, and payment paths, raw extended private roots, and x-only keys for mainnet and regtest, entities 0 and 1. |
 | 5 | satisfied | The profile monotonically allocates and never reuses wallet-local `entity'` indexes; each artist, venue, promoter, label, EVENT, and ALBUM gets its own index. |
 | 6 | satisfied | The derivation fixture executes the required invalid cases against both implementations. |
 | 7 | satisfied | Normative references use Route B; the retired path remains only in history, an explicit rejection, or unrelated hexadecimal evidence. |

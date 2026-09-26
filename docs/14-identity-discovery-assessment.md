@@ -43,12 +43,14 @@ identity seed
   ├─ VENUE / PROMOTER / LABEL root keys as applicable
   ├─ Pubky Ed25519 discovery key bindings
   ├─ optional Nostr publication key bindings
-  └─ payment and Bitcoin spending keys in separate purposes/domains
+  ├─ role-4 seal keys for deterministic identity-seal scripts
+  └─ ordinary payment keys in a separate BIP86 purpose
 ```
 
-The final derivation standard is not yet specified. Implementations must not
-invent incompatible paths or reuse the same secret across identity, Pubky,
-Nostr, RGB seal, or payment signing contexts.
+The demo-stable derivation profile assigns a separate role-4 subtree to seal
+keys while deferring the mainnet freeze. Implementations must not invent
+incompatible paths or reuse the same secret across identity signing, Pubky,
+Nostr, RGB seal, or payment contexts.
 
 ## Public discovery
 

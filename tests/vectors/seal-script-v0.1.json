@@ -1,0 +1,143 @@
+{
+  "cases": {
+    "one_controller": {
+      "controller_seal_bindings": [
+        {
+          "controller_key_id": "1568cb59a54a3478cf170cfc02d0f524bec2f993fcd02327731968355c531d53",
+          "seal_xonly": "d25ed00ba7188d413f7c0ed100bb092460be1eaed2e69596c3dfc43dc43e5c06"
+        }
+      ],
+      "delay_blocks": 144,
+      "expected": {
+        "leaf_hashes": [
+          "9fb98bec99940fc54f1f5c606e7d88588a308f9876d80d7a4974f467832f5951",
+          "4c6d3838c77a425badb5ba858abe1a8eb784cd107b16c8f0912c2459dad596b3"
+        ],
+        "merkle_root": "02eb778085e0f67410554d941a6d9f489b19e6f9782a35a86584a56e18754ded",
+        "output_key": "06ff98f296d4ed7478a15355c0fdbc7bbce0e8d256c5ecf7d46b054f4a67a18d",
+        "policy_hex": "0100010000001568cb59a54a3478cf170cfc02d0f524bec2f993fcd02327731968355c531d53d25ed00ba7188d413f7c0ed100bb092460be1eaed2e69596c3dfc43dc43e5c060300000028c004965b90170dcd56f1ec31ac221a2d0c97449ecdb44c433b6f56ee6a6f8ef65fb6a087c9ac77b26ddff1f70df9a9f73bca85a3882f2f2bd4cb0df79b82daab215bfc393cb932067a7709991969d17e64fe0d7199c40a97fa6337979bde686e5382b91922ab39a3995429c0a60fd2caa301c060cb9b2b428f20865e9d11d8b33d468ddcafef4b105c31d6ac62d8c33f7b9a0d4e626808998f4e5305047809fa1baf4a1b37fe1bb4a58770162d396934ce9ff5433599acaa61aa9fd83ca421",
+        "script_pubkey": "512006ff98f296d4ed7478a15355c0fdbc7bbce0e8d256c5ecf7d46b054f4a67a18d",
+        "scripts_hex": [
+          "20d25ed00ba7188d413f7c0ed100bb092460be1eaed2e69596c3dfc43dc43e5c06ac",
+          "206e5382b91922ab39a3995429c0a60fd2caa301c060cb9b2b428f20865e9d11d8ac20f65fb6a087c9ac77b26ddff1f70df9a9f73bca85a3882f2f2bd4cb0df79b82daba20fa1baf4a1b37fe1bb4a58770162d396934ce9ff5433599acaa61aa9fd83ca421ba529d029000b2"
+        ]
+      },
+      "policy_version": 1,
+      "recovery_seal_bindings": [
+        {
+          "recovery_key_id": "28c004965b90170dcd56f1ec31ac221a2d0c97449ecdb44c433b6f56ee6a6f8e",
+          "seal_xonly": "f65fb6a087c9ac77b26ddff1f70df9a9f73bca85a3882f2f2bd4cb0df79b82da"
+        },
+        {
+          "recovery_key_id": "ab215bfc393cb932067a7709991969d17e64fe0d7199c40a97fa6337979bde68",
+          "seal_xonly": "6e5382b91922ab39a3995429c0a60fd2caa301c060cb9b2b428f20865e9d11d8"
+        },
+        {
+          "recovery_key_id": "b33d468ddcafef4b105c31d6ac62d8c33f7b9a0d4e626808998f4e5305047809",
+          "seal_xonly": "fa1baf4a1b37fe1bb4a58770162d396934ce9ff5433599acaa61aa9fd83ca421"
+        }
+      ],
+      "threshold": 2
+    },
+    "three_controllers": {
+      "controller_seal_bindings": [
+        {
+          "controller_key_id": "1568cb59a54a3478cf170cfc02d0f524bec2f993fcd02327731968355c531d53",
+          "seal_xonly": "d25ed00ba7188d413f7c0ed100bb092460be1eaed2e69596c3dfc43dc43e5c06"
+        },
+        {
+          "controller_key_id": "d8707e20d88403260382b4515bbe7629c2a0ee149c25378cfd46d5c7f27aaa90",
+          "seal_xonly": "fd5b54671e58d4029cc5685038894ed2b2efde93ce9de62f25f00885346bb106"
+        },
+        {
+          "controller_key_id": "f1c3496318a947c3236a81ac039a96af4a6b8c5ca052679e546c17b5a5463b37",
+          "seal_xonly": "416e0730739014f342fc0247dc2aa2aab96463c7c49b56d1eaa499afe31f713e"
+        }
+      ],
+      "delay_blocks": 144,
+      "expected": {
+        "leaf_hashes": [
+          "be6d9eef52f8ab949216d04227e2d6f2f4c202dc0e379e9718db6b1dc5b31d90",
+          "9fb98bec99940fc54f1f5c606e7d88588a308f9876d80d7a4974f467832f5951",
+          "12cda37015caaacd6b70855681628e77c8090dd4e2ffd207d6c5f29cd791bbb7",
+          "4c6d3838c77a425badb5ba858abe1a8eb784cd107b16c8f0912c2459dad596b3"
+        ],
+        "merkle_root": "c698f63301fd53f8e0ce79f2aec00f01d17b57da3b8ca840359fda39cc4bb3b9",
+        "output_key": "d4aadecb0243a87ad3b784be6352ea10db9caa8a6fef47eea29cd53a81577d1e",
+        "policy_hex": "0100030000001568cb59a54a3478cf170cfc02d0f524bec2f993fcd02327731968355c531d53d25ed00ba7188d413f7c0ed100bb092460be1eaed2e69596c3dfc43dc43e5c06d8707e20d88403260382b4515bbe7629c2a0ee149c25378cfd46d5c7f27aaa90fd5b54671e58d4029cc5685038894ed2b2efde93ce9de62f25f00885346bb106f1c3496318a947c3236a81ac039a96af4a6b8c5ca052679e546c17b5a5463b37416e0730739014f342fc0247dc2aa2aab96463c7c49b56d1eaa499afe31f713e0300000028c004965b90170dcd56f1ec31ac221a2d0c97449ecdb44c433b6f56ee6a6f8ef65fb6a087c9ac77b26ddff1f70df9a9f73bca85a3882f2f2bd4cb0df79b82daab215bfc393cb932067a7709991969d17e64fe0d7199c40a97fa6337979bde686e5382b91922ab39a3995429c0a60fd2caa301c060cb9b2b428f20865e9d11d8b33d468ddcafef4b105c31d6ac62d8c33f7b9a0d4e626808998f4e5305047809fa1baf4a1b37fe1bb4a58770162d396934ce9ff5433599acaa61aa9fd83ca421",
+        "script_pubkey": "5120d4aadecb0243a87ad3b784be6352ea10db9caa8a6fef47eea29cd53a81577d1e",
+        "scripts_hex": [
+          "20416e0730739014f342fc0247dc2aa2aab96463c7c49b56d1eaa499afe31f713eac",
+          "20d25ed00ba7188d413f7c0ed100bb092460be1eaed2e69596c3dfc43dc43e5c06ac",
+          "20fd5b54671e58d4029cc5685038894ed2b2efde93ce9de62f25f00885346bb106ac",
+          "206e5382b91922ab39a3995429c0a60fd2caa301c060cb9b2b428f20865e9d11d8ac20f65fb6a087c9ac77b26ddff1f70df9a9f73bca85a3882f2f2bd4cb0df79b82daba20fa1baf4a1b37fe1bb4a58770162d396934ce9ff5433599acaa61aa9fd83ca421ba529d029000b2"
+        ]
+      },
+      "policy_version": 1,
+      "recovery_seal_bindings": [
+        {
+          "recovery_key_id": "28c004965b90170dcd56f1ec31ac221a2d0c97449ecdb44c433b6f56ee6a6f8e",
+          "seal_xonly": "f65fb6a087c9ac77b26ddff1f70df9a9f73bca85a3882f2f2bd4cb0df79b82da"
+        },
+        {
+          "recovery_key_id": "ab215bfc393cb932067a7709991969d17e64fe0d7199c40a97fa6337979bde68",
+          "seal_xonly": "6e5382b91922ab39a3995429c0a60fd2caa301c060cb9b2b428f20865e9d11d8"
+        },
+        {
+          "recovery_key_id": "b33d468ddcafef4b105c31d6ac62d8c33f7b9a0d4e626808998f4e5305047809",
+          "seal_xonly": "fa1baf4a1b37fe1bb4a58770162d396934ce9ff5433599acaa61aa9fd83ca421"
+        }
+      ],
+      "threshold": 2
+    },
+    "two_controllers_odd": {
+      "controller_seal_bindings": [
+        {
+          "controller_key_id": "1568cb59a54a3478cf170cfc02d0f524bec2f993fcd02327731968355c531d53",
+          "seal_xonly": "d25ed00ba7188d413f7c0ed100bb092460be1eaed2e69596c3dfc43dc43e5c06"
+        },
+        {
+          "controller_key_id": "f1c3496318a947c3236a81ac039a96af4a6b8c5ca052679e546c17b5a5463b37",
+          "seal_xonly": "416e0730739014f342fc0247dc2aa2aab96463c7c49b56d1eaa499afe31f713e"
+        }
+      ],
+      "delay_blocks": 144,
+      "expected": {
+        "leaf_hashes": [
+          "be6d9eef52f8ab949216d04227e2d6f2f4c202dc0e379e9718db6b1dc5b31d90",
+          "9fb98bec99940fc54f1f5c606e7d88588a308f9876d80d7a4974f467832f5951",
+          "4c6d3838c77a425badb5ba858abe1a8eb784cd107b16c8f0912c2459dad596b3"
+        ],
+        "merkle_root": "23b41ed6faa04c21284471537d8d30e138241b3d7fb37aec884658232bb842ba",
+        "output_key": "42fdab3d363409202839d4f5c5cadfdb271a3d889cf06766ea9a5f13c0b56737",
+        "policy_hex": "0100020000001568cb59a54a3478cf170cfc02d0f524bec2f993fcd02327731968355c531d53d25ed00ba7188d413f7c0ed100bb092460be1eaed2e69596c3dfc43dc43e5c06f1c3496318a947c3236a81ac039a96af4a6b8c5ca052679e546c17b5a5463b37416e0730739014f342fc0247dc2aa2aab96463c7c49b56d1eaa499afe31f713e0300000028c004965b90170dcd56f1ec31ac221a2d0c97449ecdb44c433b6f56ee6a6f8ef65fb6a087c9ac77b26ddff1f70df9a9f73bca85a3882f2f2bd4cb0df79b82daab215bfc393cb932067a7709991969d17e64fe0d7199c40a97fa6337979bde686e5382b91922ab39a3995429c0a60fd2caa301c060cb9b2b428f20865e9d11d8b33d468ddcafef4b105c31d6ac62d8c33f7b9a0d4e626808998f4e5305047809fa1baf4a1b37fe1bb4a58770162d396934ce9ff5433599acaa61aa9fd83ca421",
+        "script_pubkey": "512042fdab3d363409202839d4f5c5cadfdb271a3d889cf06766ea9a5f13c0b56737",
+        "scripts_hex": [
+          "20416e0730739014f342fc0247dc2aa2aab96463c7c49b56d1eaa499afe31f713eac",
+          "20d25ed00ba7188d413f7c0ed100bb092460be1eaed2e69596c3dfc43dc43e5c06ac",
+          "206e5382b91922ab39a3995429c0a60fd2caa301c060cb9b2b428f20865e9d11d8ac20f65fb6a087c9ac77b26ddff1f70df9a9f73bca85a3882f2f2bd4cb0df79b82daba20fa1baf4a1b37fe1bb4a58770162d396934ce9ff5433599acaa61aa9fd83ca421ba529d029000b2"
+        ]
+      },
+      "policy_version": 1,
+      "recovery_seal_bindings": [
+        {
+          "recovery_key_id": "28c004965b90170dcd56f1ec31ac221a2d0c97449ecdb44c433b6f56ee6a6f8e",
+          "seal_xonly": "f65fb6a087c9ac77b26ddff1f70df9a9f73bca85a3882f2f2bd4cb0df79b82da"
+        },
+        {
+          "recovery_key_id": "ab215bfc393cb932067a7709991969d17e64fe0d7199c40a97fa6337979bde68",
+          "seal_xonly": "6e5382b91922ab39a3995429c0a60fd2caa301c060cb9b2b428f20865e9d11d8"
+        },
+        {
+          "recovery_key_id": "b33d468ddcafef4b105c31d6ac62d8c33f7b9a0d4e626808998f4e5305047809",
+          "seal_xonly": "fa1baf4a1b37fe1bb4a58770162d396934ce9ff5433599acaa61aa9fd83ca421"
+        }
+      ],
+      "threshold": 2
+    }
+  },
+  "internal_key": "50929b74c1a04954b78b4b6035e97a5e078a5a0f28ec96d547bfee9ace803ac0",
+  "profile": "O2A seal output Draft v0.1",
+  "spdx": "CC0-1.0",
+  "unsafe_for_funds": true
+}

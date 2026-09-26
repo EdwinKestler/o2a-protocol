@@ -95,8 +95,11 @@ data for a conforming wallet to validate:
 - the EntityID derivation from network, profile, and immutable root public key;
 - the O2A RGB contract/schema and identity history from genesis to
   `subject_state`;
-- each relevant seal, witness, commitment, anchor, confirmation, and stated
-  reorg assumption;
+- each transaction that created a seal output named by the history, the output
+  index and scriptPubKey, and the inclusion/header proof needed to place that
+  creating transaction in the named best chain;
+- each relevant seal-spending witness, commitment, anchor, confirmation, and
+  stated reorg assumption;
 - current controller, recovery-policy commitment, and lifecycle status;
 - the publisher state and capability-authorized signing key needed to verify the
   proof-package signature in `O2A/v0.1/proof-package`;
@@ -111,6 +114,14 @@ object is one the manifest includes or references and whose bytes are absent.
 A hash mismatch is invalid. A verifier MUST NOT reconstruct missing
 client-side state from a transaction ID, registry row, profile badge, or
 discovery binding.
+
+For each seal-creating transaction, the verifier recomputes the expected P2TR
+scriptPubKey from the seal policy committed by the state that names the
+outpoint. A missing creating transaction or proof makes evaluation incomplete;
+a present output whose script does not match makes the identity history
+invalid. The revealed tapleaf of a seal-spending anchor is not an O2A
+operation-authorization input; O2A signatures and capabilities are verified
+separately.
 
 ## Publication and retrieval
 

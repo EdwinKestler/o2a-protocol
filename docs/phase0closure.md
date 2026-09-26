@@ -43,6 +43,13 @@ closure path, not a detour. Demo program bytes and identities remain
 disposable; evidence from that repository informs the later normative and
 dependency decisions but does not make them implicitly.
 
+**2026-09-25 seal-policy note:** the existing demonstration lineage predates
+the role-4 seal policy and deterministic controller-or-delayed-recovery P2TR
+script. It must adopt that policy and prove matching seal outputs before its
+RGB execution or custody-acceptance artifacts count as evidence for items 3
+and 4. This note does not close Phase 0, adopt program bytes, or modify the
+demo repository.
+
 The restore/discovery item is separate from deterministic key derivation. A
 mnemonic can reproduce keys only after the wallet knows which `entity'` and
 per-role indexes to derive. The source and verification rule for rebuilding

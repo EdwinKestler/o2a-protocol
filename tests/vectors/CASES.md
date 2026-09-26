@@ -7,14 +7,22 @@ claim and proof-package fixtures. `protocol-objects-v0.1.json` contains fixed
 payloads, tagged hashes, and signatures for the remaining signed-object
 layouts. `check_vectors.py` runs both bounded checkers and delegates BIP340 to
 the pinned rust-secp256k1 helper in `crypto-checker/`. These are vector tools,
-not a wallet, and they do not use the network. The helper's lock hash, audit,
-and license result are recorded in [DEPENDENCIES.md](DEPENDENCIES.md).
+not a wallet. The protocol-object checks do not use the network; the separate
+`check_seal_core.py` oracle uses only the isolated Docker regtest node. The
+helper's lock hash, audit, and license result are recorded in
+[DEPENDENCIES.md](DEPENDENCIES.md).
 `derivation-v0.1.json` records Route B paths and expected keys;
 `check_derivation_cross.py` requires the independent Python and Rust
-implementations to produce identical results.
+implementations to produce identical results. `seal-script-v0.1.json` records
+canonical seal-policy bytes, tapscripts, TapTree roots, output keys, and P2TR
+scriptPubKeys recomputed independently by the Python and Rust checkers.
+`seal-script-core-v0.1.json` records Bitcoin Core 31.1 `getdescriptorinfo` and
+`deriveaddresses` output for every seal case.
 
 The vector track remains **OPEN**. This directory has no adopted RGB
-consignment, Bitcoin anchor/header proof, seal execution, or reorg execution.
+consignment, Bitcoin anchor/header proof, seal-spend execution, or reorg
+execution. Deterministic seal-script derivation is executable, but it is not a
+regtest spend or RGB transition.
 The new lifecycle fixtures cover canonical bytes and local authorization
 inputs only; they do not execute an RGB transition.
 Reciprocal discovery proofs, full rebinding-history validation, live adapter
@@ -40,6 +48,7 @@ in `derivation-v0.1.json`; it is not a funding or production seed.
 | Wrong network | Independently signed mainnet claim accepted in mainnet context and rejected in regtest context; signed unknown-network claim rejected |
 | Duplicate names | Two independently signed claims from distinct EntityIDs both verify and remain separately visible |
 | Recovery-policy hash | Canonical threshold policy under `O2A/v0.1/recovery-policy` |
+| Seal policy and output | Canonical authorizer-to-role-4 bindings, 1/2/3 controller leaves, 2-of-3 delayed recovery leaf, odd-leaf carry, deterministic TapTree/output key, and adversarial state/script cases agree in Python, locked Rust, and Bitcoin Core descriptor RPCs |
 | Genesis and identity transition | Fixed signed bytes; root/EntityID match; controller-rotation sequence checks; unsupported operations fail closed |
 | Recovery authorization | Fixed one-signer bytes; committed policy hash and not-before checks; thresholds above one return incomplete until a signature bundle is verified |
 | Evidence objects | Fixed signed attestation, challenge, and evidence-revocation bytes with duplicate/sort/target negatives |
@@ -93,7 +102,9 @@ The proposed Route B identity hierarchy is rooted at a BIP85-derived
 key at the BIP86 path
 `m/86'/coin'/account'/0/index`. The payment key has no O2A purpose byte and
 no O2A key identifier. Controller, recovery, and Nostr publication keys are
-separate hardened identity keys and are not payment keys.
+separate hardened identity keys and are not payment keys. Role-4 seal keys use
+their own monotonically allocated hardened indexes and hold no O2A signing
+capability.
 
 Reject a payment key used as the root, as an EntityID input, or as the signer
 of an O2A object. Reject `O2A/v0.1/key-id` for a payment key. Reject one key
@@ -237,6 +248,42 @@ not a reconstructed acceptance.
 
 Not executed on regtest.
 
+The local seal vector executes canonical policy serialization and output-script
+recomputation for one, two, and three controller seal keys plus a 2-of-3
+recovery set with delay 144. The two-controller case has three total leaves and
+executes the odd-node carry in both Python and Rust. It rejects delay 0 and
+65536, unsorted or duplicate bindings, stale and unpaired authorizing keys,
+cross-role key reuse, and a scriptPubKey that differs from the state-derived
+output. The vector does not execute a Bitcoin spend or RGB consignment on
+regtest.
+
+## Deterministic seal policy and script
+
+Accept seal-policy version 1 with strictly sorted
+`authorizing_key_id || seal_xonly` bindings. Controller bindings must cover
+exactly the current capability-2 controller key-ID set; recovery bindings must
+cover exactly the recovery policy key-ID set. Seal keys have role 4 key IDs,
+no O2A capability, and no x-only key may be reused across roles in one state.
+
+Accept only the fixed BIP341 NUMS internal key, leaf version `0xc0`, one
+`<xonly> OP_CHECKSIG` leaf per controller, and the canonical
+`and_v(v:multi_a(k,...),older(d))` recovery leaf. The fixture orders controller
+leaves by key, appends the recovery leaf, then reduces adjacent nodes left to
+right while carrying an odd final node. Python and Rust must agree on every
+script, leaf hash, Merkle root, output key, and scriptPubKey.
+
+The Docker-only oracle translates each case into the equivalent
+`tr(H,{...})` descriptor. Bitcoin Core 31.1 `getdescriptorinfo` and
+`deriveaddresses` must produce the recorded checksum and regtest address; the
+decoded address script must equal the Python/Rust scriptPubKey.
+
+Reject key-path authorization, an unknown policy version, zero or excess
+counts, delay outside `1..=65535`, nonminimal script numbers, noncanonical key
+order, duplicates, stale, missing, or extra authorizer bindings, cross-role
+reuse, threshold/count mismatch, or any output script that does not equal the
+state-derived P2TR script. The seal output may not also carry Tapret; concrete
+RGB carrier bytes remain open.
+
 ## Mismatched seal
 
 Accept the state whose current seal is the Bitcoin outpoint the anchor
@@ -297,11 +344,32 @@ A recovery-policy change does not authorize itself.
 
 The protocol-only fixture now fixes recovery payload bytes, policy hash,
 recovery-role key identifier, one signature, a 1-of-1 prior threshold,
-six-block delay, and `not_before_height`. It accepts at the explicit eligible
-height and rejects one block early and a policy hash that differs from the
-prior committed input. It returns `incomplete` for a threshold above one; this
+six-block delay, and `not_before_height` derived from the seal-creation height.
+The prior anchor height intentionally differs. It accepts at the explicit
+eligible height and rejects one block early, an anchor-based height, and a
+policy hash that differs from the prior committed input. It returns
+`incomplete` for a threshold above one; this
 checker does not verify a multi-signer recovery bundle and does not execute or
 anchor the resulting RGB transition.
+
+## Seal closed without a valid transition
+
+Accept `CURRENT` only when the evaluation context names a Bitcoin-view source,
+best-block hash, and height and that view observes the current seal as unspent.
+A proof package or successful RGB validation alone is insufficient. The local
+semantic checker accepts an explicit unspent observation and returns
+`INCOMPLETE` when the observation is absent.
+
+If the spending transaction and inclusion/header proof reach the same depth
+as identity anchors without a valid O2A transition, report
+`SEAL_CLOSED_WITHOUT_VALID_TRANSITION`. Before that depth, return `INCOMPLETE`;
+apply the identity-anchor reorg rule. The local checker executes those bounded
+outcome branches, but Bitcoin best-chain proof and reorg execution remain
+open. Disposable demo-lineage smoke evidence at `o2a-testnet-demo` commit
+`bce2b58`, manifest
+`59f80970be1de88a642cd2345386ba7e12b903caf9b48f9ced5c39288c7e4b01`,
+records RGB RC3 still presenting a cell after its seal was plainly spent; it
+does not close this open O2A evaluation case.
 
 ## Recovery when no path remains (new EntityID)
 

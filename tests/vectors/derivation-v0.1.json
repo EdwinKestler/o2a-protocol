@@ -20,7 +20,13 @@
         "root_identity": {"path": "m/0'/0'/0'/0'", "xonly": "95e5b5d6882c86957fb293dfd74a72d1795cf8736c026e1e13bc63a6c5710b36"},
         "controller_0": {"path": "m/0'/0'/1'/0'", "xonly": "f3adf5ea9efb7576ccc79a330ce2cc916595a45193611779e2c6a210b1d05e17"},
         "recovery_0": {"path": "m/0'/0'/2'/0'", "xonly": "7d9c1d5b9a3ad96294b43587ba81b2c147d1aa672c9269dd8c234c1fdddbd62b"},
-        "nostr_0": {"path": "m/0'/0'/3'/0'", "xonly": "472771847b566f7757be3eca96e484f50f2b7ae002b770c020c9fcbe63af97d1"}
+        "nostr_0": {"path": "m/0'/0'/3'/0'", "xonly": "472771847b566f7757be3eca96e484f50f2b7ae002b770c020c9fcbe63af97d1"},
+        "seal_0": {"path": "m/0'/0'/4'/0'", "xonly": "d25ed00ba7188d413f7c0ed100bb092460be1eaed2e69596c3dfc43dc43e5c06"},
+        "seal_1": {"path": "m/0'/0'/4'/1'", "xonly": "416e0730739014f342fc0247dc2aa2aab96463c7c49b56d1eaa499afe31f713e"},
+        "seal_2": {"path": "m/0'/0'/4'/2'", "xonly": "fd5b54671e58d4029cc5685038894ed2b2efde93ce9de62f25f00885346bb106"},
+        "seal_3": {"path": "m/0'/0'/4'/3'", "xonly": "6e5382b91922ab39a3995429c0a60fd2caa301c060cb9b2b428f20865e9d11d8"},
+        "seal_4": {"path": "m/0'/0'/4'/4'", "xonly": "fa1baf4a1b37fe1bb4a58770162d396934ce9ff5433599acaa61aa9fd83ca421"},
+        "seal_5": {"path": "m/0'/0'/4'/5'", "xonly": "f65fb6a087c9ac77b26ddff1f70df9a9f73bca85a3882f2f2bd4cb0df79b82da"}
       },
       "payment": {"path": "m/86'/0'/0'/0/0", "xonly": "6cf32115c2fd0dc462fe82e267d89a17e5f5b43087cfcb3be52b89ac70fac245"}
     },
@@ -33,7 +39,13 @@
         "root_identity": {"path": "m/0'/1'/0'/0'", "xonly": "44eec350058c0f989cb2d1af8468aa2f1a12e99e98226cc36db446c54824374c"},
         "controller_0": {"path": "m/0'/1'/1'/0'", "xonly": "1ae475832feb3331f8e760fcd7803a48078bb0b38f5e15b1fb52017fd8757917"},
         "recovery_0": {"path": "m/0'/1'/2'/0'", "xonly": "31e6b765372e8f0f5561a05012e4e1d803d3c7b6667793208da7e9abd5fc40d8"},
-        "nostr_0": {"path": "m/0'/1'/3'/0'", "xonly": "cad4d9f2eb17e895b3e49921892255ddb7bf35c7a9fe865b89f71a3745bf53f0"}
+        "nostr_0": {"path": "m/0'/1'/3'/0'", "xonly": "cad4d9f2eb17e895b3e49921892255ddb7bf35c7a9fe865b89f71a3745bf53f0"},
+        "seal_0": {"path": "m/0'/1'/4'/0'", "xonly": "6141ece3878cc82f9c8c8372c5a20445abc35db5f85d6047177a78c640430fcf"},
+        "seal_1": {"path": "m/0'/1'/4'/1'", "xonly": "a211e7859981b908aadd860e8315a156ba133f6c6b3fc1e841600dd577d3ae6e"},
+        "seal_2": {"path": "m/0'/1'/4'/2'", "xonly": "72da254ce985d5cb811b5020806125cf951a320a6e1b6b2585135664d228269d"},
+        "seal_3": {"path": "m/0'/1'/4'/3'", "xonly": "a01764cd4afb24b0842465fd8b8d6689ad9a5f8cf115e3fc59e298d2e28d84f4"},
+        "seal_4": {"path": "m/0'/1'/4'/4'", "xonly": "263eaccde58e0ac67507aadef4443bc935ed5b5ce448ee301cb15ea65d908e92"},
+        "seal_5": {"path": "m/0'/1'/4'/5'", "xonly": "90512159c810bec6459872e26ba62f1ef26917a9cf44b0a98cbf86b7097e5d7f"}
       },
       "payment": {"path": "m/86'/0'/0'/0/0", "xonly": "6cf32115c2fd0dc462fe82e267d89a17e5f5b43087cfcb3be52b89ac70fac245"}
     },
@@ -46,7 +58,13 @@
         "root_identity": {"path": "m/1'/0'/0'/0'", "xonly": "f53704a3e4d3ddad5efb561617489c31522a0cf5a3098f5feb15f900b5ded236"},
         "controller_0": {"path": "m/1'/0'/1'/0'", "xonly": "ff96950266bcbdc5f9131f722305116cd5e51fe9c1d9e2c1073e4fcb4618c3c6"},
         "recovery_0": {"path": "m/1'/0'/2'/0'", "xonly": "851bbbf4a54b784d635a5f07fea3a2548dcaee887d75fd744191eb37770da590"},
-        "nostr_0": {"path": "m/1'/0'/3'/0'", "xonly": "8b3574abf95b90ed396a6ffc83676dfeabe91596106afbc6e8ff778d470445cb"}
+        "nostr_0": {"path": "m/1'/0'/3'/0'", "xonly": "8b3574abf95b90ed396a6ffc83676dfeabe91596106afbc6e8ff778d470445cb"},
+        "seal_0": {"path": "m/1'/0'/4'/0'", "xonly": "ffbcb0d941cb03d264d3668cb8791bcd4f36c3ea8aae0ac67e8f33a189813f78"},
+        "seal_1": {"path": "m/1'/0'/4'/1'", "xonly": "7675232df7caadff46a04021f6bd949d5baf61fe960db777aa8ebd294eb41552"},
+        "seal_2": {"path": "m/1'/0'/4'/2'", "xonly": "ed7a8beb25efb4b833d6f3f79cc3225eb4fb84d73d6d05b54f3f09a72c965717"},
+        "seal_3": {"path": "m/1'/0'/4'/3'", "xonly": "81b0866eb856ef602267ecbe48a3bcc4797f0d5ce6b41a901e5e3413f79160d3"},
+        "seal_4": {"path": "m/1'/0'/4'/4'", "xonly": "d3dbe75937d696d53dcb79c0998eea0951e018a3f06fec72766c3e139f0a4313"},
+        "seal_5": {"path": "m/1'/0'/4'/5'", "xonly": "0fa60dffd963008d98178ffe362fd8248cfe91dc9f8c802f32e593cb1d75e5bc"}
       },
       "payment": {"path": "m/86'/1'/0'/0/0", "xonly": "24b8f010a21dc5b52a6a1be88feeb23ae9b55dfa5da698cecde29ff2077387b2"}
     },
@@ -59,7 +77,13 @@
         "root_identity": {"path": "m/1'/1'/0'/0'", "xonly": "2524dced5700ec964fb67e1b446acbc1388cccb0998bc429ec5f4e6cd67f6d87"},
         "controller_0": {"path": "m/1'/1'/1'/0'", "xonly": "769b1160e553d25be96c774e0fb15e023f874f758c47bd4d1110b6d39852ebb2"},
         "recovery_0": {"path": "m/1'/1'/2'/0'", "xonly": "87383029dae6c5d60eee53fb31954f4892b04e94829de4bafda29e91ad5213af"},
-        "nostr_0": {"path": "m/1'/1'/3'/0'", "xonly": "6bbfd3daa26f57e1c9865530038632cd0937a33232dc18b7c3908af8f8f1b053"}
+        "nostr_0": {"path": "m/1'/1'/3'/0'", "xonly": "6bbfd3daa26f57e1c9865530038632cd0937a33232dc18b7c3908af8f8f1b053"},
+        "seal_0": {"path": "m/1'/1'/4'/0'", "xonly": "d21305da2d4ef9285657b612b6f509b36e2845acf251f859aa27e265221b5fd4"},
+        "seal_1": {"path": "m/1'/1'/4'/1'", "xonly": "5dd170ab286dae356d56caa2bc9e15f5047e0068b243306f348d98ab8e44e43e"},
+        "seal_2": {"path": "m/1'/1'/4'/2'", "xonly": "3949a79dcd706e555538b5d67e5c52f8190959efa47cb7a6c9f7a7625d2944d3"},
+        "seal_3": {"path": "m/1'/1'/4'/3'", "xonly": "214d98e9c8c953ecd2354c84d5feea89016e836d807c74c1478ccded31a569fc"},
+        "seal_4": {"path": "m/1'/1'/4'/4'", "xonly": "60198f04094fd13127065bbb8f44b596521cfff54adbad829e711fdb5ef7ebb9"},
+        "seal_5": {"path": "m/1'/1'/4'/5'", "xonly": "410af139fa003a114cf0f6ee5473c86021460470ba3f272ae57ca692a9ab421c"}
       },
       "payment": {"path": "m/86'/1'/0'/0/0", "xonly": "24b8f010a21dc5b52a6a1be88feeb23ae9b55dfa5da698cecde29ff2077387b2"}
     }

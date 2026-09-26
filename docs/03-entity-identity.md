@@ -35,6 +35,7 @@ anchors it to a Bitcoin single-use seal. Later valid transitions can change:
 
 - operational controller keys and their allowed capabilities;
 - the committed recovery policy;
+- the committed seal policy for the next outpoint;
 - custodian or representative bindings;
 - optional profile commitments; and
 - ACTIVE or REVOKED lifecycle status.
@@ -43,6 +44,15 @@ Every transition references the previous valid state, closes the expected
 seal, commits the successor state, and is authorized by the previous state.
 Wallets validate the complete supplied client-side history against Bitcoin.
 The newest profile document or database row is never sufficient.
+
+Every current seal is a deterministic P2TR output. The policy binds one
+dedicated seal key to each transition-capable controller key ID and each
+recovery-policy key ID, with no stale or missing mapping. It permits one
+controller branch per transition-capable controller and one threshold recovery
+branch after the committed block delay. Root, controller, recovery,
+Nostr-publication, and payment keys never appear in that script. Verifiers
+obtain the seal-creating transaction and recompute the output script from the
+state that names it.
 
 ## Root and controller keys
 
@@ -66,6 +76,15 @@ Recovery without a current controller is valid only when an earlier valid RGB
 state committed the applicable recovery rule. A later collection of social
 attestations can support recognition of a successor identity, but cannot
 silently invent authorization for the existing EntityID.
+
+The signed `not_before_height` is measured from confirmation of the transaction
+that created the current seal output, matching Bitcoin's relative-lock clock.
+If a confirmed transaction closes the seal without a valid O2A transition, the
+last valid state remains historical but the identity is permanently unable to
+transition. Wallets report that terminal closure distinctly from ACTIVE or
+REVOKED; continuity requires a new EntityID and successor evidence. `CURRENT`
+also requires an explicit Bitcoin-view observation that the seal is unspent;
+RGB validation and a proof package cannot prove that negative condition.
 
 After genesis, the normal profile should remove unilateral routine control from
 the root. Any continuing root authority must be explicit in current RGB state.

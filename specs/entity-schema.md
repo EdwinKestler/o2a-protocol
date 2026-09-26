@@ -43,6 +43,22 @@ has not frozen the full wallet profile.
     "cancellation_rule": "CONTROLLER_SPENDS_PRIOR_SEAL_BEFORE_NOT_BEFORE",
     "policy_hash": "<canonical-recovery-policy-hash>"
   },
+  "seal_policy": {
+    "version": 1,
+    "controller_seal_bindings": [{
+      "controller_key_id": "<capability-2-controller-key-id>",
+      "seal_xonly": "<role-4-x-only-seal-key>"
+    }],
+    "recovery_seal_bindings": [{
+      "recovery_key_id": "<recovery-policy-key-id>",
+      "seal_xonly": "<role-4-x-only-seal-key>"
+    }],
+    "derived_display": {
+      "internal_key": "50929b74c1a04954b78b4b6035e97a5e078a5a0f28ec96d547bfee9ace803ac0",
+      "output_type": "P2TR",
+      "script_pubkey": "<deterministically-recomputed-scriptPubKey>"
+    }
+  },
   "profile_commitment": null,
   "status": "ACTIVE",
   "signing_key_id": "<root-identity-key-id>",
@@ -56,7 +72,10 @@ has not frozen the full wallet profile.
 ## Requirements
 
 - every entity MUST have its own dedicated BIP340/secp256k1 root identity key;
-- identity and controller keys MUST be separate from Bitcoin spending keys;
+- root, controller, recovery, and Nostr-publication keys MUST be separate from
+  Bitcoin spending keys;
+- seal keys MUST use role 4, hold no O2A capability, and be separate from
+  payment keys and every O2A-signing key;
 - key role and authorization capability MUST be encoded and validated as
   separate values;
 - `entity_id` MUST be deterministically rooted in the protocol profile,
@@ -74,6 +93,15 @@ has not frozen the full wallet profile.
   previous valid state and anchored through a new RGB transition;
 - the recovery policy MUST commit its version, sequence, threshold, sorted key
   IDs, block delay, and cancellation rule using O2A-CANON-1;
+- the resulting state MUST commit the canonical seal policy, and the outpoint
+  named by `seal` MUST contain the deterministic P2TR scriptPubKey derived from
+  that policy;
+- controller and recovery seal bindings MUST cover exactly the corresponding
+  capability-2 controller and recovery-policy key-ID sets, with no stale,
+  missing, or extra binding, and x-only reuse across roles is invalid;
+- `internal_key`, `output_type`, and `script_pubkey` in the JSON example are
+  derived display fields, not canonical state fields; verifiers MUST recompute
+  them from the canonical policy rather than trust serialized display values;
 - the root identity key MUST NOT remain an unconditional controller unless the
   current valid state grants it the required capability;
 - `entity_id` MUST remain stable across operational-controller rotation and

@@ -33,3 +33,19 @@ fork, patch, dependency adoption, or production implementation.
    103, RGB reported `Mined(102)` both before and after the tip advanced from
    103 to 104. Evidence:
    `../o2a-testnet-demo/evidence/regtest-genesis-rotation-2026-09-24/WITNESS-HEIGHT.md`.
+
+## BP-WG `bp-std`
+
+1. **Candidate: select the actual tap leaf hash during PSBT finalization.**
+   Disposable demo-lineage smoke evidence against `bp-std v0.12.0-rc.3`
+   observed the finalizer using the first Merkle sibling as the tap leaf hash
+   at `psbt/src/data.rs:890-891`. This is a non-blocking upstream candidate:
+   O2A owns seal tracking and script-path finalization by design. Evidence:
+   `../o2a-testnet-demo/evidence/regtest-seal-tapscript-smoke-2026-09-25/`,
+   manifest `59f80970be1de88a642cd2345386ba7e12b903caf9b48f9ced5c39288c7e4b01`.
+2. **Candidate: avoid `extract()` panic for an absent witness-input
+   `final_script_sig`.** Disposable demo-lineage smoke evidence against
+   `bp-std v0.12.0-rc.3` observed the panic at `psbt/src/data.rs:793`; an empty
+   scriptSig allowed extraction of the finalized taproot witness. This is
+   likewise non-blocking because O2A owns seal tracking and script-path
+   finalization by design. Evidence is the same verified smoke manifest above.
