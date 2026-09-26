@@ -23,6 +23,13 @@ evidence set to a deterministic result.
     "VERIFIED",
     "CHALLENGED",
     "DISPUTED"
+  ],
+  "identity_history_states": [
+    "CURRENT",
+    "REVOKED",
+    "SEAL_CLOSED_WITHOUT_VALID_TRANSITION",
+    "INCOMPLETE",
+    "INVALID"
   ]
 }
 ```
@@ -66,11 +73,30 @@ Before policy evaluation, a verifier MUST:
 5. reject a plain-hash signature, unknown domain, cross-domain replay, or
    signature made by a key not authorized by the stated publisher state; and
 6. validate every referenced identity history, Bitcoin proof, evidence object,
-   policy, and explicit evaluation context required for the result.
+   policy, and explicit evaluation context required for the result, including
+   each seal-creating transaction and its state-derived P2TR scriptPubKey.
 
 Failure at steps 1–5 makes the package invalid. Unavailable referenced content
 needed at step 6 makes the evaluation incomplete unless the named policy
 explicitly excludes that content from its declared evidence boundary.
+
+## Terminal seal closure
+
+The evaluator MUST NOT return `CURRENT` unless the explicit Bitcoin view in
+evaluation context observes the current seal as unspent. The result MUST name
+that view's source, observed best-block hash, and height. A proof package
+cannot prove non-spend, and RGB validation alone never establishes `CURRENT`;
+without the observation, the identity-history result is `INCOMPLETE`.
+
+When that Bitcoin view contains the current-seal spending transaction and its
+inclusion/header proof at the identity-anchor confirmation depth, but no valid
+O2A transition closes the seal, the evaluator MUST return identity-history
+state `SEAL_CLOSED_WITHOUT_VALID_TRANSITION`. The same anchor reorg rule
+applies to this spend proof. The last valid state remains historical but is not
+transition-capable. This outcome is distinct from `REVOKED`, `CURRENT`, an
+ordinary ACTIVE lifecycle display, and missing data. Recognition policy may
+still evaluate evidence about that history, but continuity requires a new
+EntityID and explicit successor evidence.
 
 ## Confirmation and reorg
 
@@ -88,6 +114,7 @@ Result R MUST expose sufficient information to reproduce the decision:
 
 - policy ID/hash;
 - accepted identity-state and Bitcoin-anchor references;
+- current-seal observation source, best-block hash, and height;
 - public proof-package ID and any missing referenced objects;
 - accepted evidence IDs;
 - rejected/inapplicable evidence IDs where relevant;

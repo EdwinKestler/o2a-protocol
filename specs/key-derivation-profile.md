@@ -67,6 +67,7 @@ m/coin'/entity'/0'/0'        root identity
 m/coin'/entity'/1'/index'    controller
 m/coin'/entity'/2'/index'    recovery
 m/coin'/entity'/3'/index'    Nostr publication
+m/coin'/entity'/4'/index'    seal
 ```
 
 The network-to-coin mapping is the O2A-CANON-1 mapping: mainnet uses `0'`;
@@ -91,10 +92,16 @@ cryptographically negligible probability; the no-reuse rule prevents a
 wallet-level path collision.
 
 Identity role values are fixed: `0'` root, `1'` controller, `2'` recovery,
-and `3'` Nostr publication. Root identity uses fixed terminal index `0'`.
-Controller, recovery, and Nostr indexes are monotonically allocated within
-their role and MUST NOT be reused. Unhardened identity components, unknown
-roles, and components outside the unsigned 31-bit range are invalid.
+`3'` Nostr publication, and `4'` seal. Root identity uses fixed terminal index
+`0'`. Controller, recovery, Nostr, and seal indexes are monotonically allocated
+within their role and MUST NOT be reused. Unhardened identity components,
+unknown roles, and components outside the unsigned 31-bit range are invalid.
+
+Role `4'` is a new sibling below the already defined network and entity nodes.
+BIP32 child derivation is path-local, so adding that sibling does not change
+the private key, chain code, or public key produced by any existing v0.1 path
+using roles `0'` through `3'`. The existing outputs protected by this profile's
+change-control rule and ADR-0006 therefore remain unchanged.
 
 ## Payment and external keys
 
@@ -107,6 +114,12 @@ m/86'/coin'/account'/0/index
 This `m` is the master BIP32 tree, not `xprv_o2a`. A payment key has no O2A
 key role or O2A key identifier and MUST NOT sign an O2A object. Payment paths
 retain BIP86's unhardened change and address-index components.
+
+Seal keys are Bitcoin spending keys below `xprv_o2a`, not payment keys. A seal
+key MUST NOT sign an O2A object. A root, controller, recovery, or Nostr key
+MUST NOT sign a Bitcoin transaction or appear in a seal script, and a payment
+key MUST NOT appear in a seal script. A wallet MUST reject x-only key reuse
+across roles within one identity state.
 
 Pubky uses Ed25519 and remains outside this profile. This document does not
 define Pubky key derivation.

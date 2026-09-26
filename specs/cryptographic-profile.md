@@ -65,6 +65,17 @@ tags or capabilities that do not match the key authorization in that state.
 Key separation remains mandatory even when domain separation would otherwise
 make a replay fail. Both protections are required.
 
+## Seal-key role and capabilities
+
+Key role 4 is the seal role. Its role-bound identifier is computed by the
+ordinary `O2A/v0.1/key-id` rule, but it has no O2A capability and is invalid in
+every common signed header. Seal keys authorize only Bitcoin tapscript spends
+under the deterministic seal policy in the RGB identity contract. Conversely,
+root, controller, recovery, and Nostr-publication keys never sign Bitcoin
+transactions or appear in seal scripts, and payment keys never appear in seal
+scripts. A verifier MUST reject an x-only key reused across those roles in one
+identity state.
+
 ## Source basis
 
 BIP340 defines tagged hashing to prevent hashes used in one context from being

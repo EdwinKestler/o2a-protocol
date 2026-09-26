@@ -208,6 +208,15 @@ def derive_route_b(network: str, entity: int) -> dict[str, object]:
             "xonly": xonly_pub(role_key.secret),
         }
 
+    for index in range(6):
+        seal_key = derive_path(
+            o2a, [hardened(coin), hardened(entity), hardened(4), hardened(index)]
+        )
+        roles[f"seal_{index}"] = {
+            "path": f"m/{coin}'/{entity}'/4'/{index}'",
+            "xonly": xonly_pub(seal_key.secret),
+        }
+
     payment = derive_path(
         master, [hardened(86), hardened(coin), hardened(0), 0, 0]
     )

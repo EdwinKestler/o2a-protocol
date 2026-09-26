@@ -42,9 +42,11 @@ override either one.
 ### Bitcoin foundation
 
 Provides the consensus-ordered witness transactions and spent seals used by
-the RGB identity lifecycle. Network, confirmation depth, header source, reorg
-handling, commitment method, outpoint, and witness data are explicit verifier
-inputs.
+the RGB identity lifecycle. Each state commits a dedicated role-4 seal policy;
+the named outpoint must contain its deterministic controller-or-delayed-
+recovery P2TR script. Network, confirmation depth, seal-creating transaction,
+header source, current-seal spent/unspent observation, reorg handling,
+commitment method, outpoint, and witness data are explicit verifier inputs.
 
 ### RGB identity state
 
@@ -62,8 +64,9 @@ the profile, not a claim that all RGB state is globally public.
 
 Defines a generic EntityID rooted in a dedicated BIP340/secp256k1 public key.
 Every ARTIST, BAND, VENUE, PROMOTER, LABEL, ORGANIZATION, EVENT, and ALBUM uses
-its own root key. Root, controller, discovery, and payment keys have separate
-purposes.
+its own root key. Root, controller, recovery, discovery, seal, and payment keys
+have separate purposes. Seal keys spend only the identity seal and hold no O2A
+object-signing capability.
 
 ### Claims and attestations
 

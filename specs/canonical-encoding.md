@@ -87,9 +87,16 @@ Key role describes what kind of key it is. It is not authorization.
 | 1 | controller |
 | 2 | recovery |
 | 3 | Nostr publication |
+| 4 | seal |
 
 Payment and Pubky keys have no O2A key role and no O2A `key_id`. Pubky keys are
-independent Ed25519 keys. Payment keys MUST NOT sign O2A objects.
+independent Ed25519 keys. Payment keys MUST NOT sign O2A objects. A seal key is
+a Bitcoin spending key in the O2A identity hierarchy. It has a role-bound
+`key_id`, but it holds no O2A authorization capability and MUST NOT sign an O2A
+object. Root, controller, recovery, and Nostr-publication keys MUST NOT appear
+in a seal output script or sign a Bitcoin transaction. Payment keys MUST NOT
+appear in a seal output script. Reusing one x-only key across roles in one
+identity state is invalid.
 
 ### Authorization capabilities
 
@@ -127,6 +134,7 @@ m/coin'/entity'/0'/0'       root
 m/coin'/entity'/1'/index'   controller
 m/coin'/entity'/2'/index'   recovery
 m/coin'/entity'/3'/index'   Nostr publication
+m/coin'/entity'/4'/index'   seal
 ```
 
 Payment keys use BIP86 `m/86'/coin'/account'/0/index` from the wallet master,
@@ -199,7 +207,9 @@ policy_version || policy_sequence || threshold || recovery_key_ids
 `policy_version` is `u16(1)`. `policy_sequence` is `u64`. `threshold` is a
 nonzero `u16` no larger than the count of `recovery_key_ids`. Recovery key IDs
 are a nonempty strictly sorted set of at most 16 entries. `delay_blocks` is a
-`u32`. `cancellation_rule` is `u8(1)`, meaning a currently authorized
+`u32` whose v0.1 value MUST be in `1..=65535`; the encoding remains `u32` so a
+later profile can widen the accepted range without changing this field's
+width. `cancellation_rule` is `u8(1)`, meaning a currently authorized
 controller may cancel a pending recovery by confirming a valid competing spend
 of the prior seal before the recovery's `not_before_height`. Other values are
 invalid in v0.1.
@@ -211,17 +221,56 @@ recovery_policy_hash = TaggedHash(
 )
 ```
 
+### Seal policy
+
+```text
+seal_policy_version || controller_seal_bindings || recovery_seal_bindings
+```
+
+`seal_policy_version` is `u16(1)`. Each controller binding is exactly
+`controller_key_id || seal_xonly`, and each recovery binding is exactly
+`recovery_key_id || seal_xonly`; both fields in a binding are fixed 32-byte
+values. Each list is nonempty, contains at most 16 bindings, and is strictly
+sorted lexicographically by its complete 64-byte binding. Authorizing key IDs
+and seal x-only keys MUST each be unique within and across their respective
+lists.
+
+The controller-binding key-ID set MUST equal, with no extras or omissions, the
+key-ID set of controllers in the same state that hold capability 2, identity
+transition. The recovery-binding key-ID set MUST equal, with no extras or
+omissions, the recovery policy's `recovery_key_ids` set. Thus a stale binding
+to a rotated-out controller, an unpaired current controller or recovery key,
+and an extra seal key are invalid even when list counts happen to match. The
+recovery threshold and `delay_blocks` come only from the recovery policy and
+are not duplicated.
+
+Every `seal_xonly` has role 4 and therefore has
+`TaggedHash("O2A/v0.1/key-id", u8(4) || xonly)` as its `key_id`. No listed
+x-only key may equal the root key, a controller key, a recovery key, a Nostr
+publication key, or another seal key in the state. Canonical validity uses
+only the state and validated history; it does not depend on wallet knowledge
+of payment keys. Unknown seal-policy versions are invalid.
+
+The full canonical seal-policy bytes are embedded in the signed resulting
+state, so v0.1 does not define a separate seal-policy hash or reserve an
+`O2A/v0.1/seal-policy` tag. A second digest would not add commitment strength
+and would introduce another value that could disagree with the embedded
+policy. Implementations derive the state ID and transition commitment from the
+complete resulting-state bytes.
+
 ### Resulting identity state
 
 ```text
 sequence || previous_state || previous_seal || next_seal || controllers
-         || recovery_policy || custodian || lifecycle_status
+         || recovery_policy || seal_policy || custodian || lifecycle_status
          || custody_acceptance || profile_commitment
 ```
 
 `sequence` is `u64`. `previous_state` is `option<state_id>` and
 `previous_seal` is `option<outpoint>`; both are absent only at genesis.
 `next_seal` is an `outpoint`. `controllers` is the sorted controller set.
+`seal_policy` is the policy above and determines the scriptPubKey required at
+`next_seal`.
 `custodian` is `option<entity_id>`. Lifecycle status is `u8(1)` ACTIVE or
 `u8(2)` REVOKED. `custody_acceptance` and `profile_commitment` are
 `option<hash32>`. Custody transfer requires the acceptance-claim object ID;
@@ -271,9 +320,11 @@ common_header || operation || policy_hash || not_before_height
 ```
 
 Operation MUST be `u8(3)`. `policy_hash` is the recovery-policy hash committed
-by the prior state. `not_before_height` is `u32` and MUST equal the prior
-state's confirmed anchor height plus that policy's `delay_blocks`. Each
-recovery signer signs its own payload header over the same recovery body.
+by the prior state. `not_before_height` is `u32` and MUST equal the
+confirmation height of the transaction that created the current seal output
+plus that policy's `delay_blocks`. This applies to a genesis seal as well as a
+successor seal. Each recovery signer signs its own payload header over the same
+recovery body.
 Recovery authorization entries are sorted by `signing_key_id`, contain no
 duplicate keys, and must meet the committed threshold.
 
@@ -424,7 +475,8 @@ A verifier MUST:
 1. parse one exact bounded payload and reject trailing bytes;
 2. reject unknown versions, networks, enums, types, roles, or capabilities;
 3. match object type, capability, and tagged-hash domain;
-4. validate `signing_key_id` against key role and public key;
+4. validate `signing_key_id` against key role and public key, reject a seal
+   role in every O2A signed-object header, and reject cross-role x-only reuse;
 5. validate the stated capability in the authorizing RGB state;
 6. verify BIP340 over the exact tagged-hash message;
 7. reject cross-domain replay and a payment or adapter key used as an O2A

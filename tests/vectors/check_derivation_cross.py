@@ -13,7 +13,18 @@ from derive_route_b import UNSAFE_SEED_HEX, derive_route_b, self_test
 HERE = Path(__file__).resolve().parent
 CRYPTO_MANIFEST = HERE / "crypto-checker" / "Cargo.toml"
 CASES = (("mainnet", 0), ("mainnet", 1), ("regtest", 0), ("regtest", 1))
-KEY_NAMES = ("root_identity", "controller_0", "recovery_0", "nostr_0")
+KEY_NAMES = (
+    "root_identity",
+    "controller_0",
+    "recovery_0",
+    "nostr_0",
+    "seal_0",
+    "seal_1",
+    "seal_2",
+    "seal_3",
+    "seal_4",
+    "seal_5",
+)
 
 
 def rust_route_b(network: str, entity: int) -> dict[str, object]:

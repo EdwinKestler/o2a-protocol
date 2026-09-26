@@ -20,8 +20,13 @@ requires Bitcoin anchoring and RGB client-side validation for identity state.
 - validate the BIP340 root/genesis binding;
 - validate the RGB identity schema, consignment history, seals, anchors, and
   current controller/recovery state;
-- distinguish root, controller, recovery, and Nostr-publication key roles from
-  payment and Pubky keys;
+- distinguish root, controller, recovery, Nostr-publication, and seal key roles
+  from payment and Pubky keys;
+- recompute each named seal's deterministic P2TR script from committed state
+  and validate the seal-creating transaction and proof;
+- require an explicit Bitcoin-view observation before reporting a current seal
+  unspent, and validate any closing spend at anchor depth under the same reorg
+  rule;
 - validate key role and authorization capability as separate signed fields;
 - validate object-specific BIP340 tagged-hash domains and reject cross-domain
   signature reuse;

@@ -23,7 +23,7 @@ production wallet or identity crate.
 - freeze distinct tagged-hash signing domains and cross-domain rejection
   vectors for genesis, transitions, recovery, evidence, discovery bindings,
   proof packages, and music manifests;
-- freeze separated root, controller, recovery, discovery, and payment key
+- freeze separated root, controller, recovery, discovery, seal, and payment key
   purposes and wallet derivation rules;
 - define how a restoring wallet discovers and verifies its allocated
   `entity'` and per-role indexes from RGB history, retained proof packages, or
@@ -31,7 +31,8 @@ production wallet or identity crate.
 - define the RGB identity contract/schema for genesis, controller rotation,
   recovery-policy change, authorized recovery, custody transfer, and revocation;
 - select and pin a compatible RGB stack and Bitcoin commitment method;
-- define network, confirmation, reorg, seal, witness, and consignment rules;
+- define network, confirmation, reorg, deterministic P2TR seal-script,
+  seal-creation proof, terminal closure, witness, and consignment rules;
 - define canonical schemas and serialization for entities, claims,
   attestations, challenges, observations, EVENT manifests, and ALBUM manifests;
 - define the public, content-addressed proof package, privacy boundary,
@@ -47,8 +48,9 @@ production wallet or identity crate.
 
 Gate: the vectors cover distinct root/payment keys, duplicate names, invalid
 BIP340 signatures, cross-domain signature replay, wrong Bitcoin network, wrong
-RGB contract/schema/asset, forked or missing consignments, mismatched seals and
-anchors, reorgs,
+RGB contract/schema/asset, forked or missing consignments, mismatched seal
+scripts and anchors, controller and delayed-recovery tapleaves, terminal seal
+closure, reorgs,
 controller compromise, recovery, revocation, expired control proofs, Pubky and
 Nostr rebinding, album/event custody, and unavailable discovery.
 
