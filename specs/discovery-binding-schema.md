@@ -15,7 +15,7 @@ generic `claim`.
   "bitcoin_network": "<bitcoin-network>",
   "object_type": "discovery_key_binding",
   "issuer": "<EntityID>",
-  "issuer_state": "<validated-rgb-identity-state-id>",
+  "issuer_state": "<validated-o2a-state-id>",
   "controller_key_id": "<authorized-controller-key-id>",
   "controller_key_role": "controller",
   "authorization_capability": "discovery_binding",

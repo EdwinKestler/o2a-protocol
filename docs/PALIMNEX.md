@@ -28,6 +28,12 @@ Within a case, `expected_paths` has all-of semantics: every listed path must
 appear within that case's result limit. Use a dedicated case when alternatives
 or a more exact query need separate coverage.
 
+Known limitation: ADR-0005 ranks below summaries and narrower documents for
+broad conceptual identity queries. That retrieval ranking does not change the
+document-authority order. The evaluation fixture is not tuned to force
+ADR-0005 into those result sets; use an exact ADR or authority query when its
+decision text is required.
+
 Agent instructions live in the repository-root `AGENTS.md`. Claude and Gemini
 have root instruction files, Copilot has `.github/copilot-instructions.md`, and
 Cursor has an always-applied rule under `.cursor/rules/`; each points to that

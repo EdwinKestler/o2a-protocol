@@ -2,10 +2,10 @@
 
 ## Status
 
-Draft remediation profile for v0.1. The byte grammar and object payloads below
+Draft remediation profile for v0.1. ADR-0009 proposes freezing only the
+genesis-plus-`official_name` subset. The byte grammar and object payloads below
 replace the incomplete first draft. They do not adopt an RGB implementation,
-freeze RGB program bytes, or close Phase 0. The identity derivation purpose is
-also still provisional pending an interoperable allocation decision.
+freeze RGB program bytes, or close Phase 0.
 
 This document defines the only bytes that v0.1 signs, hashes, or commits. JSON,
 YAML, database rows, URLs, and UI models are views and MUST NOT be signed as
@@ -67,6 +67,11 @@ EntityID = TaggedHash(
   genesis_payload
 )
 
+state_id = TaggedHash(
+  "O2A/v0.1/state-id",
+  entity_id || resulting_state
+)
+
 key_id = TaggedHash(
   "O2A/v0.1/key-id",
   key_role || xonly
@@ -81,6 +86,17 @@ state. Identical payloads produce one EntityID; any byte difference produces a
 different EntityID, subject to SHA-256 collision resistance. Controller
 rotation, recovery, custody transfer, and revocation retain the EntityID
 computed from the validated history's genesis.
+
+`entity_id` is the ADR-0008 EntityID recomputed from the history's genesis.
+`resulting_state` is the exact canonical byte sequence defined below, from
+`sequence` through `profile_commitment`. The same formula applies to genesis,
+identity transitions, and recovery. It is signer-independent: recovery
+payloads with different signer-specific common headers produce one state ID
+when their EntityID and resulting-state bytes match. The state ID is O2A-native
+and independent of RGB contract, schema, assignment, consignment, carrier,
+operation, and signature identifiers. Verifiers MUST recompute it. Hashing the
+complete genesis, transition, or recovery payload under the state-ID tag is a
+rejected rule.
 
 ### Key roles
 
@@ -263,7 +279,7 @@ The full canonical seal-policy bytes are embedded in the signed resulting
 state, so v0.1 does not define a separate seal-policy hash or reserve an
 `O2A/v0.1/seal-policy` tag. A second digest would not add commitment strength
 and would introduce another value that could disagree with the embedded
-policy. Implementations derive the state ID and transition commitment from the
+policy. Implementations derive the state ID from the history EntityID and the
 complete resulting-state bytes.
 
 ### Resulting identity state
@@ -310,6 +326,8 @@ Entity type is `u16`: 1 PERSON, 2 ARTIST, 3 BAND, 4 VENUE, 5 PROMOTER,
 `signing_key_id` MUST identify `root_xonly`. The EntityID is
 `TaggedHash("O2A/v0.1/entity-id", genesis_payload)` over these exact payload
 bytes. A genesis with any nonzero `signer_entity` is invalid.
+The established sequence-0 state ID is
+`TaggedHash("O2A/v0.1/state-id", EntityID || resulting_state)`.
 
 ### 2. Identity transition
 
@@ -321,6 +339,8 @@ Operation is `u8`: 1 controller rotation, 2 recovery-policy change, 4 custody
 transfer, or 5 revocation. Operation 3 is reserved for recovery authorization
 and is invalid in this domain. The resulting sequence MUST equal the previous
 state sequence plus one. Revocation MUST produce lifecycle status REVOKED.
+The resulting state's ID is
+`TaggedHash("O2A/v0.1/state-id", EntityID || resulting_state)`.
 
 ### 3. Recovery authorization
 
@@ -337,6 +357,9 @@ successor seal. Each recovery signer signs its own payload header over the same
 recovery body.
 Recovery authorization entries are sorted by `signing_key_id`, contain no
 duplicate keys, and must meet the committed threshold.
+All recovery signers authorizing the same resulting-state bytes for one
+EntityID compute the same state ID:
+`TaggedHash("O2A/v0.1/state-id", EntityID || resulting_state)`.
 
 ### 4. Claim
 
@@ -348,6 +371,10 @@ common_header || subject || predicate || object || context || nonce
 `subject` is an `entity_id`; `predicate` is `text`; `object` is `bytes`;
 `context`, `supersedes`, and `checkpoint` are `option<hash32>`; `nonce` is
 `hash32`.
+
+The proposed ADR-0009 frozen claim subset uses exact predicate text
+`official_name`, a self-issued EntityID subject, and a controller authorized by
+the O2A state ID in `authorizing_state`.
 
 ### 5. Attestation
 

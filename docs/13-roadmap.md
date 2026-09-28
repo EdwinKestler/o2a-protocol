@@ -17,6 +17,15 @@ evidence, discovery, music, and chain cases. See the
 [Phase 0 status report](phase0closure.md). Nothing in this status authorizes a
 production wallet or identity crate.
 
+[ADR-0009](../adr/0009-scoped-genesis-freeze.md) proposes a deliberately
+narrow exception to the all-or-nothing freeze: preserve the mainnet genesis,
+the signer-independent O2A state-ID rule, `official_name` claim, seal output,
+and Route B roles 0, 1, 2, and 4 before block 0 is minted. Because the state ID
+hashes only the EntityID and canonical resulting-state bytes, it does not freeze
+transition or recovery payloads. The proposal does not freeze the RGB program,
+other evidence, or discovery, and permits no transition until the final RGB
+stack is adopted.
+
 ## Phase 0 — Freeze the Bitcoin-native specification
 
 - retain the accepted genesis-bound EntityID encoding and add independent

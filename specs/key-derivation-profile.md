@@ -2,7 +2,8 @@
 
 ## Status
 
-**Demo-stable v0.1 (2026-09-24, ADR-0006). Freeze deferred to the mainnet track.**
+**Demo-stable v0.1 (2026-09-24, ADR-0006). ADR-0009 proposes a scoped mainnet
+freeze for roles 0, 1, 2, and 4; it is not yet accepted.**
 
 This status does not authorize production identities, change an EntityID,
 adopt an RGB dependency, or reserve a BIP43 purpose.
@@ -73,6 +74,12 @@ m/coin'/entity'/4'/index'    seal
 The network-to-coin mapping is the O2A-CANON-1 mapping: mainnet uses `0'`;
 testnet, testnet4, signet, and regtest use `1'`. A declared network and its
 coin value MUST agree.
+
+If ADR-0009 is accepted, the BIP85 application, O2A index, hardened path
+grammar, mainnet coin type `0'`, entity allocation, and roles `0'` root, `1'`
+controller, `2'` recovery, and `4'` seal become frozen for the scoped genesis
+format. Role `3'`, payment paths, discovery, and the rest of the wallet profile
+remain outside that scoped freeze.
 
 `entity'` is a wallet-local unsigned 31-bit identity index. The first EntityID
 created by a wallet uses `0'`; each later EntityID uses the smallest index

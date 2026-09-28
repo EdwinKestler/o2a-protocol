@@ -68,7 +68,9 @@ Before policy evaluation, a verifier MUST:
    mismatch;
 3. validate the publisher's RGB history through `publisher_state` and confirm
    that `signing_key`, key role, and proof-package-publication capability are
-   authorized together;
+   authorized together; recompute every O2A state ID from the history EntityID
+   and exact canonical resulting-state bytes and reject mismatched header,
+   history-link, or package values;
 4. reconstruct the canonical package signature payload, compute the
    `O2A/v0.1/proof-package` tagged hash, and verify the BIP340 signature;
 5. reject a plain-hash signature, unknown domain, cross-domain replay, or

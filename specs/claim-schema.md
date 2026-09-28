@@ -8,7 +8,7 @@
   "bitcoin_network": "<bitcoin-network>",
   "object_type": "claim",
   "issuer": "<EntityID>",
-  "issuer_state": "<validated-rgb-identity-state-id>",
+  "issuer_state": "<validated-o2a-state-id>",
   "controller_key_id": "<authorized-controller-key-id>",
   "controller_key_role": "controller",
   "authorization_capability": "claim",
@@ -42,7 +42,9 @@ gate.
 ## Requirements
 
 - issuer MUST resolve through a valid RGB identity history anchored to Bitcoin;
-- `issuer_state` MUST identify the state that authorized the signing key;
+- `issuer_state` MUST equal the O2A-CANON-1 state ID recomputed from the
+  issuer EntityID and exact canonical resulting-state bytes that authorize the
+  signing key;
 - the controller key role and claim capability MUST be authorized by that
   state;
 - the BIP340 signature MUST validate against the canonical claim bytes;

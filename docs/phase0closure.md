@@ -1,6 +1,6 @@
 # Phase 0 status report
 
-## Status — 2026-09-24
+## Status — 2026-09-28
 
 **Phase 0 remains open.** This is a current status report, not a closure
 declaration. The demonstration lineage is now the intended path for producing
@@ -38,6 +38,22 @@ normative program bytes, persistent identities, or an adopted dependency lock.
 6. Mainnet freeze of the derivation profile.
 7. Lock adoption after items 2–4.
 
+## Proposed ADR-0009 scoped freeze
+
+ADR-0009 is **Proposed**, not accepted. If accepted before the first mainnet
+mint, it closes only the canonical genesis/`official_name` compatibility
+surface, the signer-independent O2A-native
+`TaggedHash(state-id, EntityID || resulting_state)` rule, the mainnet network
+byte and depth, and the Route B mainnet derivation-format gate for roles 0, 1,
+2, and 4. Its frozen manifest makes those exact outputs regression-testable.
+
+It does not close the final RGB stack, concrete RGB program/codex/schema,
+commitment carrier, transition or recovery execution, operations 2 or 4,
+custody evidence, restore/discovery, dependency lock, or wider conformance
+gates. No transition from a frozen-format identity is permitted until the RGB
+stack is final. Re-issuing the pre-transition RGB contract with the same O2A
+genesis and seal preserves the O2A EntityID and state 0 ID.
+
 Items 2–4 are produced as disposable evidence by `../o2a-testnet-demo` under
 the demo lineage permitted by the
 [dependency gate](phase0-dependency-gate.md). This is the intended Phase 0
@@ -63,5 +79,7 @@ rule for rebuilding that material remain unspecified.
 - `python3 tests/vectors/check_vectors.py` prints `ok`.
 - `python3 tests/vectors/check_protocol_objects.py` prints
   `protocol objects ok`.
+- `python3 tests/vectors/check_genesis_freeze.py` reports all proposed frozen
+  outputs unchanged while ADR-0009 remains proposed.
 - Palimnex deep validation and the evaluation suite must pass after document
   updates, and ledger status must remain healthy with no stale verifications.

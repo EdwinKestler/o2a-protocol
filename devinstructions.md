@@ -189,6 +189,7 @@ docker compose --file dev/compose.yaml --profile tools run --rm toolchain \
     python3 tests/vectors/check_derivation_cross.py
     python3 tests/vectors/check_vectors.py
     python3 tests/vectors/check_protocol_objects.py
+    python3 tests/vectors/check_genesis_freeze.py
     python3 tests/vectors/entity-id-regression/check_entity_id_regression.py
     cargo fmt --manifest-path tests/vectors/crypto-checker/Cargo.toml --check
     cargo test --locked --manifest-path tests/vectors/crypto-checker/Cargo.toml
