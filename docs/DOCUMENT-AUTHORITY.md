@@ -91,6 +91,15 @@ test does not freeze a protocol dependency or wire format. The root `LICENSE`
 file, not an assessment recommendation, states the repository's current
 license.
 
+The following audit indexes are also supporting documents. They record and
+locate decisions, tests, artifacts, and references but introduce no rule:
+
+- [September 2026 decision audit](24-decision-audit-2026-09.md);
+- [scenario matrix](25-scenario-matrix.md);
+- [test catalog](26-test-catalog.md);
+- [artifact inventory](27-artifact-inventory.md); and
+- [references](28-references.md).
+
 ## Derived material
 
 Diagrams, public SVG illustrations, website copy, the guide, examples,
