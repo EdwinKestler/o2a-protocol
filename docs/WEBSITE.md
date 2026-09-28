@@ -9,6 +9,8 @@ accept payments.
 
 The editorial sources are the accepted
 [Bitcoin-rooted identity decision](../adr/0005-bitcoin-rooted-self-custodial-identity.md),
+[genesis-bound identity decision](../adr/0008-genesis-bound-entity-id.md),
+the proposed [scoped genesis freeze](../adr/0009-scoped-genesis-freeze.md),
 [the vision](00-vision.md),
 [the roadmap](13-roadmap.md),
 [the architecture](01-architecture.md),
@@ -16,7 +18,9 @@ The editorial sources are the accepted
 [the cryptographic profile](../specs/cryptographic-profile.md),
 [the discovery-binding schema](../specs/discovery-binding-schema.md),
 [the public proof-package profile](../specs/proof-package-schema.md), and
-[the paid-use proposal](16-artist-authorized-use-payments.md).
+[the paid-use proposal](16-artist-authorized-use-payments.md). Testing claims
+on the site are bounded by the supporting
+[scenario matrix](25-scenario-matrix.md) and [test catalog](26-test-catalog.md).
 The flow, framework, stack, and pipeline figures follow
 [the protocol flow](diagrams/02-end-to-end-protocol-flow.md),
 [the protocol framework](diagrams/09-protocol-framework.md),

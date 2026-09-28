@@ -6,6 +6,12 @@
 declaration. The demonstration lineage is now the intended path for producing
 the remaining disposable RGB evidence without turning demo artifacts into
 normative program bytes, persistent identities, or an adopted dependency lock.
+[ADR-0008](../adr/0008-genesis-bound-entity-id.md) is accepted.
+[ADR-0009](../adr/0009-scoped-genesis-freeze.md) remains proposed. The bounded
+path toward a first mainnet identity is to accept ADR-0009, complete the signet
+dress rehearsal that is now **IN PROGRESS**, and only then consider a mainnet
+genesis gated on that acceptance. This sequence is not a mainnet-readiness
+claim.
 
 ## Settled
 
@@ -61,12 +67,13 @@ closure path, not a detour. Demo program bytes and identities remain
 disposable; evidence from that repository informs the later normative and
 dependency decisions but does not make them implicitly.
 
-**2026-09-25 seal-policy note:** the existing demonstration lineage predates
-the role-4 seal policy and deterministic controller-or-delayed-recovery P2TR
-script. It must adopt that policy and prove matching seal outputs before its
-RGB execution or custody-acceptance artifacts count as evidence for items 3
-and 4. This note does not close Phase 0, adopt program bytes, or modify the
-demo repository.
+**Seal-policy lineage note:** the 2026-09-24 demonstration lineage predates the
+role-4 seal policy and deterministic controller-or-delayed-recovery P2TR
+script. Later disposable regtest lineages exercise that policy, matching seal
+outputs, stale bindings, delay, closure, reorg, and genesis-bound identifiers;
+see the supporting [scenario matrix](25-scenario-matrix.md). Those runs do not
+close Phase 0, adopt program bytes, or turn demo identities into persistent
+protocol state.
 
 The restore/discovery item is separate from deterministic key derivation. A
 mnemonic can reproduce keys only after the wallet knows which `entity'` and

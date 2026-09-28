@@ -149,6 +149,16 @@ Supporting projection notes cover the
 [album registry](docs/19-album-registry.md), and
 [label registry](docs/20-label-registry.md).
 
+## Status and audit trail
+
+The supporting [decision audit](docs/24-decision-audit-2026-09.md) records the
+reviewed choices without replacing their ADRs or specifications. The
+[scenario matrix](docs/25-scenario-matrix.md),
+[test catalog](docs/26-test-catalog.md),
+[artifact inventory](docs/27-artifact-inventory.md), and
+[reference index](docs/28-references.md) connect each claim to its fixture,
+evidence path, command, hash, or upstream standard.
+
 No production implementation code should be introduced until the candidate
 v0.1 encoding and lifecycle rules are completed by an adopted RGB program and
 commitment carrier, a collision-safe identity derivation allocation, a
