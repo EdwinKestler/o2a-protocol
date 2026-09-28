@@ -7,19 +7,27 @@ Pubky, Nostr, databases, and application services have narrower roles. See
 [the architecture](../01-architecture.md), [the roadmap](../13-roadmap.md),
 and the
 [proposed stack and initial development environment](../21-proposed-tech-stack-and-development-environment.md).
+The seal-key custody and script rule follow the
+[entity schema](../../specs/entity-schema.md) and
+[RGB identity contract](../../specs/rgb-identity-contract.md). The O2A-owned
+seal tracking and script-path finalization boundary, with an RGB wallet used
+only to fund fees, is also supported by the disposable demo-lineage smoke
+evidence indexed in the [scenario matrix](../25-scenario-matrix.md) and
+[artifact inventory](../27-artifact-inventory.md); that evidence does not make
+the wallet behavior normative.
 
 ```mermaid
 flowchart TB
     subgraph CLIENT["Self-custodial client — proposed"]
         UX["Wallet UI · CLI · future SDK"]
-        VAULT["Encrypted local vault<br/>seed · identity/controller/event/album keys<br/>consignments · evidence · proof packages"]
-        CORE["Deterministic protocol core<br/>canonical codec · BIP340 domain checks<br/>RGB validation · policy evaluator"]
+        VAULT["Encrypted local vault<br/>seed · identity/controller/seal/event/album keys<br/>consignments · evidence · proof packages"]
+        CORE["Deterministic protocol core<br/>canonical codec · BIP340 domain checks<br/>RGB validation · policy evaluator<br/>seal tracking · script-path finalization"]
         UX --> VAULT --> CORE
     end
 
     subgraph REQUIRED["Required identity foundation"]
-        RGB["RGB identity profile<br/>genesis · transition · recovery · revocation<br/>client-side consignments"]
-        BTC["Bitcoin data access<br/>anchors · seals · order · confirmations<br/>full node or explicitly labeled light mode"]
+        RGB["RGB identity profile<br/>genesis · transition · recovery · revocation<br/>client-side consignments<br/>RGB wallet funds fees only"]
+        BTC["Bitcoin data access<br/>anchors · seals · order · confirmations<br/>seal script: controller now OR delayed recovery<br/>full node or explicitly labeled light mode"]
         RGB --> BTC
     end
 
@@ -49,6 +57,8 @@ flowchart TB
 
 ```text
 Bitcoin/RGB identity history           REQUIRED IDENTITY AUTHORITY
+O2A seal records + script finalizer    CLIENT-OWNED SEAL HANDLING
+RGB wallet                             FEE FUNDING ONLY
 Signed evidence + versioned policy     REAL-WORLD CLAIM EVALUATION
 PostgreSQL                             REBUILDABLE PROJECTION
 Redis                                  DISPOSABLE CACHE
