@@ -26,6 +26,7 @@ evidence set to a deterministic result.
   ],
   "identity_history_states": [
     "CURRENT",
+    "PENDING_CONFIRMATION",
     "REVOKED",
     "SEAL_CLOSED_WITHOUT_VALID_TRANSITION",
     "INCOMPLETE",
@@ -82,6 +83,14 @@ explicitly excludes that content from its declared evidence boundary.
 
 ## Terminal seal closure
 
+Before returning `CURRENT`, the evaluator MUST verify that every transaction
+which created a seal output named anywhere in the valid history, including the
+genesis seal and every successor seal, is present in the evaluation context's
+named Bitcoin best chain at the identity-anchor confirmation depth. A present
+creating transaction below that depth yields `PENDING_CONFIRMATION`; an absent
+one yields `INCOMPLETE`. An identity in `PENDING_CONFIRMATION` MUST NOT be
+presented as final.
+
 The evaluator MUST NOT return `CURRENT` unless the explicit Bitcoin view in
 evaluation context observes the current seal as unspent. The result MUST name
 that view's source, observed best-block hash, and height. A proof package
@@ -107,6 +116,14 @@ testnet, and testnet4, and 6 on mainnet. The evaluation context names the best
 block hash, height, and required depth. An anchor absent from that best chain
 at the required depth is not current. A reorg that removes the anchor drops
 dependent transitions.
+
+The same depth and reorg rule applies to every named seal-creating transaction.
+Replacing a genesis seal's creating transaction by RBF removes the named
+outpoint, invalidates that genesis, and requires the pending EntityID to be
+discarded. CPFP does not replace the transaction or outpoint and therefore
+preserves the EntityID. A reorg or replacement of a successor seal-creating
+transaction likewise prevents `CURRENT` until the valid history names an
+outpoint present at the required depth.
 
 ## Explainability
 

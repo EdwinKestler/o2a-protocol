@@ -152,6 +152,12 @@ must rebuild that set from its RGB identity history, retained proof packages,
 or a discovery rule to be specified separately. This document does not design
 that rule.
 
+EntityIDs are also not derivable from the seed alone. ADR-0008 binds each one
+to its complete canonical genesis payload, including its initial state and
+genesis seal. Restore therefore requires retained genesis payloads or
+consignments in addition to the seed and allocation indexes. A re-derived root
+key is insufficient to reconstruct an EntityID.
+
 ## Source basis
 
 - [BIP85: Deterministic Entropy From BIP32 Keychains](https://github.com/bitcoin/bips/blob/master/bip-0085.mediawiki)

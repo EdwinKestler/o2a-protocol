@@ -244,6 +244,18 @@ fn tagged_sha256(tag: &str, payload: &[u8]) -> [u8; 32] {
     sha256::Hash::from_engine(engine).to_byte_array()
 }
 
+fn entity_id(genesis_payload: &[u8]) -> Result<[u8; 32], String> {
+    if genesis_payload.len() < 37
+        || genesis_payload[..2] != 1u16.to_le_bytes()
+        || genesis_payload[2] > 4
+        || genesis_payload[3..5] != 1u16.to_le_bytes()
+        || genesis_payload[5..37] != [0u8; 32]
+    {
+        return Err("invalid genesis header for EntityID".to_owned());
+    }
+    Ok(tagged_sha256("O2A/v0.1/entity-id", genesis_payload))
+}
+
 fn compact_size(value: usize) -> Result<Vec<u8>, String> {
     if value < 253 {
         Ok(vec![value as u8])
@@ -537,6 +549,12 @@ fn run() -> Result<(), String> {
             verify(public_key, message, signature)
         }
         [_, command, public_key] if command == "validate-xonly" => validate_xonly(public_key),
+        [_, command, genesis_payload] if command == "entity-id" => {
+            let payload = hex::decode(genesis_payload)
+                .map_err(|error| format!("invalid genesis payload hex: {error}"))?;
+            println!("{}", hex::encode(entity_id(&payload)?));
+            Ok(())
+        }
         [_, command, version, threshold, delay, controllers, recovery]
             if command == "seal-output" =>
         {
@@ -561,7 +579,7 @@ fn run() -> Result<(), String> {
             sign_test_vector(key_name, message)
         }
         _ => Err(
-            "usage: o2a-vector-crypto-checker self-test\n       o2a-vector-crypto-checker bip32-master SEED_HEX\n       o2a-vector-crypto-checker bip32-ckd-hard XPRV_HEX INDEX\n       o2a-vector-crypto-checker bip85-xprv XPRV_HEX INDEX\n       o2a-vector-crypto-checker xonly-pub XPRV_HEX\n       o2a-vector-crypto-checker derive-route-b SEED_HEX NETWORK ENTITY\n       o2a-vector-crypto-checker verify PUBKEY MESSAGE SIGNATURE\n       o2a-vector-crypto-checker validate-xonly PUBKEY\n       o2a-vector-crypto-checker seal-output VERSION THRESHOLD DELAY CONTROLLERS_CSV RECOVERY_CSV\n       o2a-vector-crypto-checker sign-public-test-vector [scalar-3|bip340-vector-1|bip340-vector-2] MESSAGE"
+            "usage: o2a-vector-crypto-checker self-test\n       o2a-vector-crypto-checker bip32-master SEED_HEX\n       o2a-vector-crypto-checker bip32-ckd-hard XPRV_HEX INDEX\n       o2a-vector-crypto-checker bip85-xprv XPRV_HEX INDEX\n       o2a-vector-crypto-checker xonly-pub XPRV_HEX\n       o2a-vector-crypto-checker derive-route-b SEED_HEX NETWORK ENTITY\n       o2a-vector-crypto-checker verify PUBKEY MESSAGE SIGNATURE\n       o2a-vector-crypto-checker validate-xonly PUBKEY\n       o2a-vector-crypto-checker entity-id GENESIS_PAYLOAD_HEX\n       o2a-vector-crypto-checker seal-output VERSION THRESHOLD DELAY CONTROLLERS_CSV RECOVERY_CSV\n       o2a-vector-crypto-checker sign-public-test-vector [scalar-3|bip340-vector-1|bip340-vector-2] MESSAGE"
                 .to_owned(),
         ),
     }

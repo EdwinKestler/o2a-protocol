@@ -3,16 +3,18 @@
 ## EntityID
 
 EntityID is the canonical, self-custodied subject identifier. It is
-deterministically rooted in:
+deterministically derived as:
 
 ```text
-O2A protocol profile + Bitcoin network + dedicated BIP340 root public key
+TaggedHash("O2A/v0.1/entity-id", canonical genesis payload)
 ```
 
-O2A-CANON-1 specifies the candidate EntityID bytes. A human-readable display
-encoding and the seed-to-root derivation allocation remain open. The root key
-is an identity key, never a Bitcoin spending key. Each entity uses a different
-root key even when one wallet holds several of them.
+The canonical genesis payload includes the protocol version, Bitcoin network,
+entity type, dedicated BIP340 root public key, genesis seal, and complete
+initial state; its `signer_entity` is 32 zero bytes. O2A-CANON-1 specifies the
+exact EntityID bytes. A human-readable display encoding remains open. The root
+key is an identity key, never a Bitcoin spending key. Each entity uses a
+different root key even when one wallet holds several of them.
 
 Initial entity types are:
 
@@ -56,15 +58,15 @@ state that names it.
 
 ## Root and controller keys
 
-The root public key gives the EntityID its stable cryptographic root and signs
-genesis. Day-to-day controller keys sign claims, attestations, and
+The root public key signs the genesis payload that determines the EntityID.
+Day-to-day controller keys sign claims, attestations, and
 administrative transitions according to explicit capabilities in the current
 RGB state. Key role and authorization capability are separate. The root is not
 an unconditional forever-controller unless the current state says so.
 
-The root public key never changes: it is part of the EntityID derivation.
-Replacing it creates a new EntityID. Recovery rotates controller authority
-under an earlier committed policy while preserving that immutable root.
+The root public key and genesis payload never change. Replacing the root or
+changing any genesis byte creates a new EntityID. Recovery rotates controller
+authority under an earlier committed policy while preserving that genesis.
 
 Operational-key rotation does not change EntityID. Historical signatures are
 checked against the state that authorized their key at issuance time. Losing a
@@ -83,8 +85,11 @@ If a confirmed transaction closes the seal without a valid O2A transition, the
 last valid state remains historical but the identity is permanently unable to
 transition. Wallets report that terminal closure distinctly from ACTIVE or
 REVOKED; continuity requires a new EntityID and successor evidence. `CURRENT`
-also requires an explicit Bitcoin-view observation that the seal is unspent;
-RGB validation and a proof package cannot prove that negative condition.
+also requires every named seal-creating transaction at the required
+confirmation depth and an explicit Bitcoin-view observation that the current
+seal is unspent. A present creating transaction below depth is
+`PENDING_CONFIRMATION`; RGB validation and a proof package cannot prove the
+non-spend condition.
 
 After genesis, the normal profile should remove unilateral routine control from
 the root. Any continuing root authority must be explicit in current RGB state.
@@ -112,8 +117,9 @@ copyright.
 
 ## Human-facing names
 
-An O2A ID is unique because its root key is unique. Artist names, venue names,
-promoter names, album titles, and event names are non-exclusive claims.
+An O2A ID uniquely commits to one canonical genesis payload, subject to SHA-256
+collision resistance. Artist names, venue names, promoter names, album titles,
+and event names are non-exclusive claims.
 Wallets show their evidence, Bitcoin chronology, conflicts, challenges, and
 policy result. The core protocol does not award permanent ownership of a
 spelling to its first claimant.
@@ -132,7 +138,7 @@ authorizes the controller that signs the update.
 ```text
 O2A ID (product-facing encoding)
         ↓
-EntityID (BIP340-rooted protocol identifier)
+EntityID (genesis-bound protocol identifier)
         ↓
 validated RGB state (current controllers and recovery rules)
 ```

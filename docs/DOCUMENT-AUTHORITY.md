@@ -33,8 +33,9 @@ repository's O2A-authored material under `MIT OR Apache-2.0`; explicitly marked
 conformance vectors use CC0-1.0. Licensing is not a protocol rule.
 
 Among accepted ADRs,
-[ADR-0005](../adr/0005-bitcoin-rooted-self-custodial-identity.md) is the
-primary design authority. Its amendments take precedence over
+[ADR-0005](../adr/0005-bitcoin-rooted-self-custodial-identity.md), as amended
+by [ADR-0008](../adr/0008-genesis-bound-entity-id.md), is the primary design
+authority. Those decisions take precedence over
 [ADR-0001](../adr/0001-modular-protocol-architecture.md),
 [ADR-0002](../adr/0002-entity-id-over-artist-id.md),
 [ADR-0003](../adr/0003-catalog-is-not-source-of-truth.md), and
@@ -45,7 +46,9 @@ ADR-0005 establishes the dedicated BIP340 root, the RGB identity lifecycle
 anchored to Bitcoin, self-custodial wallet ownership, non-exclusive
 human-readable names, separate entity identities for the types it names,
 deterministic verification without a privileged validator set, and Pubky and
-Nostr as replaceable discovery adapters.
+Nostr as replaceable discovery adapters. ADR-0008 binds the EntityID to the
+complete canonical genesis payload and defines the pending-confirmation rule
+for every seal-creating transaction named by a valid history.
 
 ## Normative specs
 

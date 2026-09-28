@@ -1,7 +1,8 @@
 # 14 — Bitcoin Identity and Discovery Assessment
 
 **Status:** aligned with
-[ADR-0005](../adr/0005-bitcoin-rooted-self-custodial-identity.md), 2026-09-23.
+[ADR-0005](../adr/0005-bitcoin-rooted-self-custodial-identity.md) as amended by
+[ADR-0008](../adr/0008-genesis-bound-entity-id.md), 2026-09-28.
 This is a design assessment, not an implemented or mainnet-tested stack.
 
 ## Conclusion
@@ -12,8 +13,9 @@ client-side state anchored to Bitcoin. Pubky, Nostr, DNS, HTTPS, social
 platforms, catalogs, and APIs help publish, discover, or support claims; none
 replaces the root or the validated RGB history.
 
-The public key makes the EntityID unique and owner-controlled. It does not make
-a human-readable name unique. A wallet evaluates competing name claims using
+The root-signed canonical genesis payload makes the EntityID unique and
+owner-controlled, subject to SHA-256 collision resistance. It does not make a
+human-readable name unique. A wallet evaluates competing name claims using
 signed channel-control proofs, attestations, challenges, chronology, and a
 named policy. The core has no first-claim namespace lease.
 
@@ -21,7 +23,7 @@ named policy. The core has no first-claim namespace lease.
 
 | Technology | O2A role | What it does not establish |
 | --- | --- | --- |
-| Dedicated BIP340 root key | Stable cryptographic root for every artist, venue, promoter, label, event, and album ID. | Ownership of a stage name, legal identity, event occurrence, copyright, or payment. |
+| Dedicated BIP340 root key | Signs the canonical genesis payload for every artist, venue, promoter, label, event, and album ID. | The EntityID without its genesis payload; ownership of a stage name, legal identity, event occurrence, copyright, or payment. |
 | RGB identity contract | Client-side lifecycle for genesis, controllers, recovery rules, custody, and revocation. | Truth of DNS, social, album, or event claims without the referenced evidence. |
 | Bitcoin | Orders and confirms anchors and closes single-use seals. | A social oracle or a vote on which claimant is the real artist. |
 | Pubky/PKARR | Public Ed25519-key discovery pointer and public profile storage bound to an O2A ID. | The Bitcoin root, standardized O2A recovery, or private consignment storage. |

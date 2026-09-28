@@ -11,7 +11,7 @@ Trust policy and conflict evaluation
     ↑
 Claims · attestations · observations · challenges
     ↑
-BIP340 key-rooted EntityID and controller authorization
+Genesis-bound EntityID and BIP340 controller authorization
     ↑
 RGB identity state and client-side validation
     ↑
@@ -62,10 +62,11 @@ the profile, not a claim that all RGB state is globally public.
 
 ### Entity identity
 
-Defines a generic EntityID rooted in a dedicated BIP340/secp256k1 public key.
-Every ARTIST, BAND, VENUE, PROMOTER, LABEL, ORGANIZATION, EVENT, and ALBUM uses
-its own root key. Root, controller, recovery, discovery, seal, and payment keys
-have separate purposes. Seal keys spend only the identity seal and hold no O2A
+Defines a generic EntityID as the tagged hash of a canonical genesis payload
+signed by a dedicated BIP340/secp256k1 root key. Every ARTIST, BAND, VENUE,
+PROMOTER, LABEL, ORGANIZATION, EVENT, and ALBUM uses its own root key and
+genesis. Root, controller, recovery, discovery, seal, and payment keys have
+separate purposes. Seal keys spend only the identity seal and hold no O2A
 object-signing capability.
 
 ### Claims and attestations

@@ -1,7 +1,7 @@
 # ADR-0008 regression suite (genesis-bound EntityID)
 
-CC0-1.0. Test-only until [ADR-0008](../../../adr/0008-genesis-bound-entity-id.md)
-is accepted.
+CC0-1.0. Normative regression coverage for accepted
+[ADR-0008](../../../adr/0008-genesis-bound-entity-id.md).
 
 Every expectation is behavior ADR-0008 **requires**:
 
@@ -16,19 +16,12 @@ Every expectation is behavior ADR-0008 **requires**:
 
 ## Rule seam
 
-`entity_id_of`, `genesis_valid` and `identity_state` currently call the
-candidate implementation (`RULE = "candidate:ADR-0008"`). When the normative
-specification adopts ADR-0008:
-
-1. Replace those three bodies with calls into the normative implementation in
-   `check_protocol_objects.py`.
-2. Set `RULE` to the normative source.
-3. Do not edit any expectation. A needed edit means the spec diverged from
-   ADR-0008.
-
-Known candidate limitation: only the genesis seal is classified as
-`PENDING_CONFIRMATION`. The normative implementation must apply the rule to
-every seal-creating transaction named by a valid history.
+`entity_id_of`, `genesis_valid` and `identity_state` call the normative
+implementation in `check_protocol_objects.py`; `RULE` names that source. The
+negative controls use `legacy_evaluator.py`, a clearly labelled, frozen
+c7b0871 seam for the previous root-only rule and Option B. It is not imported
+by the standard vector suite. Existing expectations remain unchanged; the
+successor-seal confirmation row is additive.
 
 ```bash
 docker compose --file dev/compose.yaml --profile tools run --rm toolchain \

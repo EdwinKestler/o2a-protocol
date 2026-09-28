@@ -1,8 +1,8 @@
 # ADR-0008 — Genesis-Bound EntityID
 
-**Status:** Proposed, 2026-09-27. Amends [ADR-0005](0005-bitcoin-rooted-self-custodial-identity.md).
-Until this ADR is accepted, it changes no normative specification, and nothing
-here freezes an encoding or claims readiness for production.
+**Status:** Accepted, 2026-09-28. Amends [ADR-0005](0005-bitcoin-rooted-self-custodial-identity.md).
+This decision changes the Draft v0.1 EntityID rule. It does not claim readiness
+for production or mainnet.
 
 ## Context
 

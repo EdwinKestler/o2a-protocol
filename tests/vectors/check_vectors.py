@@ -205,12 +205,54 @@ def crypto_sign_test_vector(key_name: str, message: bytes) -> tuple[str, str]:
     return tuple(result.stdout.strip().split())
 
 
-def entity_id(network: int, root: bytes) -> bytes:
+def fixture_genesis_payload(
+    network: int, root: bytes, controller_public: bytes, seal_marker: int
+) -> bytes:
+    import check_protocol_objects as cpo
+
+    recovery_key = cpo.key_id(2, cpo.RECOVERY_PUBLIC)
+    policy = cpo.recovery_policy([recovery_key])
+    state = cpo.resulting_state(
+        0,
+        None,
+        None,
+        cpo.outpoint(seal_marker, 0),
+        controller_public,
+        policy,
+    )
+    return b"".join(
+        (
+            u16(1),
+            bytes([network]),
+            u16(1),
+            bytes(32),
+            option(None),
+            tagged_hash(KEY_TAG, b"\x00" + root),
+            b"\x00",
+            u16(1),
+            u16(2),
+            root,
+            state,
+        )
+    )
+
+
+def entity_id(genesis_payload: bytes) -> bytes:
+    import check_protocol_objects as cpo
+
+    try:
+        decoded = cpo.decode_payload(genesis_payload)
+    except cpo.DecodeError as error:
+        raise ValueError("invalid genesis payload") from error
+    network = decoded["header"]["network"]
+    root = decoded["body"]["root"]
     if network not in KNOWN_NETWORKS:
         raise ValueError("unknown Bitcoin network")
     if not crypto_xonly_valid(root.hex()):
         raise ValueError("root is not a BIP340 x-only public key")
-    return tagged_hash(ENTITY_TAG, u16(1) + bytes([network]) + root)
+    if cpo.entity_id_from_valid_genesis(genesis_payload) is None:
+        raise ValueError("invalid genesis payload")
+    return tagged_hash(ENTITY_TAG, genesis_payload)
 
 
 def build_claim(
@@ -420,12 +462,156 @@ def build_manifest(
     )
 
 
+def regenerate_fixture(fixture: dict) -> dict:
+    """Deterministically rebuild every EntityID-bearing v0.1 fixture field."""
+    identity = fixture["identity"]
+    public_key = fixture["public_test_key"]["xonly_hex"]
+    controller_public = bytes.fromhex(public_key)
+    root = bytes.fromhex(identity["root_xonly_hex"])
+    genesis = fixture_genesis_payload(identity["network"], root, controller_public, 0x41)
+    entity = entity_id(genesis)
+    identity["genesis_payload_hex"] = genesis.hex()
+    identity["entity_id_hex"] = entity.hex()
+    key = tagged_hash(KEY_TAG, bytes([identity["controller_role"]]) + controller_public)
+    state = bytes.fromhex(identity["authorizing_state_hex"])
+
+    claim_fixture = fixture["claim"]
+    claim = build_claim(claim_fixture, entity, state, key)
+    claim_digest = tagged_hash(CLAIM_TAG, claim)
+    _, claim_signature = crypto_sign_test_vector("scalar-3", claim_digest)
+    claim_fixture.update(
+        payload_hex=claim.hex(),
+        payload_length=len(claim),
+        digest_hex=claim_digest.hex(),
+        cross_domain_digest_hex=tagged_hash(ATTESTATION_TAG, claim).hex(),
+        signature_hex=claim_signature,
+    )
+
+    semantic = fixture["semantic_claims"]
+    primary = semantic["primary_authorization"]
+    primary["entity"] = entity.hex()
+
+    wrong_capability_spec = dict(claim_fixture, capability=5)
+    wrong_capability_payload = build_claim(wrong_capability_spec, entity, state, key)
+    wrong_capability_digest = tagged_hash(CLAIM_TAG, wrong_capability_payload)
+    _, wrong_capability_signature = crypto_sign_test_vector(
+        "scalar-3", wrong_capability_digest
+    )
+    semantic["wrong_capability"].update(
+        payload_hex=wrong_capability_payload.hex(),
+        digest_hex=wrong_capability_digest.hex(),
+        signature_hex=wrong_capability_signature,
+    )
+
+    wrong_role_payload = build_claim(claim_fixture, entity, state, key, key_role=2)
+    wrong_role_digest = tagged_hash(CLAIM_TAG, wrong_role_payload)
+    _, wrong_role_signature = crypto_sign_test_vector("scalar-3", wrong_role_digest)
+    semantic["wrong_role"].update(
+        payload_hex=wrong_role_payload.hex(),
+        digest_hex=wrong_role_digest.hex(),
+        signature_hex=wrong_role_signature,
+    )
+
+    wrong_network = semantic["wrong_network"]
+    wrong_genesis = fixture_genesis_payload(0, root, controller_public, 0x41)
+    wrong_entity = entity_id(wrong_genesis)
+    wrong_network_payload = build_claim(
+        claim_fixture, wrong_entity, state, key, network=0
+    )
+    wrong_network_digest = tagged_hash(CLAIM_TAG, wrong_network_payload)
+    _, wrong_network_signature = crypto_sign_test_vector(
+        "scalar-3", wrong_network_digest
+    )
+    wrong_network.update(
+        genesis_payload_hex=wrong_genesis.hex(),
+        entity=wrong_entity.hex(),
+        payload_hex=wrong_network_payload.hex(),
+        digest_hex=wrong_network_digest.hex(),
+        signature_hex=wrong_network_signature,
+    )
+    wrong_network["authorization"]["entity"] = wrong_entity.hex()
+
+    unknown_network = semantic["unknown_network"]
+    unknown_payload = build_claim(
+        claim_fixture,
+        entity,
+        state,
+        key,
+        network=unknown_network["network"],
+    )
+    unknown_digest = tagged_hash(CLAIM_TAG, unknown_payload)
+    _, unknown_signature = crypto_sign_test_vector("scalar-3", unknown_digest)
+    unknown_network.update(
+        payload_hex=unknown_payload.hex(),
+        digest_hex=unknown_digest.hex(),
+        signature_hex=unknown_signature,
+    )
+
+    competing = semantic["competing_name_claim"]
+    competing_root = bytes.fromhex(competing["root_public_test_key"])
+    competing_public = bytes.fromhex(competing["public_key"])
+    competing_genesis = fixture_genesis_payload(
+        semantic["expected_network"], competing_root, competing_public, 0x42
+    )
+    competing_entity = entity_id(competing_genesis)
+    competing_key = tagged_hash(KEY_TAG, b"\x01" + competing_public)
+    competing_state = bytes.fromhex(competing["authorization"]["state"])
+    competing_payload = build_claim(
+        claim_fixture, competing_entity, competing_state, competing_key
+    )
+    competing_digest = tagged_hash(CLAIM_TAG, competing_payload)
+    _, competing_signature = crypto_sign_test_vector(
+        "bip340-vector-1", competing_digest
+    )
+    competing.update(
+        genesis_payload_hex=competing_genesis.hex(),
+        entity=competing_entity.hex(),
+        payload_hex=competing_payload.hex(),
+        digest_hex=competing_digest.hex(),
+        signature_hex=competing_signature,
+    )
+    competing["authorization"]["entity"] = competing_entity.hex()
+    semantic["expected_visible_claims"] = {
+        entity.hex(): claim_digest.hex(),
+        competing_entity.hex(): competing_digest.hex(),
+    }
+
+    package = fixture["proof_package"]
+    manifest = build_manifest(entity, state, key)
+    manifest_id = hashlib.sha256(manifest).digest()
+    message = tagged_hash(PACKAGE_TAG, manifest + manifest_id)
+    _, package_signature_hex = crypto_sign_test_vector("scalar-3", message)
+    package_signature = bytes.fromhex(package_signature_hex)
+    envelope = manifest + manifest_id + package_signature
+    package.update(
+        manifest_payload_hex=manifest.hex(),
+        manifest_payload_length=len(manifest),
+        manifest_id_hex=manifest_id.hex(),
+        message_hex=message.hex(),
+        signature_hex=package_signature_hex,
+        signed_envelope_length=len(envelope),
+        package_id_hex=hashlib.sha256(envelope).hexdigest(),
+    )
+    return fixture
+
+
+def emit() -> None:
+    fixture = json.loads(FIXTURE_PATH.read_text(encoding="utf-8"))
+    print(json.dumps(regenerate_fixture(fixture), indent=2) + "\n", end="")
+
+
 def check() -> None:
     fixture = json.loads(FIXTURE_PATH.read_text(encoding="utf-8"))
     identity = fixture["identity"]
     public_key = fixture["public_test_key"]["xonly_hex"]
     root = bytes.fromhex(identity["root_xonly_hex"])
-    entity = entity_id(identity["network"], root)
+    genesis_payload = bytes.fromhex(identity["genesis_payload_hex"])
+    expected_genesis_payload = fixture_genesis_payload(
+        identity["network"], root, bytes.fromhex(public_key), 0x41
+    )
+    if genesis_payload != expected_genesis_payload:
+        fail("genesis payload was not deterministically reproduced")
+    entity = entity_id(genesis_payload)
     if entity.hex() != identity["entity_id_hex"]:
         fail("EntityID mismatch")
 
@@ -518,7 +704,14 @@ def check() -> None:
     if crypto_xonly_valid(invalid_root.hex()):
         fail("invalid root bytes parsed as a BIP340 x-only public key")
     try:
-        entity_id(semantic["expected_network"], invalid_root)
+        entity_id(
+            fixture_genesis_payload(
+                semantic["expected_network"],
+                invalid_root,
+                bytes.fromhex(public_key),
+                0x41,
+            )
+        )
         fail("invalid root bytes were hashed into an EntityID")
     except ValueError as error:
         if str(error) != "root is not a BIP340 x-only public key":
@@ -625,7 +818,12 @@ def check() -> None:
 
     wrong_network = semantic["wrong_network"]
     wrong_network_payload = bytes.fromhex(wrong_network["payload_hex"])
-    wrong_network_entity = entity_id(0, root)
+    wrong_network_genesis = bytes.fromhex(wrong_network["genesis_payload_hex"])
+    if wrong_network_genesis != fixture_genesis_payload(
+        wrong_network["network"], root, bytes.fromhex(public_key), 0x41
+    ):
+        fail("wrong-network genesis payload was not deterministically reproduced")
+    wrong_network_entity = entity_id(wrong_network_genesis)
     if wrong_network_entity.hex() != wrong_network["entity"]:
         fail("wrong-network EntityID mismatch")
     wrong_network_digest = tagged_hash(CLAIM_TAG, wrong_network_payload)
@@ -671,7 +869,14 @@ def check() -> None:
     if accepted or reason != "unknown Bitcoin network":
         fail("unknown network enum was accepted by matching verifier context")
     try:
-        entity_id(unknown_network["network"], root)
+        entity_id(
+            fixture_genesis_payload(
+                unknown_network["network"],
+                root,
+                bytes.fromhex(public_key),
+                0x41,
+            )
+        )
         fail("unknown network enum was accepted for EntityID construction")
     except ValueError as error:
         if str(error) != "unknown Bitcoin network":
@@ -679,9 +884,15 @@ def check() -> None:
 
     competing = semantic["competing_name_claim"]
     competing_payload = bytes.fromhex(competing["payload_hex"])
-    competing_entity = entity_id(
-        semantic["expected_network"], bytes.fromhex(competing["root_public_test_key"])
-    )
+    competing_genesis = bytes.fromhex(competing["genesis_payload_hex"])
+    if competing_genesis != fixture_genesis_payload(
+        semantic["expected_network"],
+        bytes.fromhex(competing["root_public_test_key"]),
+        bytes.fromhex(competing["public_key"]),
+        0x42,
+    ):
+        fail("competing-name genesis payload was not deterministically reproduced")
+    competing_entity = entity_id(competing_genesis)
     competing_key_id = tagged_hash(
         KEY_TAG, bytes([1]) + bytes.fromhex(competing["public_key"])
     )
@@ -756,5 +967,10 @@ def check() -> None:
 
 
 if __name__ == "__main__":
-    check()
-    print("ok")
+    if sys.argv[1:] == ["--emit"]:
+        emit()
+    elif sys.argv[1:]:
+        fail("usage: check_vectors.py [--emit]")
+    else:
+        check()
+        print("ok")

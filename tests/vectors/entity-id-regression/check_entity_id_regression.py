@@ -29,44 +29,121 @@ sys.path.insert(0, str(HERE.parent / "genesis-options"))
 import check_protocol_objects as cpo  # noqa: E402
 import check_option_b as ob  # noqa: E402
 import check_genesis_options as go  # noqa: E402
+import legacy_evaluator as legacy  # noqa: E402
 
 FIXTURE_PATH = HERE / "entity-id-regression-v0.1.json"
 ENTITY_TAG = "O2A/v0.1/entity-id"
 MAINNET_DEPTH = 6
 
 # =============================== RULE SEAM ===============================
-# Candidate implementation of ADR-0008. After acceptance, replace the bodies
-# with calls into the normative implementation; do not edit expectations.
-RULE = "candidate:ADR-0008"
+# ADR-0008 normative implementation. Existing expectations remain unchanged.
+RULE = "normative:check_protocol_objects.py:ADR-0008"
 
 
 def entity_id_of(genesis_payload: bytes) -> bytes:
-    return cpo.tagged_hash(ENTITY_TAG, genesis_payload)
+    return cpo.entity_id(genesis_payload)
 
 
 def genesis_valid(package: dict) -> bool:
-    return go.evaluate_any(dict(package, derivation="genesis")) == "valid"
+    payload = bytes.fromhex(package["genesis"])
+    return cpo.evaluate_signed_payload(
+        payload,
+        package["signature"],
+        ob.ROOT,
+        ob.GENESIS_TAG,
+        {"expected_network": go.NETWORK, "authorization": None},
+    ) == "valid"
 
 
 def identity_state(fixture: dict, package: dict, view: dict) -> str:
     """ADR-0008 Decision 4: PENDING_CONFIRMATION below depth, INCOMPLETE if absent."""
     if not genesis_valid(package):
         return "INVALID"
-    for seal in _named_seals(fixture, package, view):
+    genesis_payload = bytes.fromhex(package["genesis"])
+    state = cpo.decode_payload(genesis_payload)["body"]["state"]
+    state_id = bytes.fromhex(package["state_id"])
+    sequence = 0
+    creator_confirmations: list[int | None] = []
+    while True:
+        seal = state["next_seal"]
         creating = view["transactions"].get(seal[:32].hex())
         if creating is None:
             return "INCOMPLETE"
+        if not _seal_script_matches(creating, seal, state):
+            return "INVALID"
+        creator_confirmations.append(creating["confirmations"])
         if creating["confirmations"] < view["required_depth"]:
             return "PENDING_CONFIRMATION"
-    return go.history(fixture, dict(package, derivation="genesis"), view)
+        spend = view["spends"].get(seal.hex())
+        if spend is None:
+            return cpo.identity_history_outcome(
+                bitcoin_view_source=view["source"],
+                best_block_hash=bytes.fromhex(view["best_block_hash"]),
+                observed_height=view["height"],
+                seal_observation="unspent",
+                spend_proof=False,
+                spend_confirmations=0,
+                required_depth=view["required_depth"],
+                valid_transition=False,
+                seal_creating_confirmations=creator_confirmations,
+            )["state"]
+        if spend["confirmations"] < view["required_depth"]:
+            return "INCOMPLETE"
+        transition = fixture["transitions"][spend["transition"]]
+        signer = bytes.fromhex(transition["public_key"])
+        controller = next(
+            (item for item in state["controllers"] if item["public_key"] == signer),
+            None,
+        )
+        valid = controller is not None and cpo.evaluate_signed_payload(
+            bytes.fromhex(transition["payload"]),
+            transition["signature"],
+            signer,
+            ob.TRANSITION_TAG,
+            {
+                "expected_network": go.NETWORK,
+                "genesis_payload": genesis_payload,
+                "prior_sequence": sequence,
+                "authorization": {
+                    "entity": bytes.fromhex(package["entity_id"]),
+                    "state": state_id,
+                    "key_id": controller["key_id"] if controller else bytes(32),
+                    "role": 1,
+                    "public_key": signer,
+                    "capabilities": controller["capabilities"] if controller else [],
+                },
+            },
+        ) == "valid"
+        if not valid:
+            return cpo.identity_history_outcome(
+                bitcoin_view_source=view["source"],
+                best_block_hash=bytes.fromhex(view["best_block_hash"]),
+                observed_height=view["height"],
+                seal_observation="spent",
+                spend_proof=True,
+                spend_confirmations=spend["confirmations"],
+                required_depth=view["required_depth"],
+                valid_transition=False,
+                seal_creating_confirmations=creator_confirmations,
+            )["state"]
+        state = cpo.decode_payload(bytes.fromhex(transition["payload"]))["body"]["state"]
+        state_id = bytes.fromhex(transition["state_id"])
+        sequence += 1
 # ========================================================================
 
 
-def _named_seals(fixture: dict, package: dict, view: dict) -> list[bytes]:
-    # Candidate limitation: only the genesis seal is classified here. Successor
-    # seals below depth surface as INCOMPLETE through go.history; the normative
-    # implementation must apply PENDING_CONFIRMATION to every valid named seal.
-    return [cpo.decode_payload(bytes.fromhex(package["genesis"]))["body"]["state"]["next_seal"]]
+def _seal_script_matches(creating: dict, seal: bytes, state: dict) -> bool:
+    outputs = ob.tx_parse(bytes.fromhex(creating["raw"]))["outputs"]
+    vout = int.from_bytes(seal[32:], "little")
+    expected = bytes.fromhex(
+        cpo.seal_output(
+            state["seal_policy"]["controller_seal_bindings"],
+            state["seal_policy"]["recovery_seal_bindings"],
+            ob.THRESHOLD,
+            ob.DELAY,
+        )["script_pubkey"]
+    )
+    return vout < len(outputs) and outputs[vout][1] == expected
 
 
 def payout(fixture: dict, claim_name: str, package_name: str, view: dict,
@@ -164,16 +241,32 @@ def run(fixture: dict) -> list[dict]:
         identity_state(fixture, P["G-legit"], absent))
     row("R5", "payout while PENDING_CONFIRMATION", "REJECT",
         payout(fixture, "G-legit-claim", "G-legit", go.view(fixture, depth=MAINNET_DEPTH, funding_conf=3)))
+    row("R5", "successor seal creator below depth is PENDING_CONFIRMATION",
+        "PENDING_CONFIRMATION",
+        cpo.identity_history_outcome(
+            bitcoin_view_source="fixture-bitcoin-view",
+            best_block_hash=bytes.fromhex("11" * 32),
+            observed_height=200,
+            seal_observation="unspent",
+            spend_proof=False,
+            spend_confirmations=0,
+            required_depth=MAINNET_DEPTH,
+            valid_transition=False,
+            seal_creating_confirmations=[10, 3],
+        )["state"])
 
     # -- N negative controls: the previous rules must admit the attacks
-    def old_state(fx, package, v):
-        return go.history(fx, package, v)
+    def root_only_state(fx, package, v):
+        return legacy.identity_state(fx, package, v, "root")
+
+    def option_b_state(fx, package, v):
+        return legacy.identity_state(fx, package, v, "b")
     row("N", "root-only rule admits a same-seal attacker payout", "ACCEPT",
-        payout(fixture, "A-attacker-claim-same-seal", "A-attacker-same-seal", base, old_state))
+        payout(fixture, "A-attacker-claim-same-seal", "A-attacker-same-seal", base, root_only_state))
     row("N", "root-only rule admits an own-seal attacker payout", "ACCEPT",
-        payout(fixture, "A-attacker-claim-own-seal", "A-attacker-own-seal", base, old_state))
+        payout(fixture, "A-attacker-claim-own-seal", "A-attacker-own-seal", base, root_only_state))
     row("N", "Option B admits a same-seal attacker payout", "ACCEPT",
-        payout(fixture, "B-attacker-claim-same-seal", "B-attacker-same-seal", base, old_state))
+        payout(fixture, "B-attacker-claim-same-seal", "B-attacker-same-seal", base, option_b_state))
     row("N", "root-only rule gives both seals the same EntityID", True,
         P["A-attacker-own-seal"]["entity_id"] == P["A-legit"]["entity_id"])
     return rows

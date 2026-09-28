@@ -11,6 +11,8 @@ not a wallet. The protocol-object checks do not use the network; the separate
 `check_seal_core.py` oracle uses only the isolated Docker regtest node. The
 helper's lock hash, audit, and license result are recorded in
 [DEPENDENCIES.md](DEPENDENCIES.md).
+`entity-id-v0.1.json` records explicit canonical genesis-payload-to-EntityID
+pairs and requires matching Python and Rust tagged hashes.
 `derivation-v0.1.json` records Route B paths and expected keys;
 `check_derivation_cross.py` requires the independent Python and Rust
 implementations to produce identical results. `seal-script-v0.1.json` records
@@ -30,7 +32,7 @@ checks, present claim optional-field branches, and general parser
 interoperability also remain open.
 
 `v0.1.json` uses published BIP340 test-vector keys that are permanently unsafe
-for funds. It contains no wallet seed. It publishes two regtest EntityIDs,
+for funds. It contains no wallet seed. It publishes two genesis-bound regtest EntityIDs,
 role-bound controller key IDs, signed claim variants with separately encoded
 capabilities and networks, and one non-circular proof-package envelope.
 Wallet derivation uses the separate permanently unsafe BIP39 vector recorded
@@ -38,7 +40,7 @@ in `derivation-v0.1.json`; it is not a funding or production seed.
 
 | Area | Current executable evidence |
 | --- | --- |
-| Entity/key boundary | EntityID, BIP340 x-only root parsing, invalid-root rejection, and controller-role key ID |
+| Entity/key boundary | Genesis-payload EntityID in Python and Rust, zero genesis signer, BIP340 x-only root parsing, invalid-root rejection, and controller-role key ID |
 | Claim | Canonical payload, fixture-scoped bounded decoding, distinct bytes/text limits, tagged hash, valid signature, mutated signature rejection |
 | Cross-domain replay | Claim signature rejected under the attestation tag |
 | Proof package | Manifest ID, signature, signed-envelope package ID, truncation and mutation hashes |
@@ -82,17 +84,18 @@ signature authorization, sorted evidence inputs, and target classification;
 they do not decide whether an assertion is socially true or satisfy a complete
 trust policy.
 
-## Primitive bounds and EntityID root parsing
+## Primitive bounds and EntityID genesis parsing
 
 Accept a claim object `bytes` field of 4,097 bytes even though that size would
 be too large for `text`. Reject a `bytes` field of 1,048,577 bytes and a `text`
 field of 4,097 bytes. These cases keep the one-megabyte `bytes` limit separate
 from the 4,096-byte `text` limit.
 
-Accept EntityID roots only after the 32 bytes parse as a secp256k1 BIP340
-x-only public key. Reject the published BIP340 invalid public-key test-vector
-bytes before EntityID hashing. This is public conformance data, not a wallet
-key or seed.
+Accept a genesis-bound EntityID only after the genesis root's 32 bytes parse as
+a secp256k1 BIP340 x-only public key and the genesis header carries a zero
+`signer_entity`. Reject the published BIP340 invalid public-key test-vector
+bytes before accepting a genesis. This is public conformance data, not a
+wallet key or seed.
 
 ## Distinct root vs payment key
 
@@ -168,11 +171,11 @@ verification on the attestation digest.
 
 ## Wrong network
 
-Accept the regtest EntityID and the mainnet EntityID of one root as two
+Accept the regtest genesis and the mainnet genesis of one root as two
 identifiers. EntityID is
-`TaggedHash("O2A/v0.1/entity-id", u16le(1) || network || root_xonly)`.
-Regtest is network byte 4. Mainnet is network byte 0. The same root on two
-networks produces two EntityIDs.
+`TaggedHash("O2A/v0.1/entity-id", genesis_payload)`. Regtest is network byte 4
+and mainnet is network byte 0 inside that payload, so otherwise matching
+geneses on the two networks produce two EntityIDs.
 
 Reject treating those identifiers as one entity. Reject an object, signature,
 or anchor whose network does not match the entity. Reject an unknown network
@@ -256,6 +259,26 @@ executes the odd-node carry in both Python and Rust. It rejects delay 0 and
 cross-role key reuse, and a scriptPubKey that differs from the state-derived
 output. The vector does not execute a Bitcoin spend or RGB consignment on
 regtest.
+
+## Historical genesis-uniqueness evidence
+
+`option-b/` and `genesis-options/` are historical evidence pinned to
+`c7b08716d017d1f6125e6a728fb098673a09d433`. They are not part of the standard
+suite and their expectations must not be rewritten. Reproduce them against
+that commit in an isolated worktree:
+
+```bash
+git worktree add /tmp/o2a-c7b0871 c7b08716d017d1f6125e6a728fb098673a09d433
+cp -a tests/vectors/option-b tests/vectors/genesis-options /tmp/o2a-c7b0871/tests/vectors/
+docker compose --file /tmp/o2a-c7b0871/dev/compose.yaml --project-directory /tmp/o2a-c7b0871 \
+  --profile tools run --rm toolchain bash -lc \
+  'python3 tests/vectors/option-b/check_option_b.py && python3 tests/vectors/genesis-options/check_genesis_options.py'
+git worktree remove /tmp/o2a-c7b0871
+```
+
+The accepted-rule regression is separate:
+`entity-id-regression/check_entity_id_regression.py` uses the normative checker
+and a labelled c7b0871 legacy seam only for negative controls.
 
 ## Deterministic seal policy and script
 
