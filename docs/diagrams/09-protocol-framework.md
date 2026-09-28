@@ -3,16 +3,23 @@
 This framework view shows what each subsystem can prove and which components
 remain replaceable. Solid arrows point from a dependent operation to the
 prerequisite it must validate or consume; they do not transfer authority.
+Seal-key custody and the controller-or-delayed-recovery policy follow the
+[entity schema](../../specs/entity-schema.md) and
+[RGB identity contract](../../specs/rgb-identity-contract.md). The sourced
+current-seal observation follows the
+[verification policy](../../specs/verification-policy.md).
 
 ```mermaid
 flowchart LR
     subgraph CUSTODY["Owner-controlled custody"]
         ROOT["Genesis-bound EntityID<br/>dedicated BIP340 root signs genesis"]
         CTRL["Rotatable controllers<br/>recovery policy · revocation"]
-        LOCAL["Wallet/node storage<br/>seed · keys · consignments<br/>evidence · proof packages"]
+        SEAL["Dedicated seal keys<br/>seal policy: controller now<br/>OR delayed recovery"]
+        LOCAL["Wallet/node storage<br/>seed · identity + seal keys · consignments<br/>evidence · proof packages"]
         ROOT --> CTRL
         LOCAL --> ROOT
         LOCAL --> CTRL
+        LOCAL --> SEAL
     end
 
     subgraph STATE["Consensus-ordered identity state"]
@@ -30,7 +37,7 @@ flowchart LR
     end
 
     subgraph VERIFY["Independent verification"]
-        CHECK["Check package hash<br/>Bitcoin proofs · RGB history<br/>publisher key · package signature · domain"]
+        CHECK["Check package hash<br/>Bitcoin proofs · RGB history<br/>current seal observed unspent<br/>Bitcoin-view source + height<br/>publisher key · package signature · domain"]
         POLICY["Run named versioned policy<br/>show conflicts + missing evidence"]
         RESULT["Explained result<br/>same inputs => same output"]
         CHECK --> POLICY --> RESULT
@@ -44,6 +51,7 @@ flowchart LR
     end
 
     CTRL --> RGB
+    SEAL --> RGB
     RGB --> PKG
     CTRL --> SIGNED
     PKG --> CHECK
