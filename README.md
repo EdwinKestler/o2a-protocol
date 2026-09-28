@@ -22,6 +22,12 @@ accepted
 [Bitcoin-rooted identity decision](adr/0005-bitcoin-rooted-self-custodial-identity.md).
 Its EntityID derivation is amended by the accepted
 [genesis-bound identity decision](adr/0008-genesis-bound-entity-id.md).
+The proposed [scoped genesis freeze](adr/0009-scoped-genesis-freeze.md) would
+preserve the first mainnet genesis and its `official_name` claim indefinitely
+with a signer-independent O2A-native state ID over
+`EntityID || resulting_state`, without freezing the unfinished RGB stack or
+the rest of Draft v0.1. It permits no identity transition until that stack is
+final.
 
 The [project website draft](docs/WEBSITE.md) has a public Sites deployment and
 a local preview. Public access is the default Sites policy; GitHub Pages remains
@@ -197,3 +203,6 @@ confirmation, and reorg behavior. The Route B key-derivation profile is
 its mainnet freeze is deferred. Phase 0 remains open for the final RGB 0.12
 mainnet stack, concrete O2A RGB program bytes, execution and custody evidence,
 the restore/discovery rule, mainnet derivation freeze, and later lock adoption.
+ADR-0009 is only proposed: no frozen-format identity may transition before the
+final RGB stack is adopted, and this repository makes no mainnet-readiness
+claim.

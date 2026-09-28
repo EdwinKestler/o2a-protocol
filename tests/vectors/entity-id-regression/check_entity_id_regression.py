@@ -62,6 +62,9 @@ def identity_state(fixture: dict, package: dict, view: dict) -> str:
     genesis_payload = bytes.fromhex(package["genesis"])
     state = cpo.decode_payload(genesis_payload)["body"]["state"]
     state_id = bytes.fromhex(package["state_id"])
+    if state_id != cpo.state_id_from_payload(genesis_payload):
+        return "INVALID"
+    authorizing_payload = genesis_payload
     sequence = 0
     creator_confirmations: list[int | None] = []
     while True:
@@ -103,6 +106,7 @@ def identity_state(fixture: dict, package: dict, view: dict) -> str:
             {
                 "expected_network": go.NETWORK,
                 "genesis_payload": genesis_payload,
+                "authorizing_payload": authorizing_payload,
                 "prior_sequence": sequence,
                 "authorization": {
                     "entity": bytes.fromhex(package["entity_id"]),
@@ -126,8 +130,13 @@ def identity_state(fixture: dict, package: dict, view: dict) -> str:
                 valid_transition=False,
                 seal_creating_confirmations=creator_confirmations,
             )["state"]
-        state = cpo.decode_payload(bytes.fromhex(transition["payload"]))["body"]["state"]
-        state_id = bytes.fromhex(transition["state_id"])
+        transition_payload = bytes.fromhex(transition["payload"])
+        transition_state_id = cpo.state_id_from_payload(transition_payload)
+        if bytes.fromhex(transition["state_id"]) != transition_state_id:
+            return "INVALID"
+        state = cpo.decode_payload(transition_payload)["body"]["state"]
+        state_id = transition_state_id
+        authorizing_payload = transition_payload
         sequence += 1
 # ========================================================================
 
@@ -179,6 +188,87 @@ def payout(
 
 def build() -> dict:
     fixture = go.build()
+    packages = fixture["packages"]
+
+    # The historical generator remains pinned to c7b0871 for the A/B negative
+    # controls. Rebuild only the accepted Option G seam with the normative
+    # O2A-native state identifier.
+    for name, package in packages.items():
+        if name.startswith("G-"):
+            genesis_payload = bytes.fromhex(package["genesis"])
+            package["state_id"] = (
+                cpo.state_id(
+                    bytes.fromhex(package["entity_id"]),
+                    cpo.resulting_state_bytes(genesis_payload),
+                ).hex()
+                if name == "G-attacker-names-legit-id"
+                else cpo.state_id_from_payload(genesis_payload).hex()
+            )
+
+    legitimate = packages["G-legit"]
+    takeover = packages["G-attacker-takeover"]
+    legitimate_controllers = [(ob.LEGIT, [2, 4])]
+    attacker_controllers = [(ob.ATTACKER, [2, 4])]
+    o1 = bytes.fromhex(fixture["seals"]["o1"])
+    o3 = bytes.fromhex(fixture["seals"]["o3"])
+    for transition in (
+        go.transition(
+            "G-legit-rotation",
+            legitimate,
+            "legit_controller",
+            ob.LEGIT,
+            o1,
+            o3,
+            legitimate_controllers,
+            ob.LEGIT,
+            go.LEGIT_SEALS,
+        ),
+        go.transition(
+            "G-attacker-activation",
+            takeover,
+            "attacker_controller",
+            ob.ATTACKER,
+            o1,
+            o3,
+            attacker_controllers,
+            ob.ATTACKER,
+            go.LEGIT_SEALS,
+        ),
+    ):
+        transition["state_id"] = cpo.state_id_from_payload(
+            bytes.fromhex(transition["payload"])
+        ).hex()
+        fixture["transitions"][transition["name"]] = transition
+
+    same_seal = packages["G-attacker-same-seal"]
+    target = dict(same_seal, entity_id=legitimate["entity_id"])
+    for claim in (
+        go.claim(
+            "G-legit-claim",
+            legitimate,
+            "legit_controller",
+            ob.LEGIT,
+            "fixture:artist-endpoint",
+        ),
+        go.claim(
+            "G-attacker-claim-same-seal",
+            same_seal,
+            "attacker_controller",
+            ob.ATTACKER,
+            "fixture:attacker-endpoint",
+        ),
+        go.claim(
+            "G-attacker-claim-targets-legit-id",
+            target,
+            "attacker_controller",
+            ob.ATTACKER,
+            "fixture:attacker-endpoint",
+        ),
+    ):
+        if claim["name"] == "G-attacker-claim-targets-legit-id":
+            claim["package"] = "G-attacker-same-seal"
+        fixture["claims"][claim["name"]] = claim
+
     legit = fixture["packages"]["G-legit"]
     # Mutation: same root, seal and state, entity type ARTIST -> VENUE.
     payload = bytearray(bytes.fromhex(legit["genesis"]))
@@ -188,7 +278,7 @@ def build() -> dict:
         legit, name="G-mutated-entity-type", genesis=mutated.hex(),
         signature=ob.sign("root", ob.GENESIS_TAG, mutated),
         entity_id=entity_id_of(mutated).hex(),
-        state_id=ob.placeholder_state_id(mutated).hex(),
+        state_id=cpo.state_id_from_payload(mutated).hex(),
         consignment_genesis_digest=cpo.tagged_hash(ob.GENESIS_TAG, mutated).hex())
     fixture["label"] = "ADR-0008 regression fixtures: test-only, not normative until accepted"
     return fixture

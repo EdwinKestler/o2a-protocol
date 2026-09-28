@@ -23,6 +23,7 @@ SEAL_FIXTURE_PATH = HERE / "seal-script-v0.1.json"
 CRYPTO_MANIFEST = HERE / "crypto-checker" / "Cargo.toml"
 
 ENTITY_TAG = "O2A/v0.1/entity-id"
+STATE_TAG = "O2A/v0.1/state-id"
 ZERO_ENTITY = bytes(32)
 KEY_TAG = "O2A/v0.1/key-id"
 POLICY_TAG = "O2A/v0.1/recovery-policy"
@@ -103,8 +104,6 @@ ALBUM_ROOT = bytes.fromhex(
 NOSTR_PUBLIC = bytes.fromhex(
     "d69c3509bb99e412e68b0fe8544e72837dfa30746d8be2aa65975f29d22dc7b9"
 )
-STATE = bytes([0x22]) * 32
-NEXT_STATE = bytes([0x23]) * 32
 
 
 def fail(message: str) -> None:
@@ -278,6 +277,13 @@ def entity_id(genesis_payload: bytes) -> bytes:
     return tagged_hash(ENTITY_TAG, genesis_payload)
 
 
+def state_id(entity: bytes, resulting_state_bytes: bytes) -> bytes:
+    """Return the signer-independent O2A ID of exact resulting-state bytes."""
+    if len(entity) != 32 or not resulting_state_bytes:
+        raise ValueError("invalid state-ID input")
+    return tagged_hash(STATE_TAG, entity + resulting_state_bytes)
+
+
 def key_id(role: int, public_key: bytes) -> bytes:
     return tagged_hash(KEY_TAG, bytes([role]) + public_key)
 
@@ -329,14 +335,17 @@ def controller(public_key: bytes, capabilities: list[int]) -> bytes:
 
 
 def recovery_policy(
-    recovery_key_ids: list[bytes], delay_blocks: int = 6, sequence: int = 1
+    recovery_key_ids: list[bytes],
+    delay_blocks: int = 6,
+    sequence: int = 1,
+    threshold: int = 1,
 ) -> bytes:
     ordered = sorted(recovery_key_ids)
     return b"".join(
         (
             u16(1),
             u64(sequence),
-            u16(1),
+            u16(threshold),
             list_items(ordered),
             u32(delay_blocks),
             b"\x01",
@@ -574,19 +583,22 @@ def decode_payload(payload: bytes) -> dict:
     if object_type == 1:
         entity_type = reader.u16()
         root, spans["root"] = span(reader, lambda: reader.take(32))
-        body = {"entity_type": entity_type, "root": root, "state": decode_state(reader)}
+        state, spans["resulting_state"] = span(reader, lambda: decode_state(reader))
+        body = {"entity_type": entity_type, "root": root, "state": state}
     elif object_type == 2:
         operation, spans["operation"] = span(reader, reader.u8)
-        body = {"operation": operation, "state": decode_state(reader)}
+        state, spans["resulting_state"] = span(reader, lambda: decode_state(reader))
+        body = {"operation": operation, "state": state}
     elif object_type == 3:
         operation, spans["operation"] = span(reader, reader.u8)
         policy_hash, spans["policy_hash"] = span(reader, lambda: reader.take(32))
         not_before_height, spans["not_before_height"] = span(reader, reader.u32)
+        state, spans["resulting_state"] = span(reader, lambda: decode_state(reader))
         body = {
             "operation": operation,
             "policy_hash": policy_hash,
             "not_before_height": not_before_height,
-            "state": decode_state(reader),
+            "state": state,
         }
     elif object_type == 5:
         subject_kind = reader.u8()
@@ -728,6 +740,20 @@ def decode_payload(payload: bytes) -> dict:
     return {"header": header, "body": body, "spans": spans}
 
 
+def state_id_from_payload(payload: bytes) -> bytes:
+    """Derive a state ID from a canonical state-establishing object payload."""
+    decoded = decode_payload(payload)
+    if decoded["header"]["object_type"] not in {1, 2, 3}:
+        raise ValueError("object does not establish an identity state")
+    entity = (
+        entity_id(payload)
+        if decoded["header"]["object_type"] == 1
+        else decoded["header"]["signer_entity"]
+    )
+    start, end = decoded["spans"]["resulting_state"]
+    return state_id(entity, payload[start:end])
+
+
 def signed_case(
     name: str,
     signer: bytes,
@@ -787,87 +813,96 @@ def build_cases() -> list[dict]:
         CONTROLLER_PUBLIC,
         policy,
     )
-    transition_state = resulting_state(
-        1,
-        STATE,
-        outpoint(0x11, 0),
-        outpoint(0x12, 1),
-        CONTROLLER_PUBLIC,
-        policy,
-    )
-    recovery_state = resulting_state(
-        2,
-        STATE,
-        outpoint(0x12, 1),
-        outpoint(0x13, 2),
-        CONTROLLER_PUBLIC,
-        policy,
-    )
     root_genesis = entity_genesis_payload(ROOT_PUBLIC, 2, genesis_state)
     event_genesis = entity_genesis_payload(RECOVERY_PUBLIC, 8, genesis_state)
     album_genesis = entity_genesis_payload(ALBUM_ROOT, 9, genesis_state)
     root_entity = entity_id(root_genesis)
     event_entity = entity_id(event_genesis)
     album_entity = entity_id(album_genesis)
-    cases = [
-        signed_case(
-            "entity_genesis",
-            ZERO_ENTITY,
-            None,
-            ROOT_PUBLIC,
-            u16(2) + ROOT_PUBLIC + genesis_state,
-            "scalar-3",
-            {
-                "entity_type": 2,
-                "root": ROOT_PUBLIC.hex(),
-                "entity_id": root_entity.hex(),
-            },
-        ),
-        signed_case(
-            "identity_transition",
-            root_entity,
-            STATE,
-            CONTROLLER_PUBLIC,
-            b"\x01" + transition_state,
-            "bip340-vector-1",
-            {"operation": 1, "sequence": 1, "previous_sequence": 0},
-            {"prior_sequence": 0},
-        ),
-        signed_case(
-            "recovery_authorization",
-            root_entity,
-            STATE,
-            RECOVERY_PUBLIC,
-            b"\x03"
-            + tagged_hash(POLICY_TAG, policy)
-            + u32(106)
-            + recovery_state,
-            "bip340-vector-2",
-            {
-                "operation": 3,
-                "policy_hash": tagged_hash(POLICY_TAG, policy).hex(),
-                "committed_policy_hash": tagged_hash(POLICY_TAG, policy).hex(),
-                "recovery_key_ids": [recovery_key.hex()],
-                "threshold": 1,
-                "prior_anchor_height": 90,
-                "seal_creation_height": 100,
-                "delay_blocks": 6,
-                "not_before_height": 106,
-                "sequence": 2,
-                "previous_sequence": 1,
-            },
-            {
-                "prior_sequence": 1,
-                "prior_policy_hash": tagged_hash(POLICY_TAG, policy),
-                "prior_recovery_key_ids": [recovery_key],
-                "prior_threshold": 1,
-                "prior_anchor_height": 90,
-                "seal_creation_height": 100,
-                "delay_blocks": 6,
-                "block_height": 106,
-            },
-        ),
-    ]
+    root_state_id = state_id(root_entity, genesis_state)
+    event_state_id = state_id(event_entity, genesis_state)
+    album_state_id = state_id(album_entity, genesis_state)
+    genesis_case = signed_case(
+        "entity_genesis",
+        ZERO_ENTITY,
+        None,
+        ROOT_PUBLIC,
+        u16(2) + ROOT_PUBLIC + genesis_state,
+        "scalar-3",
+        {
+            "entity_type": 2,
+            "root": ROOT_PUBLIC.hex(),
+            "entity_id": root_entity.hex(),
+            "state_id": root_state_id.hex(),
+        },
+    )
+    transition_state = resulting_state(
+        1,
+        root_state_id,
+        outpoint(0x11, 0),
+        outpoint(0x12, 1),
+        CONTROLLER_PUBLIC,
+        policy,
+    )
+    transition_case = signed_case(
+        "identity_transition",
+        root_entity,
+        root_state_id,
+        CONTROLLER_PUBLIC,
+        b"\x01" + transition_state,
+        "bip340-vector-1",
+        {"operation": 1, "sequence": 1, "previous_sequence": 0},
+        {"prior_sequence": 0, "authorizing_payload": root_genesis},
+    )
+    transition_state_id = state_id(root_entity, transition_state)
+    transition_case["metadata"]["state_id"] = transition_state_id.hex()
+    recovery_state = resulting_state(
+        2,
+        transition_state_id,
+        outpoint(0x12, 1),
+        outpoint(0x13, 2),
+        CONTROLLER_PUBLIC,
+        policy,
+    )
+    recovery_case = signed_case(
+        "recovery_authorization",
+        root_entity,
+        transition_state_id,
+        RECOVERY_PUBLIC,
+        b"\x03"
+        + tagged_hash(POLICY_TAG, policy)
+        + u32(106)
+        + recovery_state,
+        "bip340-vector-2",
+        {
+            "operation": 3,
+            "policy_hash": tagged_hash(POLICY_TAG, policy).hex(),
+            "committed_policy_hash": tagged_hash(POLICY_TAG, policy).hex(),
+            "recovery_key_ids": [recovery_key.hex()],
+            "threshold": 1,
+            "prior_anchor_height": 90,
+            "seal_creation_height": 100,
+            "delay_blocks": 6,
+            "not_before_height": 106,
+            "sequence": 2,
+            "previous_sequence": 1,
+        },
+        {
+            "prior_sequence": 1,
+            "prior_policy_hash": tagged_hash(POLICY_TAG, policy),
+            "prior_recovery_key_ids": [recovery_key],
+            "prior_threshold": 1,
+            "prior_anchor_height": 90,
+            "seal_creation_height": 100,
+            "delay_blocks": 6,
+            "block_height": 106,
+            "authorizing_payload": transition_case["payload"],
+        },
+    )
+    recovery_case["metadata"]["state_id"] = state_id(
+        root_entity, recovery_state
+    ).hex()
+    cases = [genesis_case, transition_case, recovery_case]
 
     evidence_a = bytes([0x10]) * 32
     evidence_b = bytes([0x20]) * 32
@@ -876,7 +911,7 @@ def build_cases() -> list[dict]:
             signed_case(
                 "attestation",
                 root_entity,
-                STATE,
+                root_state_id,
                 CONTROLLER_PUBLIC,
                 b"\x01"
                 + event_entity
@@ -891,7 +926,7 @@ def build_cases() -> list[dict]:
             signed_case(
                 "challenge",
                 root_entity,
-                STATE,
+                root_state_id,
                 CONTROLLER_PUBLIC,
                 bytes([0x32]) * 32
                 + text_field("o2a.example/dispute/v1")
@@ -904,7 +939,7 @@ def build_cases() -> list[dict]:
             signed_case(
                 "evidence_revocation",
                 root_entity,
-                STATE,
+                root_state_id,
                 CONTROLLER_PUBLIC,
                 bytes([0x34]) * 32
                 + text_field("o2a.example/withdrawn/v1")
@@ -931,7 +966,7 @@ def build_cases() -> list[dict]:
     control_case = signed_case(
         "control_challenge",
         root_entity,
-        STATE,
+        root_state_id,
         CONTROLLER_PUBLIC,
         challenge_body,
         "bip340-vector-1",
@@ -956,7 +991,7 @@ def build_cases() -> list[dict]:
             signed_case(
                 "observation",
                 root_entity,
-                STATE,
+                root_state_id,
                 CONTROLLER_PUBLIC,
                 observation_body,
                 "bip340-vector-1",
@@ -971,7 +1006,7 @@ def build_cases() -> list[dict]:
             signed_case(
                 "discovery_binding",
                 root_entity,
-                STATE,
+                root_state_id,
                 CONTROLLER_PUBLIC,
                 b"\x01"
                 + b"\x01"
@@ -992,7 +1027,7 @@ def build_cases() -> list[dict]:
             signed_case(
                 "nostr_binding",
                 root_entity,
-                STATE,
+                root_state_id,
                 CONTROLLER_PUBLIC,
                 b"\x02"
                 + b"\x02"
@@ -1061,7 +1096,7 @@ def build_cases() -> list[dict]:
             signed_case(
                 "event_manifest",
                 event_entity,
-                NEXT_STATE,
+                event_state_id,
                 CONTROLLER_PUBLIC,
                 event_body,
                 "bip340-vector-1",
@@ -1075,7 +1110,7 @@ def build_cases() -> list[dict]:
             signed_case(
                 "album_manifest",
                 album_entity,
-                bytes([0x24]) * 32,
+                album_state_id,
                 CONTROLLER_PUBLIC,
                 album_body,
                 "bip340-vector-1",
@@ -1098,6 +1133,7 @@ def build_cases() -> list[dict]:
         else:
             genesis = root_genesis
         case["evaluation"]["genesis_payload"] = genesis
+        case["evaluation"].setdefault("authorizing_payload", genesis)
     return cases
 
 
@@ -1145,6 +1181,81 @@ def rust_entity_id(genesis_payload: bytes) -> bytes:
         fail("Rust EntityID checker returned invalid hex")
 
 
+def rust_state_id(entity: bytes, resulting_state_bytes: bytes) -> bytes:
+    result = crypto(["state-id", entity.hex(), resulting_state_bytes.hex()])
+    if result.returncode != 0:
+        fail(result.stderr.strip() or "Rust state-ID checker failed")
+    try:
+        return bytes.fromhex(result.stdout.strip())
+    except ValueError:
+        fail("Rust state-ID checker returned invalid hex")
+
+
+def resulting_state_bytes(payload: bytes) -> bytes:
+    decoded = decode_payload(payload)
+    try:
+        start, end = decoded["spans"]["resulting_state"]
+    except KeyError as error:
+        raise ValueError("payload does not contain a resulting state") from error
+    return payload[start:end]
+
+
+def build_recovery_state_id_vector(genesis_payload: bytes) -> dict:
+    entity = entity_id(genesis_payload)
+    prior_state = state_id_from_payload(genesis_payload)
+    recovery_signers = (
+        (ROOT_PUBLIC, "scalar-3"),
+        (RECOVERY_PUBLIC, "bip340-vector-2"),
+    )
+    recovery_ids = [key_id(2, public) for public, _ in recovery_signers]
+    policy = recovery_policy(recovery_ids, threshold=2)
+    recovery_bindings = sorted(
+        [
+            (recovery_ids[0], SEAL_VECTOR_KEYS[3]),
+            (recovery_ids[1], SEAL_VECTOR_KEYS[4]),
+        ],
+        key=binding_bytes,
+    )
+    state = resulting_state(
+        1,
+        prior_state,
+        outpoint(0x41, 0),
+        outpoint(0x42, 0),
+        CONTROLLER_PUBLIC,
+        policy,
+        recovery_seal_bindings=recovery_bindings,
+    )
+    body = b"\x03" + tagged_hash(POLICY_TAG, policy) + u32(106) + state
+    signers = []
+    rejected_ids = []
+    for public, key_name in recovery_signers:
+        signer_key_id = key_id(2, public)
+        payload = common_header(3, 3, entity, prior_state, signer_key_id, 2) + body
+        digest = tagged_hash(TAGS["recovery_authorization"], payload)
+        signature_public, signature = crypto_sign(key_name, digest)
+        if signature_public != public.hex():
+            fail("recovery convergence signer mismatch")
+        signers.append(
+            {
+                "signing_key_id_hex": signer_key_id.hex(),
+                "payload_hex": payload.hex(),
+                "digest_hex": digest.hex(),
+                "signature_hex": signature,
+            }
+        )
+        rejected_ids.append(tagged_hash(STATE_TAG, payload).hex())
+    return {
+        "entity_id_hex": entity.hex(),
+        "resulting_state_hex": state.hex(),
+        "state_id_hex": state_id(entity, state).hex(),
+        "signers": signers,
+        "rejected_payload_hash_rule": {
+            "label": "REJECTED: TaggedHash(state-id, recovery_payload)",
+            "state_id_hexes": rejected_ids,
+        },
+    }
+
+
 def build_entity_id_vectors() -> dict:
     cases = {case["name"]: case for case in build_cases()}
     payloads = {
@@ -1154,14 +1265,21 @@ def build_entity_id_vectors() -> dict:
     }
     return {
         "spdx": "CC0-1.0",
-        "profile": "ADR-0008 genesis-bound EntityID Draft v0.1",
+        "profile": "ADR-0008 EntityID and proposed ADR-0009 state ID Draft v0.1",
         "cases": {
             name: {
                 "genesis_payload_hex": payload.hex(),
                 "entity_id_hex": entity_id(payload).hex(),
+                "resulting_state_hex": resulting_state_bytes(payload).hex(),
+                "state_id_hex": state_id(
+                    entity_id(payload), resulting_state_bytes(payload)
+                ).hex(),
             }
             for name, payload in payloads.items()
         },
+        "recovery_signer_convergence": build_recovery_state_id_vector(
+            payloads["artist"]
+        ),
     }
 
 
@@ -1177,10 +1295,18 @@ def check_entity_id_vectors() -> None:
     for name, vector in fixture["cases"].items():
         payload = bytes.fromhex(vector["genesis_payload_hex"])
         expected_id = bytes.fromhex(vector["entity_id_hex"])
+        resulting_state = bytes.fromhex(vector["resulting_state_hex"])
+        expected_state_id = bytes.fromhex(vector["state_id_hex"])
         if entity_id(payload) != expected_id:
             fail(f"{name}: Python EntityID mismatch")
         if rust_entity_id(payload) != expected_id:
             fail(f"{name}: Rust EntityID mismatch")
+        if resulting_state_bytes(payload) != resulting_state:
+            fail(f"{name}: resulting-state bytes mismatch")
+        if state_id(expected_id, resulting_state) != expected_state_id:
+            fail(f"{name}: Python state ID mismatch")
+        if rust_state_id(expected_id, resulting_state) != expected_state_id:
+            fail(f"{name}: Rust state ID mismatch")
         nonzero_signer = payload[:5] + b"\x01" + payload[6:]
         try:
             entity_id(nonzero_signer)
@@ -1190,6 +1316,43 @@ def check_entity_id_vectors() -> None:
             fail(f"{name}: Python accepted nonzero genesis signer_entity")
         if crypto(["entity-id", nonzero_signer.hex()]).returncode == 0:
             fail(f"{name}: Rust accepted nonzero genesis signer_entity")
+
+    recovery = fixture["recovery_signer_convergence"]
+    recovery_entity = bytes.fromhex(recovery["entity_id_hex"])
+    recovery_state = bytes.fromhex(recovery["resulting_state_hex"])
+    expected_recovery_id = bytes.fromhex(recovery["state_id_hex"])
+    if state_id(recovery_entity, recovery_state) != expected_recovery_id:
+        fail("recovery convergence Python state ID mismatch")
+    if rust_state_id(recovery_entity, recovery_state) != expected_recovery_id:
+        fail("recovery convergence Rust state ID mismatch")
+    signer_state_ids = set()
+    for signer in recovery["signers"]:
+        payload = bytes.fromhex(signer["payload_hex"])
+        decoded = decode_payload(payload)
+        if decoded["header"]["signing_key_id"].hex() != signer["signing_key_id_hex"]:
+            fail("recovery convergence signing-key ID mismatch")
+        if resulting_state_bytes(payload) != recovery_state:
+            fail("recovery convergence resulting states differ")
+        digest = tagged_hash(TAGS["recovery_authorization"], payload)
+        if digest.hex() != signer["digest_hex"]:
+            fail("recovery convergence digest mismatch")
+        public = next(
+            public
+            for public in (ROOT_PUBLIC, RECOVERY_PUBLIC)
+            if key_id(2, public).hex() == signer["signing_key_id_hex"]
+        )
+        if not crypto_verify(public, digest, signer["signature_hex"]):
+            fail("recovery convergence signature mismatch")
+        signer_state_ids.add(state_id(recovery_entity, recovery_state))
+    if signer_state_ids != {expected_recovery_id}:
+        fail("recovery signers did not converge on one state ID")
+    rejected = recovery["rejected_payload_hash_rule"]
+    if not rejected["label"].startswith("REJECTED:"):
+        fail("payload-hash negative control is not labelled rejected")
+    if len(set(rejected["state_id_hexes"])) != len(recovery["signers"]):
+        fail("rejected payload-hash rule did not diverge by recovery signer")
+    if expected_recovery_id.hex() in rejected["state_id_hexes"]:
+        fail("rejected payload-hash state ID matched the normative rule")
 
 
 def build_seal_cases() -> dict[str, dict]:
@@ -1771,15 +1934,25 @@ def evaluate_signed_payload(
             return "invalid"
     else:
         genesis_payload = context.get("genesis_payload")
+        authorizing_payload = context.get("authorizing_payload")
         history_entity = (
             entity_id_from_valid_genesis(genesis_payload)
             if isinstance(genesis_payload, bytes)
             else None
         )
+        try:
+            history_state = (
+                state_id_from_payload(authorizing_payload)
+                if isinstance(authorizing_payload, bytes)
+                else None
+            )
+        except (DecodeError, ValueError):
+            history_state = None
         if (
             history_entity is None
             or header["signer_entity"] != history_entity
             or header["authorizing_state"] is None
+            or header["authorizing_state"] != history_state
             or not authorization_matches(header, public_key, context.get("authorization"))
         ):
             return "invalid"
@@ -2118,6 +2291,20 @@ def check() -> None:
                 != "invalid"
             ):
                 fail(f"{case['name']}: missing state capability was accepted")
+            mismatched_state_context = evaluation_context(
+                case, authorizing_payload=b"different state-establishing payload"
+            )
+            if (
+                evaluate_signed_payload(
+                    payload,
+                    signature,
+                    case["public_key"],
+                    case["tag"],
+                    mismatched_state_context,
+                )
+                != "invalid"
+            ):
+                fail(f"{case['name']}: mismatched O2A state ID was accepted")
 
     by_name = {case["name"]: case for case in cases}
     transition = by_name["identity_transition"]
@@ -2321,7 +2508,7 @@ def check() -> None:
     discovery_id = tagged_hash(discovery["tag"], discovery["payload"])
     package_manifest = build_manifest(
         entity_id(genesis["payload"]),
-        STATE,
+        state_id_from_payload(genesis["payload"]),
         key_id(1, ROOT_PUBLIC),
         omitted_object_id=discovery_id,
         omission_class=3,

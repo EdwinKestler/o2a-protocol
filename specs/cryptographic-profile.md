@@ -52,6 +52,12 @@ The exact UTF-8 tag bytes and canonical payload grammar are specified in
 unknown tags, wrong object types, wrong networks, wrong authorizing states, and
 tags or capabilities that do not match the key authorization in that state.
 
+`O2A/v0.1/entity-id`, `O2A/v0.1/state-id`, `O2A/v0.1/key-id`,
+`O2A/v0.1/recovery-policy`, and `O2A/v0.1/wallet-root` are identifier or
+derivation tags, not signature domains. State IDs hash the history EntityID
+concatenated with the exact canonical resulting-state bytes, never a signed
+object payload or RGB-defined state identifier.
+
 ## External signing domains
 
 - Bitcoin transactions use separate spending keys and Bitcoin's transaction

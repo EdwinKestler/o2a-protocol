@@ -12,7 +12,14 @@ not a wallet. The protocol-object checks do not use the network; the separate
 helper's lock hash, audit, and license result are recorded in
 [DEPENDENCIES.md](DEPENDENCIES.md).
 `entity-id-v0.1.json` records explicit canonical genesis-payload-to-EntityID
-pairs and requires matching Python and Rust tagged hashes.
+pairs and O2A-native state IDs, requiring matching Python and Rust tagged
+hashes. Its two-signer recovery vector proves that distinct signer-specific
+headers over one resulting state produce one state ID; a labelled negative
+control records the rejected full-payload-hash divergence.
+`genesis-freeze-v0.1.json` is the proposed ADR-0009 mainnet manifest for one
+genesis plus one `official_name` claim. It records each frozen output and its
+SHA-256, uses only published permanently unsafe Route B keys, and is checked by
+`check_genesis_freeze.py`; it is a vector, never a real identity.
 `derivation-v0.1.json` records Route B paths and expected keys;
 `check_derivation_cross.py` requires the independent Python and Rust
 implementations to produce identical results. `seal-script-v0.1.json` records
@@ -40,7 +47,7 @@ in `derivation-v0.1.json`; it is not a funding or production seed.
 
 | Area | Current executable evidence |
 | --- | --- |
-| Entity/key boundary | Genesis-payload EntityID in Python and Rust, zero genesis signer, BIP340 x-only root parsing, invalid-root rejection, and controller-role key ID |
+| Entity/key boundary | Genesis-payload EntityID and signer-independent `entity_id || resulting_state` state IDs in Python and Rust, two-signer recovery convergence, rejected payload-hash divergence, zero genesis signer, BIP340 x-only root parsing, invalid-root rejection, and controller-role key ID |
 | Claim | Canonical payload, fixture-scoped bounded decoding, distinct bytes/text limits, tagged hash, valid signature, mutated signature rejection |
 | Cross-domain replay | Claim signature rejected under the attestation tag |
 | Proof package | Manifest ID, signature, signed-envelope package ID, truncation and mutation hashes |

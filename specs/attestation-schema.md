@@ -8,7 +8,7 @@
   "bitcoin_network": "mainnet|testnet|signet|regtest",
   "object_type": "attestation",
   "issuer": "<EntityID>",
-  "issuer_state": "<validated-rgb-identity-state-id>",
+  "issuer_state": "<validated-o2a-state-id>",
   "controller_key_id": "<authorized-controller-key-id>",
   "controller_key_role": "controller",
   "authorization_capability": "attestation",

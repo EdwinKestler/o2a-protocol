@@ -374,6 +374,8 @@ def evaluate_name_claim(
     expected_network: int,
     authorization: dict,
 ) -> tuple[bool, str]:
+    import check_protocol_objects as cpo
+
     try:
         claim = parse_claim(payload)
     except ClaimDecodeError as error:
@@ -403,11 +405,14 @@ def evaluate_name_claim(
     if claim["signing_entity"] != claim["subject"]:
         return False, "name claim is not self-issued"
     try:
-        history_entity = entity_id(bytes.fromhex(authorization["genesis_payload"]))
+        history_genesis = bytes.fromhex(authorization["genesis_payload"])
+        history_entity = entity_id(history_genesis)
     except (KeyError, ValueError):
         return False, "missing or invalid history genesis"
     if claim["signing_entity"] != history_entity:
         return False, "signing entity does not match history genesis"
+    if claim["authorizing_state"] != cpo.state_id_from_payload(history_genesis):
+        return False, "authorizing state does not match history genesis"
     if (
         authorization.get("entity") != claim["signing_entity"].hex()
         or authorization.get("state")
@@ -470,16 +475,19 @@ def build_manifest(
 
 def regenerate_fixture(fixture: dict) -> dict:
     """Deterministically rebuild every EntityID-bearing v0.1 fixture field."""
+    import check_protocol_objects as cpo
+
     identity = fixture["identity"]
     public_key = fixture["public_test_key"]["xonly_hex"]
     controller_public = bytes.fromhex(public_key)
     root = bytes.fromhex(identity["root_xonly_hex"])
     genesis = fixture_genesis_payload(identity["network"], root, controller_public, 0x41)
     entity = entity_id(genesis)
+    state = cpo.state_id_from_payload(genesis)
     identity["genesis_payload_hex"] = genesis.hex()
     identity["entity_id_hex"] = entity.hex()
+    identity["authorizing_state_hex"] = state.hex()
     key = tagged_hash(KEY_TAG, bytes([identity["controller_role"]]) + controller_public)
-    state = bytes.fromhex(identity["authorizing_state_hex"])
 
     claim_fixture = fixture["claim"]
     claim = build_claim(claim_fixture, entity, state, key)
@@ -496,6 +504,7 @@ def regenerate_fixture(fixture: dict) -> dict:
     semantic = fixture["semantic_claims"]
     primary = semantic["primary_authorization"]
     primary["entity"] = entity.hex()
+    primary["state"] = state.hex()
 
     wrong_capability_spec = dict(claim_fixture, capability=5)
     wrong_capability_payload = build_claim(wrong_capability_spec, entity, state, key)
@@ -521,8 +530,9 @@ def regenerate_fixture(fixture: dict) -> dict:
     wrong_network = semantic["wrong_network"]
     wrong_genesis = fixture_genesis_payload(0, root, controller_public, 0x41)
     wrong_entity = entity_id(wrong_genesis)
+    wrong_state = cpo.state_id_from_payload(wrong_genesis)
     wrong_network_payload = build_claim(
-        claim_fixture, wrong_entity, state, key, network=0
+        claim_fixture, wrong_entity, wrong_state, key, network=0
     )
     wrong_network_digest = tagged_hash(CLAIM_TAG, wrong_network_payload)
     _, wrong_network_signature = crypto_sign_test_vector(
@@ -536,6 +546,7 @@ def regenerate_fixture(fixture: dict) -> dict:
         signature_hex=wrong_network_signature,
     )
     wrong_network["authorization"]["entity"] = wrong_entity.hex()
+    wrong_network["authorization"]["state"] = wrong_state.hex()
 
     unknown_network = semantic["unknown_network"]
     unknown_payload = build_claim(
@@ -560,8 +571,8 @@ def regenerate_fixture(fixture: dict) -> dict:
         semantic["expected_network"], competing_root, competing_public, 0x42
     )
     competing_entity = entity_id(competing_genesis)
+    competing_state = cpo.state_id_from_payload(competing_genesis)
     competing_key = tagged_hash(KEY_TAG, b"\x01" + competing_public)
-    competing_state = bytes.fromhex(competing["authorization"]["state"])
     competing_payload = build_claim(
         claim_fixture, competing_entity, competing_state, competing_key
     )
@@ -577,6 +588,7 @@ def regenerate_fixture(fixture: dict) -> dict:
         signature_hex=competing_signature,
     )
     competing["authorization"]["entity"] = competing_entity.hex()
+    competing["authorization"]["state"] = competing_state.hex()
     semantic["expected_visible_claims"] = {
         entity.hex(): claim_digest.hex(),
         competing_entity.hex(): competing_digest.hex(),
@@ -607,6 +619,8 @@ def emit() -> None:
 
 
 def check() -> None:
+    import check_protocol_objects as cpo
+
     fixture = json.loads(FIXTURE_PATH.read_text(encoding="utf-8"))
     identity = fixture["identity"]
     public_key = fixture["public_test_key"]["xonly_hex"]
@@ -625,6 +639,8 @@ def check() -> None:
     if key_id.hex() != identity["controller_key_id_hex"]:
         fail("controller key ID mismatch")
     state = bytes.fromhex(identity["authorizing_state_hex"])
+    if state != cpo.state_id_from_payload(genesis_payload):
+        fail("authorizing state ID does not match the genesis payload")
 
     claim_fixture = fixture["claim"]
     claim = build_claim(claim_fixture, entity, state, key_id)

@@ -21,7 +21,7 @@ has not frozen the full wallet profile.
   },
   "rgb_identity": {
     "contract_id": "<rgb-contract-id>",
-    "state_id": "<rgb-state-id>",
+    "state_id": "<o2a-state-id-derived-from-entity-id-and-resulting-state>",
     "sequence": 0,
     "previous_state": null,
     "seal": "<bitcoin-outpoint>",
@@ -82,6 +82,9 @@ has not frozen the full wallet profile.
   genesis payload, whose header uses 32 zero bytes for `signer_entity`;
 - verifiers MUST recompute `entity_id` from the validated genesis rather than
   trust an identifier supplied beside a package or history;
+- `state_id` MUST be the O2A-CANON-1 tagged hash of the EntityID followed by
+  the exact canonical resulting-state bytes; it is not an RGB-defined
+  identifier and verifiers MUST recompute it;
 - genesis MUST be signed by the root key and represented by an RGB state
   anchored to Bitcoin;
 - genesis, transitions, and recovery authorizations MUST use their respective

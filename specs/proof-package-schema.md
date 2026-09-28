@@ -28,7 +28,7 @@ private attestation, or application record public.
   "object_type": "public_identity_proof_package",
   "manifest_id": "<hash-of-canonical-manifest-payload>",
   "subject": "<EntityID>",
-  "subject_state": "<validated-rgb-identity-state-id>",
+  "subject_state": "<validated-o2a-state-id>",
   "identity_profile": "o2a-bitcoin-rgb-v0.1",
   "rgb_contract": "<contract-and-schema-identifiers>",
   "identity_history": "<public-identity-consignment-reference>",
@@ -43,7 +43,7 @@ private attestation, or application record public.
   "evaluation_context": "<explicit-context>",
   "previous_manifest": null,
   "publisher": "<EntityID>",
-  "publisher_state": "<authorizing-rgb-state-id>",
+  "publisher_state": "<authorizing-o2a-state-id>",
   "signing_key": "<authorized-controller-key-id>",
   "signing_key_role": "controller",
   "authorization_capability": "proof_package_publication",
@@ -121,6 +121,12 @@ The verifier MUST validate the included genesis first, require its
 canonical genesis payload. Every non-genesis object and every named subject or
 publisher EntityID in that history MUST match the recomputed value. A mismatch
 is `INVALID`; an externally supplied EntityID is never authoritative.
+
+Every named state ID MUST equal
+`TaggedHash("O2A/v0.1/state-id", entity_id || resulting_state)` for the
+history EntityID and exact canonical resulting-state bytes. An object-payload
+hash, RGB contract identifier, or assignment identifier is not a substitute;
+a mismatch is `INVALID`.
 
 For each seal-creating transaction, the verifier recomputes the expected P2TR
 scriptPubKey from the seal policy committed by the state that names the

@@ -34,6 +34,19 @@ recovery and seal policies. Later operations reference that state or a valid
 successor. Every resulting state commits a seal policy for the `next_seal` it
 names.
 
+O2A state IDs are independent of RGB identifiers. Every state ID is the tagged
+hash under `O2A/v0.1/state-id` of the history EntityID followed by the exact
+canonical resulting-state bytes. This produces one ID for a recovery state
+regardless of its signer-specific authorization headers. RGB contract, schema,
+assignment, consignment, and carrier identifiers MUST NOT replace an O2A state
+ID.
+
+Under the proposed ADR-0009 scoped freeze, a frozen-format identity MUST NOT
+transition until the final RGB stack, program, and commitment carrier are
+adopted. Before its first transition, its RGB contract may be re-issued only
+with the exact same O2A genesis bytes and same genesis seal. Such re-issuance
+preserves its EntityID and state 0 ID and is not a new O2A genesis.
+
 | Code | Operation | Authorization |
 | --- | --- | --- |
 | 1 | Controller rotation | A current controller with the identity-transition capability |
