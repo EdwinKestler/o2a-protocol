@@ -402,6 +402,12 @@ def evaluate_name_claim(
         return False, "signing key ID does not match role and public key"
     if claim["signing_entity"] != claim["subject"]:
         return False, "name claim is not self-issued"
+    try:
+        history_entity = entity_id(bytes.fromhex(authorization["genesis_payload"]))
+    except (KeyError, ValueError):
+        return False, "missing or invalid history genesis"
+    if claim["signing_entity"] != history_entity:
+        return False, "signing entity does not match history genesis"
     if (
         authorization.get("entity") != claim["signing_entity"].hex()
         or authorization.get("state")
@@ -717,12 +723,26 @@ def check() -> None:
         if str(error) != "root is not a BIP340 x-only public key":
             fail(f"unexpected invalid-root rejection: {error}")
 
-    primary_authorization = semantic["primary_authorization"]
+    primary_authorization = dict(
+        semantic["primary_authorization"], genesis_payload=genesis_payload.hex()
+    )
     accepted, reason = evaluate_name_claim(
         claim, signature, public_key, semantic["expected_network"], primary_authorization
     )
     if not accepted:
         fail(f"valid primary name claim was rejected: {reason}")
+    alternate_history = fixture_genesis_payload(
+        identity["network"], root, bytes.fromhex(public_key), 0x42
+    )
+    accepted, reason = evaluate_name_claim(
+        claim,
+        signature,
+        public_key,
+        semantic["expected_network"],
+        dict(primary_authorization, genesis_payload=alternate_history.hex()),
+    )
+    if accepted or reason != "signing entity does not match history genesis":
+        fail("claim EntityID was not bound to its history genesis")
 
     # A caller-supplied authorization context cannot make an absent state or
     # arbitrary key ID valid; both are bound by the canonical header/profile.
@@ -836,7 +856,10 @@ def check() -> None:
         wrong_network["signature_hex"],
         public_key,
         semantic["expected_network"],
-        wrong_network["authorization"],
+        dict(
+            wrong_network["authorization"],
+            genesis_payload=wrong_network_genesis.hex(),
+        ),
     )
     if accepted or reason != "wrong verifier network":
         fail("wrong network was not rejected by verifier context")
@@ -845,7 +868,10 @@ def check() -> None:
         wrong_network["signature_hex"],
         public_key,
         wrong_network["network"],
-        wrong_network["authorization"],
+        dict(
+            wrong_network["authorization"],
+            genesis_payload=wrong_network_genesis.hex(),
+        ),
     )
     if not accepted:
         fail(f"well-formed alternate-network claim was rejected: {reason}")
@@ -908,7 +934,9 @@ def check() -> None:
         competing["signature_hex"],
         competing["public_key"],
         semantic["expected_network"],
-        competing["authorization"],
+        dict(
+            competing["authorization"], genesis_payload=competing_genesis.hex()
+        ),
     )
     if not accepted:
         fail(f"valid competing name claim was rejected: {reason}")

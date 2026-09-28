@@ -146,12 +146,33 @@ def _seal_script_matches(creating: dict, seal: bytes, state: dict) -> bool:
     return vout < len(outputs) and outputs[vout][1] == expected
 
 
-def payout(fixture: dict, claim_name: str, package_name: str, view: dict,
-           state_fn=identity_state) -> str:
+def normative_claim_valid(package: dict, claim: dict) -> bool:
+    signer = bytes.fromhex(claim["public_key"])
+    auth = ob.authorization(package, signer)
+    if auth is None:
+        return False
+    auth["genesis_payload"] = package["genesis"]
+    accepted, _ = ob.cv.evaluate_name_claim(
+        bytes.fromhex(claim["payload"]),
+        claim["signature"],
+        claim["public_key"],
+        go.NETWORK,
+        auth,
+    )
+    return accepted
+
+
+def payout(
+    fixture: dict,
+    claim_name: str,
+    package_name: str,
+    view: dict,
+    state_fn=identity_state,
+    claim_fn=normative_claim_valid,
+) -> str:
     c = fixture["claims"][claim_name]
     package = fixture["packages"][package_name]
-    claim = ob.evaluate_claim(package, c)
-    if claim != "accepted":
+    if not claim_fn(package, c):
         return "REJECT"
     return "ACCEPT" if state_fn(fixture, package, view) == "CURRENT" else "REJECT"
 
@@ -262,11 +283,14 @@ def run(fixture: dict) -> list[dict]:
     def option_b_state(fx, package, v):
         return legacy.identity_state(fx, package, v, "b")
     row("N", "root-only rule admits a same-seal attacker payout", "ACCEPT",
-        payout(fixture, "A-attacker-claim-same-seal", "A-attacker-same-seal", base, root_only_state))
+        payout(fixture, "A-attacker-claim-same-seal", "A-attacker-same-seal", base,
+               root_only_state, legacy.claim_valid))
     row("N", "root-only rule admits an own-seal attacker payout", "ACCEPT",
-        payout(fixture, "A-attacker-claim-own-seal", "A-attacker-own-seal", base, root_only_state))
+        payout(fixture, "A-attacker-claim-own-seal", "A-attacker-own-seal", base,
+               root_only_state, legacy.claim_valid))
     row("N", "Option B admits a same-seal attacker payout", "ACCEPT",
-        payout(fixture, "B-attacker-claim-same-seal", "B-attacker-same-seal", base, option_b_state))
+        payout(fixture, "B-attacker-claim-same-seal", "B-attacker-same-seal", base,
+               option_b_state, legacy.claim_valid))
     row("N", "root-only rule gives both seals the same EntityID", True,
         P["A-attacker-own-seal"]["entity_id"] == P["A-legit"]["entity_id"])
     return rows

@@ -26,6 +26,73 @@ def option_b_entity_id(root: bytes, seal: bytes) -> bytes:
     )
 
 
+def evaluate_name_claim(
+    payload: bytes,
+    signature: str,
+    public_key: str,
+    expected_network: int,
+    authorization: dict,
+) -> tuple[bool, str]:
+    """Exact c7b0871 claim-evaluation semantics for negative controls."""
+    import check_vectors as cv
+
+    try:
+        claim = cv.parse_claim(payload)
+    except cv.ClaimDecodeError as error:
+        return False, str(error)
+    digest = cv.tagged_hash(cv.CLAIM_TAG, payload)
+    if not cv.crypto_verify(public_key, digest.hex(), signature):
+        return False, "invalid signature"
+    if claim["network"] not in cv.KNOWN_NETWORKS or expected_network not in cv.KNOWN_NETWORKS:
+        return False, "unknown Bitcoin network"
+    if claim["network"] != expected_network:
+        return False, "wrong verifier network"
+    if claim["version"] != 1 or claim["object_type"] != 4 or claim["capability"] != 4:
+        return False, "object/domain/capability mismatch"
+    if claim["key_role"] != 1:
+        return False, "wrong signing-key role"
+    if claim["authorizing_state"] is None:
+        return False, "missing authorizing state"
+    try:
+        public_key_bytes = bytes.fromhex(public_key)
+    except ValueError:
+        return False, "invalid public key encoding"
+    expected_key_id = cv.tagged_hash(
+        cv.KEY_TAG, bytes([claim["key_role"]]) + public_key_bytes
+    )
+    if claim["signing_key_id"] != expected_key_id:
+        return False, "signing key ID does not match role and public key"
+    if claim["signing_entity"] != claim["subject"]:
+        return False, "name claim is not self-issued"
+    if (
+        authorization.get("entity") != claim["signing_entity"].hex()
+        or authorization.get("state")
+        != (claim["authorizing_state"].hex() if claim["authorizing_state"] else None)
+        or authorization.get("key_id") != claim["signing_key_id"].hex()
+        or authorization.get("public_key") != public_key
+        or authorization.get("key_role") != claim["key_role"]
+        or claim["capability"] not in authorization.get("capabilities", [])
+    ):
+        return False, "signer is not authorized by the stated fixture state"
+    return True, "accepted"
+
+
+def claim_valid(package: dict, claim: dict) -> bool:
+    from check_option_b import authorization
+
+    auth = authorization(package, bytes.fromhex(claim["public_key"]))
+    if auth is None:
+        return False
+    accepted, _ = evaluate_name_claim(
+        bytes.fromhex(claim["payload"]),
+        claim["signature"],
+        claim["public_key"],
+        NETWORK,
+        auth,
+    )
+    return accepted
+
+
 def genesis_valid(package: dict, derivation: str) -> bool:
     payload = bytes.fromhex(package["genesis"])
     signature = package["signature"]
