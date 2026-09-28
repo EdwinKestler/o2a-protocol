@@ -23,7 +23,10 @@ The current local wheel came from `/home/kestl/github/palimnex/dist/` and has
 SHA-256 `be01f323b0bfc3ab4755ea53780384f21b839f66da443d2ba45d25efb3d94044`.
 The O2A project UUID and cache namespace are distinct from Palimnex's own.
 The private Redis socket and SQLite ledger live under ignored `.palimnex/`.
-The frozen retrieval fixture is under `evaluation/` and excluded from indexing.
+Frozen retrieval fixtures are under `evaluation/` and excluded from indexing.
+Within a case, `expected_paths` has all-of semantics: every listed path must
+appear within that case's result limit. Use a dedicated case when alternatives
+or a more exact query need separate coverage.
 
 Agent instructions live in the repository-root `AGENTS.md`. Claude and Gemini
 have root instruction files, Copilot has `.github/copilot-instructions.md`, and
