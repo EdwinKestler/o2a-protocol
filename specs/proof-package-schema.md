@@ -92,7 +92,8 @@ content hash to the signed manifest.
 The package, or content-addressed objects it references, MUST provide enough
 data for a conforming wallet to validate:
 
-- the EntityID derivation from network, profile, and immutable root public key;
+- the canonical genesis payload and the EntityID recomputed as
+  `TaggedHash("O2A/v0.1/entity-id", genesis_payload)`;
 - the O2A RGB contract/schema and identity history from genesis to
   `subject_state`;
 - each transaction that created a seal output named by the history, the output
@@ -114,6 +115,12 @@ object is one the manifest includes or references and whose bytes are absent.
 A hash mismatch is invalid. A verifier MUST NOT reconstruct missing
 client-side state from a transaction ID, registry row, profile badge, or
 discovery binding.
+
+The verifier MUST validate the included genesis first, require its
+`signer_entity` to be 32 zero bytes, and recompute the EntityID from the exact
+canonical genesis payload. Every non-genesis object and every named subject or
+publisher EntityID in that history MUST match the recomputed value. A mismatch
+is `INVALID`; an externally supplied EntityID is never authoritative.
 
 For each seal-creating transaction, the verifier recomputes the expected P2TR
 scriptPubKey from the seal policy committed by the state that names the

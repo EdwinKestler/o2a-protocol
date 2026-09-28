@@ -18,10 +18,12 @@ from derive_route_b import CURVE_N, CURVE_P, _point_add, public_point
 
 HERE = Path(__file__).resolve().parent
 FIXTURE_PATH = HERE / "protocol-objects-v0.1.json"
+ENTITY_ID_FIXTURE_PATH = HERE / "entity-id-v0.1.json"
 SEAL_FIXTURE_PATH = HERE / "seal-script-v0.1.json"
 CRYPTO_MANIFEST = HERE / "crypto-checker" / "Cargo.toml"
 
 ENTITY_TAG = "O2A/v0.1/entity-id"
+ZERO_ENTITY = bytes(32)
 KEY_TAG = "O2A/v0.1/key-id"
 POLICY_TAG = "O2A/v0.1/recovery-policy"
 SEAL_INTERNAL_KEY = bytes.fromhex(
@@ -263,8 +265,17 @@ def seal_output(
     }
 
 
-def entity_id(root: bytes) -> bytes:
-    return tagged_hash(ENTITY_TAG, u16(1) + bytes([NETWORK]) + root)
+def entity_id(genesis_payload: bytes) -> bytes:
+    """Return the ADR-0008 EntityID for exact O2A-CANON-1 genesis bytes."""
+    if (
+        len(genesis_payload) < 37
+        or genesis_payload[:2] != u16(1)
+        or genesis_payload[2] not in KNOWN_NETWORKS
+        or genesis_payload[3:5] != u16(1)
+        or genesis_payload[5:37] != ZERO_ENTITY
+    ):
+        raise ValueError("invalid genesis header for EntityID")
+    return tagged_hash(ENTITY_TAG, genesis_payload)
 
 
 def key_id(role: int, public_key: bytes) -> bytes:
@@ -294,6 +305,15 @@ def common_header(
             bytes([role]),
             u16(capability),
         )
+    )
+
+
+def entity_genesis_payload(root: bytes, entity_type: int, state: bytes) -> bytes:
+    return (
+        common_header(1, 1, ZERO_ENTITY, None, key_id(0, root), 0)
+        + u16(entity_type)
+        + root
+        + state
     )
 
 
@@ -757,9 +777,6 @@ def signed_case(
 
 
 def build_cases() -> list[dict]:
-    root_entity = entity_id(ROOT_PUBLIC)
-    event_entity = entity_id(RECOVERY_PUBLIC)
-    album_entity = entity_id(ALBUM_ROOT)
     recovery_key = key_id(2, RECOVERY_PUBLIC)
     policy = recovery_policy([recovery_key])
     genesis_state = resulting_state(
@@ -786,15 +803,25 @@ def build_cases() -> list[dict]:
         CONTROLLER_PUBLIC,
         policy,
     )
+    root_genesis = entity_genesis_payload(ROOT_PUBLIC, 2, genesis_state)
+    event_genesis = entity_genesis_payload(RECOVERY_PUBLIC, 8, genesis_state)
+    album_genesis = entity_genesis_payload(ALBUM_ROOT, 9, genesis_state)
+    root_entity = entity_id(root_genesis)
+    event_entity = entity_id(event_genesis)
+    album_entity = entity_id(album_genesis)
     cases = [
         signed_case(
             "entity_genesis",
-            root_entity,
+            ZERO_ENTITY,
             None,
             ROOT_PUBLIC,
             u16(2) + ROOT_PUBLIC + genesis_state,
             "scalar-3",
-            {"entity_type": 2, "root": ROOT_PUBLIC.hex()},
+            {
+                "entity_type": 2,
+                "root": ROOT_PUBLIC.hex(),
+                "entity_id": root_entity.hex(),
+            },
         ),
         signed_case(
             "identity_transition",
@@ -1061,6 +1088,16 @@ def build_cases() -> list[dict]:
             ),
         ]
     )
+    for case in cases:
+        if case["name"] == "entity_genesis":
+            continue
+        if case["name"] == "event_manifest":
+            genesis = event_genesis
+        elif case["name"] == "album_manifest":
+            genesis = album_genesis
+        else:
+            genesis = root_genesis
+        case["evaluation"]["genesis_payload"] = genesis
     return cases
 
 
@@ -1096,6 +1133,63 @@ def crypto_sign(key_name: str, message: bytes) -> tuple[str, str]:
         fail(result.stderr.strip() or "test-vector signing failed")
     public_key, signature = result.stdout.strip().split()
     return public_key, signature
+
+
+def rust_entity_id(genesis_payload: bytes) -> bytes:
+    result = crypto(["entity-id", genesis_payload.hex()])
+    if result.returncode != 0:
+        fail(result.stderr.strip() or "Rust EntityID checker failed")
+    try:
+        return bytes.fromhex(result.stdout.strip())
+    except ValueError:
+        fail("Rust EntityID checker returned invalid hex")
+
+
+def build_entity_id_vectors() -> dict:
+    cases = {case["name"]: case for case in build_cases()}
+    payloads = {
+        "artist": cases["entity_genesis"]["payload"],
+        "event": cases["event_manifest"]["evaluation"]["genesis_payload"],
+        "album": cases["album_manifest"]["evaluation"]["genesis_payload"],
+    }
+    return {
+        "spdx": "CC0-1.0",
+        "profile": "ADR-0008 genesis-bound EntityID Draft v0.1",
+        "cases": {
+            name: {
+                "genesis_payload_hex": payload.hex(),
+                "entity_id_hex": entity_id(payload).hex(),
+            }
+            for name, payload in payloads.items()
+        },
+    }
+
+
+def emit_entity_id_vectors() -> None:
+    print(json.dumps(build_entity_id_vectors(), indent=2, sort_keys=True))
+
+
+def check_entity_id_vectors() -> None:
+    fixture = json.loads(ENTITY_ID_FIXTURE_PATH.read_text(encoding="utf-8"))
+    expected = build_entity_id_vectors()
+    if fixture != expected:
+        fail("genesis-bound EntityID fixture mismatch")
+    for name, vector in fixture["cases"].items():
+        payload = bytes.fromhex(vector["genesis_payload_hex"])
+        expected_id = bytes.fromhex(vector["entity_id_hex"])
+        if entity_id(payload) != expected_id:
+            fail(f"{name}: Python EntityID mismatch")
+        if rust_entity_id(payload) != expected_id:
+            fail(f"{name}: Rust EntityID mismatch")
+        nonzero_signer = payload[:5] + b"\x01" + payload[6:]
+        try:
+            entity_id(nonzero_signer)
+        except ValueError:
+            pass
+        else:
+            fail(f"{name}: Python accepted nonzero genesis signer_entity")
+        if crypto(["entity-id", nonzero_signer.hex()]).returncode == 0:
+            fail(f"{name}: Rust accepted nonzero genesis signer_entity")
 
 
 def build_seal_cases() -> dict[str, dict]:
@@ -1215,6 +1309,7 @@ def identity_history_outcome(
     spend_confirmations: int,
     required_depth: int,
     valid_transition: bool,
+    seal_creating_confirmations: list[int | None] | None = None,
 ) -> dict:
     result = {
         "bitcoin_view_source": bitcoin_view_source,
@@ -1228,6 +1323,17 @@ def identity_history_outcome(
         or seal_observation is None
     ):
         return dict(result, state="INCOMPLETE")
+    if seal_creating_confirmations is not None:
+        if not seal_creating_confirmations or any(
+            confirmations is None for confirmations in seal_creating_confirmations
+        ):
+            return dict(result, state="INCOMPLETE")
+        if any(
+            confirmations < required_depth
+            for confirmations in seal_creating_confirmations
+            if confirmations is not None
+        ):
+            return dict(result, state="PENDING_CONFIRMATION")
     if seal_observation == "unspent":
         return dict(result, state="CURRENT")
     if (
@@ -1411,6 +1517,36 @@ def check_seal_vectors() -> None:
         fail("missing current-seal observation was not incomplete")
     if (
         identity_history_outcome(
+            bitcoin_view_source="mainnet-rpc",
+            best_block_hash=bytes([0x45]) * 32,
+            observed_height=840_000,
+            seal_observation="unspent",
+            spend_proof=False,
+            spend_confirmations=0,
+            required_depth=6,
+            valid_transition=False,
+            seal_creating_confirmations=[12, 3],
+        )["state"]
+        != "PENDING_CONFIRMATION"
+    ):
+        fail("under-depth successor seal creator was not pending confirmation")
+    if (
+        identity_history_outcome(
+            bitcoin_view_source="mainnet-rpc",
+            best_block_hash=bytes([0x45]) * 32,
+            observed_height=840_000,
+            seal_observation="unspent",
+            spend_proof=False,
+            spend_confirmations=0,
+            required_depth=6,
+            valid_transition=False,
+            seal_creating_confirmations=[12, None],
+        )["state"]
+        != "INCOMPLETE"
+    ):
+        fail("absent successor seal creator was not incomplete")
+    if (
+        identity_history_outcome(
             bitcoin_view_source="regtest-rpc",
             best_block_hash=bytes([0x44]) * 32,
             observed_height=120,
@@ -1575,6 +1711,31 @@ def authorization_matches(header: dict, public_key: bytes, authorization: dict |
     )
 
 
+def entity_id_from_valid_genesis(genesis_payload: bytes) -> bytes | None:
+    """Validate the identity-defining genesis fields and return its EntityID."""
+    try:
+        decoded = decode_payload(genesis_payload)
+    except DecodeError:
+        return None
+    header = decoded["header"]
+    body = decoded["body"]
+    if (
+        header["object_type"] != 1
+        or header["version"] != 1
+        or header["network"] not in KNOWN_NETWORKS
+        or header["signer_entity"] != ZERO_ENTITY
+        or header["authorizing_state"] is not None
+        or header["key_role"] != 0
+        or header["capability"] != 1
+        or body["entity_type"] not in set(range(1, 10))
+        or not crypto_xonly_valid(body["root"])
+        or header["signing_key_id"] != key_id(0, body["root"])
+        or not valid_state(body["state"], genesis=True)
+    ):
+        return None
+    return entity_id(genesis_payload)
+
+
 def evaluate_signed_payload(
     payload: bytes,
     signature: str,
@@ -1608,10 +1769,20 @@ def evaluate_signed_payload(
     if header["object_type"] == 1:
         if header["authorizing_state"] is not None or context.get("authorization") is not None:
             return "invalid"
-    elif header["authorizing_state"] is None or not authorization_matches(
-        header, public_key, context.get("authorization")
-    ):
-        return "invalid"
+    else:
+        genesis_payload = context.get("genesis_payload")
+        history_entity = (
+            entity_id_from_valid_genesis(genesis_payload)
+            if isinstance(genesis_payload, bytes)
+            else None
+        )
+        if (
+            history_entity is None
+            or header["signer_entity"] != history_entity
+            or header["authorizing_state"] is None
+            or not authorization_matches(header, public_key, context.get("authorization"))
+        ):
+            return "invalid"
 
     object_type = header["object_type"]
     if object_type == 1:
@@ -1620,7 +1791,8 @@ def evaluate_signed_payload(
             if body["entity_type"] in set(range(1, 10))
             and crypto_xonly_valid(body["root"])
             and body["root"] == public_key
-            and header["signer_entity"] == entity_id(body["root"])
+            and header["signer_entity"] == ZERO_ENTITY
+            and header["signing_key_id"] == key_id(0, body["root"])
             and valid_state(body["state"], genesis=True)
             and body["root"]
             not in set(
@@ -1859,6 +2031,7 @@ def emit() -> None:
 
 
 def check() -> None:
+    check_entity_id_vectors()
     check_seal_vectors()
     fixture = json.loads(FIXTURE_PATH.read_text(encoding="utf-8"))
     cases = build_cases()
@@ -2147,7 +2320,7 @@ def check() -> None:
 
     discovery_id = tagged_hash(discovery["tag"], discovery["payload"])
     package_manifest = build_manifest(
-        entity_id(ROOT_PUBLIC),
+        entity_id(genesis["payload"]),
         STATE,
         key_id(1, ROOT_PUBLIC),
         omitted_object_id=discovery_id,
@@ -2174,7 +2347,7 @@ def check() -> None:
     wrong_event_entity = patch_span(
         event["payload"],
         event_decoded["spans"]["signer_entity"],
-        entity_id(ALBUM_ROOT),
+        entity_id(by_name["album_manifest"]["evaluation"]["genesis_payload"]),
     )
     resign_and_evaluate(event, wrong_event_entity, "invalid")
 
@@ -2191,8 +2364,10 @@ if __name__ == "__main__":
         emit()
     elif sys.argv[1:] == ["--emit-seal"]:
         emit_seal_vectors()
+    elif sys.argv[1:] == ["--emit-entity-id"]:
+        emit_entity_id_vectors()
     elif sys.argv[1:]:
-        fail("usage: check_protocol_objects.py [--emit|--emit-seal]")
+        fail("usage: check_protocol_objects.py [--emit|--emit-seal|--emit-entity-id]")
     else:
         check()
         print("protocol objects ok")

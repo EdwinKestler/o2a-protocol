@@ -5,17 +5,26 @@
 The O2A state machine is specified. Concrete RGB 0.12 program bytes and the
 dependency lock remain open. This document does not adopt RGB-WG RC3.
 
-## Same machine, fixed root
+## Same machine, genesis-bound identity
 
 Artist, venue, promoter, label, event, and album identities use this same
 state machine. The machine is not specialized by entity type. Person, band,
 and organization identities use it as well, and each entity still has its own
 root.
 
-The root public key is fixed at genesis. Operations 1 through 5 do not change
-the root or the EntityID. A different root is a different EntityID. See
-[ADR-0005](../adr/0005-bitcoin-rooted-self-custodial-identity.md) and the
-[entity schema](entity-schema.md).
+The root public key and complete canonical genesis payload are fixed. The
+EntityID is the O2A-CANON-1 tagged hash of that payload, whose
+`signer_entity` is 32 zero bytes. Operations 1 through 5 do not change the root
+or the EntityID. A different root or any other genesis-payload byte produces a
+different EntityID. See [ADR-0008](../adr/0008-genesis-bound-entity-id.md) and
+the [entity schema](entity-schema.md).
+
+Identical genesis payloads produce identical EntityIDs. Distinct payloads,
+including payloads that name the same seal, produce distinct EntityIDs subject
+to SHA-256 collision resistance. Thus each EntityID has exactly one genesis.
+At most one history on a shared genesis seal can continue: once one valid
+transition spends it at the required depth, every other history on that seal
+is `SEAL_CLOSED_WITHOUT_VALID_TRANSITION`.
 
 ## Operations
 
@@ -299,6 +308,19 @@ transitions. Whether an anchor is current is decided only against the named
 evaluation context and the supplied consignment. If two candidate anchors
 spend the same seal, only a candidate present in that best chain at the
 required depth can be current.
+
+`CURRENT` additionally requires every transaction that created a seal output
+named anywhere in the valid history, including the genesis seal and all
+successor seals, to be present in that named best chain at the same required
+depth. A present creating transaction below depth yields
+`PENDING_CONFIRMATION`; an absent one yields `INCOMPLETE`. Wallets MUST NOT
+present an EntityID as final while the history is `PENDING_CONFIRMATION`.
+
+RBF replacement of the transaction creating the genesis seal removes its
+named outpoint and invalidates that genesis; a wallet MUST discard the pending
+EntityID. CPFP preserves the transaction and outpoint and therefore preserves
+the EntityID. The same presence, depth, and reorg test applies to successor
+seal-creating transactions before their histories can be `CURRENT`.
 
 ## Outside this contract
 

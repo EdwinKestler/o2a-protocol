@@ -42,7 +42,7 @@
 
     <section class="section wrap" id="idea" aria-labelledby="idea-title">
       <div class="section-top"><p class="eyebrow">01 / THE OPPORTUNITY</p><span class="section-note">Recognition should travel.</span></div>
-      <div class="split-heading"><h2 id="idea-title">One participant.<br>Too many rented identifiers.</h2><p>Streaming platforms, ticketing systems, and catalogs each assign their own IDs. O2A proposes a public-key-rooted ID the owner controls locally and can connect to those records with portable evidence.</p></div>
+      <div class="split-heading"><h2 id="idea-title">One participant.<br>Too many rented identifiers.</h2><p>Streaming platforms, ticketing systems, and catalogs each assign their own IDs. O2A proposes a genesis-bound ID, signed by a dedicated root key, that the owner controls locally and can connect to those records with portable evidence.</p></div>
       <div class="problem-grid">
         <article class="problem-card"><span class="card-number">01</span><h3>Identity without a single gatekeeper</h3><p>Create a dedicated BIP340 identity key in your wallet. RGB records its lifecycle with Bitcoin anchors while platform IDs remain signed references.</p><div class="mini-ids" aria-hidden="true"><span>Platform A</span><span>Platform B</span><span>Catalog C</span><b>↘ &nbsp; EntityID &nbsp; ↙</b></div></article>
         <article class="problem-card"><span class="card-number">02</span><h3>A working history you can carry</h3><p>Keep claims, counterparties, and known disputes in a portable package. A new service can evaluate the evidence without starting from an unexplained badge.</p><div class="mini-history" aria-hidden="true"><span>Claim</span><i></i><span>Attest</span><i></i><span>Verify</span></div></article>
@@ -74,7 +74,7 @@
       <p class="diagram-hint">Swipe each figure sideways to read it.</p>
       <div class="diagram-list">
         <figure class="diagram" id="flow">
-          <img src="assets/protocol-flow.svg" width="1200" height="900" alt="Protocol flow: an owner wallet creates a BIP340-rooted EntityID, evolves its RGB lifecycle anchored to Bitcoin, signs typed evidence, exports a content-addressed public proof package, transfers or publishes it, and lets independent wallets validate the same bounded inputs.">
+          <img src="assets/protocol-flow.svg" width="1200" height="900" alt="Protocol flow: an owner wallet creates a genesis-bound EntityID signed by a dedicated BIP340 root, evolves its RGB lifecycle anchored to Bitcoin, signs typed evidence, exports a content-addressed public proof package, transfers or publishes it, and lets independent wallets validate the same bounded inputs.">
           <figcaption><strong>Protocol flow.</strong> The owner exports the public identity-history shard, Bitcoin proofs, evidence, policy, and context in an immutable package. A direct recipient or stranger wallet verifies the bytes and every authority boundary.</figcaption>
         </figure>
         <figure class="diagram" id="framework">

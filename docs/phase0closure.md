@@ -13,6 +13,8 @@ normative program bytes, persistent identities, or an adopted dependency lock.
   [ADR-0006](../adr/0006-route-b-key-derivation-via-bip85.md). All seven
   derivation evidence gates are satisfied; mainnet freeze is deferred.
 - O2A-CANON-1 defines the canonical primitive and container encoding.
+- ADR-0008 fixes the Draft v0.1 EntityID as the tagged hash of the canonical
+  root-signed genesis payload; it does not close the mainnet or RGB gates.
 - Canonical layouts and signing domains exist for all twelve signed objects.
 - The Python protocol/vector checker and the independent locked Rust
   cryptographic checker exercise the retained conformance fixtures.
@@ -52,8 +54,9 @@ demo repository.
 
 The restore/discovery item is separate from deterministic key derivation. A
 mnemonic can reproduce keys only after the wallet knows which `entity'` and
-per-role indexes to derive. The source and verification rule for rebuilding
-that allocation set remain unspecified.
+per-role indexes to derive, and it cannot reproduce genesis-bound EntityIDs
+without retained genesis payloads or consignments. The source and verification
+rule for rebuilding that material remain unspecified.
 
 ## Current checks
 

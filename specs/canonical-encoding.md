@@ -64,7 +64,7 @@ Protocol version is `u16(1)`. Network is one `u8`:
 ```text
 EntityID = TaggedHash(
   "O2A/v0.1/entity-id",
-  u16(1) || network || root_xonly
+  genesis_payload
 )
 
 key_id = TaggedHash(
@@ -73,9 +73,14 @@ key_id = TaggedHash(
 )
 ```
 
-The EntityID preimage is 35 bytes. Controller rotation, recovery, custody
-transfer, and revocation do not change it. A different root or network produces
-a different EntityID.
+`genesis_payload` is the exact O2A-CANON-1 entity-genesis payload defined
+below, without its signature. Its common header contains a zero
+`signer_entity`, so this derivation is not self-referential. The payload binds
+the version, network, entity type, root key, genesis seal, and complete initial
+state. Identical payloads produce one EntityID; any byte difference produces a
+different EntityID, subject to SHA-256 collision resistance. Controller
+rotation, recovery, custody transfer, and revocation retain the EntityID
+computed from the validated history's genesis.
 
 ### Key roles
 
@@ -181,10 +186,13 @@ version || network || object_type || signer_entity || authorizing_state
 | key_role | key-role `u8` |
 | capability | capability `u16` |
 
-Genesis MUST use an absent `authorizing_state`, the root role, and capability
-1. Every other object MUST name the validated prior or current authorizing
-state. The header's object type, capability, key role, and domain must be
-authorized together; none can be inferred from a filename or API route.
+Genesis MUST use 32 zero bytes for `signer_entity`, an absent
+`authorizing_state`, the root role, and capability 1. This is the only
+`signer_entity` exception. Every other object MUST name the EntityID recomputed
+from its validated history's genesis and MUST name the validated prior or
+current authorizing state. The header's object type, capability, key role, and
+domain must be authorized together; none can be inferred from a filename or
+API route.
 
 ## Shared compound values
 
@@ -298,8 +306,10 @@ common_header || entity_type || root_xonly || resulting_state
 
 Entity type is `u16`: 1 PERSON, 2 ARTIST, 3 BAND, 4 VENUE, 5 PROMOTER,
 6 LABEL, 7 ORGANIZATION, 8 EVENT, or 9 ALBUM. The resulting state has sequence
-0 and an absent previous state. `signer_entity` MUST equal the EntityID derived
-from `root_xonly`, and `signing_key_id` MUST identify that root.
+0 and an absent previous state. `signer_entity` MUST be 32 zero bytes, and
+`signing_key_id` MUST identify `root_xonly`. The EntityID is
+`TaggedHash("O2A/v0.1/entity-id", genesis_payload)` over these exact payload
+bytes. A genesis with any nonzero `signer_entity` is invalid.
 
 ### 2. Identity transition
 

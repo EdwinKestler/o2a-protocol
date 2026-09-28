@@ -2,6 +2,8 @@
 
 **Status:** Accepted for v0.1 design
 
+**Amended by [ADR-0008](0008-genesis-bound-entity-id.md).**
+
 ## Context
 
 O2A exists to give participants in the music ecosystem a public identifier

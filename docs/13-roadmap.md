@@ -19,7 +19,8 @@ production wallet or identity crate.
 
 ## Phase 0 — Freeze the Bitcoin-native specification
 
-- freeze the EntityID encoding rooted in a dedicated BIP340 public key;
+- retain the accepted genesis-bound EntityID encoding and add independent
+  implementation and lifecycle vectors;
 - freeze distinct tagged-hash signing domains and cross-domain rejection
   vectors for genesis, transitions, recovery, evidence, discovery bindings,
   proof packages, and music manifests;
@@ -61,7 +62,7 @@ No production implementation code is accepted before this gate closes.
 Release sequence:
 
 ```text
-0.0.1 BIP340 EntityID + canonical encoding
+0.0.1 Genesis-bound EntityID + canonical encoding
 0.0.2 RGB identity genesis + Bitcoin anchor
 0.0.3 Controller rotation + recovery + revocation
 0.0.4 Claims + attestations + control observations

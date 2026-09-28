@@ -4,8 +4,9 @@
 attestation, verification, and registry protocol for the music ecosystem.
 
 Each artist, venue, promoter, label, live event, and album has a public O2A
-EntityID rooted in its own dedicated BIP340/secp256k1 identity key. The owner
-holds that key and its proof data in a self-custodial wallet/node. Identity
+EntityID derived from its complete canonical genesis payload. That payload is
+signed by its own dedicated BIP340/secp256k1 identity key. The owner holds the
+key and proof data in a self-custodial wallet/node. Identity
 genesis, controller changes, recovery-policy changes, and revocation are RGB
 client-side state transitions anchored to Bitcoin. O2A-signing keys are never
 Bitcoin spending keys; dedicated role-4 seal keys spend the identity's
@@ -19,6 +20,8 @@ without pretending that the first claimant owns a spelling forever.
 Start with the [project vision and rationale](docs/00-vision.md) and the
 accepted
 [Bitcoin-rooted identity decision](adr/0005-bitcoin-rooted-self-custodial-identity.md).
+Its EntityID derivation is amended by the accepted
+[genesis-bound identity decision](adr/0008-genesis-bound-entity-id.md).
 
 The [project website draft](docs/WEBSITE.md) has a public Sites deployment and
 a local preview. Public access is the default Sites policy; GitHub Pages remains
@@ -32,7 +35,7 @@ Bitcoin consensus
     ↓
 RGB identity state
     ↓
-BIP340 key-rooted EntityID
+Genesis-bound EntityID signed by its BIP340 root
     ↓
 Claims and attestations
     ↓
@@ -76,7 +79,7 @@ authority; private wallet state remains excluded.
 
 O2A v0.1 specifies:
 
-- BIP340-rooted EntityID genesis on RGB/Bitcoin;
+- genesis-bound EntityIDs signed by dedicated BIP340 roots on RGB/Bitcoin;
 - controller rotation, committed recovery rules, and revocation;
 - signed claims and third-party attestations;
 - DNS, HTTPS, Pubky, Nostr, and social channel-control observations;
@@ -160,7 +163,7 @@ implementation code is accepted.
 The first complete protocol scenario is:
 
 1. An artist, venue, promoter, label, live event, and album create distinct
-   key-rooted EntityIDs through RGB genesis transitions on Bitcoin regtest.
+   genesis-bound EntityIDs through RGB genesis transitions on Bitcoin regtest.
 2. Their wallets validate the RGB histories and current controller keys.
 3. Day-to-day controller keys sign typed objects while root and Bitcoin
    spending keys remain separate.

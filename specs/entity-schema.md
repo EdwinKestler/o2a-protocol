@@ -13,7 +13,7 @@ has not frozen the full wallet profile.
   "protocol_version": "0.1",
   "object_type": "entity",
   "network": "<bitcoin-network>",
-  "entity_id": "<id-derived-from-network-and-root-identity-key>",
+  "entity_id": "<tagged-hash-of-canonical-genesis-payload>",
   "entity_type": "ARTIST",
   "root_identity_key": {
     "scheme": "bip340-secp256k1",
@@ -78,8 +78,10 @@ has not frozen the full wallet profile.
   payment keys and every O2A-signing key;
 - key role and authorization capability MUST be encoded and validated as
   separate values;
-- `entity_id` MUST be deterministically rooted in the protocol profile,
-  Bitcoin network, and root identity public key;
+- `entity_id` MUST equal the O2A-CANON-1 tagged hash of the exact canonical
+  genesis payload, whose header uses 32 zero bytes for `signer_entity`;
+- verifiers MUST recompute `entity_id` from the validated genesis rather than
+  trust an identifier supplied beside a package or history;
 - genesis MUST be signed by the root key and represented by an RGB state
   anchored to Bitcoin;
 - genesis, transitions, and recovery authorizations MUST use their respective
@@ -106,8 +108,9 @@ has not frozen the full wallet profile.
   current valid state grants it the required capability;
 - `entity_id` MUST remain stable across operational-controller rotation and
   authorized recovery;
-- the root public key MUST remain immutable. A replacement root produces a new
-  EntityID rather than a recovery transition;
+- the root public key and genesis payload MUST remain immutable. A replacement
+  root or any distinct genesis produces a new EntityID rather than a recovery
+  transition;
 - canonical serialization MUST exclude transport-only metadata;
 - human-readable profiles SHOULD remain separable from identity-critical state;
 - the exact EntityID encoding and O2A state payload grammar are specified in

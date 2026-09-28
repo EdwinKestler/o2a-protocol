@@ -29,7 +29,7 @@ This is the first complete scenario. It matches the [roadmap](../13-roadmap.md) 
 ```mermaid
 flowchart TB
     subgraph OWNER["Owner wallet / node"]
-        E["1 Create EntityID<br/>immutable BIP340 root<br/>separate from spending keys"]
+        E["1 Create EntityID<br/>canonical genesis + BIP340 root<br/>separate from spending keys"]
         L["2 Evolve identity<br/>controller rotation · recovery<br/>revocation under RGB state"]
         S["3 Sign typed evidence<br/>name · DNS/social control<br/>event/album manifests · relationships"]
         PKG["4 Export public proof package<br/>identity-history shard · Bitcoin proofs<br/>evidence · policy · context"]

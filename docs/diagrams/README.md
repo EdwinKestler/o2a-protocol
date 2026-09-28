@@ -30,7 +30,8 @@ repeated a master in an older form:
 ## Design rules reflected in these diagrams
 
 - lower layers never depend on upper layers;
-- every EntityID is rooted in a dedicated BIP340 key and an RGB lifecycle
+- every EntityID is bound to a canonical genesis signed by a dedicated BIP340
+  key and followed by an RGB lifecycle
   anchored to Bitcoin;
 - artist, venue, promoter, label/organization, event, and album identities
   each have their own public key;

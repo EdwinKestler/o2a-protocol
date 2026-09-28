@@ -7,7 +7,7 @@ prerequisite it must validate or consume; they do not transfer authority.
 ```mermaid
 flowchart LR
     subgraph CUSTODY["Owner-controlled custody"]
-        ROOT["Immutable EntityID root<br/>dedicated BIP340 key"]
+        ROOT["Genesis-bound EntityID<br/>dedicated BIP340 root signs genesis"]
         CTRL["Rotatable controllers<br/>recovery policy · revocation"]
         LOCAL["Wallet/node storage<br/>seed · keys · consignments<br/>evidence · proof packages"]
         ROOT --> CTRL
@@ -61,7 +61,7 @@ flowchart LR
 | Evidence policy | an explained result over explicit evidence and context | authority to rewrite identity history |
 | Discovery and registries | finding packages and presenting rebuildable views | identity, consensus, or verification authority |
 
-The immutable root identifies the EntityID. Controller keys authorize ordinary
-operations and can rotate under validated RGB state. Bitcoin spending keys,
+The immutable, root-signed genesis payload identifies the EntityID. Controller
+keys authorize ordinary operations and can rotate under validated RGB state. Bitcoin spending keys,
 Pubky Ed25519 keys, Nostr publication keys, and payment endpoints remain
 separate and may only be connected through explicit signed bindings.
