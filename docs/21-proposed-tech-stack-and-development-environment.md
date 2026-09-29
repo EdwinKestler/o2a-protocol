@@ -98,6 +98,15 @@ incompatibilities in the Phase 0 profile. Keep the 0.11.1 and 0.12
 families in separate Cargo workspaces and bridge their distinct secp256k1 type
 families only through validated bytes.
 
+For artist-wallet, SplitNight, and other application work, use the
+[RGB ecosystem repository map](28-references.md#rgb-ecosystem-rgb-protocol-v0111-line-adr-0010)
+to select references from the accepted line. `rgb-lib` is the recommended
+wallet starting point because it supplies cross-platform Bitcoin/RGB wallet
+operations, but it exclusively manages its wallet's UTXOs and therefore MUST
+NOT hold O2A identity seals. The O2A adapter keeps its own seal records and
+performs script-path finalization; selecting an application SDK does not adopt
+the still-open production dependency lock.
+
 ## Initial development environment
 
 ### Base prerequisites
