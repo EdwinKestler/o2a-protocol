@@ -1,8 +1,11 @@
 # Upstream needs
 
-**Status:** tracked interoperability requests, 2026-09-24. This list records
-changes O2A would like upstream projects to make. It does not authorize an O2A
-fork, patch, dependency adoption, or production implementation.
+**Status:** historical 0.12-specific interoperability record under accepted
+[ADR-0010](../adr/0010-rgb-carrier-line.md), updated 2026-09-28. The selected
+first-transition line is rgb-protocol v0.11.1 with Opret. These retained
+RGB-WG and `bp-std` candidates are non-blocking historical evidence; this list
+does not authorize an O2A fork, patch, dependency adoption, or production
+implementation.
 
 ## RGB-WG
 

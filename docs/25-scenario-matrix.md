@@ -38,7 +38,7 @@ Source: demo commit `2ddfe8c`, bundle
 `o2a-testnet-demo`, and `docs/rgb-0.11.1-compat-memo.md` at that commit. Its
 22-file manifest has manifest-file SHA-256
 `2b376eed8bb5e5640fe542fbf4b5b4cb7d63315502a4de9f7115b18e16bd2cad`.
-This is disposable regtest evidence for proposed
+This is disposable regtest evidence for accepted
 [ADR-0010](../adr/0010-rgb-carrier-line.md), not production or mainnet
 evidence.
 
@@ -58,6 +58,12 @@ The immutable demo memo and `RUN.md` mark C8 `FAIL` and C9 `REPORT` under the
 then-current 2026-09-24 license gate. D14 reclassifies C8 for protocol decision
 purposes, and ADR-0010 uses C9 to select Opret; neither change rewrites the
 recorded evidence.
+
+Commit `31dc5df` adds the separate four-entry
+`evidence/regtest-rgb011-compat-2026-09-28-addendum/` manifest. Its blocking
+advisory, ban, and source checks pass; the license check reports MITNFA with
+exit 4, and the policy wrapper returns success because the reviewed license is
+report-only. The original C1–C9 bundle remains unchanged.
 
 ## Option B cases 1–4
 
@@ -159,12 +165,20 @@ reports. An initial F7 read while electrs lagged is retained separately as
 `e3-mismatch-electrs-lag.txt`; the filed result is the retry after heights
 matched.
 
-## Signet dress rehearsal — IN PROGRESS
+## Signet dress rehearsals
 
-Evidence workspace:
-`../o2a-testnet-demo/evidence/signet-block0-rehearsal-2026-09-28/`.
-This section is intentionally not summarized or scored. It will be filled only
-after Gate 3.
+All three bundles are disposable signet evidence from `o2a-testnet-demo`.
+They spend no mainnet coins and do not establish production or mainnet
+readiness. Rehearsal 1 is preserved but superseded; rehearsals 2 and 3 are
+clean runs with new seeds, entity indexes, and seals.
 
-| Scenario | Expected | Observed | Result | Evidence path |
-| --- | --- | --- | --- | --- |
+| Rehearsal | Carrier | Expected | Observed | Result | Evidence path |
+| --- | --- | --- | --- | --- | --- |
+| 1 | Pre-ADR-0010 / 0.12 line | Recompute the seal script from the signed genesis and verify without trusting a mutable seal record | The first verify returned `INVALID` because the verifier trusted `scriptPubKey` from a seal record that lacked the identity's seal keys. Rewriting that record made the run pass, so the result was not acceptable evidence. | SUPERSEDED: verifier boundary was wrong | `../o2a-testnet-demo/evidence/signet-block0-rehearsal-2026-09-28/RUN.md`; 46-entry manifest SHA-256 `ce48cda6ca83947fec2d26b91bd609718a02d962f8b98ed611e6b6bf69b0e3cc` |
+| 2 | 0.12 | Corrected verifier recomputes the seal script; six confirmations; two seedless verifiers `CURRENT`; claim, restore, outage, and unspent-seal checks pass | Six confirmations at height 324089; both reports matched and returned `CURRENT`; `official_name` and backup-only restore verified; unavailable network failed closed; no later seal spend | PASS, clean 0.12 rehearsal | `../o2a-testnet-demo/evidence/signet-block0-rehearsal-2-2026-09-28/RUN.md`; 46-entry manifest SHA-256 `bfc29c70fcb1be31acf147cb959d17e4f2c21f428464f2e3f68e83e45b66efde` |
+| 3 | rgb-protocol 0.11.1, Opret | Repeat the accepted carrier path at depth six with fresh state, two seedless verifier directories, a valid `official_name`, public-package restore, and an unspent seal | Six confirmations at height 324129; both reports matched and returned `CURRENT`; claim and restore verified; Core still returned the seal output unspent | PASS, clean 0.11.1 rehearsal | `../o2a-testnet-demo/evidence/signet-block0-rehearsal-3-2026-09-28/RUN.md`; 26-entry manifest SHA-256 `2d98449550921243ebaec876b732bb68a3f6fbda2ca765f4b0c7cbb3c91ea91f` |
+
+The two verifier labels in these runs are clean directories on one machine,
+not two physical clients. Rehearsal 3 is the signet evidence cited by accepted
+[ADR-0010](../adr/0010-rgb-carrier-line.md); rehearsal 2 remains clean archived
+0.12 evidence.

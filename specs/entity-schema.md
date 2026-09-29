@@ -118,8 +118,9 @@ has not frozen the full wallet profile.
 - human-readable profiles SHOULD remain separable from identity-critical state;
 - the exact EntityID encoding and O2A state payload grammar are specified in
   [canonical encoding](canonical-encoding.md); the identity derivation purpose,
-  RGB program/schema bytes, and Bitcoin commitment carrier remain open until
-  the Phase 0 dependency gate passes.
+  remaining derivation roles, RGB program/schema bytes, and production
+  dependency lock remain open. ADR-0010 selects rgb-protocol v0.11.1 and Opret
+  for the first transitions.
 
 ## Initial entity types
 

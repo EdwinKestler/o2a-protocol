@@ -22,12 +22,13 @@ accepted
 [Bitcoin-rooted identity decision](adr/0005-bitcoin-rooted-self-custodial-identity.md).
 Its EntityID derivation is amended by the accepted
 [genesis-bound identity decision](adr/0008-genesis-bound-entity-id.md).
-The proposed [scoped genesis freeze](adr/0009-scoped-genesis-freeze.md) would
-preserve the first mainnet genesis and its `official_name` claim indefinitely
+The accepted [scoped genesis freeze](adr/0009-scoped-genesis-freeze.md)
+preserves a frozen-format mainnet genesis and its `official_name` claim indefinitely
 with a signer-independent O2A-native state ID over
 `EntityID || resulting_state`, without freezing the unfinished RGB stack or
-the rest of Draft v0.1. It permits no identity transition until that stack is
-final.
+the rest of Draft v0.1. The accepted RGB line and carrier are rgb-protocol
+v0.11.1 and Opret; concrete program bytes and the remaining transition gates
+must still close before any identity transition.
 
 The [project website draft](docs/WEBSITE.md) has a public Sites deployment and
 a local preview. Public access is the default Sites policy; GitHub Pages remains
@@ -133,7 +134,8 @@ The [control-proof assessment](docs/17-control-proofs-and-verification-bonds.md)
 defines the channel-proof and independent-observation boundary.
 The [proposed technology stack and initial development environment](docs/21-proposed-tech-stack-and-development-environment.md)
 turns the accepted architecture into a CLI-first Rust and Bitcoin Core regtest
-plan while keeping the RGB lineage and dependency set behind a Phase 0 gate.
+plan while keeping the concrete RGB program and dependency lock behind Phase 0
+gates.
 The supporting [license/adoption assessment](docs/22-license-and-adoption-assessment.md)
 and [compatibility/security record](docs/23-stack-compatibility-and-security-readiness.md)
 record the accepted dual-license policy, the dependency-license assessment
@@ -161,9 +163,10 @@ reviewed choices without replacing their ADRs or specifications. The
 evidence path, command, hash, or upstream standard.
 
 No production implementation code should be introduced until the candidate
-v0.1 encoding and lifecycle rules are completed by an adopted RGB program and
-commitment carrier, a collision-safe identity derivation allocation, a
-compatible dependency lock, and complete deterministic conformance vectors.
+v0.1 encoding and lifecycle rules are completed by a concrete adopted RGB
+program, the remaining identity derivation allocation, a compatible dependency
+lock, and complete deterministic conformance vectors. ADR-0010 has selected
+the RGB line and Opret carrier, but it does not close those remaining gates.
 
 O2A-authored specifications, documentation, and future official reference
 software are licensed, at the recipient's option, under
@@ -210,12 +213,13 @@ The BIP340 root and required Bitcoin/RGB identity lifecycle are accepted design
 constraints. O2A-CANON-1 now specifies the candidate EntityID and object bytes,
 and the RGB identity-contract draft specifies candidate lifecycle, recovery,
 confirmation, and reorg behavior. The Route B key-derivation profile is
-**demo-stable v0.1** under [ADR-0006](adr/0006-route-b-key-derivation-via-bip85.md);
-its mainnet freeze is deferred. [ADR-0010](adr/0010-rgb-carrier-line.md)
-proposes rgb-protocol v0.11.1 with Opret for the first identity transitions;
-it is not accepted yet. Phase 0 remains open for that carrier-line decision,
-concrete O2A RGB program bytes, execution and custody evidence, the
-restore/discovery rule, mainnet derivation freeze, and later lock adoption.
-ADR-0009 is only proposed: no frozen-format identity may transition before the
-final RGB stack is adopted, and this repository makes no mainnet-readiness
-claim.
+**demo-stable v0.1** under [ADR-0006](adr/0006-route-b-key-derivation-via-bip85.md).
+[ADR-0009](adr/0009-scoped-genesis-freeze.md) is accepted and freezes the
+genesis, one `official_name` claim, and Route B format for roles 0, 1, 2, and
+4. [ADR-0010](adr/0010-rgb-carrier-line.md) is accepted and selects
+rgb-protocol v0.11.1 with Opret for the first identity transitions. Phase 0
+remains open for concrete O2A RGB program bytes, the production dependency
+lock, transition and custody gates outside the accepted evidence,
+restore/discovery, the remaining derivation profile, and broader conformance.
+No production or mainnet identity network is running, and this repository
+makes no mainnet-readiness claim.

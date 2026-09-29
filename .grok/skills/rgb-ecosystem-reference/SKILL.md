@@ -8,7 +8,7 @@ when-to-use: Before adding, upgrading or evaluating any RGB, RGB wallet or RGB S
 
 ## Two incompatible lines: never mix them in one dependency graph
 - RGB-WG v0.12: `github.com/RGB-WG/rgb` 0.12.0-rc.3 (release candidate). Its O2A compatibility evidence and patched fork remain archived.
-- rgb-protocol v0.11.1: the proposed ADR-0010 line for O2A's first transitions, using Opret. The 0.11.1 compatibility check is recorded at demo commit `2ddfe8c`; acceptance still requires the maintained port, a regtest lineage, a signet rehearsal, and license-register review.
+- rgb-protocol v0.11.1: the accepted ADR-0010 line for O2A's first transitions, using Opret. Demo commits `31dc5df` and `a86421f` record the compatibility addendum, maintained adapter, regtest lineage, and signet rehearsal; the maintainer reviewed the license register.
 
 O2A's genesis is RGB-line-agnostic. Keep every 0.11.1 adapter in a separate
 Cargo workspace from all 0.12 experiments; never place both lines in one

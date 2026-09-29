@@ -113,8 +113,9 @@ reorg rule without pretending an RGB stack has been adopted.
   transaction that commits to the transition hash.
 - Set confirmation depth to 1 on regtest, signet, testnet, and testnet4, and
   to 6 on mainnet. An anchor missing from the named best chain is not current.
-- State that the concrete RGB 0.12 program bytes stay unbound until the
-  dependency agent records an adopted lock.
+- State that ADR-0010 selects rgb-protocol v0.11.1 with Opret, while the
+  concrete O2A program bytes stay unbound until the dependency agent records
+  an adopted production lock.
 - Do not edit the encoding spec or the evidence schemas.
 
 ## 3. Evidence agent

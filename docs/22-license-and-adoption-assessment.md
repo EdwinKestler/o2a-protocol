@@ -74,9 +74,11 @@ dependency must be replaced before distribution.
 
 ### License register
 
+**Maintainer review:** completed 2026-09-28 for the register below.
+
 | Package | License and path | Assessment | Status |
 | --- | --- | --- | --- |
-| `hex_lit 0.1.1` | MITNFA; pulled in through `bitcoin 0.32.102` by `rgb-consensus 0.11.1` | MIT plus a no-false-attribution clause on modified distributions. Negligible risk for the recorded compatibility use: O2A does not modify or redistribute `hex_lit`. | accepted |
+| `hex_lit 0.1.1` | MITNFA; pulled in through `bitcoin 0.32.102` by `rgb-consensus 0.11.1` | MIT plus a no-false-attribution clause on modified distributions. Negligible risk for the recorded compatibility use: O2A does not modify or redistribute `hex_lit`. | accepted; reviewed 2026-09-28 |
 
 An `accepted` entry records the assessed use and facts above; it is not a
 global allowlist addition for unrelated packages or changed distribution

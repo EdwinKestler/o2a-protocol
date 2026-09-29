@@ -14,10 +14,11 @@ SQLite plus content-addressed files for local wallet data, and no public
 network or real-value keys.
 
 The RGB ecosystem requires more than a version pin. Two active, incompatible
-lineages currently exist. The first engineering deliverable is therefore a
-time-boxed compatibility and lineage decision that compiles and tests one
-complete dependency family end to end. Production implementation remains
-behind the Phase 0 gates in the [roadmap](13-roadmap.md).
+lineages currently exist. The time-boxed comparison, maintained adapter,
+regtest lineage, and signet rehearsal support ADR-0010's accepted v0.11.1/Opret
+choice. The next engineering deliverable is the concrete O2A program and
+reviewed production lock. Production implementation remains behind the Phase 0
+gates in the [roadmap](13-roadmap.md).
 
 ## Proposed stack
 
@@ -27,7 +28,7 @@ behind the Phase 0 gates in the [roadmap](13-roadmap.md).
 | Deterministic core | Pure Rust library: typed O2A objects, canonical codec boundary, BIP340 domains, controller authorization, policy evaluation, and proof-package verification | Required shape. No DNS, HTTP, clock, database, or hidden chain reads during evaluation. |
 | Bitcoin | Bitcoin Core 31.1 regtest as the chain source, reached through a narrow O2A RPC adapter and, if the selected RGB runtime requires it, a local Electrum/Esplora resolver backed by that same node | Initial reference backend. Full-node mode comes first; light mode is a later, separately labeled adapter. |
 | Bitcoin types and signatures | Maintained libsecp256k1-backed BIP340 bindings, with one secp256k1 type family inside each crate and explicit byte-level validation at version boundaries | Strong recommendation. Current stable `rust-bitcoin` and RGB RC3 resolve different secp256k1 crate versions; do not assume their Rust key types interoperate. Never implement curve arithmetic or Schnorr signing locally. |
-| RGB | Dedicated adapter over one tested RGB Core, standard-library/runtime, BP, and Strict Types dependency family | Phase 0 blocker. [ADR-0010](../adr/0010-rgb-carrier-line.md) proposes rgb-protocol v0.11.1 with Opret for the first transitions; acceptance and exact lock adoption remain open. |
+| RGB | Dedicated adapter over one tested RGB Core, standard-library/runtime, BP, and Strict Types dependency family | [ADR-0010](../adr/0010-rgb-carrier-line.md) accepts rgb-protocol v0.11.1 with Opret for the first transitions. Concrete program bytes and production lock adoption remain open. |
 | Local wallet storage | SQLite for metadata and rebuildable indexes; content-addressed files for consignments, Bitcoin proofs, evidence, and packages | Strong recommendation. The encrypted secret-store format and backup design remain security decisions. |
 | First interface | CLI for create, transition, sign, package, import, verify, and explain operations | Initial interface. It exposes deterministic behavior before GUI concerns. |
 | Discovery | Pubky/PKARR Rust adapter in Phase 3; optional Nostr adapter in a separate crate | Planned. Adapter keys and records never replace the O2A root or validated RGB history. |
@@ -58,8 +59,9 @@ This is a target layout, not permission to create the production crates. The
 first RGB experiment is disposable and must live outside `crates/o2a-rgb`. It
 may prove genesis, rotation, recovery-policy changes, authorized recovery, and
 revocation on regtest, but it does not freeze an O2A RGB contract. Create the
-production adapter only after Phase 0 accepts the exact RGB lineage and test
-evidence.
+production workspace only after the remaining Phase 0 program, lock, and
+conformance gates close. The maintained demo adapter and test evidence satisfy
+ADR-0010's acceptance gate without creating that production workspace.
 
 Discovery collectors and registry services should be separate workspace
 members added in their roadmap phases. The core accepts explicit observations,
@@ -85,14 +87,14 @@ The research snapshot found these two candidate families:
 | Candidate | Current evidence | O2A consequence |
 | --- | --- | --- |
 | RGB-WG 0.12 | RGB Core `v0.12.0` is final. The latest tagged standard-library and runtime releases checked on 2026-09-23 are both `v0.12.0-rc.3`. The 0.12 model is not wire-compatible with earlier RGB contracts. | The RC3 compatibility evidence remains archived. It is never mixed into the proposed 0.11.1 workspace. |
-| `rgb-protocol` 0.11.1 | The maintained API uses the 0.11.1 family. Demo commit `2ddfe8c` records C1–C9 compatibility evidence, including an Opret transition path. | [ADR-0010](../adr/0010-rgb-carrier-line.md) proposes this line with Opret for the first identity transitions. Acceptance still requires the port, regtest lineage, signet rehearsal, and license-register review. |
+| `rgb-protocol` 0.11.1 | The maintained API uses the 0.11.1 family. Demo commits `31dc5df` and `a86421f` record the revised compatibility verdict, maintained adapter, regtest lineage, and signet rehearsal. | [ADR-0010](../adr/0010-rgb-carrier-line.md) accepts this line with Opret for the first identity transitions. Concrete program bytes and production lock adoption remain open. |
 
 O2A's genesis is RGB-line-agnostic; its first transitions use the production
-RGB line. ADR-0010 is the proposed protocol-project decision for that line,
-not an accepted dependency lock and not a conclusion inferred from repository
-names. If it is accepted, record the upstream organization, repositories,
-revisions, dependency lockfile, minimum Rust version, fixture provenance, and
-known incompatibilities in the Phase 0 profile. Keep the 0.11.1 and 0.12
+RGB line. ADR-0010 is the accepted protocol-project decision for that line,
+not an adopted production dependency lock and not a conclusion inferred from
+repository names. Record the upstream organization, repositories, revisions,
+dependency lockfile, minimum Rust version, fixture provenance, and known
+incompatibilities in the Phase 0 profile. Keep the 0.11.1 and 0.12
 families in separate Cargo workspaces and bridge their distinct secp256k1 type
 families only through validated bytes.
 

@@ -41,9 +41,10 @@ regardless of its signer-specific authorization headers. RGB contract, schema,
 assignment, consignment, and carrier identifiers MUST NOT replace an O2A state
 ID.
 
-Under the proposed ADR-0009 scoped freeze, a frozen-format identity MUST NOT
-transition until the final RGB stack, program, and commitment carrier are
-adopted. Before its first transition, its RGB contract may be re-issued only
+Under the accepted ADR-0009 scoped freeze, a frozen-format identity MUST NOT
+transition until the concrete RGB program and remaining transition rules are
+adopted. ADR-0010 already selects rgb-protocol v0.11.1 and Opret. Before its
+first transition, its RGB contract may be re-issued only
 with the exact same O2A genesis bytes and same genesis seal. Such re-issuance
 preserves its EntityID and state 0 ID and is not a new O2A genesis.
 

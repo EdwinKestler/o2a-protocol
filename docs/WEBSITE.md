@@ -10,7 +10,7 @@ accept payments.
 The editorial sources are the accepted
 [Bitcoin-rooted identity decision](../adr/0005-bitcoin-rooted-self-custodial-identity.md),
 [genesis-bound identity decision](../adr/0008-genesis-bound-entity-id.md),
-the proposed [scoped genesis freeze](../adr/0009-scoped-genesis-freeze.md),
+the accepted [scoped genesis freeze](../adr/0009-scoped-genesis-freeze.md),
 [the vision](00-vision.md),
 [the roadmap](13-roadmap.md),
 [the architecture](01-architecture.md),
