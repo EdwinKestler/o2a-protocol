@@ -50,9 +50,11 @@ identity seed
 ```
 
 The demo-stable derivation profile assigns a separate role-4 subtree to seal
-keys while deferring the mainnet freeze. Implementations must not invent
-incompatible paths or reuse the same secret across identity signing, Pubky,
-Nostr, RGB seal, or payment contexts.
+keys. ADR-0009 freezes the scoped mainnet format for roles 0, 1, 2, and 4;
+the remaining derivation profile stays open. ADR-0011 selects that mapping
+through one network profile rather than a mainnet-only code path.
+Implementations must not invent incompatible paths or reuse the same secret
+across identity signing, Pubky, Nostr, RGB seal, or payment contexts.
 
 ## Public discovery
 

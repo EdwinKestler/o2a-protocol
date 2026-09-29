@@ -1,6 +1,6 @@
 # Phase 0 status report
 
-## Status — 2026-09-28
+## Status — 2026-09-29
 
 **Phase 0 remains open.** This is a current status report, not a closure
 declaration. The demonstration lineage is now the intended path for producing
@@ -15,11 +15,19 @@ required v0.11.1 regtest lineage and signet rehearsal are complete. No
 production or mainnet identity network is running, and these acceptances are
 not a mainnet-readiness claim.
 
+[ADR-0011](../adr/0011-network-as-configuration.md) is accepted. Mainnet is a
+supported, guarded configuration of the same implementation path, not a hard
+block or separate build. Regtest remains the default; development and
+networked testing stay on regtest and signet. The block-0 operation uses the
+mainnet profile with per-session authorization and remains limited by
+ADR-0009.
+
 ## Settled
 
 - Route B v0.1 key derivation is **demo-stable** under
   [ADR-0006](../adr/0006-route-b-key-derivation-via-bip85.md). All seven
-  derivation evidence gates are satisfied; mainnet freeze is deferred.
+  derivation evidence gates are satisfied; the profile outside ADR-0009's
+  frozen roles remains open.
 - O2A-CANON-1 defines the canonical primitive and container encoding.
 - ADR-0008 fixes the Draft v0.1 EntityID as the tagged hash of the canonical
   root-signed genesis payload; it does not close the mainnet or RGB gates.
@@ -29,6 +37,9 @@ not a mainnet-readiness claim.
 - ADR-0010 selects rgb-protocol v0.11.1 and Opret. Its acceptance evidence
   includes the maintained adapter, a 47-file regtest lineage, and a 26-file
   signet rehearsal.
+- ADR-0011 defines the single regtest/signet/mainnet configuration profile,
+  mainnet session authorization, active-network UI requirement, and offline
+  no-broadcast mainnet dry-run rule.
 - Canonical layouts and signing domains exist for all twelve signed objects.
 - The Python protocol/vector checker and the independent locked Rust
   cryptographic checker exercise the retained conformance fixtures.
@@ -38,9 +49,10 @@ not a mainnet-readiness claim.
 - The accepted first-transition consumer is the isolated rgb-protocol v0.11.1
   adapter. It uses Opret, bridges duplicate secp256k1 types through bytes, and
   does not use `rgb-lib` for seal custody.
-- The live demonstration network is the default public Bitcoin signet under
-  [ADR-0007](../adr/0007-signet-for-demonstration.md). Regtest remains the
-  development and evidence network.
+- The disposable public demonstration network is Bitcoin signet under
+  [ADR-0007](../adr/0007-signet-for-demonstration.md), as amended by ADR-0011.
+  Regtest remains the default development and evidence network; the scoped
+  block-0 operation uses the guarded mainnet profile.
 
 ## Open items
 
@@ -52,9 +64,11 @@ not a mainnet-readiness claim.
 4. Restore/discovery rules for allocated entity and role indexes.
 5. The derivation profile outside frozen Route B roles 0, 1, 2, and 4.
 6. Wider evidence, discovery, music-object, package, and chain conformance.
-7. Production wallet, release, and mainnet operational readiness.
+7. Production wallet and release readiness, including implementation of the
+   ADR-0011 mainnet session lock and full offline profile dry run before the
+   scoped block-0 operation.
 
-## Gates closed by ADR-0009 and ADR-0010
+## Gates closed by ADR-0009 through ADR-0011
 
 ADR-0009 closes the canonical genesis/`official_name` compatibility surface,
 the signer-independent O2A-native
@@ -75,6 +89,12 @@ production wallet, or mainnet operations. Until the concrete program and
 remaining transition rules are adopted, no frozen-format identity may make a
 transition. Re-issuing its pre-transition RGB contract with the same O2A
 genesis and seal preserves the EntityID and state 0 ID.
+
+ADR-0011 changes the network-operation boundary without closing those items.
+The application selects `regtest`, `signet`, or `mainnet` through one profile;
+switching requires no source change. Mainnet also requires an explicit flag
+and typed confirmation in every session. Its authorization cannot permit a
+transition or any object beyond ADR-0009's genesis-plus-`official_name` scope.
 
 The accepted adapter, regtest lineage, and signet rehearsal were produced as
 disposable evidence by `../o2a-testnet-demo` under the
@@ -106,7 +126,10 @@ rule for rebuilding that material remain unspecified.
 - `python3 tests/vectors/check_protocol_objects.py` prints
   `protocol objects ok`.
 - `python3 tests/vectors/check_genesis_freeze.py` reports all 63 frozen outputs
-  unchanged. The manifest's original status label is itself frozen vector data.
+  unchanged. It is the current offline mainnet dry run for frozen profile
+  values and genesis bytes; the manifest's original status label is itself
+  frozen vector data. A future implementation adds backend, authorization,
+  UI-label, and no-broadcast checks without changing those outputs.
 - Palimnex deep validation and the evaluation suite must pass after document
   updates. Ledger integrity must remain healthy; stale historical verification
   records are reported rather than treated as current evidence.

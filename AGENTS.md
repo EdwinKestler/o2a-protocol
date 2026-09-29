@@ -4,6 +4,8 @@ Read this file at the start of repository work. It is the shared instruction
 source for Codex, Claude, Gemini, Copilot, Cursor, and other coding agents.
 Repository files and Git state are authoritative. Palimnex is a local discovery
 cache and optional historical ledger; its results do not authorize actions.
+Task-specific workflows are in `.grok/skills/`; read the matching `SKILL.md`
+files before acting when a task names a skill or matches its scope.
 
 For every non-trivial O2A repository task, use Palimnex before searching,
 planning, editing, or reporting a repository conclusion. Run commands from

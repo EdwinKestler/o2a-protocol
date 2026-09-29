@@ -3,9 +3,9 @@
 This environment establishes containerized prerequisites without creating an
 O2A implementation. The default service is Bitcoin Core 31.1 on an isolated,
 zero-peer regtest network. Rust 1.98.1 tooling and SQLite 3.53.4 are an opt-in
-container. Exact electrs 0.12.0 and patched RGB RC3 form an explicitly
-disposable compatibility profile; their presence does not adopt the RGB
-lineage or dependency graph.
+container. Exact electrs 0.12.0 and patched RGB-WG RC3 remain as an explicitly
+disposable historical compatibility profile; accepted ADR-0010 selects the
+separate rgb-protocol v0.11.1/Opret line for O2A's first transitions.
 
 No service publishes a host port. Bitcoin RPC and Electrum are reachable only
 inside the Compose `regtest` network. Containers drop all Linux capabilities,
@@ -92,12 +92,15 @@ The bind mount is writable so future source changes have the host user's UID.
 The Cargo home is a named Docker volume. Do not place wallet files, seeds,
 private keys, RPC cookies, or private consignments in the repository.
 
-## Disposable RGB compatibility profile
+## Historical, superseded by ADR-0010
+
+### Disposable RGB-WG RC3 compatibility profile
 
 This profile builds exact electrs tag `v0.12.0` at commit `37501cc4` and exact
 RGB tag `v0.12.0-rc.3` at commit `a1e6b415`, then applies the retained CLI
 compatibility patch. It intentionally uses the unadopted upstream RGB lock,
-whose audit fails. Use only regtest data and never provide real keys.
+whose audit fails. It is retained as neutral historical evidence and is not
+the selected O2A line. Use only regtest data and never provide real keys.
 
 ```bash
 docker compose --file dev/compose.yaml --profile rgb-compat build electrs rgb-compat

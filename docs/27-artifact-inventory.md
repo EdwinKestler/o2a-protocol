@@ -1,7 +1,7 @@
 # 27 — Artifact inventory
 
-**Status:** supporting inventory updated 2026-09-28 from protocol base
-`0a8d54f`. It introduces no protocol rule. Git and the named files remain
+**Status:** supporting inventory updated 2026-09-29 from protocol base
+`86eb527`. It introduces no protocol rule. Git and the named files remain
 authoritative; branch tips below retain their dated audit observation and may
 move.
 
@@ -15,10 +15,11 @@ move.
 | [0004](../adr/0004-consensus-as-policy-not-blockchain.md) | Accepted for v0.1 design; clarified | `423f607` | Recognition is policy, not chain consensus |
 | [0005](../adr/0005-bitcoin-rooted-self-custodial-identity.md) | Accepted; amended by ADR-0008 | `cc2a35b`; amendment in `38d9bd5` | Bitcoin-rooted identity and custody |
 | [0006](../adr/0006-route-b-key-derivation-via-bip85.md) | Accepted | `8b19c28` | Demo-stable Route B derivation |
-| [0007](../adr/0007-signet-for-demonstration.md) | Accepted | `3ca98ea` | Default public signet for demonstrations |
+| [0007](../adr/0007-signet-for-demonstration.md) | Accepted; amended by ADR-0011 | `3ca98ea` | Default public signet for disposable demonstrations |
 | [0008](../adr/0008-genesis-bound-entity-id.md) | Accepted, 2026-09-28 | `38d9bd5`; merge `0ef16c2` | Genesis-bound EntityID and pending confirmation |
 | [0009](../adr/0009-scoped-genesis-freeze.md) | Accepted, 2026-09-28 | `cabae9b`; merge `b622c98`; maintainer acceptance | Scoped genesis / `official_name` freeze and O2A state ID |
 | [0010](../adr/0010-rgb-carrier-line.md) | Accepted, 2026-09-28 | Proposal merge `0a8d54f`; acceptance evidence at demo `48fd5db` | rgb-protocol v0.11.1 with Opret for first transitions |
+| [0011](../adr/0011-network-as-configuration.md) | Accepted, 2026-09-29 | Maintainer decision, 2026-09-29 | One regtest/signet/mainnet profile with a per-session mainnet lock |
 
 ## Normative specifications changed since `c7b0871`
 
@@ -63,6 +64,11 @@ state ID
 and two-recovery-signer convergence state ID
 `ed3feb49735ba733b13ddc73e81131b92f878ca3c182473531e307b558d0259b`.
 The published keys are permanently unsafe for funds.
+
+The mainnet entries in the 63-output genesis-freeze manifest are the current
+offline dry run for ADR-0011's frozen profile values and genesis bytes. They
+never authorize a live identity or transaction, and the checker performs no
+network connection or broadcast.
 
 ## Evidence bundles
 
@@ -110,6 +116,8 @@ listed committed manifest passed `sha256sum -c` on 2026-09-28.
 | Protocol #2 | `0ef16c2` | `5105632` (includes `38d9bd5`, `d72a017`) | Accepted ADR-0008 and Palimnex v2 |
 | Protocol #3 | `b622c98` | `cabae9b` | Proposed ADR-0009 and O2A-native state IDs |
 | Protocol #7 | `0a8d54f` | `6604dbc` | License assessment policy and proposed ADR-0010 |
+| Protocol #8 | `099f706` | `69273b0` | Accepted ADR-0009 and ADR-0010; current evidence and site status |
+| Protocol #9 | `86eb527` | `2cbc485` | RGB v0.11.1 repository and application reference map |
 | Demo #1 | `02b9430` | smoke branch through `786dab9`; retains `bce2b58` | Preserved custom-tapscript smoke lineage |
 | Demo #5 | `48fd5db` | `a86421f` | Maintained rgb-protocol v0.11.1 adapter, regtest lineage, and signet rehearsal 3 |
 
