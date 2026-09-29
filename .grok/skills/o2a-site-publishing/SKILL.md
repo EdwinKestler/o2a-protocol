@@ -10,7 +10,7 @@ paths: site/**, docs/WEBSITE.md, docs/diagrams/**
 
 - Follow docs/WEBSITE.md: an eleven-file allowlist, no new pages, generic participants only.
 - Never mention artist names, event names or dates, a live or stage genesis ceremony, wallet addresses, or private paths.
-- Status copy stays honest: Draft v0.1, ADR-0009 Proposed, no mainnet identity network running, and each test proves only its named case.
+- Status copy stays honest: Draft v0.1, ADR-0009 Accepted, no production or mainnet identity network running, and each test proves only its named case.
 - Figures follow their Mermaid sources: update docs/diagrams/*.md first, then the matching site/assets/*.svg, keeping the visual style. Validate Mermaid by rendering.
 - Validate with `python3 scripts/build_site.py`.
 - Merging changes under site/** to main redeploys GitHub Pages (pages.yml). The OpenAI Sites route is a separate publication and requires explicit authorization every time.

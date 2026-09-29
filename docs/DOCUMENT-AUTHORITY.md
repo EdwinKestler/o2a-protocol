@@ -6,9 +6,10 @@ govern when two O2A texts disagree. It does not add protocol rules.
 The project is in the specification phase. The normative specs below are Draft
 v0.1. O2A-CANON-1 now defines the candidate byte grammar and signed payload
 layouts, and the RGB identity contract defines the candidate state, recovery,
-confirmation, and reorg rules. The identity derivation allocation, concrete
-RGB program and commitment carrier, compatible dependency lock, and complete
-conformance vectors remain Phase 0 gates. Until those gates close, a draft
+confirmation, and reorg rules. ADR-0009 freezes the scoped genesis format, and
+ADR-0010 selects rgb-protocol v0.11.1 with Opret for the first transitions.
+The remaining identity derivation allocation, concrete RGB program, compatible
+dependency lock, and complete conformance vectors remain Phase 0 gates. Until those gates close, a draft
 schema controls other documents, and it is not yet a frozen wire format.
 
 ## Precedence
@@ -35,7 +36,10 @@ conformance vectors use CC0-1.0. Licensing is not a protocol rule.
 Among accepted ADRs,
 [ADR-0005](../adr/0005-bitcoin-rooted-self-custodial-identity.md), as amended
 by [ADR-0008](../adr/0008-genesis-bound-entity-id.md), is the primary design
-authority. Those decisions take precedence over
+authority. [ADR-0009](../adr/0009-scoped-genesis-freeze.md) freezes the scoped
+genesis and `official_name` surface, and
+[ADR-0010](../adr/0010-rgb-carrier-line.md) selects the first-transition RGB
+line and carrier. Those decisions take precedence over
 [ADR-0001](../adr/0001-modular-protocol-architecture.md),
 [ADR-0002](../adr/0002-entity-id-over-artist-id.md),
 [ADR-0003](../adr/0003-catalog-is-not-source-of-truth.md), and
@@ -48,7 +52,9 @@ human-readable names, separate entity identities for the types it names,
 deterministic verification without a privileged validator set, and Pubky and
 Nostr as replaceable discovery adapters. ADR-0008 binds the EntityID to the
 complete canonical genesis payload and defines the pending-confirmation rule
-for every seal-creating transaction named by a valid history.
+for every seal-creating transaction named by a valid history. ADR-0009 adds the
+indefinite frozen-format compatibility promise, and ADR-0010 selects
+rgb-protocol v0.11.1 with Opret without making the O2A genesis line-dependent.
 
 ## Normative specs
 

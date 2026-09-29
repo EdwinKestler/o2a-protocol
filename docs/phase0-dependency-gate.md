@@ -1,16 +1,17 @@
 # Phase 0 RGB dependency gate
 
-**Status:** recorded 2026-09-23 from retained evidence only. This decision does
-not start a new experiment, regtest, crate, or lock adoption. The RGB
-dependency gate remains **OPEN**. An open dependency gate does not finish
-Phase 0.
+**Status:** historical 0.12-specific Phase 0 evidence under accepted
+[ADR-0010](../adr/0010-rgb-carrier-line.md). This record does not govern the
+selected rgb-protocol v0.11.1/Opret line. It remains unchanged evidence of why
+the 0.12 RC3 graph and patch were not adopted; the separate production program
+and dependency-lock gates remain open.
 
 Three questions are decided from the
 [third disposable remediation run](../evidence/phase0/rgb-rc3-remediation-2026-09-23/RUN.md)
 and its
 [lock review](../evidence/phase0/rgb-rc3-remediation-2026-09-23/lock-review/SUMMARY.md).
-This page does not select an RGB lineage, vendor RGB, or close the
-[Phase 0 roadmap](13-roadmap.md).
+This page did not select an RGB lineage or vendor RGB. ADR-0010 later selected
+v0.11.1/Opret. Nothing here closes the remaining [Phase 0 roadmap](13-roadmap.md).
 
 ## Recheck — 2026-09-23
 
@@ -99,11 +100,12 @@ correctness gap, and rust-bitcoin warns against using the crate as a consensus
 validator. The registry note is
 [rust-bitcoin-release-check.txt](../evidence/phase0/rgb-rc3-remediation-2026-09-23/rust-bitcoin-release-check.txt).
 
-## Phase 0
+## Historical Phase 0 conclusion
 
-An open dependency gate does not finish Phase 0. The roadmap still requires a
-selected and pinned compatible RGB stack. This decision does not close Phase 0
-and does not authorize a production RGB crate.
+At the time, the roadmap still required a selected and pinned compatible RGB
+stack. ADR-0010 later selected v0.11.1/Opret, so this 0.12-specific gate is now
+historical. It did not close Phase 0 or authorize a production RGB crate; the
+concrete program and production lock remain open.
 
 ## Feature-aware measurement — 2026-09-24
 
@@ -125,10 +127,11 @@ the lock-wide `rustls-webpki` advisories. This statement fixes the consumer
 boundary only; it does not adopt the RC3 lock, define an O2A RGB program, or
 close the dependency gate.
 
-## Gate restatement — 2026-09-24
+## Historical gate restatement — 2026-09-24
 
-The dependency gate remains **OPEN**. After the feature-aware measurement and
-the maintainer's license and advisory decisions, these blockers remain:
+The 0.12-specific dependency gate remained **OPEN** at that time. After the
+feature-aware measurement and the maintainer's then-current license and
+advisory decisions, these blockers remained:
 
 1. The matching RGB 0.12 application/runtime stack is not a final release.
    RGB Core 0.12.0 is final, but the standard library and runtime used by this

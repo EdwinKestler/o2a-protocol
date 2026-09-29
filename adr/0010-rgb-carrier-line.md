@@ -1,6 +1,6 @@
 # ADR-0010 — RGB 0.11.1 Opret Carrier Line
 
-**Status:** Proposed, 2026-09-28.
+**Status:** Accepted, 2026-09-28 (maintainer decision).
 
 ## Context
 
@@ -98,3 +98,36 @@ The maintainer MUST NOT accept this ADR until all of the following are true:
 
 Until then, this ADR is a proposal. It does not adopt a dependency lock, permit
 a frozen-format identity to transition, or make a mainnet-readiness claim.
+
+## Acceptance evidence — 2026-09-28
+
+The maintainer accepted this ADR after reviewing the license register and the
+following evidence on `o2a-testnet-demo` `main` at merge commit `48fd5db`:
+
+- `git merge-base --is-ancestor 31dc5df main` and
+  `git merge-base --is-ancestor a86421f main` both returned success;
+- commit `31dc5df` adds
+  `evidence/regtest-rgb011-compat-2026-09-28-addendum/`, whose four-entry
+  manifest verifies and has SHA-256
+  `e9acd79fcd911cd7d01b74ec3ffd01570bf7aa78a554db0a68f3185b2b931367`.
+  Its blocking advisory, ban, and source checks pass, while the license-only
+  MITNFA finding is reported without blocking development;
+- commit `a86421f` contains the maintained v0.11.1 adapter in its separate
+  workspace and the 47-file
+  `evidence/regtest-rgb011-lineage-2026-09-28/` bundle. The lineage manifest
+  verifies with SHA-256
+  `ba5479df552f8fcea7c27e9b4ffae5ac67d40184f1043ba108b134d6e6020849`,
+  and its rotation, delayed recovery, competing-contract, plain-close, RBF,
+  CPFP, and reorg cases pass; and
+- the same commit contains the 26-file
+  `evidence/signet-block0-rehearsal-3-2026-09-28/` bundle. Its manifest
+  verifies with SHA-256
+  `2d98449550921243ebaec876b732bb68a3f6fbda2ca765f4b0c7cbb3c91ea91f`;
+  the v0.11.1/Opret identity reached six confirmations, two clean verifier
+  directories returned `CURRENT`, the `official_name` claim and public-package
+  restore verified, and the seal remained unspent.
+
+The maintainer reviewed the `hex_lit 0.1.1` MITNFA register entry and accepted
+it for the assessed use. These results satisfy the four pre-acceptance
+requirements above. They remain bounded regtest and signet evidence and do not
+claim that a production or mainnet identity network is running.

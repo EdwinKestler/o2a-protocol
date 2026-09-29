@@ -8,7 +8,7 @@ win if a summary here is incomplete or inconsistent.
 
 | ID | Decision | Date | Authority / change | Status | Reversal cost |
 | --- | --- | --- | --- | --- | --- |
-| D1 | Retain RGB as the identity-state carrier; reject Lightning for identity ordering | 2026-09-25 | Maintainer review; no dedicated commit or PR recorded | Retained; final RGB stack remains open | High |
+| D1 | Retain RGB as the identity-state carrier; reject Lightning for identity ordering | 2026-09-25 | Maintainer review; no dedicated commit or PR recorded | Retained; line/carrier selected by D15 | High |
 | D2 | Add dedicated role-4 seal keys and the deterministic P2TR seal script | 2026-09-25 | `4b1c99e`; PR #1 merge `c7b0871` | Draft v0.1 rule | High |
 | D3 | Measure recovery delay from the seal-creating transaction | 2026-09-25 | `4b1c99e`; PR #1 | Draft v0.1 rule; exercised on regtest | High |
 | D4 | Bind every seal key to its authorizing key ID | 2026-09-25 | `4b1c99e`; PR #1 | Draft v0.1 rule | High |
@@ -17,12 +17,13 @@ win if a summary here is incomplete or inconsistent.
 | D7 | Freeze Palimnex v1 and publish v2 without ranking tricks | 2026-09-25–28 | Dropped `0d93ccd`; retained `d72a017` in PR #2 | Repository evaluation policy | Low |
 | D8 | Adopt genesis-payload hash option G as ADR-0008 | 2026-09-27 | `38d9bd5`; PR #2 merge `0ef16c2` | Accepted | Very high |
 | D9 | Add `PENDING_CONFIRMATION`, RBF invalidation, and CPFP preservation | 2026-09-28 | ADR-0008 in `38d9bd5`; PR #2 | Accepted | High |
-| D10 | Propose a scoped genesis freeze and signer-independent O2A state ID | 2026-09-28 | `cabae9b`; PR #3 merge `b622c98` | Proposed | High before acceptance; prohibitive after use |
-| D11 | Gate a first mainnet identity on ADR-0009 after a signet rehearsal | 2026-09-28 | `cabae9b`; PR #3 | Planned; not mainnet-ready | High |
+| D10 | Adopt a scoped genesis freeze and signer-independent O2A state ID | 2026-09-28 | `cabae9b`; PR #3 merge `b622c98`; maintainer acceptance | Accepted | Prohibitive after use |
+| D11 | Gate a first mainnet identity on ADR-0009 after a signet rehearsal | 2026-09-28 | `cabae9b`; signet rehearsals 2 and 3 | Accepted; no mainnet identity authorized | High |
 | D12 | Record two non-blocking `bp-std` finalization findings | 2026-09-25 | `4b1c99e`; PR #1 | Open upstream candidates; non-blocking | Low for O2A |
 | D13 | Start a new demo lineage for each spec change; never migrate evidence | 2026-09-26 | Demo PR #1 merge `02b9430` retains `bce2b58` | Demonstration policy | Medium |
 | D14 | Treat dependency licenses as assessed findings rather than a rigid development gate | 2026-09-28 | Maintainer decision; [license assessment](22-license-and-adoption-assessment.md) | Accepted policy | Medium before distribution |
-| D15 | Use rgb-protocol v0.11.1 with Opret for the first identity transitions | 2026-09-28 | Proposed [ADR-0010](../adr/0010-rgb-carrier-line.md); demo `2ddfe8c` | Proposed; acceptance evidence open | High after first transition |
+| D15 | Use rgb-protocol v0.11.1 with Opret for the first identity transitions | 2026-09-28 | Accepted [ADR-0010](../adr/0010-rgb-carrier-line.md); demo `31dc5df`, `a86421f` | Accepted | High after first transition |
+| D16 | Accept ADR-0009 and ADR-0010 after evidence and license review | 2026-09-28 | Maintainer decision; demo main `48fd5db` | Accepted; Phase 0 remains open | High |
 
 ## D1 — Identity carrier
 
@@ -40,9 +41,10 @@ win if a summary here is incomplete or inconsistent.
 - **Decision:** the maintainer retained RGB to preserve shared RGB ecosystem
   tooling, including SplitNight integration. Lightning remains a payment rail,
   not identity authority. No dedicated decision commit or PR was found.
-- **Status and reversal:** retained architecture, with the final RGB stack
-  still open. Reversal is high-cost because it changes the identity lifecycle,
-  proof model, and downstream documentation.
+- **Status and reversal:** retained architecture; D15 now selects the
+  v0.11.1/Opret line and carrier while concrete program and production-lock
+  gates remain open. Reversal is high-cost because it changes the identity
+  lifecycle, proof model, and downstream documentation.
 
 ## D2 — Seal custody and role 4
 
@@ -186,12 +188,11 @@ win if a summary here is incomplete or inconsistent.
   controls are in `tests/vectors/entity-id-v0.1.json`. The 63-output manifest
   is `tests/vectors/genesis-freeze-v0.1.json`, SHA-256
   `915187a825ff0ffc6ae13dcb8f8d3d153bef7f7438c64711a42f861eace69244`.
-- **Decision / who:** agent proposal accepted by the maintainer; propose the
-  scoped freeze and
+- **Decision / who:** maintainer; accept the scoped freeze and
   `TaggedHash("O2A/v0.1/state-id", entity_id || resulting_state)`.
-- **Commit / status:** `cabae9b`, PR #3 merge `b622c98`; Proposed, not
-  accepted. Reversal is high before acceptance and incompatible with the
-  promised indefinite verification after a frozen-format identity is used.
+- **Commit / status:** `cabae9b`, PR #3 merge `b622c98`; Accepted by
+  maintainer decision on 2026-09-28. Reversal is incompatible with the
+  promised indefinite verification of frozen-format identities.
 
 ## D11 — Path to a first mainnet identity
 
@@ -199,13 +200,17 @@ win if a summary here is incomplete or inconsistent.
 - **Options considered:** mint directly; rehearse on signet and accept the
   scoped freeze first.
 - **Evidence:** [Phase 0 status](phase0closure.md), the
-  [roadmap](13-roadmap.md), and ADR-0009's not-frozen boundary.
+  [roadmap](13-roadmap.md), ADR-0009's not-frozen boundary, and the clean
+  signet rehearsal records summarized in the [scenario matrix](25-scenario-matrix.md).
 - **Decision / who:** maintainer; complete a signet rehearsal, accept ADR-0009,
   and only then consider mainnet genesis. A frozen-format identity may not
-  transition until the RGB stack is final; before its first transition its RGB
-  contract may be re-issued only with the same O2A genesis bytes and seal.
-- **Commit / status:** restated in `cabae9b`, PR #3; gated and not
-  mainnet-ready. Reversal cost is high after any public genesis exists.
+  transition until the concrete RGB program and remaining transition gates
+  close; before its first transition its RGB contract may be re-issued only
+  with the same O2A genesis bytes and seal.
+- **Commit / status:** restated in `cabae9b`, PR #3; Accepted on 2026-09-28
+  after the signet evidence. No mainnet identity is authorized or running, and
+  the project is not mainnet-ready. Reversal cost is high after any public
+  genesis exists.
 
 ## D12 — Non-blocking `bp-std` findings
 
@@ -266,13 +271,32 @@ win if a summary here is incomplete or inconsistent.
   `evidence/regtest-rgb011-compat-2026-09-28/` bundle, and
   `docs/rgb-0.11.1-compat-memo.md`. C1–C7 pass, C8 passes under D14, and C9
   limits the proposal to Opret. C6 and C7 confirm that O2A must retain its
-  sourced current-seal observation independently of RGB validity.
-- **Decision / who:** maintainer proposal in
+  sourced current-seal observation independently of RGB validity. Commit
+  `31dc5df` records the verdict addendum. Commit `a86421f` supplies the
+  maintained adapter, 47-file regtest lineage, and 26-file v0.11.1/Opret
+  signet rehearsal; both commits are ancestors of demo main `48fd5db`.
+- **Decision / who:** maintainer in
   [ADR-0010](../adr/0010-rgb-carrier-line.md); the first transitions use
   v0.11.1 with Opret, `rgb-lib` does not own seal custody, incompatible RGB
   lines stay in separate workspaces, and duplicate secp256k1 types cross by
   bytes.
-- **Status and reversal:** Proposed. Acceptance still requires the merged
-  adapter port, a v0.11.1 regtest lineage, a v0.11.1 signet rehearsal, and
-  license-register review. Reversal is high after the first transition but
-  does not change the RGB-line-agnostic O2A genesis.
+- **Status and reversal:** Accepted on 2026-09-28 after the adapter, regtest,
+  signet, and license-review requirements were satisfied. Reversal is high
+  after the first transition but does not change the RGB-line-agnostic O2A
+  genesis.
+
+## D16 — Maintainer acceptance of ADR-0009 and ADR-0010
+
+- **Question:** Have the scoped-freeze and RGB carrier proposals met their
+  acceptance requirements without overstating Phase 0 or mainnet readiness?
+- **Evidence:** the ADR-0009 63-output freeze manifest remains unchanged;
+  `31dc5df` and `a86421f` are reachable from `o2a-testnet-demo` main
+  `48fd5db`; the addendum, 47-file regtest lineage, and 26-file signet
+  rehearsal manifests verify; and the maintainer reviewed the accepted
+  `hex_lit 0.1.1` MITNFA register entry.
+- **Decision / who:** maintainer; accept ADR-0009 and ADR-0010 on 2026-09-28.
+- **Status and boundary:** Accepted. The frozen genesis/`official_name` surface
+  and v0.11.1/Opret carrier selection are settled. Concrete O2A RGB program
+  bytes, the production dependency lock, remaining transition/custody,
+  restore/discovery, broader conformance, and every production or mainnet
+  operational gate remain open.

@@ -21,7 +21,7 @@ The governing O2A uses of these standards are in
 [canonical encoding](../specs/canonical-encoding.md), the
 [cryptographic profile](../specs/cryptographic-profile.md), the
 [RGB identity contract](../specs/rgb-identity-contract.md), and
-[ADR-0009's proposed frozen subset](../adr/0009-scoped-genesis-freeze.md).
+[ADR-0009's accepted frozen subset](../adr/0009-scoped-genesis-freeze.md).
 
 ## Pinned implementation evidence
 

@@ -2,8 +2,8 @@
 
 ## Status
 
-**Demo-stable v0.1 (2026-09-24, ADR-0006). ADR-0009 proposes a scoped mainnet
-freeze for roles 0, 1, 2, and 4; it is not yet accepted.**
+**Demo-stable v0.1 (2026-09-24, ADR-0006). ADR-0009 accepts a scoped mainnet
+freeze for roles 0, 1, 2, and 4. The rest of this profile is not frozen.**
 
 This status does not authorize production identities, change an EntityID,
 adopt an RGB dependency, or reserve a BIP43 purpose.

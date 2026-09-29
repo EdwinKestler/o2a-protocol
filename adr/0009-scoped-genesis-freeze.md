@@ -1,7 +1,6 @@
 # ADR-0009 — Scoped Genesis Freeze
 
-**Status:** Proposed, 2026-09-28. The maintainer intends to accept this ADR
-before any mainnet identity is minted. It builds on accepted
+**Status:** Accepted, 2026-09-28 (maintainer decision). It builds on accepted
 [ADR-0008](0008-genesis-bound-entity-id.md) as merged in `0ef16c2`.
 
 ## Context

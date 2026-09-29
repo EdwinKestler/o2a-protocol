@@ -7,14 +7,13 @@ declaration. The demonstration lineage is now the intended path for producing
 the remaining disposable RGB evidence without turning demo artifacts into
 normative program bytes, persistent identities, or an adopted dependency lock.
 [ADR-0008](../adr/0008-genesis-bound-entity-id.md) is accepted.
-[ADR-0009](../adr/0009-scoped-genesis-freeze.md) remains proposed.
-[ADR-0010](../adr/0010-rgb-carrier-line.md) proposal would select
-rgb-protocol v0.11.1 with Opret for the first identity transitions while
-leaving the O2A genesis RGB-line-agnostic. It is not accepted and does not
-adopt a dependency lock. The bounded path toward a first mainnet identity is
-to accept ADR-0009, complete the signet dress rehearsal that is now **IN
-PROGRESS**, and only then consider a mainnet genesis gated on that acceptance.
-This sequence is not a mainnet-readiness claim.
+[ADR-0009](../adr/0009-scoped-genesis-freeze.md) and
+[ADR-0010](../adr/0010-rgb-carrier-line.md) are accepted. The scoped genesis
+format is frozen, and rgb-protocol v0.11.1 with Opret is the accepted carrier
+line for first transitions while O2A genesis stays RGB-line-agnostic. The
+required v0.11.1 regtest lineage and signet rehearsal are complete. No
+production or mainnet identity network is running, and these acceptances are
+not a mainnet-readiness claim.
 
 ## Settled
 
@@ -24,48 +23,61 @@ This sequence is not a mainnet-readiness claim.
 - O2A-CANON-1 defines the canonical primitive and container encoding.
 - ADR-0008 fixes the Draft v0.1 EntityID as the tagged hash of the canonical
   root-signed genesis payload; it does not close the mainnet or RGB gates.
+- ADR-0009 freezes the canonical genesis/`official_name` surface, the
+  signer-independent O2A state ID, mainnet network byte and confirmation depth,
+  and Route B format for roles 0, 1, 2, and 4.
+- ADR-0010 selects rgb-protocol v0.11.1 and Opret. Its acceptance evidence
+  includes the maintained adapter, a 47-file regtest lineage, and a 26-file
+  signet rehearsal.
 - Canonical layouts and signing domains exist for all twelve signed objects.
 - The Python protocol/vector checker and the independent locked Rust
   cryptographic checker exercise the retained conformance fixtures.
 - O2A-authored work is `MIT OR Apache-2.0`; conformance vectors are CC0-1.0;
-  the accepted dependency-license policy and narrow exceptions are recorded
-  in [the license assessment](22-license-and-adoption-assessment.md).
-- The RGB consumer shape is `rgb-runtime` with
-  `default-features = false` and features `resolver-electrum` and `fs`.
-  `rgb-wallet` is not an O2A dependency.
+  the accepted dependency-license policy and reviewed `hex_lit 0.1.1` entry
+  are recorded in [the license assessment](22-license-and-adoption-assessment.md).
+- The accepted first-transition consumer is the isolated rgb-protocol v0.11.1
+  adapter. It uses Opret, bridges duplicate secp256k1 types through bytes, and
+  does not use `rgb-lib` for seal custody.
 - The live demonstration network is the default public Bitcoin signet under
   [ADR-0007](../adr/0007-signet-for-demonstration.md). Regtest remains the
   development and evidence network.
 
 ## Open items
 
-1. RGB carrier-line decision; ADR-0010 proposes rgb-protocol v0.11.1 with
-   Opret for the first transitions.
-2. Concrete O2A RGB program bytes.
-3. RGB execution fixtures.
-4. Custody acceptance over real prior state.
-5. Restore/discovery rule.
-6. Mainnet freeze of the derivation profile.
-7. Lock adoption after items 2–4.
+1. Concrete O2A RGB program/codex/schema bytes and identifiers.
+2. Adoption of the exact production-workspace dependency lock.
+3. Transition and recovery payload freeze, custody-transfer operation 4, and
+   the remaining lifecycle and adversarial conformance cases beyond the
+   accepted bounded regtest/signet evidence.
+4. Restore/discovery rules for allocated entity and role indexes.
+5. The derivation profile outside frozen Route B roles 0, 1, 2, and 4.
+6. Wider evidence, discovery, music-object, package, and chain conformance.
+7. Production wallet, release, and mainnet operational readiness.
 
-## Proposed ADR-0009 scoped freeze
+## Gates closed by ADR-0009 and ADR-0010
 
-ADR-0009 is **Proposed**, not accepted. If accepted before the first mainnet
-mint, it closes only the canonical genesis/`official_name` compatibility
-surface, the signer-independent O2A-native
+ADR-0009 closes the canonical genesis/`official_name` compatibility surface,
+the signer-independent O2A-native
 `TaggedHash(state-id, EntityID || resulting_state)` rule, the mainnet network
 byte and depth, and the Route B mainnet derivation-format gate for roles 0, 1,
 2, and 4. Its frozen manifest makes those exact outputs regression-testable.
 
-It does not close the final RGB stack, concrete RGB program/codex/schema,
-commitment carrier, transition or recovery execution, operations 2 or 4,
-custody evidence, restore/discovery, dependency lock, or wider conformance
-gates. No transition from a frozen-format identity is permitted until the RGB
-stack is final. Re-issuing the pre-transition RGB contract with the same O2A
-genesis and seal preserves the O2A EntityID and state 0 ID.
+ADR-0010 closes the RGB-line and commitment-carrier choice for first
+transitions: rgb-protocol v0.11.1 with Opret. Its pre-acceptance gates are also
+closed: the maintained adapter is merged in the demo repository, the named
+regtest lineage and signet rehearsal pass, and the maintainer reviewed the
+license register.
 
-Items 2–4 are produced as disposable evidence by `../o2a-testnet-demo` under
-the demo lineage permitted by the
+Neither ADR closes the concrete O2A program/codex/schema bytes, transition or
+recovery payload formats, operations 2 or 4, custody-transfer acceptance,
+restore/discovery, the production dependency lock, wider conformance, a
+production wallet, or mainnet operations. Until the concrete program and
+remaining transition rules are adopted, no frozen-format identity may make a
+transition. Re-issuing its pre-transition RGB contract with the same O2A
+genesis and seal preserves the EntityID and state 0 ID.
+
+The accepted adapter, regtest lineage, and signet rehearsal were produced as
+disposable evidence by `../o2a-testnet-demo` under the
 [dependency gate](phase0-dependency-gate.md). This is the intended Phase 0
 closure path, not a detour. Demo program bytes and identities remain
 disposable; evidence from that repository informs the later normative and
@@ -79,11 +91,8 @@ see the supporting [scenario matrix](25-scenario-matrix.md). Those runs do not
 close Phase 0, adopt program bytes, or turn demo identities into persistent
 protocol state.
 
-ADR-0010 is also **Proposed**. Its C1–C9 compatibility evidence supports a
-0.11.1/Opret carrier decision, but acceptance still requires the maintained
-port, a regtest lineage, a signet rehearsal on 0.11.1, and review of the
-license register. The archived 0.12 RC3 evidence remains part of the decision
-record.
+The archived 0.12 RC3 evidence remains part of the historical decision record;
+it is not the selected first-transition line under ADR-0010.
 
 The restore/discovery item is separate from deterministic key derivation. A
 mnemonic can reproduce keys only after the wallet knows which `entity'` and
@@ -96,7 +105,8 @@ rule for rebuilding that material remain unspecified.
 - `python3 tests/vectors/check_vectors.py` prints `ok`.
 - `python3 tests/vectors/check_protocol_objects.py` prints
   `protocol objects ok`.
-- `python3 tests/vectors/check_genesis_freeze.py` reports all proposed frozen
-  outputs unchanged while ADR-0009 remains proposed.
+- `python3 tests/vectors/check_genesis_freeze.py` reports all 63 frozen outputs
+  unchanged. The manifest's original status label is itself frozen vector data.
 - Palimnex deep validation and the evaluation suite must pass after document
-  updates, and ledger status must remain healthy with no stale verifications.
+  updates. Ledger integrity must remain healthy; stale historical verification
+  records are reported rather than treated as current evidence.

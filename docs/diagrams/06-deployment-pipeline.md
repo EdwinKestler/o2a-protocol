@@ -3,13 +3,13 @@
 The proposed deployment progression adds two controlled environments between
 local development and production. The project is still in specification, so
 these stages are design targets rather than a running deployment. The Phase 0
-milestone and split mainnet scopes reflect proposed
+milestone and split mainnet scopes reflect accepted
 [ADR-0009](../../adr/0009-scoped-genesis-freeze.md), the
 [Phase 0 status](../phase0closure.md), and the [roadmap](../13-roadmap.md).
 
 ```mermaid
 flowchart LR
-    P0["Phase 0 — freeze specification<br/>scoped genesis freeze (ADR-0009, Proposed)<br/>canonical encoding · signing domains<br/>RGB stack/commitment method · vectors<br/>MIT OR Apache-2.0 accepted"]
+    P0["Phase 0 — freeze specification<br/>scoped genesis freeze (ADR-0009, Accepted)<br/>canonical encoding · signing domains<br/>RGB stack/commitment method · vectors<br/>MIT OR Apache-2.0 accepted"]
     P1["Phase 1 — deterministic core<br/>Bitcoin/RGB regtest lifecycle<br/>positive + adversarial vectors"]
     P2["Phase 2 — wallet/node<br/>local custody · backup/recovery<br/>proof export/import · full/light modes"]
     P3["Phase 3 — discovery/testnet<br/>DNS/social observations · Pubky/Nostr<br/>collisions · registry rebuild · interop"]
@@ -39,14 +39,14 @@ flowchart LR
 
 The intended discipline is to promote the same tested artifact rather than rebuilding a different production binary.
 
-## First frozen-format genesis — proposed
+## First frozen-format genesis — accepted format
 
 ```text
 Genesis plus one official_name claim
 No transitions until the RGB stack, program, and commitment carrier are final
 ```
 
-This is the scoped compatibility surface proposed by ADR-0009, not a
+This is the scoped compatibility surface accepted by ADR-0009, not a
 mainnet-readiness claim and not the complete v1 protocol.
 
 ## Mainnet identity v1

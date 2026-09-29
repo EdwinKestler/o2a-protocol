@@ -8,32 +8,30 @@ recovery, confirmation, and reorg rules. Claim and proof-package fixtures now
 exercise a maintained BIP340 verifier, but they cover only a subset of this
 phase's gate.
 
-The blocking items are the mainnet freeze of the
+The blocking items are the remainder of the
 [demo-stable identity derivation profile](phase0-derivation-allocation.md), a
 restore/discovery rule for allocated identity and role indexes, concrete RGB
-program/schema and Bitcoin commitment carrier, an adopted compatible RGB lock,
-and executable positive and adversarial fixtures for the remaining lifecycle,
-evidence, discovery, music, and chain cases. See the
+program/schema bytes, an adopted compatible production lock, and executable
+positive and adversarial fixtures for the remaining lifecycle, evidence,
+discovery, music, and chain cases. See the
 [Phase 0 status report](phase0closure.md). Nothing in this status authorizes a
 production wallet or identity crate.
 
-[ADR-0009](../adr/0009-scoped-genesis-freeze.md) proposes a deliberately
+[ADR-0009](../adr/0009-scoped-genesis-freeze.md) accepts a deliberately
 narrow exception to the all-or-nothing freeze: preserve the mainnet genesis,
 the signer-independent O2A state-ID rule, `official_name` claim, seal output,
 and Route B roles 0, 1, 2, and 4 before block 0 is minted. Because the state ID
 hashes only the EntityID and canonical resulting-state bytes, it does not freeze
-transition or recovery payloads. The proposal does not freeze the RGB program,
+transition or recovery payloads. The decision does not freeze the RGB program,
 other evidence, or discovery, and permits no transition until the final RGB
 stack is adopted.
 
-[ADR-0008](../adr/0008-genesis-bound-entity-id.md) is accepted; ADR-0009 is
-still proposed. [ADR-0010](../adr/0010-rgb-carrier-line.md) separately proposes
+[ADR-0008](../adr/0008-genesis-bound-entity-id.md), ADR-0009, and
+[ADR-0010](../adr/0010-rgb-carrier-line.md) are accepted. ADR-0010 selects
 rgb-protocol v0.11.1 with Opret for the first identity transitions while the
-O2A genesis remains RGB-line-agnostic. The current gated path toward a first
-mainnet identity is: accept ADR-0009, finish the signet dress rehearsal now
-**IN PROGRESS**, and then consider a mainnet genesis only under the accepted
-freeze. That path does not establish mainnet readiness or close the remaining
-Phase 0 gates.
+O2A genesis remains RGB-line-agnostic. The required v0.11.1 regtest lineage
+and signet rehearsal are complete. These decisions do not establish mainnet
+readiness, authorize a mainnet identity, or close the remaining Phase 0 gates.
 
 ## Phase 0 — Freeze the Bitcoin-native specification
 
@@ -49,7 +47,8 @@ Phase 0 gates.
   a separately specified discovery mechanism;
 - define the RGB identity contract/schema for genesis, controller rotation,
   recovery-policy change, authorized recovery, custody transfer, and revocation;
-- select and pin a compatible RGB stack and Bitcoin commitment method;
+- implement the accepted rgb-protocol v0.11.1/Opret carrier in the eventual
+  production workspace and pin its reviewed dependency lock;
 - define network, confirmation, reorg, deterministic P2TR seal-script,
   seal-creation proof, terminal closure, witness, and consignment rules;
 - define canonical schemas and serialization for entities, claims,

@@ -16,10 +16,11 @@ pairs and O2A-native state IDs, requiring matching Python and Rust tagged
 hashes. Its two-signer recovery vector proves that distinct signer-specific
 headers over one resulting state produce one state ID; a labelled negative
 control records the rejected full-payload-hash divergence.
-`genesis-freeze-v0.1.json` is the proposed ADR-0009 mainnet manifest for one
+`genesis-freeze-v0.1.json` is the accepted ADR-0009 mainnet manifest for one
 genesis plus one `official_name` claim. It records each frozen output and its
 SHA-256, uses only published permanently unsafe Route B keys, and is checked by
-`check_genesis_freeze.py`; it is a vector, never a real identity.
+`check_genesis_freeze.py`; its original proposal-status label is frozen vector
+data, and it is a vector, never a real identity.
 `derivation-v0.1.json` records Route B paths and expected keys;
 `check_derivation_cross.py` requires the independent Python and Rust
 implementations to produce identical results. `seal-script-v0.1.json` records
@@ -275,12 +276,18 @@ suite and their expectations must not be rewritten. Reproduce them against
 that commit in an isolated worktree:
 
 ```bash
-git worktree add /tmp/o2a-c7b0871 c7b08716d017d1f6125e6a728fb098673a09d433
-cp -a tests/vectors/option-b tests/vectors/genesis-options /tmp/o2a-c7b0871/tests/vectors/
-docker compose --file /tmp/o2a-c7b0871/dev/compose.yaml --project-directory /tmp/o2a-c7b0871 \
-  --profile tools run --rm toolchain bash -lc \
+git worktree add --detach /tmp/o2a-c7b0871 \
+  c7b08716d017d1f6125e6a728fb098673a09d433
+cp -a tests/vectors/option-b tests/vectors/genesis-options \
+  /tmp/o2a-c7b0871/tests/vectors/
+docker compose --file /tmp/o2a-c7b0871/dev/compose.yaml \
+  --project-directory /tmp/o2a-c7b0871/dev \
+  --project-name o2a-historical --profile tools run --rm toolchain bash -lc \
   'python3 tests/vectors/option-b/check_option_b.py && python3 tests/vectors/genesis-options/check_genesis_options.py'
-git worktree remove /tmp/o2a-c7b0871
+docker compose --file /tmp/o2a-c7b0871/dev/compose.yaml \
+  --project-directory /tmp/o2a-c7b0871/dev \
+  --project-name o2a-historical --profile tools down
+git worktree remove --force /tmp/o2a-c7b0871
 ```
 
 The accepted-rule regression is separate:

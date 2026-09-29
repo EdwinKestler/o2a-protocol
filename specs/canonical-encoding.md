@@ -2,7 +2,7 @@
 
 ## Status
 
-Draft remediation profile for v0.1. ADR-0009 proposes freezing only the
+Draft remediation profile for v0.1. ADR-0009 freezes only the
 genesis-plus-`official_name` subset. The byte grammar and object payloads below
 replace the incomplete first draft. They do not adopt an RGB implementation,
 freeze RGB program bytes, or close Phase 0.
@@ -372,7 +372,7 @@ common_header || subject || predicate || object || context || nonce
 `context`, `supersedes`, and `checkpoint` are `option<hash32>`; `nonce` is
 `hash32`.
 
-The proposed ADR-0009 frozen claim subset uses exact predicate text
+The accepted ADR-0009 frozen claim subset uses exact predicate text
 `official_name`, a self-issued EntityID subject, and a controller authorized by
 the O2A state ID in `authorizing_state`.
 
