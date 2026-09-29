@@ -318,9 +318,12 @@ win if a summary here is incomplete or inconsistent.
 - **Decision / who:** maintainer in
   [ADR-0011](../adr/0011-network-as-configuration.md); `O2A_NETWORK` selects a
   typed regtest, signet, or mainnet profile, with regtest default. Mainnet also
-  requires a session-local flag and typed confirmation. All interfaces expose
-  the active network, and the standard suite exercises mainnet only offline
-  with broadcasting disabled.
+  requires a session-local flag and typed confirmation for planning and
+  signing; public read-only verification requires only the mainnet profile.
+  O2A tools never broadcast on mainnet: the operator's wallet funds the seal
+  address printed by the plan step, and O2A checks its script and depth before
+  genesis signing. All interfaces expose the active network, and the standard
+  suite exercises mainnet only offline with broadcasting disabled.
 - **Status and boundary:** Accepted, 2026-09-29. The block-0 operation uses
   mainnet, but ADR-0009 independently permits only genesis and one
   `official_name` claim until the RGB program is final. Signet identities stay

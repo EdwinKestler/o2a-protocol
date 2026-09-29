@@ -78,8 +78,9 @@ local deterministic vectors → Bitcoin regtest + RGB → public test network �
 
 The same protocol rules apply through the typed network profile in every
 environment. Development and networked tests use regtest and signet. Mainnet
-uses the same implementation with ADR-0011's per-session lock; ADR-0009 permits
-only the scoped genesis and `official_name` claim until the remaining program
-and transition gates close. Broader mainnet release remains held until
-version-pinned evidence covers reorgs, consignment loss, controller recovery,
-revocation, and independent verifier agreement.
+uses the same implementation; ADR-0011's per-session lock guards planning and
+signing but not keyless read-only verification, and O2A tools do not broadcast
+there. ADR-0009 permits only the scoped genesis and `official_name` claim until
+the remaining program and transition gates close. Broader mainnet release
+remains held until version-pinned evidence covers reorgs, consignment loss,
+controller recovery, revocation, and independent verifier agreement.

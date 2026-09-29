@@ -19,7 +19,7 @@ move.
 | [0008](../adr/0008-genesis-bound-entity-id.md) | Accepted, 2026-09-28 | `38d9bd5`; merge `0ef16c2` | Genesis-bound EntityID and pending confirmation |
 | [0009](../adr/0009-scoped-genesis-freeze.md) | Accepted, 2026-09-28 | `cabae9b`; merge `b622c98`; maintainer acceptance | Scoped genesis / `official_name` freeze and O2A state ID |
 | [0010](../adr/0010-rgb-carrier-line.md) | Accepted, 2026-09-28 | Proposal merge `0a8d54f`; acceptance evidence at demo `48fd5db` | rgb-protocol v0.11.1 with Opret for first transitions |
-| [0011](../adr/0011-network-as-configuration.md) | Accepted, 2026-09-29 | Maintainer decision, 2026-09-29 | One regtest/signet/mainnet profile with a per-session mainnet lock |
+| [0011](../adr/0011-network-as-configuration.md) | Accepted, 2026-09-29 | Maintainer decision, 2026-09-29 | One network profile; guarded mainnet creation, public read-only verification, and operator-wallet seal funding |
 
 ## Normative specifications changed since `c7b0871`
 

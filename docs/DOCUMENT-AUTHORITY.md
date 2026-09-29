@@ -9,10 +9,11 @@ layouts, and the RGB identity contract defines the candidate state, recovery,
 confirmation, and reorg rules. ADR-0009 freezes the scoped genesis format, and
 ADR-0010 selects rgb-protocol v0.11.1 with Opret for the first transitions.
 ADR-0011 makes regtest, signet, and mainnet configurations of one implementation
-with a separate per-session mainnet lock. The remaining identity derivation
-allocation, concrete RGB program, compatible dependency lock, and complete
-conformance vectors remain Phase 0 gates. Until those gates close, a draft
-schema controls other documents, and it is not yet a frozen wire format.
+with a per-session lock for mainnet planning and signing but not read-only
+verification. The remaining identity derivation allocation, concrete RGB
+program, compatible dependency lock, and complete conformance vectors remain
+Phase 0 gates. Until those gates close, a draft schema controls other documents,
+and it is not yet a frozen wire format.
 
 ## Precedence
 
@@ -59,9 +60,11 @@ complete canonical genesis payload and defines the pending-confirmation rule
 for every seal-creating transaction named by a valid history. ADR-0009 adds the
 indefinite frozen-format compatibility promise, and ADR-0010 selects
 rgb-protocol v0.11.1 with Opret without making the O2A genesis line-dependent.
-ADR-0011 centralizes runtime network values in one profile and requires an
-additional session-local mainnet authorization without expanding ADR-0009's
-scoped genesis surface.
+ADR-0011 centralizes runtime network values in one profile, requires an
+additional session-local authorization for mainnet planning and signing, and
+keeps keyless read-only mainnet verification authorization-free. O2A tooling
+does not broadcast on mainnet. None of these rules expands ADR-0009's scoped
+genesis surface.
 
 ## Normative specs
 

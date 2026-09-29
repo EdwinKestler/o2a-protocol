@@ -34,8 +34,11 @@ The accepted [network-configuration decision](adr/0011-network-as-configuration.
 makes regtest, signet, and mainnet profiles of one implementation selected by
 `O2A_NETWORK`, with regtest as the default. Development and networked tests
 stay on regtest and signet. Mainnet additionally requires a session-local flag
-and typed confirmation, and ADR-0009 still limits it to the frozen genesis plus
-one `official_name` claim until the RGB program is final.
+and typed confirmation for planning and signing; public read-only verification
+requires only the mainnet profile. O2A tools never broadcast on mainnet: the
+operator's wallet funds the planned seal address, and O2A confirms its script
+and depth before signing. ADR-0009 still limits mainnet creation to the frozen
+genesis plus one `official_name` claim until the RGB program is final.
 
 The [project website draft](docs/WEBSITE.md) has a public Sites deployment and
 a local preview. Public access is the default Sites policy; GitHub Pages remains

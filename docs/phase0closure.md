@@ -18,9 +18,10 @@ not a mainnet-readiness claim.
 [ADR-0011](../adr/0011-network-as-configuration.md) is accepted. Mainnet is a
 supported, guarded configuration of the same implementation path, not a hard
 block or separate build. Regtest remains the default; development and
-networked testing stay on regtest and signet. The block-0 operation uses the
-mainnet profile with per-session authorization and remains limited by
-ADR-0009.
+networked testing stay on regtest and signet. The block-0 planning and signing
+steps use the mainnet profile with per-session authorization and remain limited
+by ADR-0009. Keyless read-only mainnet verification needs no such authorization,
+and O2A tools do not broadcast there.
 
 ## Settled
 
@@ -38,8 +39,9 @@ ADR-0009.
   includes the maintained adapter, a 47-file regtest lineage, and a 26-file
   signet rehearsal.
 - ADR-0011 defines the single regtest/signet/mainnet configuration profile,
-  mainnet session authorization, active-network UI requirement, and offline
-  no-broadcast mainnet dry-run rule.
+  mainnet planning/signing authorization, authorization-free read-only
+  verification, active-network UI requirement, operator-wallet seal funding,
+  and offline no-broadcast mainnet dry-run rule.
 - Canonical layouts and signing domains exist for all twelve signed objects.
 - The Python protocol/vector checker and the independent locked Rust
   cryptographic checker exercise the retained conformance fixtures.
@@ -65,8 +67,9 @@ ADR-0009.
 5. The derivation profile outside frozen Route B roles 0, 1, 2, and 4.
 6. Wider evidence, discovery, music-object, package, and chain conformance.
 7. Production wallet and release readiness, including implementation of the
-   ADR-0011 mainnet session lock and full offline profile dry run before the
-   scoped block-0 operation.
+   ADR-0011 mainnet planning/signing lock, authorization-free verifier path,
+   operator-wallet funding boundary, and full offline profile dry run before
+   the scoped block-0 operation.
 
 ## Gates closed by ADR-0009 through ADR-0011
 
@@ -92,9 +95,13 @@ genesis and seal preserves the EntityID and state 0 ID.
 
 ADR-0011 changes the network-operation boundary without closing those items.
 The application selects `regtest`, `signet`, or `mainnet` through one profile;
-switching requires no source change. Mainnet also requires an explicit flag
-and typed confirmation in every session. Its authorization cannot permit a
-transition or any object beyond ADR-0009's genesis-plus-`official_name` scope.
+switching requires no source change. Mainnet planning and signing also require
+an explicit flag and typed confirmation in every session; read-only validation
+uses the profile without that authorization. O2A prints the planned seal
+address but does not broadcast: the operator's wallet funds it, after which O2A
+checks the script and confirmation depth before genesis signing. Authorization
+cannot permit a transition or any object beyond ADR-0009's
+genesis-plus-`official_name` scope.
 
 The accepted adapter, regtest lineage, and signet rehearsal were produced as
 disposable evidence by `../o2a-testnet-demo` under the

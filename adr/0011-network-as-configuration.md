@@ -52,10 +52,19 @@ The Draft v0.1 wire encoding continues to recognize its existing testnet and
 testnet4 values for verification; they are not selectable runtime profiles
 under this decision.
 
-### 2. Mainnet session authorization
+### 2. Mainnet session authorization and public verification
 
-`O2A_NETWORK=mainnet` is necessary but not sufficient to perform a mainnet
-operation. Each process session MUST also receive both:
+`O2A_NETWORK=mainnet` is sufficient for read-only mainnet verification. A
+verifier MAY fetch transactions, headers, merkle proofs, and unspent-status
+observations and validate O2A histories and proof packages without session
+authorization. This path MUST NOT derive, load, or use private keys, construct
+or sign transactions or O2A objects, or broadcast. Implementations MUST NOT
+require the authorization below for that path: public and third-party
+verifiers depend on being able to validate mainnet state without operator
+credentials.
+
+The mainnet creation and signing workflow, including its seal-policy planning
+step, requires both the mainnet profile and, in each process session:
 
 1. an explicit mainnet-authorization flag, equivalent to
    `--authorize-mainnet`; and
@@ -64,11 +73,26 @@ operation. Each process session MUST also receive both:
 
 Neither authorization may be persisted, inferred from a prior session,
 supplied by the network setting, or bypassed by a stored preference. Failure
-of either check MUST stop before key use, transaction construction, signing,
-or broadcast. This is an operational lock around the same implementation
-path, not a request for a mainnet-only code change.
+of either check MUST stop before the planning step, private-key access, or
+signing. This is an operational lock around the same implementation path, not
+a request for a mainnet-only code change. It does not grant broadcast authority.
 
-### 3. Independent ADR-0009 scope limit
+### 3. Operator-funded mainnet seal
+
+O2A tooling MUST NOT broadcast on mainnet. For the ADR-0009 scoped genesis,
+the authorized O2A plan step computes the seal policy and prints its address
+and expected `scriptPubKey`; it does not construct or broadcast the funding
+transaction. The operator's own wallet creates, signs, and broadcasts a
+transaction paying that address.
+
+O2A tooling then uses the read-only verification path to fetch the funding
+transaction, its header and merkle inclusion proof, and the output's unspent
+status. It MUST recompute and match the planned `scriptPubKey` and MUST observe
+the required confirmation depth before the genesis may be signed. This
+chain-read step itself neither uses keys nor requires session authorization,
+even when it is performed within an already authorized creation session.
+
+### 4. Independent ADR-0009 scope limit
 
 Network authorization does not expand protocol scope. On mainnet, a
 frozen-format identity may create only the ADR-0009 genesis and its one
@@ -80,7 +104,7 @@ operation outside that scoped surface.
 The block-0 event uses the mainnet profile and the per-session authorization
 above. Its identity is permanent under ADR-0009's compatibility promise.
 
-### 4. Development, testing, and offline mainnet proof
+### 5. Development, testing, and offline mainnet proof
 
 Development and networked automated tests MUST use regtest or signet. Mainnet
 conformance is tested only by an **OFFLINE** dry run in the standard suite:
@@ -95,10 +119,10 @@ genesis bytes. The future implementation suite MUST add the full profile,
 backend-selection, authorization, UI-label, and no-broadcast dry run without
 altering those frozen outputs.
 
-### 5. User-interface requirements
+### 6. User-interface requirements
 
 Every CLI, desktop, mobile, browser, and service-operator interface MUST show
-the active network wherever it can construct, sign, inspect, or broadcast an
+the active network wherever it can plan, construct, sign, or inspect an
 operation. Mainnet MUST use a prominent indicator that cannot be confused
 with regtest or signet. Confirmation prompts MUST repeat the active network.
 
@@ -113,8 +137,12 @@ implies the identity can be reminted under the same identifier.
   separate implementation.
 - Regtest remains the default and primary development network; signet remains
   the public rehearsal and interoperability network.
-- Mainnet use carries an explicit session-local human authorization boundary
-  in addition to configuration.
+- Mainnet creation and signing carry an explicit session-local human
+  authorization boundary in addition to configuration; read-only mainnet
+  verification requires only the mainnet profile.
+- O2A does not broadcast on mainnet. The operator's own wallet funds the
+  planned seal address, and O2A confirms the script, inclusion, depth, and
+  unspent status before signing genesis.
 - ADR-0009, not network selection, defines what block 0 may do while the RGB
   program remains unfinished.
 - No production or mainnet identity network is running merely because this
