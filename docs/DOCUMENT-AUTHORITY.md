@@ -8,9 +8,12 @@ v0.1. O2A-CANON-1 now defines the candidate byte grammar and signed payload
 layouts, and the RGB identity contract defines the candidate state, recovery,
 confirmation, and reorg rules. ADR-0009 freezes the scoped genesis format, and
 ADR-0010 selects rgb-protocol v0.11.1 with Opret for the first transitions.
-The remaining identity derivation allocation, concrete RGB program, compatible
-dependency lock, and complete conformance vectors remain Phase 0 gates. Until those gates close, a draft
-schema controls other documents, and it is not yet a frozen wire format.
+ADR-0011 makes regtest, signet, and mainnet configurations of one implementation
+with a per-session lock for mainnet planning and signing but not read-only
+verification. The remaining identity derivation allocation, concrete RGB
+program, compatible dependency lock, and complete conformance vectors remain
+Phase 0 gates. Until those gates close, a draft schema controls other documents,
+and it is not yet a frozen wire format.
 
 ## Precedence
 
@@ -39,7 +42,9 @@ by [ADR-0008](../adr/0008-genesis-bound-entity-id.md), is the primary design
 authority. [ADR-0009](../adr/0009-scoped-genesis-freeze.md) freezes the scoped
 genesis and `official_name` surface, and
 [ADR-0010](../adr/0010-rgb-carrier-line.md) selects the first-transition RGB
-line and carrier. Those decisions take precedence over
+line and carrier, and
+[ADR-0011](../adr/0011-network-as-configuration.md) amends ADR-0007's network
+operation boundary. Those decisions take precedence over
 [ADR-0001](../adr/0001-modular-protocol-architecture.md),
 [ADR-0002](../adr/0002-entity-id-over-artist-id.md),
 [ADR-0003](../adr/0003-catalog-is-not-source-of-truth.md), and
@@ -55,6 +60,11 @@ complete canonical genesis payload and defines the pending-confirmation rule
 for every seal-creating transaction named by a valid history. ADR-0009 adds the
 indefinite frozen-format compatibility promise, and ADR-0010 selects
 rgb-protocol v0.11.1 with Opret without making the O2A genesis line-dependent.
+ADR-0011 centralizes runtime network values in one profile, requires an
+additional session-local authorization for mainnet planning and signing, and
+keeps keyless read-only mainnet verification authorization-free. O2A tooling
+does not broadcast on mainnet. None of these rules expands ADR-0009's scoped
+genesis surface.
 
 ## Normative specs
 

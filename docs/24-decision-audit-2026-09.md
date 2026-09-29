@@ -1,6 +1,6 @@
 # 24 — Decision audit, September 2026
 
-**Status:** supporting record, 2026-09-28. This document introduces no
+**Status:** supporting record, 2026-09-29. This document introduces no
 protocol rule. Accepted ADRs and the [normative specifications](DOCUMENT-AUTHORITY.md)
 win if a summary here is incomplete or inconsistent.
 
@@ -18,12 +18,13 @@ win if a summary here is incomplete or inconsistent.
 | D8 | Adopt genesis-payload hash option G as ADR-0008 | 2026-09-27 | `38d9bd5`; PR #2 merge `0ef16c2` | Accepted | Very high |
 | D9 | Add `PENDING_CONFIRMATION`, RBF invalidation, and CPFP preservation | 2026-09-28 | ADR-0008 in `38d9bd5`; PR #2 | Accepted | High |
 | D10 | Adopt a scoped genesis freeze and signer-independent O2A state ID | 2026-09-28 | `cabae9b`; PR #3 merge `b622c98`; maintainer acceptance | Accepted | Prohibitive after use |
-| D11 | Gate a first mainnet identity on ADR-0009 after a signet rehearsal | 2026-09-28 | `cabae9b`; signet rehearsals 2 and 3 | Accepted; no mainnet identity authorized | High |
+| D11 | Gate a first mainnet identity on ADR-0009 after a signet rehearsal | 2026-09-28 | `cabae9b`; signet rehearsals 2 and 3; amended operationally by D17 | Accepted; scoped block-0 path only, no mainnet identity running | High |
 | D12 | Record two non-blocking `bp-std` finalization findings | 2026-09-25 | `4b1c99e`; PR #1 | Open upstream candidates; non-blocking | Low for O2A |
 | D13 | Start a new demo lineage for each spec change; never migrate evidence | 2026-09-26 | Demo PR #1 merge `02b9430` retains `bce2b58` | Demonstration policy | Medium |
 | D14 | Treat dependency licenses as assessed findings rather than a rigid development gate | 2026-09-28 | Maintainer decision; [license assessment](22-license-and-adoption-assessment.md) | Accepted policy | Medium before distribution |
 | D15 | Use rgb-protocol v0.11.1 with Opret for the first identity transitions | 2026-09-28 | Accepted [ADR-0010](../adr/0010-rgb-carrier-line.md); demo `31dc5df`, `a86421f` | Accepted | High after first transition |
 | D16 | Accept ADR-0009 and ADR-0010 after evidence and license review | 2026-09-28 | Maintainer decision; demo main `48fd5db` | Accepted; Phase 0 remains open | High |
+| D17 | Treat mainnet as a guarded network configuration rather than a hard block | 2026-09-29 | Accepted [ADR-0011](../adr/0011-network-as-configuration.md); maintainer decision | Accepted; block-0 scope remains bounded by ADR-0009 | High for operational safety |
 
 ## D1 — Identity carrier
 
@@ -208,9 +209,10 @@ win if a summary here is incomplete or inconsistent.
   close; before its first transition its RGB contract may be re-issued only
   with the same O2A genesis bytes and seal.
 - **Commit / status:** restated in `cabae9b`, PR #3; Accepted on 2026-09-28
-  after the signet evidence. No mainnet identity is authorized or running, and
-  the project is not mainnet-ready. Reversal cost is high after any public
-  genesis exists.
+  after the signet evidence and amended operationally by D17. The scoped
+  block-0 path uses the guarded mainnet profile, but no mainnet identity is
+  running and the project is not generally mainnet-ready. Reversal cost is
+  high after any public genesis exists.
 
 ## D12 — Non-blocking `bp-std` findings
 
@@ -300,3 +302,30 @@ win if a summary here is incomplete or inconsistent.
   bytes, the production dependency lock, remaining transition/custody,
   restore/discovery, broader conformance, and every production or mainnet
   operational gate remain open.
+
+## D17 — Network as configuration
+
+- **Question:** Must mainnet require a separate implementation path, or can
+  one implementation select regtest, signet, or mainnet safely by
+  configuration?
+- **Options considered:** keep mainnet as a hard block; add a mainnet-only
+  build or code path; use one profile plus an operational mainnet lock.
+- **Evidence:** O2A-CANON-1 and ADR-0009 already freeze mainnet network byte
+  `0`, Route B coin type `0'`, the seal script, and depth `6`; the
+  63-output freeze check reconstructs the scoped mainnet genesis entirely
+  offline. ADR-0007 remains the source for disposable signet demonstration
+  evidence.
+- **Decision / who:** maintainer in
+  [ADR-0011](../adr/0011-network-as-configuration.md); `O2A_NETWORK` selects a
+  typed regtest, signet, or mainnet profile, with regtest default. Mainnet also
+  requires a session-local flag and typed confirmation for planning and
+  signing; public read-only verification requires only the mainnet profile.
+  O2A tools never broadcast on mainnet: the operator's wallet funds the seal
+  address printed by the plan step, and O2A checks its script and depth before
+  genesis signing. All interfaces expose the active network, and the standard
+  suite exercises mainnet only offline with broadcasting disabled.
+- **Status and boundary:** Accepted, 2026-09-29. The block-0 operation uses
+  mainnet, but ADR-0009 independently permits only genesis and one
+  `official_name` claim until the RGB program is final. Signet identities stay
+  disposable; mainnet identities are permanent. No production or mainnet
+  identity network is currently running.

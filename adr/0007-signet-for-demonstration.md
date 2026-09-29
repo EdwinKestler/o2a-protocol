@@ -2,6 +2,8 @@
 
 **Status:** Accepted
 
+**Amended by ADR-0011.**
+
 ## Context
 
 The live demonstration exercises an O2A wallet, an RGB identity contract, and

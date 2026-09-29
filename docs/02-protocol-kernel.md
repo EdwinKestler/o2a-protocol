@@ -76,7 +76,11 @@ or mismatched. A transaction ID or public key alone is insufficient.
 local deterministic vectors → Bitcoin regtest + RGB → public test network → mainnet
 ```
 
-The same protocol test vectors must pass in every environment. Mainnet remains
-held until version-pinned regtest and public-test evidence cover reorgs,
-consignment loss, controller recovery, revocation, and independent verifier
-agreement.
+The same protocol rules apply through the typed network profile in every
+environment. Development and networked tests use regtest and signet. Mainnet
+uses the same implementation; ADR-0011's per-session lock guards planning and
+signing but not keyless read-only verification, and O2A tools do not broadcast
+there. ADR-0009 permits only the scoped genesis and `official_name` claim until
+the remaining program and transition gates close. Broader mainnet release
+remains held until version-pinned evidence covers reorgs, consignment loss,
+controller recovery, revocation, and independent verifier agreement.

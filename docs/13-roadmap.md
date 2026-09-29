@@ -33,6 +33,17 @@ O2A genesis remains RGB-line-agnostic. The required v0.11.1 regtest lineage
 and signet rehearsal are complete. These decisions do not establish mainnet
 readiness, authorize a mainnet identity, or close the remaining Phase 0 gates.
 
+[ADR-0011](../adr/0011-network-as-configuration.md) is also accepted. One
+`O2A_NETWORK` setting selects the regtest, signet, or mainnet profile without
+code changes; regtest remains the default, development and networked testing
+stay on regtest and signet, and mainnet planning and signing require a fresh
+flag plus typed confirmation for every session. Read-only mainnet verification
+requires only the profile, and O2A tools never broadcast there. The block-0
+operation uses mainnet, but
+ADR-0009 independently limits it to genesis and one `official_name` claim
+until the RGB program and transition rules are final. The standard suite must
+exercise the mainnet profile only as an offline, no-broadcast dry run.
+
 ## Phase 0 — Freeze the Bitcoin-native specification
 
 - retain the accepted genesis-bound EntityID encoding and add independent
@@ -50,7 +61,9 @@ readiness, authorize a mainnet identity, or close the remaining Phase 0 gates.
 - implement the accepted rgb-protocol v0.11.1/Opret carrier in the eventual
   production workspace and pin its reviewed dependency lock;
 - define network, confirmation, reorg, deterministic P2TR seal-script,
-  seal-creation proof, terminal closure, witness, and consignment rules;
+  seal-creation proof, terminal closure, witness, and consignment rules, and
+  enforce the accepted network profile, authorization-free read-only mainnet
+  verification, mainnet planning/signing lock, and no-broadcast boundary;
 - define canonical schemas and serialization for entities, claims,
   attestations, challenges, observations, EVENT manifests, and ALBUM manifests;
 - define the public, content-addressed proof package, privacy boundary,

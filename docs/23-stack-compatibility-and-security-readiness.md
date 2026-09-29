@@ -4,7 +4,14 @@
 regtest-only, and used no O2A or real-value keys. It does not select the RGB
 lineage, freeze a dependency graph, or demonstrate an O2A identity lifecycle.
 
-## Verdict
+## Historical, superseded by ADR-0010
+
+This document records the earlier RGB-WG v0.12 RC3 investigation. Accepted
+[ADR-0010](../adr/0010-rgb-carrier-line.md) later selected rgb-protocol v0.11.1
+with Opret for O2A's first transitions. The findings below remain neutral
+historical evidence and do not govern the selected line.
+
+### Verdict
 
 The proposed development baseline is feasible, but the exact stack is **not
 ready to adopt**. A third disposable run built the exact RGB-WG RC3 tag and
@@ -36,7 +43,7 @@ These results make the first RGB experiment explicitly disposable. It must not
 be promoted into `crates/o2a-rgb`, and its contract shape must not enter a
 normative spec, until every Phase 0 gate passes.
 
-## Exact smoke record
+### Exact smoke record
 
 The run used:
 
@@ -77,7 +84,7 @@ The node was bound to localhost in regtest with zero peers. The disposable
 wallet, chain, sources, toolchain, and build outputs were deleted with the
 temporary directory after the node stopped.
 
-## Second disposable run
+### Second disposable run
 
 The second run closed the evidence-preservation, signed-checksum, local
 resolver, and public-key conversion gaps. Its exact lockfiles, feature tree,
@@ -90,7 +97,7 @@ patch plus a newly observed wallet-directory rename, and the exact lock failed
 the advisory gate. No O2A contract, identity, signature, transition, or
 independent package validation was performed.
 
-## Third disposable remediation run
+### Third disposable remediation run
 
 The third run retained the exact patch, upstream locks, feature tree, sanitized
 logs, source checks, and dependency experiments in the
@@ -118,7 +125,7 @@ The second attempt changes upstream features and was not resolver-tested in
 that form. It is evidence for a possible direction, not a selected patch or
 dependency graph. No production crate or O2A identity was created.
 
-## Compatibility gates for the next run
+### Compatibility gates for the next run
 
 1. Start from the exact RC3 tags, then check for a newer matching release
    family before testing. Never mix the RGB-WG 0.12 family with an unrelated
@@ -147,7 +154,7 @@ dependency graph. No production crate or O2A identity was created.
    register; and complete source/provenance and duplicate/version review before
    accepting it.
 
-## Known security and correctness risks
+### Known security and correctness risks
 
 | Risk | Current evidence | Required design mitigation |
 | --- | --- | --- |
@@ -164,7 +171,7 @@ Pubky and PKARR showed no published upstream security advisories in this review;
 that is not proof of audit or safety. Their Ed25519 keys remain optional signed
 discovery bindings and can never authorize the BIP340 O2A identity lifecycle.
 
-## Primary security references
+### Primary security references
 
 - [Rust release history](https://blog.rust-lang.org/releases/latest/) and the
   [Cargo extraction advisory](https://blog.rust-lang.org/2026/03/21/cve-2026-33056/).

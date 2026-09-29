@@ -1,7 +1,9 @@
 # Phase 0 identity derivation allocation
 
-**Status:** Route B is demo-stable v0.1 under ADR-0006. The allocation question
-is closed for the demo track and reopens only for the mainnet freeze.
+**Status:** Route B is demo-stable v0.1 under ADR-0006. ADR-0009 freezes its
+mainnet form for roles 0, 1, 2, and 4 in the scoped genesis; allocation for the
+remaining roles is still open. ADR-0011 selects the mapping through one network
+profile rather than a separate mainnet code path.
 
 ## Decision record
 
@@ -28,6 +30,15 @@ satisfied. Freezing is deferred because demonstration identities are
 disposable; a mainnet-capable release requires a separate maintainer ADR.
 The allocation question is therefore closed for the demo track and reopens
 only when the mainnet derivation profile is frozen.
+
+2026-09-28 — [ADR-0009](../adr/0009-scoped-genesis-freeze.md) freezes Route B
+on mainnet only for roles 0 root, 1 controller, 2 recovery, and 4 seal as used
+by the frozen genesis and `official_name` surface. Other roles remain outside
+that compatibility promise.
+
+2026-09-29 — [ADR-0011](../adr/0011-network-as-configuration.md) makes the
+mainnet coin mapping part of the single typed network profile. It does not
+freeze the remaining roles or create a separate mainnet derivation path.
 
 O2A needs deterministic wallet separation between root identity, controller,
 recovery, Nostr-publication, seal, and Bitcoin payment keys. Route B derives an
@@ -93,7 +104,9 @@ does not itself freeze the wallet profile.
 | 7 | satisfied | Normative references use Route B; the retired path remains only in history, an explicit rejection, or unrelated hexadecimal evidence. |
 
 All seven evidence gates remain satisfied. The profile is **demo-stable v0.1**
-under ADR-0006 and is not frozen for mainnet or production identities.
+under ADR-0006; ADR-0009 freezes only the mainnet roles and outputs in its
+scoped genesis surface. The remaining role allocation and production profile
+are not frozen.
 
 ## Collision review — 2026-09-23
 

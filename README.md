@@ -30,6 +30,16 @@ the rest of Draft v0.1. The accepted RGB line and carrier are rgb-protocol
 v0.11.1 and Opret; concrete program bytes and the remaining transition gates
 must still close before any identity transition.
 
+The accepted [network-configuration decision](adr/0011-network-as-configuration.md)
+makes regtest, signet, and mainnet profiles of one implementation selected by
+`O2A_NETWORK`, with regtest as the default. Development and networked tests
+stay on regtest and signet. Mainnet additionally requires a session-local flag
+and typed confirmation for planning and signing; public read-only verification
+requires only the mainnet profile. O2A tools never broadcast on mainnet: the
+operator's wallet funds the planned seal address, and O2A confirms its script
+and depth before signing. ADR-0009 still limits mainnet creation to the frozen
+genesis plus one `official_name` claim until the RGB program is final.
+
 The [project website draft](docs/WEBSITE.md) has a public Sites deployment and
 a local preview. Public access is the default Sites policy; GitHub Pages remains
 a separate, currently disabled publication route. Examples use generic
@@ -221,5 +231,7 @@ rgb-protocol v0.11.1 with Opret for the first identity transitions. Phase 0
 remains open for concrete O2A RGB program bytes, the production dependency
 lock, transition and custody gates outside the accepted evidence,
 restore/discovery, the remaining derivation profile, and broader conformance.
-No production or mainnet identity network is running, and this repository
-makes no mainnet-readiness claim.
+[ADR-0011](adr/0011-network-as-configuration.md) supports mainnet as a guarded
+configuration of the same code path; it does not relax those gates. No
+production or mainnet identity network is running, and this repository makes
+no general mainnet-readiness claim.
