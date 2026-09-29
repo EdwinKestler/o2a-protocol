@@ -21,6 +21,8 @@ win if a summary here is incomplete or inconsistent.
 | D11 | Gate a first mainnet identity on ADR-0009 after a signet rehearsal | 2026-09-28 | `cabae9b`; PR #3 | Planned; not mainnet-ready | High |
 | D12 | Record two non-blocking `bp-std` finalization findings | 2026-09-25 | `4b1c99e`; PR #1 | Open upstream candidates; non-blocking | Low for O2A |
 | D13 | Start a new demo lineage for each spec change; never migrate evidence | 2026-09-26 | Demo PR #1 merge `02b9430` retains `bce2b58` | Demonstration policy | Medium |
+| D14 | Treat dependency licenses as assessed findings rather than a rigid development gate | 2026-09-28 | Maintainer decision; [license assessment](22-license-and-adoption-assessment.md) | Accepted policy | Medium before distribution |
+| D15 | Use rgb-protocol v0.11.1 with Opret for the first identity transitions | 2026-09-28 | Proposed [ADR-0010](../adr/0010-rgb-carrier-line.md); demo `2ddfe8c` | Proposed; acceptance evidence open | High after first transition |
 
 ## D1 — Identity carrier
 
@@ -233,3 +235,44 @@ win if a summary here is incomplete or inconsistent.
   never a migration.
 - **Commit / status:** demo PR #1 merge `02b9430`; active demonstration policy.
   Reversal cost is medium because migration would destroy evidence provenance.
+
+## D14 — Dependency licenses are an assessment
+
+- **Question:** Must every non-allowlisted dependency license block development,
+  or should it be recorded and assessed before distribution?
+- **Options considered:** retain the rigid 2026-09-24 license gate; split
+  supply-chain enforcement from a report-only license assessment.
+- **Evidence:** the RGB 0.11.1 compatibility graph passed advisory, ban, and
+  source checks but its license check reported `hex_lit 0.1.1` under MITNFA,
+  pulled through `bitcoin 0.32.102` by `rgb-consensus 0.11.1`. The original
+  output is retained at demo commit `2ddfe8c` in
+  `evidence/regtest-rgb011-compat-2026-09-28/raw/deny-mitnfa.txt`.
+- **Decision / who:** maintainer; cargo-deny advisories, bans, and sources stay
+  blocking. Licenses are report-only and every non-allowlisted result enters
+  the [license register](22-license-and-adoption-assessment.md) as `accepted`
+  or `review-before-distribution`. GPL, AGPL, and SSPL require maintainer review
+  before public distribution or mainnet release, not before development.
+- **Status and reversal:** accepted repository policy, superseding the
+  2026-09-24 rigid license rule. Reversal cost is medium because release
+  review and validation automation depend on the classification.
+
+## D15 — RGB carrier line
+
+- **Question:** Which RGB line and commitment carrier should O2A use for its
+  first identity transitions while keeping genesis independent of that choice?
+- **Options considered:** continue the RGB-WG 0.12 RC3 experiment; use
+  `rgb-protocol` v0.11.1 with Opret; select Tapret from the incomplete report.
+- **Evidence:** demo commit `2ddfe8c`, the 22-file
+  `evidence/regtest-rgb011-compat-2026-09-28/` bundle, and
+  `docs/rgb-0.11.1-compat-memo.md`. C1–C7 pass, C8 passes under D14, and C9
+  limits the proposal to Opret. C6 and C7 confirm that O2A must retain its
+  sourced current-seal observation independently of RGB validity.
+- **Decision / who:** maintainer proposal in
+  [ADR-0010](../adr/0010-rgb-carrier-line.md); the first transitions use
+  v0.11.1 with Opret, `rgb-lib` does not own seal custody, incompatible RGB
+  lines stay in separate workspaces, and duplicate secp256k1 types cross by
+  bytes.
+- **Status and reversal:** Proposed. Acceptance still requires the merged
+  adapter port, a v0.11.1 regtest lineage, a v0.11.1 signet rehearsal, and
+  license-register review. Reversal is high after the first transition but
+  does not change the RGB-line-agnostic O2A genesis.

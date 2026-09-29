@@ -7,11 +7,14 @@ declaration. The demonstration lineage is now the intended path for producing
 the remaining disposable RGB evidence without turning demo artifacts into
 normative program bytes, persistent identities, or an adopted dependency lock.
 [ADR-0008](../adr/0008-genesis-bound-entity-id.md) is accepted.
-[ADR-0009](../adr/0009-scoped-genesis-freeze.md) remains proposed. The bounded
-path toward a first mainnet identity is to accept ADR-0009, complete the signet
-dress rehearsal that is now **IN PROGRESS**, and only then consider a mainnet
-genesis gated on that acceptance. This sequence is not a mainnet-readiness
-claim.
+[ADR-0009](../adr/0009-scoped-genesis-freeze.md) remains proposed.
+[ADR-0010](../adr/0010-rgb-carrier-line.md) proposal would select
+rgb-protocol v0.11.1 with Opret for the first identity transitions while
+leaving the O2A genesis RGB-line-agnostic. It is not accepted and does not
+adopt a dependency lock. The bounded path toward a first mainnet identity is
+to accept ADR-0009, complete the signet dress rehearsal that is now **IN
+PROGRESS**, and only then consider a mainnet genesis gated on that acceptance.
+This sequence is not a mainnet-readiness claim.
 
 ## Settled
 
@@ -36,7 +39,8 @@ claim.
 
 ## Open items
 
-1. RGB 0.12 final stack for mainnet.
+1. RGB carrier-line decision; ADR-0010 proposes rgb-protocol v0.11.1 with
+   Opret for the first transitions.
 2. Concrete O2A RGB program bytes.
 3. RGB execution fixtures.
 4. Custody acceptance over real prior state.
@@ -74,6 +78,12 @@ outputs, stale bindings, delay, closure, reorg, and genesis-bound identifiers;
 see the supporting [scenario matrix](25-scenario-matrix.md). Those runs do not
 close Phase 0, adopt program bytes, or turn demo identities into persistent
 protocol state.
+
+ADR-0010 is also **Proposed**. Its C1–C9 compatibility evidence supports a
+0.11.1/Opret carrier decision, but acceptance still requires the maintained
+port, a regtest lineage, a signet rehearsal on 0.11.1, and review of the
+license register. The archived 0.12 RC3 evidence remains part of the decision
+record.
 
 The restore/discovery item is separate from deterministic key derivation. A
 mnemonic can reproduce keys only after the wallet knows which `entity'` and

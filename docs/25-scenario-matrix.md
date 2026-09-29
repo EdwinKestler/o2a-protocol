@@ -31,6 +31,34 @@ abandoned first contract on the same outpoint. No transaction from that failed
 attempt was broadcast, and the removed contract state is not recoverable from
 the retained data; the original bundle remains unchanged.
 
+## RGB 0.11.1 compatibility: C1–C9
+
+Source: demo commit `2ddfe8c`, bundle
+`evidence/regtest-rgb011-compat-2026-09-28/` in sibling repository
+`o2a-testnet-demo`, and `docs/rgb-0.11.1-compat-memo.md` at that commit. Its
+22-file manifest has manifest-file SHA-256
+`2b376eed8bb5e5640fe542fbf4b5b4cb7d63315502a4de9f7115b18e16bd2cad`.
+This is disposable regtest evidence for proposed
+[ADR-0010](../adr/0010-rgb-carrier-line.md), not production or mainnet
+evidence.
+
+| Case | Expected | Observed | Result | Evidence path |
+| --- | --- | --- | --- | --- |
+| C1 | A custom declarative identity schema with a 32-byte digest and no validators issues and validates | Distinct O2A schema and contract; `validators_none true`; `Consignment is valid` | PASS | `../o2a-testnet-demo/evidence/regtest-rgb011-compat-2026-09-28/cases.txt`, `A.strict` |
+| C2 | The RGB right can use an external outpoint whose script matches the O2A seal policy | `o2a_script_match true`; the RGB seal has no script field; consignment valid | PASS | Same `cases.txt`; `A.strict` |
+| C3 | A generic PSBT commits the transition without the PSBT layer requiring wallet ownership | External seal input committed with Opret; no `RgbWallet`; wallet selection paths were not called | PASS | Same `cases.txt`; `RUN.md` wallet-ownership lines |
+| C4 | Controller script-path spend broadcasts and two independent resolvers agree | Mined at 109; validators byte-identical; consignment valid | PASS | Same `cases.txt`; `c4-validators.txt`, `c4-transfer.strict` |
+| C5 | Recovery fails before BIP68 maturity and succeeds after it | `non-BIP68-final` at 109; allowed at 117; mined at 118 | PASS | Same `cases.txt`; `c5-validators.txt`, `c5-transfer.strict` |
+| C6 | Record RGB behavior after a plain seal spend with no commitment | Bitcoin spent the seal at 119; RGB still reported `Consignment is valid`, right on the spent outpoint, witness `None` | PASS; O2A current-seal check required | Same `cases.txt`; `c6-plain.hex` |
+| C7 | Record two contracts sharing one outpoint when only contract 2 is committed | Both valid while unspent; after the spend at 120, contract 1 still validated and listed the spent outpoint | PASS; O2A current-seal check required | Same `cases.txt`; `c7-validators.txt`, `c7-transfer.strict` |
+| C8 | Blocking dependency gates pass and every license finding is assessed | Audit, advisories, bans, and sources passed; license report identified only `hex_lit 0.1.1` / MITNFA after Zlib correction | PASS under D14; register status `accepted` | `../o2a-testnet-demo/evidence/regtest-rgb011-compat-2026-09-28/raw/deny-mitnfa.txt`; [license register](22-license-and-adoption-assessment.md) |
+| C9 | Determine the supported commitment carrier without broadcasting the Tapret probe | Script-tree Tapret unsupported; key-only Tapret proof built but not broadcast; Opret path passed C3–C4 | OPRET ONLY | Same `cases.txt`; `RUN.md` |
+
+The immutable demo memo and `RUN.md` mark C8 `FAIL` and C9 `REPORT` under the
+then-current 2026-09-24 license gate. D14 reclassifies C8 for protocol decision
+purposes, and ADR-0010 uses C9 to select Opret; neither change rewrites the
+recorded evidence.
+
 ## Option B cases 1–4
 
 Historical, synthetic evidence pinned to `c7b0871`. Expected results describe

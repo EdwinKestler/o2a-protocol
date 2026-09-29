@@ -67,14 +67,16 @@ The unmaintained `paste` warning remained after those updates.
 
 The Electrum-only experiment reaches zero vulnerability advisories but keeps
 unmaintained `paste` 1.0.15 (`RUSTSEC-2024-0436`), needs an unreleased source
-patch, and has unreviewed extra license expressions. Removing Esplora produced
+patch, and has extra license expressions requiring assessment. Removing Esplora produced
 a 213-package lock that passed locked workspace checks and five tests. That
 subtask did not sync it against a local Electrum network. The source change is
 the retained `electrum-only-experiment.patch`, an experiment-only patch to the
 RC3 tag, not an upstream-compatible dependency update. Its license scan was
 metadata triage, not a `cargo-deny` run: 25 expressions, including
 `MPL-2.0-no-copyleft-exception`, `CDLA-Permissive-2.0`, and `Unlicense`/LGPL
-alternatives, were not accepted. Neither candidate lock is adopted.
+alternatives. The 2026-09-28 license policy makes these report-only register
+candidates rather than development blockers. Neither candidate lock is
+adopted.
 
 ## 3. rust-bitcoin 0.32.102
 
@@ -111,7 +113,7 @@ Evidence: [rgb-rc3-compiled-graph-2026-09-24](../evidence/phase0/rgb-rc3-compile
 1. `bp-esplora` on `rgb-runtime` is optional (`resolver-esplora`); the default feature set does not reach it, `minreq`, or `rustls` 0.21. Measurement artifact. The CLI package `rgb-wallet` still depends on it directly.
 2. `rustls-webpki` 0.101.7 is absent from the `resolver-electrum` + `fs` tree. The three lock-wide advisories are a measurement artifact. `paste` 1.0.15 remains in that tree, and feature-aware `cargo deny` still fails on it.
 3. An unmodified library consumer synced 101 regtest UTXOs through electrs. The CLI patch blocker is a measurement artifact for a library consumer.
-4. License failures on the compiled graph are a real allowlist blocker: ISC, MIT-0, Unicode-3.0, CDLA-Permissive-2.0, and copyleft `MPL-2.0-no-copyleft-exception`. This is triage, not an accepted exception list.
+4. At the time, license failures on the compiled graph were treated as an allowlist blocker: ISC, MIT-0, Unicode-3.0, CDLA-Permissive-2.0, and copyleft `MPL-2.0-no-copyleft-exception`. The 2026-09-28 maintainer decision supersedes that blocking interpretation; this remains historical triage for the license register.
 
 ## Consumer dependency shape — 2026-09-24
 

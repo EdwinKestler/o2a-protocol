@@ -1,7 +1,7 @@
 # 22 — License and Adoption Assessment
 
-**Status:** accepted licensing policy, 2026-09-23. This is a practical
-open-source licensing record, not legal advice. The root
+**Status:** accepted licensing policy, updated 2026-09-28. This is a practical
+open-source licensing record and assessment, not legal advice. The root
 [LICENSE](../LICENSE) notice and its canonical license files are authoritative.
 
 ## Outcome
@@ -44,19 +44,45 @@ that choice. Teams that value the patent terms can choose Apache-2.0.
 - Future Rust package metadata must use the exact SPDX expression
   `MIT OR Apache-2.0`.
 
-## Dependency license policy
+## Dependency license assessment policy — 2026-09-28
 
-The first `deny.toml` must allow at least:
+The maintainer decided that dependency-license compliance is an evaluated
+assessment, not a rigid development gate. Security and provenance checks stay
+separate from the license assessment:
 
-```toml
-allow = ["Apache-2.0", "MIT", "CC0-1.0"]
-```
+- `cargo deny check advisories bans sources` is **BLOCKING**. A failing
+  advisory, ban, or source check stops the validation run.
+- `cargo deny check licenses` is **REPORT-ONLY**. Its complete output and exit
+  code are recorded, but its exit code does not block development.
+- Every dependency whose license expression is not on the routine allowlist
+  MUST be entered in the license register below with an assessment and either
+  `accepted` or `review-before-distribution` status.
 
-That is a minimum, not a blind universal allowlist. Add another license only
-after it appears in the selected, locked graph and its obligations are
-reviewed. Fail unknown and unlicensed packages. Review runtime, build, and dev
-dependencies, Git dependencies, bundled native libraries, fonts, icons, and
-installers. Use narrow package exceptions with an owner, reason, and expiry.
+The routine allowlist remains `CC0-1.0`, `MIT`, `MIT-0`, `Apache-2.0`,
+`BSD-2-Clause`, `BSD-3-Clause`, `ISC`, `Zlib`, `Unicode-3.0`, and
+`CDLA-Permissive-2.0`, including SPDX `OR` expressions composed only of those
+licenses. It is a reporting baseline, not a claim that every other license is
+prohibited. Review runtime, build, and development dependencies, Git
+dependencies, bundled native libraries, fonts, icons, and installers.
+
+Strong-copyleft dependencies under GPL, AGPL, or SSPL are
+`review-before-distribution`. The maintainer MUST review their obligations
+before any public distribution or mainnet release, but their presence does not
+block development. Other non-allowlisted, unknown, or missing license metadata
+is assessed and registered the same way; the register may conclude that a
+dependency must be replaced before distribution.
+
+### License register
+
+| Package | License and path | Assessment | Status |
+| --- | --- | --- | --- |
+| `hex_lit 0.1.1` | MITNFA; pulled in through `bitcoin 0.32.102` by `rgb-consensus 0.11.1` | MIT plus a no-false-attribution clause on modified distributions. Negligible risk for the recorded compatibility use: O2A does not modify or redistribute `hex_lit`. | accepted |
+
+An `accepted` entry records the assessed use and facts above; it is not a
+global allowlist addition for unrelated packages or changed distribution
+behavior. `review-before-distribution` means the dependency can be used for
+development, but public artifacts and mainnet release remain held until the
+maintainer records the review.
 
 The relevant upstream snapshot checked on 2026-09-23 is:
 
@@ -72,31 +98,13 @@ Recheck exact packages, features, license files, and revisions when the
 dependency lockfile is selected. `cargo-deny` assists that review; it does not
 replace the notices or a manual distribution audit.
 
-## Maintainer dependency-license decision — 2026-09-24
+## Superseded 2026-09-24 rule
 
-The feature-aware RGB measurement at commit `3b9c397` separated the compiled
-library graph from packages present only in the upstream lock or CLI. The
-maintainer approved the following repository-wide dependency policy. This
-policy does not adopt the measured RGB graph or close its Phase 0 gate.
-
-Permissive dependencies may use `CC0-1.0`, `MIT`, `MIT-0`, `Apache-2.0`,
-`BSD-2-Clause`, `BSD-3-Clause`, `ISC`, `Zlib`, `Unicode-3.0`, or
-`CDLA-Permissive-2.0`. SPDX `OR` expressions composed only of those approved
-licenses are also allowed. A `deny.toml` expresses this by allowing the
-individual identifiers; it must continue to fail unknown or unlicensed
-packages.
-
-`MPL-2.0` and `MPL-2.0-no-copyleft-exception` are allowed only through a
-package-scoped exception for an unmodified third-party dependency. O2A does
-not fork or patch an MPL-licensed crate. A required modification is a stop and
-requires a new maintainer and license review before work continues. The current
-measured instance is unmodified `base85 2.0.0` under
-`MPL-2.0-no-copyleft-exception`. MPL is intentionally absent from the global
-allowlist so a newly introduced MPL package cannot pass without that review.
-
-`MITNFA` remains disallowed. Any dependency expression containing `GPL`,
-`LGPL`, or `AGPL` is a stop. An alternative disjunct does not silently waive
-the review: the selected and distributed licensing path must be recorded.
+The 2026-09-24 rule treated non-allowlisted licenses as rigid blockers:
+`MITNFA` was disallowed, MPL required a narrow exception, and GPL/LGPL/AGPL
+expressions stopped work. The maintainer's 2026-09-28 decision supersedes that
+rule. The earlier measurements and deny outputs remain historical evidence,
+but current decisions use the report-only check and license register above.
 
 `RUSTSEC-2024-0436` for `paste 1.0.15` is ignored as a maintenance advisory
 for the measured graph because `paste` is a proc macro used at compile time and
@@ -106,11 +114,11 @@ drop-in maintained fork `pastey`—is tracked in
 [upstream needs](upstream-needs.md). Every ignore entry must cite this dated
 decision.
 
-Future repository `deny.toml` files must implement this policy. The scoped
-checker policy under `tests/vectors/crypto-checker/` carries the permissive
-allowlist and the dated advisory ignore. A future RGB consumer must additionally
-use a package-and-version-scoped MPL exception for `base85 2.0.0` after
-confirming that its source is unmodified.
+Repository `deny.toml` files retain the routine allowlist so the license check
+can identify register candidates. The scoped checker policy under
+`tests/vectors/crypto-checker/` carries that allowlist and the dated advisory
+ignore; its advisory, ban, and source checks are blocking, while its license
+check is report-only.
 
 ## Primary references
 

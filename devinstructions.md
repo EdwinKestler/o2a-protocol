@@ -194,9 +194,17 @@ docker compose --file dev/compose.yaml --profile tools run --rm toolchain \
     cargo fmt --manifest-path tests/vectors/crypto-checker/Cargo.toml --check
     cargo test --locked --manifest-path tests/vectors/crypto-checker/Cargo.toml
     cargo audit --file tests/vectors/crypto-checker/Cargo.lock
-    cargo deny --manifest-path tests/vectors/crypto-checker/Cargo.toml check
+    bash tests/vectors/crypto-checker/check_dependency_policy.sh
   '
 ```
+
+The dependency-policy helper runs
+`cargo deny check advisories bans sources` as a blocking gate. It then runs
+`cargo deny check licenses`, records that command's complete output and exit
+code, and returns success regardless of the license-check exit because license
+findings are report-only assessments under the 2026-09-28 maintainer decision.
+Every non-allowlisted license must still be assessed in the register in
+`docs/22-license-and-adoption-assessment.md`.
 
 The checker lock and license policy apply only to
 `tests/vectors/crypto-checker/`. They are not an adopted production workspace

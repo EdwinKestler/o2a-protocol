@@ -24,12 +24,12 @@ allow = [
 ]
 confidence-threshold = 0.8
 
-# MPL-2.0 and MPL-2.0-no-copyleft-exception are never global allowances.
-# A future graph may use a package-scoped exception only for a reviewed,
-# unmodified third-party dependency. Patching or forking it is a stop.
-# The current reviewed instance, outside this checker graph, is unmodified
-# base85 2.0.0 under MPL-2.0-no-copyleft-exception.
-# MITNFA and every GPL/LGPL/AGPL expression remain disallowed.
+# Licenses outside this routine allowlist are report-only findings. Record each
+# one in docs/22-license-and-adoption-assessment.md with an assessment and an
+# accepted or review-before-distribution status. GPL, AGPL, and SSPL require
+# maintainer review before public distribution or mainnet release, but do not
+# block development. MITNFA is not globally allowed; the register contains the
+# scoped assessment for hex_lit 0.1.1 outside this checker graph.
 
 [bans]
 multiple-versions = "warn"

@@ -16,7 +16,8 @@ Recorded 2026-09-24:
   `exclude-dev = true`, the executable plus build graph contains ten packages;
 - `cargo audit --file tests/vectors/crypto-checker/Cargo.lock` reported no
   vulnerability advisories;
-- `cargo deny check` passed the scoped source and license policy; and
+- the blocking cargo-deny advisory, ban, and source checks passed;
+- the report-only cargo-deny license check passed for this graph; and
 - the complete license-expression set in the checked executable/build graph is
   `CC0-1.0` and `MIT OR Apache-2.0`. Lock metadata for excluded development
   dependencies additionally contains `(MIT OR Apache-2.0) AND Unicode-3.0`.
@@ -26,9 +27,16 @@ distributed with this standalone checker. The new executable dependencies are
 exactly pinned `bitcoin_hashes 0.14.101` and its normal dependencies
 `bitcoin-io 0.1.101`, `hex-conservative 0.2.3`, and `arrayvec 0.7.8`.
 The checker implements only the bounded BIP32 hardened and BIP85 operations
-needed by the vectors. It does not depend on the `bitcoin` crate. Rust-bitcoin
-was rejected because it declares the MITNFA-licensed `hex_lit` crate as a
-normal dependency even though rust-bitcoin uses it only in test modules.
+needed by the vectors. It does not depend on the `bitcoin` crate. Under the
+superseded 2026-09-24 license gate, rust-bitcoin was rejected because it
+declares the MITNFA-licensed `hex_lit` crate as a normal dependency even though
+rust-bitcoin uses it only in test modules. The 2026-09-28 policy instead treats
+licenses as report-only and records `hex_lit 0.1.1` as accepted for the assessed
+RGB 0.11.1 use; that change does not expand this checker's bounded purpose.
+
+Current validation runs `crypto-checker/check_dependency_policy.sh`. It keeps
+`cargo deny check advisories bans sources` blocking and records, but does not
+fail on, the exit from `cargo deny check licenses`.
 
 The helper uses maintained libsecp256k1-backed BIP340 verification. Its
 deterministic signing command exists only to regenerate public CC0 fixtures

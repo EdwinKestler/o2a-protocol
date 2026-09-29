@@ -136,8 +136,9 @@ turns the accepted architecture into a CLI-first Rust and Bitcoin Core regtest
 plan while keeping the RGB lineage and dependency set behind a Phase 0 gate.
 The supporting [license/adoption assessment](docs/22-license-and-adoption-assessment.md)
 and [compatibility/security record](docs/23-stack-compatibility-and-security-readiness.md)
-record the accepted dual-license policy, the disposable install smoke,
-blockers, and required mitigations without selecting a dependency graph.
+record the accepted dual-license policy, the dependency-license assessment
+register, the disposable compatibility evidence, blockers, and required
+mitigations without adopting a dependency graph.
 The [containerized Phase 0 development environment](dev/README.md) supplies a
 pinned Rust toolchain, isolated Bitcoin Core regtest, and an opt-in disposable
 RGB compatibility profile without adding an O2A implementation crate.
@@ -210,9 +211,11 @@ constraints. O2A-CANON-1 now specifies the candidate EntityID and object bytes,
 and the RGB identity-contract draft specifies candidate lifecycle, recovery,
 confirmation, and reorg behavior. The Route B key-derivation profile is
 **demo-stable v0.1** under [ADR-0006](adr/0006-route-b-key-derivation-via-bip85.md);
-its mainnet freeze is deferred. Phase 0 remains open for the final RGB 0.12
-mainnet stack, concrete O2A RGB program bytes, execution and custody evidence,
-the restore/discovery rule, mainnet derivation freeze, and later lock adoption.
+its mainnet freeze is deferred. [ADR-0010](adr/0010-rgb-carrier-line.md)
+proposes rgb-protocol v0.11.1 with Opret for the first identity transitions;
+it is not accepted yet. Phase 0 remains open for that carrier-line decision,
+concrete O2A RGB program bytes, execution and custody evidence, the
+restore/discovery rule, mainnet derivation freeze, and later lock adoption.
 ADR-0009 is only proposed: no frozen-format identity may transition before the
 final RGB stack is adopted, and this repository makes no mainnet-readiness
 claim.

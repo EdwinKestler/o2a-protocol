@@ -27,10 +27,13 @@ other evidence, or discovery, and permits no transition until the final RGB
 stack is adopted.
 
 [ADR-0008](../adr/0008-genesis-bound-entity-id.md) is accepted; ADR-0009 is
-still proposed. The current gated path toward a first mainnet identity is:
-accept ADR-0009, finish the signet dress rehearsal now **IN PROGRESS**, and
-then consider a mainnet genesis only under the accepted freeze. That path does
-not establish mainnet readiness or close the remaining Phase 0 gates.
+still proposed. [ADR-0010](../adr/0010-rgb-carrier-line.md) separately proposes
+rgb-protocol v0.11.1 with Opret for the first identity transitions while the
+O2A genesis remains RGB-line-agnostic. The current gated path toward a first
+mainnet identity is: accept ADR-0009, finish the signet dress rehearsal now
+**IN PROGRESS**, and then consider a mainnet genesis only under the accepted
+freeze. That path does not establish mainnet readiness or close the remaining
+Phase 0 gates.
 
 ## Phase 0 — Freeze the Bitcoin-native specification
 

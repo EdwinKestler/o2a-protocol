@@ -27,7 +27,7 @@ behind the Phase 0 gates in the [roadmap](13-roadmap.md).
 | Deterministic core | Pure Rust library: typed O2A objects, canonical codec boundary, BIP340 domains, controller authorization, policy evaluation, and proof-package verification | Required shape. No DNS, HTTP, clock, database, or hidden chain reads during evaluation. |
 | Bitcoin | Bitcoin Core 31.1 regtest as the chain source, reached through a narrow O2A RPC adapter and, if the selected RGB runtime requires it, a local Electrum/Esplora resolver backed by that same node | Initial reference backend. Full-node mode comes first; light mode is a later, separately labeled adapter. |
 | Bitcoin types and signatures | Maintained libsecp256k1-backed BIP340 bindings, with one secp256k1 type family inside each crate and explicit byte-level validation at version boundaries | Strong recommendation. Current stable `rust-bitcoin` and RGB RC3 resolve different secp256k1 crate versions; do not assume their Rust key types interoperate. Never implement curve arithmetic or Schnorr signing locally. |
-| RGB | Dedicated adapter over one tested RGB Core, standard-library/runtime, BP, and Strict Types dependency family | Phase 0 blocker. Select the lineage and exact revisions only after the compatibility spike passes. |
+| RGB | Dedicated adapter over one tested RGB Core, standard-library/runtime, BP, and Strict Types dependency family | Phase 0 blocker. [ADR-0010](../adr/0010-rgb-carrier-line.md) proposes rgb-protocol v0.11.1 with Opret for the first transitions; acceptance and exact lock adoption remain open. |
 | Local wallet storage | SQLite for metadata and rebuildable indexes; content-addressed files for consignments, Bitcoin proofs, evidence, and packages | Strong recommendation. The encrypted secret-store format and backup design remain security decisions. |
 | First interface | CLI for create, transition, sign, package, import, verify, and explain operations | Initial interface. It exposes deterministic behavior before GUI concerns. |
 | Discovery | Pubky/PKARR Rust adapter in Phase 3; optional Nostr adapter in a separate crate | Planned. Adapter keys and records never replace the O2A root or validated RGB history. |
@@ -84,14 +84,17 @@ The research snapshot found these two candidate families:
 
 | Candidate | Current evidence | O2A consequence |
 | --- | --- | --- |
-| RGB-WG 0.12 | RGB Core `v0.12.0` is final. The latest tagged standard-library and runtime releases checked on 2026-09-23 are both `v0.12.0-rc.3`. The 0.12 model is not wire-compatible with earlier RGB contracts. | Preferred direction for a new protocol because the consensus layer is final, but not selectable until the matching high-level stack passes O2A's regtest flow. The RC3 libraries compiled in the first disposable smoke, but the debug-built CLI and resolver path did not pass; release CLI behavior was not tested. See the compatibility record. O2A language such as “schema” must also be checked against the 0.12 issuer/program model. |
-| `rgb-protocol` 0.11.1 | The maintained API uses the 0.11.1 family and the sandbox demonstrates 0.11.1 RC6. Its dependency graph still includes pre-release BP components. | Useful as a reproducible integration comparison, not something to mix with RGB-WG Core 0.12 or silently make the O2A profile. |
+| RGB-WG 0.12 | RGB Core `v0.12.0` is final. The latest tagged standard-library and runtime releases checked on 2026-09-23 are both `v0.12.0-rc.3`. The 0.12 model is not wire-compatible with earlier RGB contracts. | The RC3 compatibility evidence remains archived. It is never mixed into the proposed 0.11.1 workspace. |
+| `rgb-protocol` 0.11.1 | The maintained API uses the 0.11.1 family. Demo commit `2ddfe8c` records C1–C9 compatibility evidence, including an Opret transition path. | [ADR-0010](../adr/0010-rgb-carrier-line.md) proposes this line with Opret for the first identity transitions. Acceptance still requires the port, regtest lineage, signet rehearsal, and license-register review. |
 
-The proposal is to test RGB-WG 0.12 first and keep 0.11.1 as the comparison
-spike. The final choice is a protocol-project decision, not a conclusion that
-can be inferred from repository names. Record the chosen upstream organization,
-repositories, revisions, dependency lockfile, minimum Rust version, fixture
-provenance, and known incompatibilities in the Phase 0 profile.
+O2A's genesis is RGB-line-agnostic; its first transitions use the production
+RGB line. ADR-0010 is the proposed protocol-project decision for that line,
+not an accepted dependency lock and not a conclusion inferred from repository
+names. If it is accepted, record the upstream organization, repositories,
+revisions, dependency lockfile, minimum Rust version, fixture provenance, and
+known incompatibilities in the Phase 0 profile. Keep the 0.11.1 and 0.12
+families in separate Cargo workspaces and bridge their distinct secp256k1 type
+families only through validated bytes.
 
 ## Initial development environment
 
@@ -238,10 +241,13 @@ memory handling, encryption at rest, unlock policy, backup, recovery testing,
 OS key stores, logs, crash dumps, and migration. Until that review passes,
 development uses only disposable test identities and regtest bitcoin.
 
-The first locked graph must also pass `cargo audit`, `cargo deny check`, source
-allowlisting, duplicate-dependency review, and a manual review of
-consensus-sensitive APIs. A clean scanner result is necessary but is not proof
-that an RGB release candidate or a Bitcoin parsing/signing path is correct.
+The first locked graph must pass `cargo audit` and the blocking cargo-deny
+advisory, ban, and source checks, plus source allowlisting,
+duplicate-dependency review, and a manual review of consensus-sensitive APIs.
+The cargo-deny license check is report-only: record each non-allowlisted
+license in the assessment register and complete any distribution review before
+release. A clean scanner result is necessary but is not proof that an RGB
+release candidate or a Bitcoin parsing/signing path is correct.
 
 ## Deferred from the initial setup
 
