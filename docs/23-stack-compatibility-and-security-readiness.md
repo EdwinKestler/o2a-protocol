@@ -17,8 +17,9 @@ Compatible dependency updates reduced the full RC3 graph from 15 RustSec
 findings to three. Removing Esplora in a separate feature-minimized experiment
 removed those three advisories and passed locked checks and tests, but required
 another unreleased source patch and retained an unmaintained dependency
-warning. Bitcoin Core RPC is not an implemented RGB RC3 resolver, the licenses
-of the candidate graph are not approved, and no O2A lifecycle was tested.
+warning. Bitcoin Core RPC is not an implemented RGB RC3 resolver, the
+candidate graph's non-allowlisted licenses still need register assessment for
+any changed distribution use, and no O2A lifecycle was tested.
 
 | Check | Result | Meaning |
 | --- | --- | --- |
@@ -29,7 +30,7 @@ of the candidate graph are not approved, and no O2A lifecycle was tested.
 | RGB chain resolver | Patched pass | Under Rust 1.98.1, the patched CLI created the correctly named wallet and synced 101 UTXOs through exact electrs 0.12.0 backed by the same Core node. No manual rename was needed. Core RPC remains a TODO. |
 | Bitcoin/RGB type conversion | Bounded pass | A separate manifest resolved BP secp256k1 0.30.0 and rust-bitcoin's 0.29.1. Compressed and x-only public keys round-tripped through validated canonical bytes, and malformed keys were rejected. Signatures, authorization, and consensus behavior remain untested. |
 | O2A RGB lifecycle and independent import | Not run | No genesis, rotation, recovery-policy change, authorized recovery, revocation, consignment exchange, or second-client verification was performed. |
-| Locked advisory and license scan | Fail for adoption | The tagged 342-package lock has 15 vulnerabilities and five warnings. Compatible updates leave three Esplora-path advisories. An Electrum-only source-patched graph has zero vulnerability advisories but one unmaintained warning and unapproved license expressions. None is adopted. |
+| Locked advisory and license scan | Fail for adoption on blocking advisories | The tagged 342-package lock has 15 vulnerabilities and five warnings. Compatible updates leave three Esplora-path advisories. An Electrum-only source-patched graph has zero vulnerability advisories but one unmaintained warning; its non-allowlisted license expressions are report-only assessment items under the 2026-09-28 policy. None is adopted. |
 
 These results make the first RGB experiment explicitly disposable. It must not
 be promoted into `crates/o2a-rgb`, and its contract shape must not enter a
@@ -141,9 +142,10 @@ dependency graph. No production crate or O2A identity was created.
 8. Preserve the candidate lockfile, its hash, enabled-feature inventory, Cargo
    metadata, and source revisions as Phase 0 evidence, even when the experiment
    itself remains disposable. Commit a lockfile only with its reviewed
-   candidate graph. Run `cargo audit`, all cargo-deny checks,
-   source/provenance review, license inventory, and duplicate/version review
-   before accepting it.
+   candidate graph. Run `cargo audit` and the blocking cargo-deny advisory,
+   ban, and source checks; record the report-only license check in the license
+   register; and complete source/provenance and duplicate/version review before
+   accepting it.
 
 ## Known security and correctness risks
 

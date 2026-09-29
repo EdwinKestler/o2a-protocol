@@ -1,8 +1,9 @@
 # 27 — Artifact inventory
 
-**Status:** supporting inventory captured 2026-09-28 at protocol commit
-`b622c98`. It introduces no protocol rule. Git and the named files remain
-authoritative; branch tips are a dated observation and may move.
+**Status:** supporting inventory updated 2026-09-28 from protocol base
+`7779bcd`. It introduces no protocol rule. Git and the named files remain
+authoritative; branch tips below retain their dated audit observation and may
+move.
 
 ## Architecture decisions
 
@@ -17,6 +18,7 @@ authoritative; branch tips are a dated observation and may move.
 | [0007](../adr/0007-signet-for-demonstration.md) | Accepted | `3ca98ea` | Default public signet for demonstrations |
 | [0008](../adr/0008-genesis-bound-entity-id.md) | Accepted, 2026-09-28 | `38d9bd5`; merge `0ef16c2` | Genesis-bound EntityID and pending confirmation |
 | [0009](../adr/0009-scoped-genesis-freeze.md) | Proposed, 2026-09-28 | `cabae9b`; merge `b622c98` | Scoped genesis / `official_name` freeze and O2A state ID |
+| [0010](../adr/0010-rgb-carrier-line.md) | Proposed, 2026-09-28 | This draft; evidence at demo `2ddfe8c` | rgb-protocol v0.11.1 with Opret for first transitions |
 
 ## Normative specifications changed since `c7b0871`
 
@@ -86,6 +88,7 @@ listed committed manifest passed `sha256sum -c` on 2026-09-28.
 | `evidence/regtest-seal-policy-lineage-2026-09-26/` | `15e8570e27227ace2339eb63d333214684c6811569111665fa8e16e0d4fe2654` | F1–F8 lineage |
 | `evidence/regtest-seal-policy-lineage-correction-2026-09-28/` | `9014c7427dc7e8e98da91b88c036ab5f210b6b022e3d67fb5dedfe958edd31a1` | Shared-root correction |
 | `evidence/regtest-genesis-bound-lineage-2026-09-28/` | `f01f9ee9075e150051aa62d76e41e3c33d5454c369fb6461ffa48100532aa2e1` | Twelve-case ADR-0008 lineage |
+| `evidence/regtest-rgb011-compat-2026-09-28/` | `2b376eed8bb5e5640fe542fbf4b5b4cb7d63315502a4de9f7115b18e16bd2cad` | 22-file C1–C9 rgb-protocol v0.11.1 compatibility bundle at `2ddfe8c` |
 | `evidence/signet-block0-rehearsal-2026-09-28/` | No manifest; untracked at audit time | IN PROGRESS; no result recorded here |
 
 ## Palimnex evaluation fixtures

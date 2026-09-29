@@ -18,9 +18,19 @@ python3 tests/vectors/check_protocol_objects.py          # protocol objects ok
 python3 tests/vectors/check_genesis_freeze.py            # genesis freeze: 63/63 outputs unchanged
 python3 tests/vectors/entity-id-regression/check_entity_id_regression.py   # 27/27
 cargo fmt --manifest-path tests/vectors/crypto-checker/Cargo.toml --check
-cargo test --locked --manifest-path tests/vectors/crypto-checker/Cargo.toml'
+cargo test --locked --manifest-path tests/vectors/crypto-checker/Cargo.toml
+cargo audit --file tests/vectors/crypto-checker/Cargo.lock
+bash tests/vectors/crypto-checker/check_dependency_policy.sh'
 ```
-Also run `tests/vectors/check_seal_core.py` (Bitcoin Core oracle, uses the o2a-phase0 bitcoind) and cargo audit/deny per DEPENDENCIES.md. Run `python3 scripts/build_site.py` when site/ or its sources changed (expect `Validated 2 pages; exported 11 public files`).
+The dependency-policy helper runs cargo-deny advisories, bans, and sources as
+blocking checks. It then records the complete license-check output and exit
+code but ignores that exit code because licenses are report-only assessments.
+Every non-allowlisted license still belongs in the register in
+`docs/22-license-and-adoption-assessment.md`.
+
+Also run `tests/vectors/check_seal_core.py` (Bitcoin Core oracle, uses the
+o2a-phase0 bitcoind). Run `python3 scripts/build_site.py` when site/ or its
+sources changed (expect `Validated 2 pages; exported 11 public files`).
 
 Historical suites (tests/vectors/option-b, tests/vectors/genesis-options) are pinned to c7b0871. They are NOT part of this suite; run them only in a worktree at that commit (see docs/26-test-catalog.md).
 
@@ -33,7 +43,8 @@ Historical suites (tests/vectors/option-b, tests/vectors/genesis-options) are pi
 ```
 
 ## Known, non-blocking noise
-- invalid `docker-sbom` plugin warning; cargo deny unmatched-allowance warnings;
+- invalid `docker-sbom` plugin warning; cargo-deny unmatched-allowance warnings;
+- a non-zero cargo-deny license exit after its complete output is recorded;
 - `cargo test` reports 0 Rust unit tests (the checkers are the evidence);
 - ledger `stale` for historical verification records after source changes.
 
