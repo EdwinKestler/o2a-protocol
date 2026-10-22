@@ -67,7 +67,8 @@ If accepted:
    exact lock hash with `--locked`.
 2. The review is rerun within 14 days of acceptance against the then-current
    RustSec database, with the same results or a recorded disposition.
-3. The maintainer reviews decision item 4 (scoped rust-bitcoin admission).
+3. ~~The maintainer reviews decision item 4 (scoped rust-bitcoin admission).~~
+   Done 2026-10-22.
 
 ## Consequences
 
@@ -78,3 +79,11 @@ If accepted:
   created; moving it changes no pin.
 - `docs/phase0-dependency-gate.md` and `docs/upstream-needs.md` remain
   historical 0.12 records.
+
+## Maintainer decisions — 2026-10-22
+
+- Decision item 4 is approved as written: rust-bitcoin 0.32.102 is admitted
+  only for BIP341 `SIGHASH_DEFAULT` Taproot signing in the adapter, and
+  Bitcoin Core remains the consensus validator for depth, inclusion, and
+  script validity. Any other use needs a new decision. The ADR stays Proposed
+  until checklist items 1 and 2 are met.

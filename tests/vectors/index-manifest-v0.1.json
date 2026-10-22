@@ -124,14 +124,14 @@
           0
         ],
         "history_missing": [],
-        "next_entity": 21,
+        "next_entity": 101,
         "rejected": [],
         "role_next": {
           "0": [
-            23,
-            21,
-            20,
-            24
+            103,
+            101,
+            100,
+            104
           ]
         },
         "status": "SCAN_ONLY"
@@ -144,20 +144,20 @@
           3
         ],
         "history_missing": [],
-        "next_entity": 24,
+        "next_entity": 104,
         "rejected": [],
         "role_next": {
           "0": [
-            23,
-            21,
-            20,
-            24
+            103,
+            101,
+            100,
+            104
           ],
           "3": [
-            21,
-            21,
-            20,
-            21
+            101,
+            101,
+            100,
+            101
           ]
         },
         "status": "SCAN_ONLY"
@@ -173,10 +173,12 @@
       "reject": "WRONG_NETWORK"
     }
   },
-  "gap_limit": 20,
   "mac_key": "ccd398cdc3122d6c334a487056d361a0d717152f7b2f4af547a1c1e90669646e",
   "manifest_v1_hex": "01000404f5df798731b2a6346f048568c7a75dc73f82be69c637faeea478669ad22ada010000000000000002000000000000000201cff1e85b494ac33fb907f5f64dd6144e12da78d54435fc4fe74b14ec00fbd4f50300000001000000010000000400000001000000030001000000010000000000000001000000471ca8677de9a3dfa7c3bf2b86b703ea7fa43647bdcf12d4c57c31b67dd72035",
   "manifest_v2_hex": "01000404f5df798731b2a6346f048568c7a75dc73f82be69c637faeea478669ad22ada020000000000000004000000000000000201cff1e85b494ac33fb907f5f64dd6144e12da78d54435fc4fe74b14ec00fbd4f50300000001000000010000000400000001000000030001000000010000000000000001000000020000000100010000000100000000000000010000000300000002014ec1fdbb2115c269fc5334ce7f604f6926803a70301865e4698f42774f8b669401000000010000000000000001000000a8e21d23f040ddf85571f235f1d66a560afe159236c7e26433ef89cc838d6e72",
+  "scan_gap": 100,
+  "skip_after_manifest": 20,
+  "skip_after_scan_only": 100,
   "spdx": "CC0-1.0",
   "status": "proposed (ADR-0015); not frozen until accepted",
   "unsafe_for_funds": true,

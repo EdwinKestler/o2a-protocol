@@ -54,13 +54,19 @@ Rules:
 1. **Write-ahead.** A wallet MUST durably store a manifest with an increased
    `manifest_sequence` that already covers an index before deriving any key
    at that index for persistent use.
-2. A manifest is valid only if its HMAC verifies, its network and
+2. **Off-site cap.** A wallet MUST NOT allocate an index more than 20 beyond
+   its *restorable high-water mark* — the highest index covered by an
+   off-site manifest copy or by an off-site published history. If an
+   allocation would exceed it, the wallet first copies the current manifest
+   off-site. A wallet SHOULD keep at least two independent off-site manifest
+   copies.
+3. A manifest is valid only if its HMAC verifies, its network and
    `wallet_tag` match the restoring wallet, and it parses exactly. A failing
    manifest is ignored, not repaired.
-3. Among valid manifests the highest `manifest_sequence` wins; equal
+4. Among valid manifests the highest `manifest_sequence` wins; equal
    sequences with different contents are merged by taking each maximum and
    reported as `CONFLICT_MERGED`.
-4. The manifest is private backup data: it links EntityIDs to one wallet and
+5. The manifest is private backup data: it links EntityIDs to one wallet and
    SHOULD be stored encrypted beside the consignment backups. Its HMAC gives
    integrity, not confidentiality, and it is never a protocol object.
 
@@ -71,21 +77,24 @@ For `entity' = 0, 1, …` the wallet derives the root key
 consignments, genesis payloads, and proof packages — for a genesis whose
 `root_xonly` matches and which verifies (root signature, EntityID recompute,
 ADR-0009 shape). Registry or discovery hits only locate payloads; validity
-comes from verification. The scan stops after `G = 20` consecutive misses
+comes from verification. The scan stops after `100` consecutive misses
 above the highest index known from the manifest or the scan. For each found
 identity, each role's next index is one past the highest index whose key
-appears in any valid state of its history, scanning each role up to `G`
+appears in any valid state of its history, scanning each role up to 100
 beyond the highest hit.
 
 ### 3. Skip-ahead after every restore
 
 ```text
-next_entity = max(manifest next, scan high + 1) + G
-next_role   = max(manifest next_role, scan next_role) + G   (per known entity)
+S           = 20   if a valid manifest was found, otherwise 100
+next_entity = max(manifest next, scan high + 1) + S
+next_role   = max(manifest next_role, scan next_role) + S   (per known entity)
 ```
 
 A restored wallet cannot prove its newest manifest was the last one written,
-so it always skips `G` indexes. Unused indexes are free; reuse is not.
+so it always skips. With rule 2, a manifest restore needs only 20; a
+scan-only restore cannot see unpublished drafts and skips 100. Unused
+indexes are free; reuse is not.
 
 ### 4. Missing history
 
@@ -111,7 +120,8 @@ foreign `wallet_tag`.
 2. The demo wallet writes a manifest before each derivation in one disposable
    regtest lineage and restores it from the mnemonic plus the consignment
    backup on a clean machine.
-3. Maintainer review of `G = 20` and of the always-skip rule.
+3. ~~Maintainer review of the skip values and the always-skip rule.~~ Done
+   2026-10-22 on the simulation below.
 
 ## Consequences
 
@@ -119,3 +129,26 @@ foreign `wallet_tag`.
   "Out of scope: restore and discovery" section is replaced by a pointer here.
 - ADR-0009's frozen entity-allocation rule is unchanged; this ADR only
   constrains how a restored wallet resumes it.
+
+## Maintainer decisions — 2026-10-22
+
+The maintainer chose a 20-index skip after every restore and asked for it to
+be simulated. Evidence:
+[`evidence/phase0/restore-skip-simulation-2026-10-22/`](../evidence/phase0/restore-skip-simulation-2026-10-22/RUN.md),
+from `scripts/simulate_restore_skip.py` (fixed seed, 20 000 trials per cell,
+six scenarios).
+
+- A fixed 20-index skip alone reused an index in 0.07 % of typical restores
+  but 31.6 % with poor off-site backups.
+- Adding the off-site cap (rule 2) reduced that to 0–1 %, and to zero whenever
+  a manifest was restored.
+- The remainder came from scan-only restores with many unpublished drafts.
+  A 100-index skip and a 100-miss scan gap in that case removed it: zero
+  reuses in 120 000 trials, at a mean cost of 19–36 skipped indexes (about 97
+  without a manifest) out of 2^31.
+
+**Decision:** keep the 20-index skip after a manifest restore, add the
+off-site cap of 20 (rule 2) and the two-copy recommendation, and use a
+100-miss scan gap with a 100-index skip after a scan-only restore. The
+vector file implements these values. The ADR stays Proposed until checklist
+items 1 and 2 are met.

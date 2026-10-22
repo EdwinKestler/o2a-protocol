@@ -584,7 +584,9 @@ and do not freeze anything until those ADRs are accepted.
   rollback to an older manifest, scan-only restore, scan with a history gap,
   missing published history, and rejection of a flipped byte, a dropped entry
   under the old MAC, wrong network, unsorted entries, a PUBLISHED entry
-  without EntityID, and a foreign wallet tag. Every restore skips 20 indexes.
+  without EntityID, and a foreign wallet tag. A restore with a verified
+  manifest skips 20 indexes; a scan-only restore uses a 100-miss scan gap and
+  skips 100 (2026-10-22 simulation).
 - **Route B completion** (`check_route_b_profile.py`): 36 identity keys
   re-derived by Rust, 24 of them matching the existing derivation vectors, 4
   BIP86 payment keys, and 5 rejected path shapes.

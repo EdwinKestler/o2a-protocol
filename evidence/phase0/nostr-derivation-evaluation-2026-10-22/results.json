@@ -1,0 +1,52 @@
+{
+  "decision": "A",
+  "ecosystem": "NIP-06 is marked draft/unrecommended ('prefer a single nsec'); NIP-49 ncryptsec and NIP-46 remote signing are the portable paths.",
+  "escalation_exposes_sibling_m_44_1237_5_0_1": true,
+  "nip06_vectors_reproduced": [
+    {
+      "npub": true,
+      "nsec": true,
+      "private": true,
+      "public": true
+    },
+    {
+      "npub": true,
+      "nsec": true,
+      "private": true,
+      "public": true
+    }
+  ],
+  "nip06_xpub_plus_leaf_recovers_account_key": true,
+  "option_a_entity0_mainnet_role3_npub": "npub1gunhrprm2ehhw4a78m9fdeyy758jk7hqq2mhpspqe87tuca0jlgsnh5mzr",
+  "option_b_entity0_equals_default_nip06_account0": true,
+  "option_b_entity0_npub": "npub17v46v50fwtwq5rdc6xqxjznk6w2pqrk2k6u4jjcf2r5h5ua7k7hq2q3erf",
+  "options": {
+    "A_role3_plus_export": {
+      "conflicts_with_personal_nip06_account0": false,
+      "generic_client_mnemonic_restore": "no; import nsec/ncryptsec or use a NIP-46 signer",
+      "leaf_plus_xpub_escalation": false,
+      "o2a_restore": "ADR-0015 manifest/scan",
+      "rotation": "yes, index' per entity",
+      "under_bip85_child_not_master": true
+    },
+    "B_nip06_account_eq_entity": {
+      "conflicts_with_personal_nip06_account0": true,
+      "generic_client_mnemonic_restore": "entity 0 only (clients default to account 0)",
+      "leaf_plus_xpub_escalation": true,
+      "o2a_restore": "needs a second allocation scheme",
+      "rotation": "no; /0/0 fixed per account",
+      "under_bip85_child_not_master": false
+    },
+    "C_nip06_reserved_high_account": {
+      "conflicts_with_personal_nip06_account0": false,
+      "generic_client_mnemonic_restore": "no (custom account)",
+      "leaf_plus_xpub_escalation": true,
+      "o2a_restore": "needs a second allocation scheme",
+      "rotation": "no",
+      "under_bip85_child_not_master": false
+    }
+  },
+  "overlap_role3_vs_nip06_accounts_0_999": 0,
+  "role3_keys_checked": 60,
+  "role3_path_all_hardened": true
+}

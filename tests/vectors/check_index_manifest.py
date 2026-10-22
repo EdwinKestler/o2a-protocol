@@ -3,7 +3,8 @@
 """Proposed restore/discovery vectors for entity and role indexes (ADR-0015).
 
 Covers the authenticated index manifest (primary) and the bounded gap-limit
-scan (fallback), including the restore skip-ahead that prevents index reuse.
+scan (fallback, gap 100), including the restore skip-ahead that prevents
+index reuse (20 after a manifest restore, 100 after a scan-only restore).
 Uses the permanently unsafe Route B test seed.
 
     python3 tests/vectors/check_index_manifest.py          # check
@@ -34,7 +35,9 @@ from check_protocol_objects import list_items, option, tagged_hash, u16, u32, u6
 
 HERE = Path(__file__).resolve().parent
 FIXTURE = HERE / "index-manifest-v0.1.json"
-GAP = 20
+SCAN_GAP = 100        # consecutive misses before a scan stops
+SKIP_MANIFEST = 20    # skip-ahead after a restore with a verified manifest
+SKIP_SCAN_ONLY = 100  # skip-ahead after a scan-only restore
 ROLES = (1, 2, 3, 4)
 RESERVED, PUBLISHED, ABANDONED = 1, 2, 3
 NETWORK_COIN = {0: 0, 1: 1, 2: 1, 3: 1, 4: 1}
@@ -119,9 +122,15 @@ def parse(blob: bytes, root, network: int) -> dict:
     return {"sequence": sequence, "entries": entries}
 
 
+_KEY_CACHE: dict = {}
+
+
 def role_key(root, coin: int, entity: int, role: int, index: int) -> str:
-    path = [hardened(coin), hardened(entity), hardened(role), hardened(index)]
-    return xonly_pub(derive_path(root, path).secret)
+    cache_key = (root.encode(), coin, entity, role, index)
+    if cache_key not in _KEY_CACHE:
+        path = [hardened(coin), hardened(entity), hardened(role), hardened(index)]
+        _KEY_CACHE[cache_key] = xonly_pub(derive_path(root, path).secret)
+    return _KEY_CACHE[cache_key]
 
 
 def scan(root, coin: int, sources: list[dict], start_high: int = -1) -> dict:
@@ -132,7 +141,7 @@ def scan(root, coin: int, sources: list[dict], start_high: int = -1) -> dict:
     """
     found, misses, index, high = {}, 0, 0, start_high
     roots = {s["root_xonly"]: s for s in sources}
-    while misses < GAP or index <= high:
+    while misses < SCAN_GAP or index <= high:
         key = role_key(root, coin, index, 0, 0)
         if key in roots:
             found[index] = roots[key]
@@ -146,7 +155,7 @@ def scan(root, coin: int, sources: list[dict], start_high: int = -1) -> dict:
         nexts = []
         for role in ROLES:
             seen, top, i = set(record["keys"].get(str(role), [])), -1, 0
-            while i <= top + GAP:
+            while i <= top + SCAN_GAP:
                 if role_key(root, coin, e, role, i) in seen:
                     top = i
                 i += 1
@@ -176,13 +185,16 @@ def restore(root, network: int, blobs: list[bytes], sources: list[dict]) -> dict
                 manifest_roles[e["index"]] = tuple(max(a, b) for a, b in zip(prev, e["next"]))
     scanned = scan(root, coin, sources, manifest_next_entity - 1)
     # Restore skip-ahead: a restored wallet cannot know whether its newest
-    # manifest is the last one written, so every next index moves past the gap.
-    next_entity = max(manifest_next_entity, scanned["high"] + 1) + GAP
+    # manifest is the last one written, so every next index moves past it
+    # (20 after a manifest restore, 100 after a scan-only restore; see the
+    # 2026-10-22 restore-skip simulation).
+    skip = SKIP_MANIFEST if good else SKIP_SCAN_ONLY
+    next_entity = max(manifest_next_entity, scanned["high"] + 1) + skip
     role_next = {}
     for e in sorted(set(manifest_roles) | set(scanned["role_next"])):
         m = manifest_roles.get(e, (0, 0, 0, 0))
         s = scanned["role_next"].get(e, (0, 0, 0, 0))
-        role_next[e] = [max(a, b) + GAP for a, b in zip(m, s)]
+        role_next[e] = [max(a, b) + skip for a, b in zip(m, s)]
     published = {e["index"] for m in good for e in m["entries"] if e["state"] == PUBLISHED}
     missing = sorted(published - set(scanned["found"]))
     return {"status": "CONFLICT_MERGED" if conflict else status, "rejected": rejected,
@@ -230,7 +242,9 @@ def build() -> dict:
         "spdx": "CC0-1.0",
         "status": "proposed (ADR-0015); not frozen until accepted",
         "unsafe_for_funds": True,
-        "gap_limit": GAP,
+        "scan_gap": SCAN_GAP,
+        "skip_after_manifest": SKIP_MANIFEST,
+        "skip_after_scan_only": SKIP_SCAN_ONLY,
         "wallet_tag": tag.hex(),
         "mac_key": mac_key(root).hex(),
         "manifest_v2_hex": v2.hex(),
@@ -252,9 +266,9 @@ EXPECTED = {
                              "role_next": {"0": [23, 21, 21, 24], "1": [21, 21, 20, 21],
                                            "2": [21, 21, 20, 21], "3": [21, 21, 20, 21]}},
     "rollback_only_old_manifest": {"status": "MANIFEST", "next_entity": 24, "history_missing": []},
-    "scan_only_skip_ahead": {"status": "SCAN_ONLY", "next_entity": 24, "history_missing": [],
-                             "role_next": {"0": [23, 21, 20, 24], "3": [21, 21, 20, 21]}},
-    "scan_only_history_gap": {"status": "SCAN_ONLY", "next_entity": 21, "history_missing": []},
+    "scan_only_skip_ahead": {"status": "SCAN_ONLY", "next_entity": 104, "history_missing": [],
+                             "role_next": {"0": [103, 101, 100, 104], "3": [101, 101, 100, 101]}},
+    "scan_only_history_gap": {"status": "SCAN_ONLY", "next_entity": 101, "history_missing": []},
     "manifest_without_history": {"status": "MANIFEST", "next_entity": 24, "history_missing": [3]},
     "tampered_byte": "MAC", "entry_dropped": "MAC", "wrong_network": "WRONG_NETWORK",
     "unsorted_entries": "ENTRIES_NOT_STRICTLY_INCREASING",
