@@ -2,7 +2,8 @@
 
 **Status:** Proposed, 2026-10-22. Not accepted. Closes Phase 0 open item 3
 only after the acceptance checklist below is complete and the maintainer
-accepts it. Decision 2 needs an explicit maintainer choice.
+accepts it. Decision 2 was chosen by the maintainer on 2026-10-22 (see
+"Maintainer decisions").
 
 ## Context
 
@@ -37,7 +38,7 @@ controller role, domain `O2A/v0.1/identity-transition`, operation 1, 2, 4, or
 resulting_state` (object type 3, capability 3, recovery role, domain
 `O2A/v0.1/recovery`, operation 3).
 
-### 2. Recovery anchor digest (maintainer choice required)
+### 2. Recovery anchor digest (maintainer choice: selected 2026-10-22)
 
 The anchor for operation 3 commits to the signer-independent recovery body:
 
@@ -115,7 +116,7 @@ Bitcoin execution is involved.
 
 ## Required evidence before acceptance
 
-1. Maintainer choice on decision 2.
+1. ~~Maintainer choice on decision 2.~~ Done 2026-10-22.
 2. The ADR-0012 regtest lineage exercises operations 1–5 with these exact
    rules, including one custody transfer and one rejected acceptance replay.
 3. The Rust `crypto-checker` gains independent encoders for the vector
@@ -128,3 +129,11 @@ Bitcoin execution is involved.
 - `specs/rgb-identity-contract.md`, `specs/canonical-encoding.md`, and
   `specs/cryptographic-profile.md` take the amendments above on acceptance;
   until then they carry a pointer to this proposal.
+
+## Maintainer decisions — 2026-10-22
+
+- Decision 2: the maintainer selected the signer-independent
+  `O2A/v0.1/recovery-anchor` digest over
+  `entity_id || recovery_body`. Alternatives (a) and (b) are rejected. The
+  vector file already uses this rule. The ADR stays Proposed until checklist
+  items 2 and 3 are met.

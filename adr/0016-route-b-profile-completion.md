@@ -54,7 +54,8 @@ five invalid path shapes are rejected.
 
 ## Required evidence before acceptance
 
-1. Maintainer confirmation that no NIP-06 compatibility is required for v0.1.
+1. ~~Maintainer confirmation that no NIP-06 compatibility is required for
+   v0.1.~~ Done 2026-10-22 on the evidence below.
 2. The demo wallet derives a role `3'` key and publishes one discovery binding
    on regtest that verifies against these vectors.
 
@@ -64,3 +65,30 @@ five invalid path shapes are rejected.
   "frozen v0.1". Route A (a BIP/SLIP allocation) stays available only as a new
   profile version.
 - Hardware signers must implement this profile explicitly, as before.
+
+## Maintainer decisions — 2026-10-22
+
+The maintainer asked for an empirical evaluation before deciding NIP-06
+compatibility. Evidence:
+[`evidence/phase0/nostr-derivation-evaluation-2026-10-22/`](../evidence/phase0/nostr-derivation-evaluation-2026-10-22/RUN.md),
+produced by `scripts/evaluate_nostr_derivation.py`.
+
+- The repository's BIP39/BIP32 code reproduces both NIP-06 test vectors
+  (private key, public key, `nsec`, `npub`), so the comparison is on equal
+  footing.
+- Mapping entities to NIP-06 accounts (`m/44'/1237'/<entity>'/0/0`) makes
+  entity 0 identical to the user's default personal Nostr key, cannot rotate
+  a key without burning an account, and sits under the Bitcoin master tree.
+  An account xpub plus one leaked `/0/0` leaf recovered the account private
+  key (and its sibling keys); the all-hardened role `3'` path is not exposed
+  to that escalation.
+- Zero of 60 role-`3'` test keys coincide with NIP-06 accounts 0–999.
+- NIP-06 itself is now marked `unrecommended` ("prefer a single nsec");
+  portability in the ecosystem goes through NIP-19 `nsec`, NIP-49
+  `ncryptsec`, and NIP-46 remote signing.
+
+**Decision:** no NIP-06 compatibility in v0.1. Decision item 1 stands. A
+wallet MAY export a role-`3'` key as NIP-19 `nsec` or NIP-49 `ncryptsec`
+(preferred), or act as a NIP-46 remote signer so the key never leaves it.
+Export is a wallet feature, not a protocol object, and does not change any
+derived output. The ADR stays Proposed until checklist item 2 is met.

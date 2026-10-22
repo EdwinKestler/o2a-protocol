@@ -11,12 +11,24 @@ ADR's acceptance checklist is complete and the maintainer accepts it.
 | Item | Proposal | Vectors / evidence | Still required before acceptance |
 | --- | --- | --- | --- |
 | 1. RGB program bytes and IDs | [ADR-0012](../adr/0012-o2a-rgb-program-v0.1.md) | `rgb-program-v0.1.json`, `check_rgb_program.py`; demo `program-dump` | Regtest lineage for ops 1–5 and signet rehearsal on the new schema id |
-| 2. Dependency lock | [ADR-0013](../adr/0013-rgb-adapter-dependency-lock.md) | Demo `lock-review-rgb011-2026-10-22` | Lineage built from the pinned lock; review rerun at acceptance; scoped rust-bitcoin admission reviewed |
-| 3. Transition, recovery, op-4 formats | [ADR-0014](../adr/0014-transition-recovery-custody-formats.md) | `transition-freeze-v0.1.json`, `check_transition_freeze.py` | Maintainer choice on the recovery anchor digest; Rust payload encoders; RGB lineage |
+| 2. Dependency lock | [ADR-0013](../adr/0013-rgb-adapter-dependency-lock.md) | Demo `lock-review-rgb011-2026-10-22` | Lineage built from the pinned lock; review rerun at acceptance |
+| 3. Transition, recovery, op-4 formats | [ADR-0014](../adr/0014-transition-recovery-custody-formats.md) | `transition-freeze-v0.1.json`, `check_transition_freeze.py` | Rust payload encoders; RGB lineage |
 | 4. Restore/discovery | [ADR-0015](../adr/0015-index-restore-and-discovery.md) | `index-manifest-v0.1.json`, `check_index_manifest.py` | Rust implementation; clean-machine restore drill |
-| 5. Remaining Route B profile | [ADR-0016](../adr/0016-route-b-profile-completion.md) | `route-b-profile-v0.1.json`, `check_route_b_profile.py` | NIP-06 decision; regtest Nostr binding |
+| 5. Remaining Route B profile | [ADR-0016](../adr/0016-route-b-profile-completion.md) | `route-b-profile-v0.1.json`, `check_route_b_profile.py` | Regtest Nostr binding |
 | 6. Wider conformance | (test catalog) | 27 transition, 11 restore, 5 path, and RGB-pairing adversarial cases | RGB-execution adversarial cases; package/evidence cases for the custody claim and manifest |
 | 7. Production wallet and release readiness | not started in this pass | — | unchanged |
+
+**Maintainer decisions, 2026-10-22 (later the same day):** the
+`recovery-anchor` digest is selected (ADR-0014); the scoped rust-bitcoin
+admission is approved (ADR-0013); the restore skip was simulated and set to
+20 after a manifest restore with an off-site write-ahead cap of 20, and 100
+with a 100-miss scan gap after a scan-only restore (ADR-0015,
+[simulation](../evidence/phase0/restore-skip-simulation-2026-10-22/RUN.md));
+NIP-06 compatibility was evaluated and rejected for v0.1 in favour of role
+`3'` with NIP-19/NIP-49 export or NIP-46 signing (ADR-0016,
+[evaluation](../evidence/phase0/nostr-derivation-evaluation-2026-10-22/RUN.md)).
+These decisions tick checklist items; all five ADRs remain Proposed until
+their remaining evidence exists.
 
 Review findings that shaped the proposals: the 0.11.1 demo schema's
 transitions carry no O2A digest and its revocation has no owned output
