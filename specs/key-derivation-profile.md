@@ -157,7 +157,11 @@ Recovering the set of allocated `entity'` indexes and per-role indexes from a
 seed alone is not defined by this profile. A wallet restoring from a mnemonic
 must rebuild that set from its RGB identity history, retained proof packages,
 or a discovery rule to be specified separately. This document does not design
-that rule.
+that rule; proposed [ADR-0015](../adr/0015-index-restore-and-discovery.md)
+drafts it (authenticated index manifest, gap-limit scan, restore skip-ahead),
+and proposed [ADR-0016](../adr/0016-route-b-profile-completion.md) drafts the
+freeze of role `3'`, operational indexes, and payment paths. Neither is
+accepted.
 
 EntityIDs are also not derivable from the seed alone. ADR-0008 binds each one
 to its complete canonical genesis payload, including its initial state and

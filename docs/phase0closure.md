@@ -1,5 +1,29 @@
 # Phase 0 status report
 
+## Update — 2026-10-22: closure proposals for items 1–6
+
+**Phase 0 remains open.** Proposed ADR-0012 through ADR-0016 draft the
+closure of open items 1–5, and new protocol-only vectors advance item 6. A
+proposed ADR carries no normative authority (see
+[document authority](DOCUMENT-AUTHORITY.md)); each item closes only when its
+ADR's acceptance checklist is complete and the maintainer accepts it.
+
+| Item | Proposal | Vectors / evidence | Still required before acceptance |
+| --- | --- | --- | --- |
+| 1. RGB program bytes and IDs | [ADR-0012](../adr/0012-o2a-rgb-program-v0.1.md) | `rgb-program-v0.1.json`, `check_rgb_program.py`; demo `program-dump` | Regtest lineage for ops 1–5 and signet rehearsal on the new schema id |
+| 2. Dependency lock | [ADR-0013](../adr/0013-rgb-adapter-dependency-lock.md) | Demo `lock-review-rgb011-2026-10-22` | Lineage built from the pinned lock; review rerun at acceptance; scoped rust-bitcoin admission reviewed |
+| 3. Transition, recovery, op-4 formats | [ADR-0014](../adr/0014-transition-recovery-custody-formats.md) | `transition-freeze-v0.1.json`, `check_transition_freeze.py` | Maintainer choice on the recovery anchor digest; Rust payload encoders; RGB lineage |
+| 4. Restore/discovery | [ADR-0015](../adr/0015-index-restore-and-discovery.md) | `index-manifest-v0.1.json`, `check_index_manifest.py` | Rust implementation; clean-machine restore drill |
+| 5. Remaining Route B profile | [ADR-0016](../adr/0016-route-b-profile-completion.md) | `route-b-profile-v0.1.json`, `check_route_b_profile.py` | NIP-06 decision; regtest Nostr binding |
+| 6. Wider conformance | (test catalog) | 27 transition, 11 restore, 5 path, and RGB-pairing adversarial cases | RGB-execution adversarial cases; package/evidence cases for the custody claim and manifest |
+| 7. Production wallet and release readiness | not started in this pass | — | unchanged |
+
+Review findings that shaped the proposals: the 0.11.1 demo schema's
+transitions carry no O2A digest and its revocation has no owned output
+(ADR-0012); the recovery anchor digest is ambiguous with several signers
+(ADR-0014); the RGB 0.11.1 builder does not itself enforce a `Once` global and
+panics on an unknown transition name (ADR-0012 evidence).
+
 ## Status — 2026-09-29
 
 **Phase 0 remains open.** This is a current status report, not a closure

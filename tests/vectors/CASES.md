@@ -557,3 +557,39 @@ The missing-discovery requirement case returns `incomplete` rather than
 accepting silently. Verification of a complete retained package during an
 actual discovery-service outage, and all live Pubky/Nostr behavior, remain
 unexecuted.
+
+## Proposed Phase 0 closure cases (2026-10-22)
+
+These cases back proposed ADR-0012 through ADR-0016. They are protocol-only
+and do not freeze anything until those ADRs are accepted.
+
+- **RGB program pairing** (`check_rgb_program.py`): pins the candidate
+  `O2aIdentityV01` schema bytes by SHA-256 and checks that operations 1, 2, 4,
+  and 5 map only to transition type `8101` and operation 3 only to `8102`.
+- **Transition lineage** (`check_transition_freeze.py`): genesis, rotation,
+  recovery-policy change, custody transfer with acceptance claim, delayed
+  2-of-2 recovery, and revocation all evaluate from decoded bytes. Each of 27
+  adversarial cases is re-signed so that exactly one rule rejects it:
+  operation 3 in the transition domain, sequence skip, stale authorizing
+  state, previous-seal mismatch, reused next seal, rotated-out signer, invalid
+  signature, wrong network, rotation that changes policy, custodian change
+  outside operation 4, stale seal binding, unincremented policy sequence,
+  custody without acceptance, acceptance with wrong next seal, wrong prior
+  state, signer mismatch, or wrong predicate, stale recovery policy hash,
+  recovery below `not_before_height`, insufficient threshold, duplicate
+  recovery signer, recovery signer removed by the prior policy change, anchor
+  digest mismatch or absence, RGB type/domain mismatch, revocation left
+  ACTIVE, and a transition after REVOKED.
+- **Index restore** (`check_index_manifest.py`): latest manifest wins,
+  rollback to an older manifest, scan-only restore, scan with a history gap,
+  missing published history, and rejection of a flipped byte, a dropped entry
+  under the old MAC, wrong network, unsorted entries, a PUBLISHED entry
+  without EntityID, and a foreign wallet tag. Every restore skips 20 indexes.
+- **Route B completion** (`check_route_b_profile.py`): 36 identity keys
+  re-derived by Rust, 24 of them matching the existing derivation vectors, 4
+  BIP86 payment keys, and 5 rejected path shapes.
+
+Not yet covered: RGB-execution adversarial cases on the candidate program,
+proof packages carrying custody claims or manifests, and chain-level
+cancellation of a pending recovery by a competing controller spend on the new
+program.
