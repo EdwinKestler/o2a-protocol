@@ -523,4 +523,4 @@ A verifier MUST:
 
 Semantic state-transition and policy requirements remain in their respective
 normative specs. Concrete RGB program bytes and the dependency lock remain
-open.
+open; proposed ADR-0012 through ADR-0014 draft them and are not accepted.

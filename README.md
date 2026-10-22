@@ -231,6 +231,9 @@ rgb-protocol v0.11.1 with Opret for the first identity transitions. Phase 0
 remains open for concrete O2A RGB program bytes, the production dependency
 lock, transition and custody gates outside the accepted evidence,
 restore/discovery, the remaining derivation profile, and broader conformance.
+Proposed ADR-0012 through ADR-0016 (2026-10-22) draft those closures; they are
+not accepted and carry no normative authority yet (see
+[the Phase 0 status report](docs/phase0closure.md)).
 [ADR-0011](adr/0011-network-as-configuration.md) supports mainnet as a guarded
 configuration of the same code path; it does not relax those gates. No
 production or mainnet identity network is running, and this repository makes

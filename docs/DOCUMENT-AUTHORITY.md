@@ -15,6 +15,10 @@ program, compatible dependency lock, and complete conformance vectors remain
 Phase 0 gates. Until those gates close, a draft schema controls other documents,
 and it is not yet a frozen wire format.
 
+A **proposed** ADR (for example ADR-0012 through ADR-0016, 2026-10-22) is a
+supporting document until the maintainer accepts it. It does not override a
+normative spec, and specs only point to it until acceptance.
+
 ## Precedence
 
 ```text

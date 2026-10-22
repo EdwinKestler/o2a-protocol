@@ -2,8 +2,14 @@
 
 ## Status
 
-The O2A state machine is specified. Concrete RGB 0.12 program bytes and the
-dependency lock remain open. This document does not adopt RGB-WG RC3.
+The O2A state machine is specified. Accepted ADR-0010 selects rgb-protocol
+v0.11.1 with Opret for first transitions. Concrete O2A program bytes and the
+dependency lock remain open; proposed [ADR-0012](../adr/0012-o2a-rgb-program-v0.1.md)
+and [ADR-0013](../adr/0013-rgb-adapter-dependency-lock.md) draft them, and
+proposed [ADR-0014](../adr/0014-transition-recovery-custody-formats.md) drafts
+the per-operation rules, the custody-acceptance claim, and a signer-independent
+recovery anchor digest. None is accepted. This document does not adopt
+RGB-WG RC3.
 
 ## Same machine, genesis-bound identity
 
@@ -344,5 +350,7 @@ or copyright. Those questions belong to signed claims, evidence, and a named
 
 ## Unbound
 
-Concrete RGB 0.12 program bytes and the dependency lock remain open. This
-document does not adopt RGB-WG RC3 or any other RGB stack.
+Concrete O2A program bytes and the dependency lock remain open (proposed
+ADR-0012 and ADR-0013). Apart from ADR-0010's selection of rgb-protocol
+v0.11.1 with Opret, this document does not adopt RGB-WG RC3 or any other RGB
+stack.

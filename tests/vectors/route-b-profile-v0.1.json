@@ -1,0 +1,364 @@
+{
+  "keys": [
+    {
+      "entity": 0,
+      "index": 0,
+      "network": "mainnet",
+      "path": "m/0'/0'/0'/0'",
+      "role": 0,
+      "xonly": "95e5b5d6882c86957fb293dfd74a72d1795cf8736c026e1e13bc63a6c5710b36"
+    },
+    {
+      "entity": 0,
+      "index": 0,
+      "network": "mainnet",
+      "path": "m/0'/0'/1'/0'",
+      "role": 1,
+      "xonly": "f3adf5ea9efb7576ccc79a330ce2cc916595a45193611779e2c6a210b1d05e17"
+    },
+    {
+      "entity": 0,
+      "index": 1,
+      "network": "mainnet",
+      "path": "m/0'/0'/1'/1'",
+      "role": 1,
+      "xonly": "851a0328b1a1663845ce1e869be608078c28aeaf4121886cf9e3b0b4686ab6bb"
+    },
+    {
+      "entity": 0,
+      "index": 0,
+      "network": "mainnet",
+      "path": "m/0'/0'/2'/0'",
+      "role": 2,
+      "xonly": "7d9c1d5b9a3ad96294b43587ba81b2c147d1aa672c9269dd8c234c1fdddbd62b"
+    },
+    {
+      "entity": 0,
+      "index": 1,
+      "network": "mainnet",
+      "path": "m/0'/0'/2'/1'",
+      "role": 2,
+      "xonly": "b60d881f4001d5c8472cae526f5c7352f416e24dfe7336451bf88d9e31b8bbb2"
+    },
+    {
+      "entity": 0,
+      "index": 0,
+      "network": "mainnet",
+      "path": "m/0'/0'/3'/0'",
+      "role": 3,
+      "xonly": "472771847b566f7757be3eca96e484f50f2b7ae002b770c020c9fcbe63af97d1"
+    },
+    {
+      "entity": 0,
+      "index": 1,
+      "network": "mainnet",
+      "path": "m/0'/0'/3'/1'",
+      "role": 3,
+      "xonly": "8d172f488f350205561d16041dc67271e41ed876cb02e10c9396982d7f10a388"
+    },
+    {
+      "entity": 0,
+      "index": 0,
+      "network": "mainnet",
+      "path": "m/0'/0'/4'/0'",
+      "role": 4,
+      "xonly": "d25ed00ba7188d413f7c0ed100bb092460be1eaed2e69596c3dfc43dc43e5c06"
+    },
+    {
+      "entity": 0,
+      "index": 1,
+      "network": "mainnet",
+      "path": "m/0'/0'/4'/1'",
+      "role": 4,
+      "xonly": "416e0730739014f342fc0247dc2aa2aab96463c7c49b56d1eaa499afe31f713e"
+    },
+    {
+      "entity": 1,
+      "index": 0,
+      "network": "mainnet",
+      "path": "m/0'/1'/0'/0'",
+      "role": 0,
+      "xonly": "44eec350058c0f989cb2d1af8468aa2f1a12e99e98226cc36db446c54824374c"
+    },
+    {
+      "entity": 1,
+      "index": 0,
+      "network": "mainnet",
+      "path": "m/0'/1'/1'/0'",
+      "role": 1,
+      "xonly": "1ae475832feb3331f8e760fcd7803a48078bb0b38f5e15b1fb52017fd8757917"
+    },
+    {
+      "entity": 1,
+      "index": 1,
+      "network": "mainnet",
+      "path": "m/0'/1'/1'/1'",
+      "role": 1,
+      "xonly": "46bab7f126f4c0d4f50e44723a8b154060d1618e4033dcb559d18b9a4a7a86e7"
+    },
+    {
+      "entity": 1,
+      "index": 0,
+      "network": "mainnet",
+      "path": "m/0'/1'/2'/0'",
+      "role": 2,
+      "xonly": "31e6b765372e8f0f5561a05012e4e1d803d3c7b6667793208da7e9abd5fc40d8"
+    },
+    {
+      "entity": 1,
+      "index": 1,
+      "network": "mainnet",
+      "path": "m/0'/1'/2'/1'",
+      "role": 2,
+      "xonly": "17c0f506a2db33ed32f113bd7bd4d350e9ba5d4162400edc82cc9e2fca93722b"
+    },
+    {
+      "entity": 1,
+      "index": 0,
+      "network": "mainnet",
+      "path": "m/0'/1'/3'/0'",
+      "role": 3,
+      "xonly": "cad4d9f2eb17e895b3e49921892255ddb7bf35c7a9fe865b89f71a3745bf53f0"
+    },
+    {
+      "entity": 1,
+      "index": 1,
+      "network": "mainnet",
+      "path": "m/0'/1'/3'/1'",
+      "role": 3,
+      "xonly": "e52f01fa3d189052c79a4dcc0b9573cf7297b8ba71473c35858c7ae0f68126f4"
+    },
+    {
+      "entity": 1,
+      "index": 0,
+      "network": "mainnet",
+      "path": "m/0'/1'/4'/0'",
+      "role": 4,
+      "xonly": "6141ece3878cc82f9c8c8372c5a20445abc35db5f85d6047177a78c640430fcf"
+    },
+    {
+      "entity": 1,
+      "index": 1,
+      "network": "mainnet",
+      "path": "m/0'/1'/4'/1'",
+      "role": 4,
+      "xonly": "a211e7859981b908aadd860e8315a156ba133f6c6b3fc1e841600dd577d3ae6e"
+    },
+    {
+      "index": 0,
+      "network": "mainnet",
+      "path": "m/86'/0'/0'/0/0",
+      "payment": true,
+      "xonly": "6cf32115c2fd0dc462fe82e267d89a17e5f5b43087cfcb3be52b89ac70fac245"
+    },
+    {
+      "index": 1,
+      "network": "mainnet",
+      "path": "m/86'/0'/0'/0/1",
+      "payment": true,
+      "xonly": "2c2e6f72c7b63f195a8c912bab3438625235c4eacb92d86c5bd763d585fa90fc"
+    },
+    {
+      "entity": 0,
+      "index": 0,
+      "network": "regtest",
+      "path": "m/1'/0'/0'/0'",
+      "role": 0,
+      "xonly": "f53704a3e4d3ddad5efb561617489c31522a0cf5a3098f5feb15f900b5ded236"
+    },
+    {
+      "entity": 0,
+      "index": 0,
+      "network": "regtest",
+      "path": "m/1'/0'/1'/0'",
+      "role": 1,
+      "xonly": "ff96950266bcbdc5f9131f722305116cd5e51fe9c1d9e2c1073e4fcb4618c3c6"
+    },
+    {
+      "entity": 0,
+      "index": 1,
+      "network": "regtest",
+      "path": "m/1'/0'/1'/1'",
+      "role": 1,
+      "xonly": "4f570c2b38863ebd30b811b15caf8f2125f5692e1e630b43bd67d79acdcdf062"
+    },
+    {
+      "entity": 0,
+      "index": 0,
+      "network": "regtest",
+      "path": "m/1'/0'/2'/0'",
+      "role": 2,
+      "xonly": "851bbbf4a54b784d635a5f07fea3a2548dcaee887d75fd744191eb37770da590"
+    },
+    {
+      "entity": 0,
+      "index": 1,
+      "network": "regtest",
+      "path": "m/1'/0'/2'/1'",
+      "role": 2,
+      "xonly": "47777fd37d60d45f1aaa9277ff7c5d5c33777b0fd63f25123d70502002f7c7e7"
+    },
+    {
+      "entity": 0,
+      "index": 0,
+      "network": "regtest",
+      "path": "m/1'/0'/3'/0'",
+      "role": 3,
+      "xonly": "8b3574abf95b90ed396a6ffc83676dfeabe91596106afbc6e8ff778d470445cb"
+    },
+    {
+      "entity": 0,
+      "index": 1,
+      "network": "regtest",
+      "path": "m/1'/0'/3'/1'",
+      "role": 3,
+      "xonly": "0931fbc00ab334a836276c42bb7473e6b574b4ed904bedfb42ed468045d91a14"
+    },
+    {
+      "entity": 0,
+      "index": 0,
+      "network": "regtest",
+      "path": "m/1'/0'/4'/0'",
+      "role": 4,
+      "xonly": "ffbcb0d941cb03d264d3668cb8791bcd4f36c3ea8aae0ac67e8f33a189813f78"
+    },
+    {
+      "entity": 0,
+      "index": 1,
+      "network": "regtest",
+      "path": "m/1'/0'/4'/1'",
+      "role": 4,
+      "xonly": "7675232df7caadff46a04021f6bd949d5baf61fe960db777aa8ebd294eb41552"
+    },
+    {
+      "entity": 1,
+      "index": 0,
+      "network": "regtest",
+      "path": "m/1'/1'/0'/0'",
+      "role": 0,
+      "xonly": "2524dced5700ec964fb67e1b446acbc1388cccb0998bc429ec5f4e6cd67f6d87"
+    },
+    {
+      "entity": 1,
+      "index": 0,
+      "network": "regtest",
+      "path": "m/1'/1'/1'/0'",
+      "role": 1,
+      "xonly": "769b1160e553d25be96c774e0fb15e023f874f758c47bd4d1110b6d39852ebb2"
+    },
+    {
+      "entity": 1,
+      "index": 1,
+      "network": "regtest",
+      "path": "m/1'/1'/1'/1'",
+      "role": 1,
+      "xonly": "7861161be144236d3454a95912f8f1503a5105a6b5fa2359f2209937bd9d0474"
+    },
+    {
+      "entity": 1,
+      "index": 0,
+      "network": "regtest",
+      "path": "m/1'/1'/2'/0'",
+      "role": 2,
+      "xonly": "87383029dae6c5d60eee53fb31954f4892b04e94829de4bafda29e91ad5213af"
+    },
+    {
+      "entity": 1,
+      "index": 1,
+      "network": "regtest",
+      "path": "m/1'/1'/2'/1'",
+      "role": 2,
+      "xonly": "14d523e003135115a87a4d2508dddcfaa08b9f7446617c76d003464977665cc6"
+    },
+    {
+      "entity": 1,
+      "index": 0,
+      "network": "regtest",
+      "path": "m/1'/1'/3'/0'",
+      "role": 3,
+      "xonly": "6bbfd3daa26f57e1c9865530038632cd0937a33232dc18b7c3908af8f8f1b053"
+    },
+    {
+      "entity": 1,
+      "index": 1,
+      "network": "regtest",
+      "path": "m/1'/1'/3'/1'",
+      "role": 3,
+      "xonly": "7f6a13147e5f39110a5e486e1abbc177b652a3771c7127ee13fe6274f4f0463c"
+    },
+    {
+      "entity": 1,
+      "index": 0,
+      "network": "regtest",
+      "path": "m/1'/1'/4'/0'",
+      "role": 4,
+      "xonly": "d21305da2d4ef9285657b612b6f509b36e2845acf251f859aa27e265221b5fd4"
+    },
+    {
+      "entity": 1,
+      "index": 1,
+      "network": "regtest",
+      "path": "m/1'/1'/4'/1'",
+      "role": 4,
+      "xonly": "5dd170ab286dae356d56caa2bc9e15f5047e0068b243306f348d98ab8e44e43e"
+    },
+    {
+      "index": 0,
+      "network": "regtest",
+      "path": "m/86'/1'/0'/0/0",
+      "payment": true,
+      "xonly": "24b8f010a21dc5b52a6a1be88feeb23ae9b55dfa5da698cecde29ff2077387b2"
+    },
+    {
+      "index": 1,
+      "network": "regtest",
+      "path": "m/86'/1'/0'/0/1",
+      "payment": true,
+      "xonly": "a1414a58b67afcbce1822b2f76513ec0b6b4f900f503eed0fe36258cd30e6d18"
+    }
+  ],
+  "rejected_paths": {
+    "extra_component": [
+      "0x80000000",
+      "0x80000000",
+      "0x80000001",
+      "0x80000000",
+      "0x80000000"
+    ],
+    "root_nonzero_index": [
+      "0x80000000",
+      "0x80000000",
+      "0x80000000",
+      "0x80000001"
+    ],
+    "unhardened_index": [
+      "0x80000000",
+      "0x80000000",
+      "0x80000001",
+      "0x0"
+    ],
+    "unknown_coin_2": [
+      "0x80000002",
+      "0x80000000",
+      "0x80000001",
+      "0x80000000"
+    ],
+    "unknown_role_5": [
+      "0x80000000",
+      "0x80000000",
+      "0x80000005",
+      "0x80000000"
+    ]
+  },
+  "rejected_results": {
+    "extra_component": false,
+    "root_nonzero_index": false,
+    "unhardened_index": false,
+    "unknown_coin_2": false,
+    "unknown_role_5": false
+  },
+  "spdx": "CC0-1.0",
+  "status": "proposed (ADR-0016); roles 0, 1, 2, 4 at index 0 already frozen by ADR-0009",
+  "unsafe_for_funds": true,
+  "xprv_o2a": "cb4aabaed484766c4be18d21723aa351c82a3a5707d69958accb27a3bef3e8b32e7ce52950114c05dfdd3aab7b3c08cd0899af7bf93b4137d7e1f0f6952f2505"
+}
